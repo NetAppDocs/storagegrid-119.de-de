@@ -1,0 +1,100 @@
+---
+permalink: monitor/monitoring-events.html 
+sidebar: sidebar 
+keywords: monitor, monitoring events, events, storageGRID events 
+summary: Sie können Ereignisse überwachen, die von einem Grid-Knoten erkannt werden, einschließlich benutzerdefinierter Ereignisse, die Sie erstellt haben, um Ereignisse zu verfolgen, die auf dem Syslog-Server protokolliert werden.  Die im Grid Manager angezeigte Meldung „Letztes Ereignis“ bietet weitere Informationen zum aktuellsten Ereignis. 
+---
+= Überwachen von Ereignissen
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Sie können Ereignisse überwachen, die von einem Grid-Knoten erkannt werden, einschließlich benutzerdefinierter Ereignisse, die Sie erstellt haben, um Ereignisse zu verfolgen, die auf dem Syslog-Server protokolliert werden.  Die im Grid Manager angezeigte Meldung „Letztes Ereignis“ bietet weitere Informationen zum aktuellsten Ereignis.
+
+Ereignismeldungen werden auch aufgelistet in der `/var/local/log/bycast-err.log` Protokolldatei. Siehe dielink:logs-files-reference.html["Referenz zu Protokolldateien"] .
+
+Der SMTT-Alarm (Gesamtereignisse) kann wiederholt durch Probleme wie Netzwerkprobleme, Stromausfälle oder Upgrades ausgelöst werden.  Dieser Abschnitt enthält Informationen zur Untersuchung von Ereignissen, damit Sie besser verstehen, warum diese Alarme aufgetreten sind.  Wenn ein Ereignis aufgrund eines bekannten Problems aufgetreten ist, können die Ereigniszähler bedenkenlos zurückgesetzt werden.
+
+.Schritte
+. Überprüfen Sie die Systemereignisse für jeden Grid-Knoten:
++
+.. Wählen Sie *SUPPORT* > *Tools* > *Gittertopologie*.
+.. Wählen Sie *_site_* > *_grid node_* > *SSM* > *Events* > *Overview* > *Main*.
+
+
+. Erstellen Sie eine Liste früherer Ereignismeldungen, um in der Vergangenheit aufgetretene Probleme einzugrenzen:
++
+.. Wählen Sie *SUPPORT* > *Tools* > *Gittertopologie*.
+.. Wählen Sie *_site_* > *_grid node_* > *SSM* > *Events* > *Reports*.
+.. Wählen Sie *Text* aus.
++
+Das Attribut *Letztes Ereignis* wird nicht angezeigt in derlink:using-charts-and-reports.html["Diagrammansicht"] .  So zeigen Sie es an:
+
+.. Ändern Sie *Attribut* in *Letztes Ereignis*.
+.. Wählen Sie optional einen Zeitraum für die *Schnellabfrage* aus.
+.. Wählen Sie *Aktualisieren*.
++
+image::../media/events_report.gif[Veranstaltungsseite]
+
+
+
+
+
+
+
+== Erstellen Sie benutzerdefinierte Syslog-Ereignisse
+
+Mit benutzerdefinierten Ereignissen können Sie alle Kernel-, Daemon-, Fehler- und Benutzerereignisse auf kritischer Ebene verfolgen, die auf dem Syslog-Server protokolliert werden.  Ein benutzerdefiniertes Ereignis kann nützlich sein, um das Auftreten von Systemprotokollmeldungen (und somit Netzwerksicherheitsereignissen und Hardwarefehlern) zu überwachen.
+
+.Informationen zu diesem Vorgang
+Erwägen Sie die Erstellung benutzerdefinierter Ereignisse, um wiederkehrende Probleme zu überwachen.  Die folgenden Überlegungen gelten für benutzerdefinierte Ereignisse.
+
+* Nachdem ein benutzerdefiniertes Ereignis erstellt wurde, wird jedes Vorkommen davon überwacht.
+* Um ein benutzerdefiniertes Ereignis basierend auf Schlüsselwörtern in der `/var/local/log/messages` Dateien müssen die Protokolle in diesen Dateien sein:
++
+** Vom Kernel generiert
+** Von Daemon oder Benutzerprogramm auf Fehler- oder kritischer Ebene generiert
+
+
+
+
+*Hinweis:* Nicht alle Einträge in der `/var/local/log/messages` Dateien werden abgeglichen, sofern sie nicht die oben genannten Anforderungen erfüllen.
+
+.Schritte
+. Wählen Sie *SUPPORT* > *Alarme (Legacy)* > *Benutzerdefinierte Ereignisse*.
+. Klicken Sie auf *Bearbeiten*image:../media/icon_nms_edit.gif["Bleistiftsymbol"] (oder *Einfügen*image:../media/icon_nms_insert.gif["Plus-Symbol"] wenn dies nicht das erste Ereignis ist).
+. Geben Sie eine benutzerdefinierte Ereigniszeichenfolge ein, beispielsweise „Herunterfahren“
++
+image::../media/custom_events.png[Screenshot, der zeigt, wo die benutzerdefinierte Ereigniszeichenfolge eingegeben werden muss]
+
+. Wählen Sie *Änderungen übernehmen*.
+. Wählen Sie *SUPPORT* > *Tools* > *Gittertopologie*.
+. Wählen Sie *_grid node_* > *SSM* > *Events*.
+. Suchen Sie den Eintrag für benutzerdefinierte Ereignisse in der Ereignistabelle und überwachen Sie den Wert für *Anzahl*.
++
+Wenn die Anzahl steigt, wird auf diesem Grid-Knoten ein von Ihnen überwachtes benutzerdefiniertes Ereignis ausgelöst.
+
++
+image::../media/custom_events_count.png[SSM > Veranstaltungen > Übersichtsseite]
+
+
+
+
+
+== Setzt die Anzahl der benutzerdefinierten Ereignisse auf Null zurück
+
+Wenn Sie den Zähler nur für benutzerdefinierte Ereignisse zurücksetzen möchten, müssen Sie die Seite „Grid-Topologie“ im Support-Menü verwenden.
+
+Das Zurücksetzen eines Zählers führt dazu, dass der Alarm beim nächsten Ereignis ausgelöst wird.  Wenn Sie dagegen einen Alarm bestätigen, wird dieser Alarm nur dann erneut ausgelöst, wenn der nächste Schwellenwert erreicht wird.
+
+.Schritte
+. Wählen Sie *SUPPORT* > *Tools* > *Gittertopologie*.
+. Wählen Sie *_grid node_* > *SSM* > *Events* > *Configuration* > *Main*.
+. Aktivieren Sie das Kontrollkästchen *Zurücksetzen* für benutzerdefinierte Ereignisse.
++
+image::../media/custom_events_reset.gif[Screenshot unter SSM > Ereignisse > Konfiguration > Haupt]
+
+. Wählen Sie *Änderungen übernehmen*.
+

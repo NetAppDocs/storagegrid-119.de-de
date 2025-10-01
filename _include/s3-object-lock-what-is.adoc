@@ -1,0 +1,73 @@
+= Was ist S3 Object Lock?
+:allow-uri-read: 
+
+
+
+
+== Was ist S3 Object Lock?
+
+Die StorageGRID S3 Object Lock-Funktion ist eine Objektschutzlösung, die S3 Object Lock in Amazon Simple Storage Service (Amazon S3) entspricht.
+
+Wenn die globale S3-Objektsperre-Einstellung für ein StorageGRID -System aktiviert ist, kann ein S3-Mandantenkonto Buckets mit oder ohne aktivierte S3-Objektsperre erstellen.  Wenn für einen Bucket die S3-Objektsperre aktiviert ist, ist eine Bucket-Versionierung erforderlich und wird automatisch aktiviert.
+
+*Ein Bucket ohne S3-Objektsperre* kann nur Objekte ohne angegebene Aufbewahrungseinstellungen enthalten.  Für aufgenommene Objekte werden keine Aufbewahrungseinstellungen festgelegt.
+
+*Ein Bucket mit S3 Object Lock* kann Objekte mit und ohne Aufbewahrungseinstellungen enthalten, die von S3-Clientanwendungen angegeben werden.  Für einige aufgenommene Objekte gelten Aufbewahrungseinstellungen.
+
+*Ein Bucket mit S3 Object Lock und konfigurierter Standardaufbewahrung* kann hochgeladene Objekte mit angegebenen Aufbewahrungseinstellungen und neue Objekte ohne Aufbewahrungseinstellungen enthalten.  Die neuen Objekte verwenden die Standardeinstellung, da die Aufbewahrungseinstellung nicht auf Objektebene konfiguriert wurde.
+
+Tatsächlich verfügen alle neu aufgenommenen Objekte über Aufbewahrungseinstellungen, wenn die Standardaufbewahrung konfiguriert ist.  Vorhandene Objekte ohne Objektaufbewahrungseinstellungen bleiben davon unberührt.
+
+
+
+=== Aufbewahrungsmodi
+
+Die StorageGRID S3 Object Lock-Funktion unterstützt zwei Aufbewahrungsmodi, um unterschiedliche Schutzstufen auf Objekte anzuwenden.  Diese Modi entsprechen den Aufbewahrungsmodi von Amazon S3.
+
+* Im Compliance-Modus:
++
+** Das Objekt kann erst gelöscht werden, wenn sein Aufbewahrungsdatum erreicht ist.
+** Das Aufbewahrungsdatum des Objekts kann erhöht, aber nicht verringert werden.
+** Das Aufbewahrungsdatum des Objekts kann erst entfernt werden, wenn dieses Datum erreicht ist.
+
+
+* Im Governance-Modus:
++
+** Benutzer mit Sonderberechtigung können in Anfragen einen Bypass-Header verwenden, um bestimmte Aufbewahrungseinstellungen zu ändern.
+** Diese Benutzer können eine Objektversion löschen, bevor ihr Aufbewahrungsdatum erreicht ist.
+** Diese Benutzer können das Aufbewahrungsdatum eines Objekts erhöhen, verringern oder entfernen.
+
+
+
+
+
+
+=== Aufbewahrungseinstellungen für Objektversionen
+
+Wenn ein Bucket mit aktivierter S3-Objektsperre erstellt wird, können Benutzer mit der S3-Clientanwendung optional die folgenden Aufbewahrungseinstellungen für jedes dem Bucket hinzugefügte Objekt angeben:
+
+* *Aufbewahrungsmodus*: Entweder Compliance oder Governance.
+* *Aufbewahrungsdatum*: Wenn das Aufbewahrungsdatum einer Objektversion in der Zukunft liegt, kann das Objekt abgerufen, aber nicht gelöscht werden.
+* *Rechtliche Sperre*: Durch Anwenden einer rechtlichen Sperre auf eine Objektversion wird dieses Objekt sofort gesperrt.  Beispielsweise müssen Sie möglicherweise ein Objekt, das mit einer Untersuchung oder einem Rechtsstreit in Zusammenhang steht, rechtlich sperren.  Eine rechtliche Sperre hat kein Ablaufdatum, sondern bleibt bestehen, bis sie ausdrücklich aufgehoben wird.  Rechtliche Sperren sind unabhängig vom Aufbewahrungsdatum.
++
+
+NOTE: Wenn ein Objekt einer rechtlichen Sperre unterliegt, kann niemand das Objekt löschen, unabhängig von seinem Aufbewahrungsmodus.
+
++
+Details zu den Objekteinstellungen finden Sie unterlink:../s3/use-s3-api-for-s3-object-lock.html["Verwenden Sie die S3 REST API, um S3 Object Lock zu konfigurieren"] .
+
+
+
+
+
+=== Standardaufbewahrungseinstellung für Buckets
+
+Wenn ein Bucket mit aktivierter S3-Objektsperre erstellt wird, können Benutzer optional die folgenden Standardeinstellungen für den Bucket angeben:
+
+* *Standardaufbewahrungsmodus*: Entweder Compliance oder Governance.
+* *Standardaufbewahrungszeitraum*: Wie lange neue Objektversionen, die diesem Bucket hinzugefügt werden, ab dem Tag ihrer Hinzufügung aufbewahrt werden sollen.
+
+
+Die Standard-Bucket-Einstellungen gelten nur für neue Objekte, die keine eigenen Aufbewahrungseinstellungen haben.  Vorhandene Bucket-Objekte sind nicht betroffen, wenn Sie diese Standardeinstellungen hinzufügen oder ändern.
+
+Sehenlink:../tenant/creating-s3-bucket.html["Erstellen eines S3-Buckets"] Undlink:../tenant/update-default-retention-settings.html["Standardaufbewahrung für S3 Object Lock aktualisieren"] .

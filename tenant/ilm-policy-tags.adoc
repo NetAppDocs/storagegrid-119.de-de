@@ -1,0 +1,59 @@
+---
+permalink: tenant/ilm-policy-tags.html 
+sidebar: sidebar 
+keywords: how to assign ilm policy tag to bucket 
+summary: Wählen Sie basierend auf Ihren Objektspeicheranforderungen ein ILM-Richtlinien-Tag aus, das einem Bucket zugewiesen werden soll. 
+---
+= Anwenden eines ILM-Richtlinientags auf einen Bucket
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Wählen Sie basierend auf Ihren Objektspeicheranforderungen ein ILM-Richtlinien-Tag aus, das auf einen Bucket angewendet werden soll.
+
+Die ILM-Richtlinie steuert, wo die Objektdaten gespeichert werden und ob sie nach einer bestimmten Zeit gelöscht werden.  Ihr Grid-Administrator erstellt ILM-Richtlinien und weist sie ILM-Richtlinien-Tags zu, wenn mehrere aktive Richtlinien verwendet werden.
+
+
+NOTE: Vermeiden Sie die häufige Neuzuweisung des Richtlinien-Tags eines Buckets.  Andernfalls können Leistungsprobleme auftreten.
+
+.Bevor Sie beginnen
+* Sie sind beim Tenant Manager angemeldet mit einemlink:../admin/web-browser-requirements.html["unterstützter Webbrowser"] .
+* Sie gehören einer Benutzergruppe an, die über dielink:tenant-management-permissions.html["Root-Zugriff, Alle Buckets verwalten oder Alle Buckets anzeigen"] .  Diese Berechtigungen überschreiben die Berechtigungseinstellungen in Gruppen- oder Bucket-Richtlinien.
+
+
+.Schritte
+. Wählen Sie im Dashboard *Buckets anzeigen* oder wählen Sie *STORAGE (S3)* > *Buckets*.
++
+Die Seite „Buckets“ wird angezeigt.  Sie können die Informationen je nach Bedarf nach beliebigen Spalten sortieren oder in der Liste vor- und zurückblättern.
+
+. Wählen Sie den Namen des Buckets aus, dem Sie ein ILM-Richtlinien-Tag zuweisen möchten.
++
+Sie können die ILM-Richtlinien-Tag-Zuweisung auch für einen Bucket ändern, dem bereits ein Tag zugewiesen ist.
+
++
+
+NOTE: Die angezeigten Werte für „Objektanzahl“ und „Benutzter Speicherplatz“ sind Schätzungen. Diese Schätzungen werden durch den Zeitpunkt der Aufnahme, die Netzwerkkonnektivität und den Knotenstatus beeinflusst.  Wenn für Buckets die Versionierung aktiviert ist, werden gelöschte Objektversionen in die Objektzählung einbezogen.
+
+. Erweitern Sie auf der Registerkarte „Bucket-Optionen“ das Akkordeon „ILM-Richtlinientag“.  Dieses Akkordeon wird nur angezeigt, wenn Ihr Grid-Administrator die Verwendung benutzerdefinierter Richtlinien-Tags aktiviert hat.
+. Lesen Sie die Beschreibung jedes Richtlinien-Tags, um zu bestimmen, welches Tag auf den Bucket angewendet werden soll.
++
+
+CAUTION: Das Ändern des ILM-Richtlinientags für einen Bucket löst eine ILM-Neubewertung aller Objekte im Bucket aus.  Wenn die neue Richtlinie Objekte für eine begrenzte Zeit aufbewahrt, werden ältere Objekte gelöscht.
+
+. Wählen Sie das Optionsfeld für das Tag aus, das Sie dem Bucket zuweisen möchten.
+. Wählen Sie *Änderungen speichern*. Ein neues S3-Bucket-Tag wird auf dem Bucket mit dem Schlüssel gesetzt `NTAP-SG-ILM-BUCKET-TAG` und der Wert des ILM-Richtlinien-Tag-Namens.
++
+
+CAUTION: Stellen Sie sicher, dass Ihre S3-Anwendungen das neue Bucket-Tag nicht versehentlich überschreiben oder löschen.  Wenn dieses Tag beim Anwenden eines neuen TagSets auf den Bucket weggelassen wird, werden die Objekte im Bucket wieder anhand der ILM-Standardrichtlinie ausgewertet.
+
++
+
+CAUTION: Legen Sie ILM-Richtlinien-Tags fest und ändern Sie sie nur mithilfe des Tenant Managers oder der Tenant Manager-API, wo das ILM-Richtlinien-Tag validiert wird.  Ändern Sie nicht die `NTAP-SG-ILM-BUCKET-TAG` ILM-Richtlinientag mithilfe der S3 PutBucketTagging-API oder der S3 DeleteBucketTagging-API.
+
++
+
+NOTE: Das Ändern des einem Bucket zugewiesenen Richtlinientags hat vorübergehende Auswirkungen auf die Leistung, während Objekte mithilfe der neuen ILM-Richtlinie neu ausgewertet werden.
+
+

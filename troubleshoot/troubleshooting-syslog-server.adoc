@@ -1,0 +1,148 @@
+---
+permalink: troubleshoot/troubleshooting-syslog-server.html 
+sidebar: sidebar 
+keywords: how to troubleshoot the external syslog server 
+summary: In der folgenden Tabelle werden die Fehlermeldungen beschrieben, die bei der Verwendung eines externen Syslog-Servers auftreten können, und es werden Korrekturmaßnahmen aufgelistet. 
+---
+= Fehlerbehebung bei einem externen Syslog-Server
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+In der folgenden Tabelle werden die Fehlermeldungen beschrieben, die bei der Verwendung eines externen Syslog-Servers auftreten können, und es werden Korrekturmaßnahmen aufgelistet.
+
+Weitere Informationen zum Senden von Audit-Informationen an einen externen Syslog-Server finden Sie unter:
+
+* link:../monitor/considerations-for-external-syslog-server.html["Überlegungen zur Verwendung eines externen Syslog-Servers"]
+* link:../monitor/configure-audit-messages.html["Konfigurieren Sie Audit-Meldungen und einen externen Syslog-Server"]
+
+
+[cols="1a,3a"]
+|===
+| Fehlermeldung | Beschreibung und empfohlene Maßnahmen 
+
+
+ a| 
+Kann den Hostnamen nicht auflösen
+ a| 
+Der von Ihnen für den Syslog-Server eingegebene FQDN konnte nicht in eine IP-Adresse aufgelöst werden.
+
+. Überprüfen Sie den eingegebenen Hostnamen.  Wenn Sie eine IP-Adresse eingegeben haben, stellen Sie sicher, dass es sich um eine gültige IP-Adresse in WXYZ-Notation („dotted decimal“) handelt.
+. Überprüfen Sie, ob die DNS-Server richtig konfiguriert sind.
+. Bestätigen Sie, dass jeder Knoten auf die IP-Adressen für den DNS-Server zugreifen kann.
+
+
+
+
+ a| 
+Verbindung abgelehnt
+ a| 
+Eine TCP- oder TLS-Verbindung zum Syslog-Server wurde abgelehnt.  Möglicherweise lauscht kein Dienst auf dem TCP- oder TLS-Port des Hosts oder eine Firewall blockiert den Zugriff.
+
+. Überprüfen Sie, ob Sie den richtigen FQDN oder die richtige IP-Adresse, den richtigen Port und das richtige Protokoll für den Syslog-Server eingegeben haben.
+. Vergewissern Sie sich, dass auf dem Host für den Syslog-Dienst ein Syslog-Daemon ausgeführt wird, der den angegebenen Port überwacht.
+. Stellen Sie sicher, dass der Zugriff auf TCP/TLS-Verbindungen von den Knoten zur IP und zum Port des Syslog-Servers nicht durch eine Firewall blockiert wird.
+
+
+
+
+ a| 
+Netzwerk nicht erreichbar
+ a| 
+Der Syslog-Server befindet sich nicht in einem direkt angeschlossenen Subnetz.  Ein Router hat eine ICMP-Fehlermeldung zurückgegeben, um anzuzeigen, dass er die Testnachrichten von den aufgelisteten Knoten nicht an den Syslog-Server weiterleiten konnte.
+
+. Überprüfen Sie, ob Sie den richtigen FQDN oder die richtige IP-Adresse für den Syslog-Server eingegeben haben.
+. Überprüfen Sie für jeden aufgeführten Knoten die Grid-Netzwerk-Subnetzliste, die Admin-Netzwerk-Subnetzlisten und die Client-Netzwerk-Gateways.  Bestätigen Sie, dass diese so konfiguriert sind, dass der Datenverkehr über die erwartete Netzwerkschnittstelle und das Gateway (Grid, Admin oder Client) an den Syslog-Server weitergeleitet wird.
+
+
+
+
+ a| 
+Host nicht erreichbar
+ a| 
+Der Syslog-Server befindet sich in einem direkt angeschlossenen Subnetz (Subnetz, das von den aufgelisteten Knoten für ihre Grid-, Admin- oder Client-IP-Adressen verwendet wird).  Die Knoten versuchten, Testnachrichten zu senden, erhielten jedoch keine Antworten auf ARP-Anfragen für die MAC-Adresse des Syslog-Servers.
+
+. Überprüfen Sie, ob Sie den richtigen FQDN oder die richtige IP-Adresse für den Syslog-Server eingegeben haben.
+. Überprüfen Sie, ob der Host, auf dem der Syslog-Dienst ausgeführt wird, aktiv ist.
+
+
+
+
+ a| 
+Verbindungs-Timeout
+ a| 
+Es wurde ein TCP/TLS-Verbindungsversuch unternommen, aber vom Syslog-Server wurde lange Zeit keine Antwort empfangen.  Möglicherweise liegt eine Routing-Fehlkonfiguration vor oder eine Firewall blockiert den Datenverkehr, ohne eine Antwort zu senden (eine häufige Konfiguration).
+
+. Überprüfen Sie, ob Sie den richtigen FQDN oder die richtige IP-Adresse für den Syslog-Server eingegeben haben.
+. Überprüfen Sie für jeden aufgeführten Knoten die Grid-Netzwerk-Subnetzliste, die Admin-Netzwerk-Subnetzlisten und die Client-Netzwerk-Gateways.  Bestätigen Sie, dass diese so konfiguriert sind, dass der Datenverkehr über die Netzwerkschnittstelle und das Gateway (Grid, Admin oder Client) an den Syslog-Server weitergeleitet wird, über die der Syslog-Server Ihrer Meinung nach erreicht werden soll.
+. Vergewissern Sie sich, dass der Zugriff auf TCP/TLS-Verbindungen von den aufgelisteten Knoten zur IP und zum Port des Syslog-Servers nicht durch eine Firewall blockiert wird.
+
+
+
+
+ a| 
+Verbindung vom Partner geschlossen
+ a| 
+Eine TCP-Verbindung zum Syslog-Server wurde erfolgreich hergestellt, später jedoch geschlossen.  Gründe hierfür können sein:
+
+* Der Syslog-Server wurde möglicherweise neu gestartet oder neu gebootet.
+* Der Knoten und der Syslog-Server haben möglicherweise unterschiedliche TCP/TLS-Einstellungen.
+* Eine zwischengeschaltete Firewall schließt möglicherweise inaktive TCP-Verbindungen.
+* Ein Nicht-Syslog-Server, der den Syslog-Server-Port überwacht, hat möglicherweise die Verbindung geschlossen.
+
+
+So beheben Sie dieses Problem:
+
+. Überprüfen Sie, ob Sie den richtigen FQDN oder die richtige IP-Adresse, den richtigen Port und das richtige Protokoll für den Syslog-Server eingegeben haben.
+. Wenn Sie TLS verwenden, stellen Sie sicher, dass der Syslog-Server auch TLS verwendet.  Wenn Sie TCP verwenden, vergewissern Sie sich, dass der Syslog-Server auch TCP verwendet.
+. Stellen Sie sicher, dass keine zwischengeschaltete Firewall so konfiguriert ist, dass sie inaktive TCP-Verbindungen schließt.
+
+
+
+
+ a| 
+TLS-Zertifikatfehler
+ a| 
+Das vom Syslog-Server empfangene Serverzertifikat war nicht mit dem von Ihnen bereitgestellten CA-Zertifikatpaket und Client-Zertifikat kompatibel.
+
+. Bestätigen Sie, dass das CA-Zertifikatpaket und das Client-Zertifikat (sofern vorhanden) mit dem Server-Zertifikat auf dem Syslog-Server kompatibel sind.
+. Bestätigen Sie, dass die Identitäten im Serverzertifikat vom Syslog-Server die erwarteten IP- oder FQDN-Werte enthalten.
+
+
+
+
+ a| 
+Weiterleitung ausgesetzt
+ a| 
+Syslog-Datensätze werden nicht mehr an den Syslog-Server weitergeleitet und StorageGRID kann den Grund dafür nicht erkennen.
+
+Überprüfen Sie die mit diesem Fehler bereitgestellten Debugprotokolle, um die Grundursache zu ermitteln.
+
+
+
+ a| 
+TLS-Sitzung beendet
+ a| 
+Der Syslog-Server hat die TLS-Sitzung beendet und StorageGRID kann den Grund nicht erkennen.
+
+. Überprüfen Sie die mit diesem Fehler bereitgestellten Debugprotokolle, um die Grundursache zu ermitteln.
+. Überprüfen Sie, ob Sie den richtigen FQDN oder die richtige IP-Adresse, den richtigen Port und das richtige Protokoll für den Syslog-Server eingegeben haben.
+. Wenn Sie TLS verwenden, stellen Sie sicher, dass der Syslog-Server auch TLS verwendet.  Wenn Sie TCP verwenden, vergewissern Sie sich, dass der Syslog-Server auch TCP verwendet.
+. Bestätigen Sie, dass das CA-Zertifikatpaket und das Client-Zertifikat (sofern vorhanden) mit dem Server-Zertifikat des Syslog-Servers kompatibel sind.
+. Bestätigen Sie, dass die Identitäten im Serverzertifikat vom Syslog-Server die erwarteten IP- oder FQDN-Werte enthalten.
+
+
+
+
+ a| 
+Ergebnisabfrage fehlgeschlagen
+ a| 
+Der für die Konfiguration und das Testen des Syslog-Servers verwendete Admin-Knoten kann keine Testergebnisse von den aufgelisteten Knoten anfordern.  Möglicherweise sind ein oder mehrere Knoten ausgefallen.
+
+. Befolgen Sie die Standardschritte zur Fehlerbehebung, um sicherzustellen, dass die Knoten online sind und alle erwarteten Dienste ausgeführt werden.
+. Starten Sie den Miscd-Dienst auf den aufgelisteten Knoten neu.
+
+
+|===

@@ -1,0 +1,49 @@
+---
+permalink: admin/viewing-storagegrid-license-information.html 
+sidebar: sidebar 
+keywords: storagegrid license, view license, licensed capacity of grid 
+summary: Sie können die Lizenzinformationen für Ihr StorageGRID -System, beispielsweise die maximale Speicherkapazität Ihres Grids, bei Bedarf einsehen. 
+---
+= StorageGRID Lizenzinformationen anzeigen
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Sie können die Lizenzinformationen für Ihr StorageGRID -System, beispielsweise die maximale Speicherkapazität Ihres Grids, bei Bedarf einsehen.
+
+.Bevor Sie beginnen
+Sie sind beim Grid Manager angemeldet mit einemlink:../admin/web-browser-requirements.html["unterstützter Webbrowser"] .
+
+.Informationen zu diesem Vorgang
+Wenn ein Problem mit der Softwarelizenz für dieses StorageGRID -System vorliegt, enthält die Integritätsstatuskarte auf dem Dashboard ein Lizenzstatussymbol und einen *Lizenz*-Link.  Die Zahl gibt die Anzahl der lizenzbezogenen Probleme an.
+
+image::../media/dashboard_health_panel_license_status.png[Dashboard Gesundheitsstatus Karte Lizenzstatus]
+
+.Schritte
+. Greifen Sie auf die Lizenzseite zu, indem Sie einen der folgenden Schritte ausführen:
++
+** Wählen Sie *WARTUNG* > *System* > *Lizenz*.
+** Wählen Sie auf der Gesundheitsstatuskarte im Dashboard das Lizenzstatussymbol oder den Link *Lizenz* aus.
++
+Dieser Link wird nur angezeigt, wenn ein Problem mit der Lizenz vorliegt.
+
+
+
+. Zeigen Sie die schreibgeschützten Details für die aktuelle Lizenz an:
++
+** StorageGRID -System-ID, die eindeutige Identifikationsnummer für diese StorageGRID Installation
+** Lizenzseriennummer
+** Lizenztyp, entweder *Dauerlizenz* oder *Abonnement*
+** Lizenzierte Speicherkapazität des Netzes
+** Unterstützte Speicherkapazität
+** Enddatum der Lizenz.  *N/A* wird für eine unbefristete Lizenz angezeigt.
+** Support-Enddatum
++
+Dieses Datum wird aus der aktuellen Lizenzdatei gelesen und kann veraltet sein, wenn Sie den Support-Servicevertrag nach Erhalt der Lizenzdatei verlängert oder erneuert haben.  Informationen zum Aktualisieren dieses Werts finden Sie unterlink:updating-storagegrid-license-information.html["Aktualisieren Sie die StorageGRID -Lizenzinformationen"] .  Sie können das tatsächliche Vertragsende auch mit Active IQ einsehen.
+
+** Inhalt der Lizenztextdatei
+
+
+

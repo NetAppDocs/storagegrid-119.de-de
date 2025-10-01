@@ -1,0 +1,139 @@
+---
+permalink: troubleshoot/investigating-lost-objects.html 
+sidebar: sidebar 
+keywords: lost objects, investigating, objects 
+summary: Wenn die Warnung „Objekte verloren“ ausgelöst wird, müssen Sie dies sofort untersuchen. Sammeln Sie Informationen zu den betroffenen Objekten und wenden Sie sich an den technischen Support. 
+---
+= Untersuchen Sie verlorene Gegenstände
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Wenn die Warnung „Objekte verloren“ ausgelöst wird, müssen Sie dies sofort untersuchen. Sammeln Sie Informationen zu den betroffenen Objekten und wenden Sie sich an den technischen Support.
+
+.Bevor Sie beginnen
+* Sie müssen beim Grid Manager mit einemlink:../admin/web-browser-requirements.html["unterstützter Webbrowser"] .
+* Du hastlink:../admin/admin-group-permissions.html["spezifische Zugriffsberechtigungen"] .
+* Sie müssen über die `Passwords.txt` Datei.
+
+
+.Informationen zu diesem Vorgang
+Die Warnung „Objekte verloren“ zeigt an, dass StorageGRID davon ausgeht, dass im Grid keine Kopien eines Objekts vorhanden sind. Möglicherweise sind die Daten dauerhaft verloren gegangen.
+
+Gehen Sie Warnmeldungen zu verlorenen Gegenständen sofort nach.  Möglicherweise müssen Sie Maßnahmen ergreifen, um weiteren Datenverlust zu verhindern.  In einigen Fällen können Sie einen verlorenen Gegenstand möglicherweise wiederherstellen, wenn Sie umgehend handeln.
+
+.Schritte
+. Wählen Sie *NODES*.
+. Wählen Sie *_Speicherknoten_* > *Objekte*.
+. Überprüfen Sie die Anzahl der verlorenen Objekte, die in der Objektanzahltabelle angezeigt wird.
++
+Diese Zahl gibt die Gesamtzahl der Objekte an, die dieser Grid-Knoten im gesamten StorageGRID System als fehlend erkennt.  Der Wert ist die Summe der Zähler für verlorene Objekte der Datenspeicherkomponente innerhalb der LDR- und DDS-Dienste.
+
++
+image::../media/nodes_storage_nodes_objects_page_lost_object.png[Knoten Speicherknoten Objektseite verlorenes Objekt]
+
+. Von einem Admin-Knoten aus,link:../audit/accessing-audit-log-file.html["Zugriff auf das Überwachungsprotokoll"] So ermitteln Sie die eindeutige Kennung (UUID) des Objekts, das die Warnung „Objekte verloren“ ausgelöst hat:
++
+.. Melden Sie sich beim Grid-Knoten an:
++
+... Geben Sie den folgenden Befehl ein: `ssh admin@grid_node_IP`
+... Geben Sie das Passwort ein, das in der `Passwords.txt` Datei.
+... Geben Sie den folgenden Befehl ein, um zum Root zu wechseln: `su -`
+... Geben Sie das Passwort ein, das in der `Passwords.txt` Datei.  Wenn Sie als Root angemeldet sind, ändert sich die Eingabeaufforderung von `$` Zu `#` .
+
+
+.. Wechseln Sie in das Verzeichnis, in dem sich die Überwachungsprotokolle befinden.
++
+--
+Das Prüfprotokollverzeichnis und die entsprechenden Knoten hängen von Ihren Prüfzieleinstellungen ab.
+
+[cols="1a,2a"]
+|===
+| Option | Ziel 
+
+
+ a| 
+Lokale Knoten (Standard)
+ a| 
+`/var/local/log/localaudit.log`
+
+
+
+ a| 
+Admin-Knoten/lokale Knoten
+ a| 
+*** Admin-Knoten (primär und nicht primär): `/var/local/audit/export/audit.log`
+*** Alle Knoten: Die `/var/local/log/localaudit.log` Die Datei ist in diesem Modus normalerweise leer oder fehlt.
+
+
+
+
+ a| 
+Externer Syslog-Server
+ a| 
+`/var/local/log/localaudit.log`
+
+|===
+Geben Sie je nach Ihren Audit-Zieleinstellungen Folgendes ein: `cd /var/local/log` oder `/var/local/audit/export/`
+
+Weitere Informationen finden Sie unterlink:../monitor/configure-audit-messages.html#select-audit-information-destinations["Auswählen von Zielen für Auditinformationen"] .
+
+--
+.. Verwenden Sie grep, um die OLST-Auditmeldungen (Object Lost) zu extrahieren.  Eingeben: `grep OLST audit_file_name`
+.. Beachten Sie den in der Nachricht enthaltenen UUID-Wert.
++
+[listing]
+----
+Admin: # grep OLST audit.log
+2020-02-12T19:18:54.780426 [AUDT:[CBID(UI64):0x38186FE53E3C49A5][UUID(CSTR):"926026C4-00A4-449B-AC72-BCCA72DD1311"]
+[PATH(CSTR):"source/cats"][NOID(UI32):12288733][VOLI(UI64):3222345986][RSLT(FC32):NONE][AVER(UI32):10]
+[ATIM(UI64):1581535134780426][ATYP(FC32):OLST][ANID(UI32):12448208][AMID(FC32):ILMX][ATID(UI64):7729403978647354233]]
+----
+
+
+. Suchen Sie mithilfe der UUID nach den Metadaten für das verlorene Objekt:
++
+.. Wählen Sie *ILM* > *Objektmetadatensuche*.
+.. Geben Sie die UUID ein und wählen Sie *Nachschlagen*.
+.. Überprüfen Sie die Standorte in den Metadaten und ergreifen Sie die entsprechenden Maßnahmen:
++
+[cols="2a,4a"]
+|===
+| Metadaten | Abschluss 
+
+
+ a| 
+Objekt <Objektkennung> nicht gefunden
+ a| 
+Wenn das Objekt nicht gefunden wird, wird die Meldung „ERROR":"“ zurückgegeben.
+
+Wenn das Objekt nicht gefunden wird, können Sie die Anzahl der *verlorenen Objekte* zurücksetzen, um die Warnung zu löschen. Das Fehlen eines Objekts weist darauf hin, dass das Objekt absichtlich gelöscht wurde.
+
+
+
+ a| 
+Standorte > 0
+ a| 
+Wenn in der Ausgabe Standorte aufgeführt sind, kann die Warnung „Objekte verloren“ ein Fehlalarm sein.
+
+Bestätigen Sie, dass die Objekte vorhanden sind.  Verwenden Sie die in der Ausgabe aufgeführte Knoten-ID und den Dateipfad, um zu bestätigen, dass sich die Objektdatei am aufgeführten Speicherort befindet.
+
+(Das Verfahren fürlink:searching-for-and-restoring-potentially-lost-objects.html["Suche nach möglicherweise verlorenen Gegenständen"] erklärt, wie Sie die Knoten-ID verwenden, um den richtigen Speicherknoten zu finden.)
+
+Wenn die Objekte vorhanden sind, können Sie die Anzahl der *verlorenen Objekte* zurücksetzen, um die Warnung zu löschen.
+
+
+
+ a| 
+Standorte = 0
+ a| 
+Wenn in der Ausgabe keine Standorte aufgeführt sind, fehlt das Objekt möglicherweise. Sie können versuchen,link:searching-for-and-restoring-potentially-lost-objects.html["Suchen und Wiederherstellen des Objekts"] selbst oder Sie können sich an den technischen Support wenden.
+
+Der technische Support wird Sie möglicherweise bitten, festzustellen, ob gerade ein Speicherwiederherstellungsverfahren läuft.  Informationen zulink:../maintain/restoring-volume.html["Wiederherstellen von Objektdaten mit Grid Manager"] Undlink:../maintain/restoring-object-data-to-storage-volume.html["Wiederherstellen von Objektdaten auf einem Speichervolume"] .
+
+|===
+
+
+

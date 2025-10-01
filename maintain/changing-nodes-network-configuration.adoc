@@ -1,0 +1,210 @@
+---
+permalink: maintain/changing-nodes-network-configuration.html 
+sidebar: sidebar 
+keywords: storagegrid, network configuration, node network configuration 
+summary: Sie können die Netzwerkkonfiguration eines oder mehrerer Knoten mit dem Tool „IP ändern“ ändern.  Sie können die Konfiguration des Grid-Netzwerks ändern oder die Admin- oder Client-Netzwerke hinzufügen, ändern oder entfernen. 
+---
+= Knotennetzwerkkonfiguration ändern
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Sie können die Netzwerkkonfiguration eines oder mehrerer Knoten mit dem Tool „IP ändern“ ändern.  Sie können die Konfiguration des Grid-Netzwerks ändern oder die Admin- oder Client-Netzwerke hinzufügen, ändern oder entfernen.
+
+.Bevor Sie beginnen
+Sie haben die `Passwords.txt` Datei.
+
+.Informationen zu diesem Vorgang
+*Linux:* Wenn Sie zum ersten Mal einen Grid-Knoten zum Admin-Netzwerk oder Client-Netzwerk hinzufügen und ADMIN_NETWORK_TARGET oder CLIENT_NETWORK_TARGET zuvor nicht in der Knotenkonfigurationsdatei konfiguriert haben, müssen Sie dies jetzt tun.
+
+Lesen Sie die StorageGRID -Installationsanweisungen für Ihr Linux-Betriebssystem:
+
+* link:../rhel/index.html["Installieren Sie StorageGRID unter Red Hat Enterprise Linux"]
+* link:../ubuntu/index.html["Installieren Sie StorageGRID unter Ubuntu oder Debian"]
+
+
+*Geräte:* Wenn bei StorageGRID -Geräten das Client- oder Admin-Netzwerk während der Erstinstallation nicht im StorageGRID -Geräteinstallationsprogramm konfiguriert wurde, kann das Netzwerk nicht nur mithilfe des Tools „IP ändern“ hinzugefügt werden.  Zuerst müssen Sie https://docs.netapp.com/us-en/storagegrid-appliances/commonhardware/placing-appliance-into-maintenance-mode.html["Versetzen Sie das Gerät in den Wartungsmodus"^] , konfigurieren Sie die Links, versetzen Sie die Appliance wieder in den normalen Betriebsmodus und verwenden Sie dann das Tool „IP ändern“, um die Netzwerkkonfiguration zu ändern.  Siehe die https://docs.netapp.com/us-en/storagegrid-appliances/installconfig/configuring-network-links.html["Verfahren zum Konfigurieren von Netzwerkverbindungen"^] .
+
+Sie können die IP-Adresse, die Subnetzmaske, das Gateway oder den MTU-Wert für einen oder mehrere Knoten in jedem Netzwerk ändern.
+
+Sie können auch einen Knoten zu einem Client-Netzwerk oder einem Admin-Netzwerk hinzufügen oder daraus entfernen:
+
+* Sie können einem Client-Netzwerk oder einem Admin-Netzwerk einen Knoten hinzufügen, indem Sie dem Knoten eine IP-Adresse/Subnetzmaske in diesem Netzwerk hinzufügen.
+* Sie können einen Knoten aus einem Client-Netzwerk oder einem Admin-Netzwerk entfernen, indem Sie die IP-Adresse/Subnetzmaske für den Knoten in diesem Netzwerk löschen.
++
+Knoten können nicht aus dem Grid-Netzwerk entfernt werden.
+
+
+
+
+NOTE: Ein Austausch der IP-Adresse ist nicht zulässig.  Wenn Sie IP-Adressen zwischen Grid-Knoten austauschen müssen, müssen Sie eine temporäre Zwischen-IP-Adresse verwenden.
+
+
+NOTE: Wenn Single Sign-On (SSO) für Ihr StorageGRID System aktiviert ist und Sie die IP-Adresse eines Admin-Knotens ändern, beachten Sie, dass alle Vertrauensstellungen der vertrauenden Seite, die mit der IP-Adresse des Admin-Knotens (anstelle des vollqualifizierten Domänennamens, wie empfohlen) konfiguriert wurden, ungültig werden. Sie können sich nicht mehr beim Knoten anmelden. Unmittelbar nach der Änderung der IP-Adresse müssen Sie die Vertrauensstellung der vertrauenden Seite des Knotens in Active Directory Federation Services (AD FS) mit der neuen IP-Adresse aktualisieren oder neu konfigurieren. Siehe die Anweisungen fürlink:../admin/configuring-sso.html["Konfigurieren von SSO"] .
+
+
+NOTE: Alle Änderungen, die Sie mit dem Tool „IP ändern“ am Netzwerk vornehmen, werden an die Installations-Firmware für die StorageGRID -Geräte weitergegeben.  Auf diese Weise ist die Netzwerkkonfiguration korrekt, wenn die StorageGRID -Software auf einem Gerät neu installiert wird oder ein Gerät in den Wartungsmodus versetzt wird.
+
+.Schritte
+. Melden Sie sich beim primären Admin-Knoten an:
++
+.. Geben Sie den folgenden Befehl ein: `ssh admin@_primary_Admin_Node_IP_`
+.. Geben Sie das Passwort ein, das in der `Passwords.txt` Datei.
+.. Geben Sie den folgenden Befehl ein, um zum Root zu wechseln: `su -`
+.. Geben Sie das Passwort ein, das in der `Passwords.txt` Datei.
+
+
++
+Wenn Sie als Root angemeldet sind, ändert sich die Eingabeaufforderung von `$` Zu `#` .
+
+. Starten Sie das Tool „IP ändern“, indem Sie den folgenden Befehl eingeben: `change-ip`
+. Geben Sie bei der Eingabeaufforderung die Bereitstellungspassphrase ein.
++
+Das Hauptmenü wird angezeigt.
+
++
+image::../media/change_ip_tool_main_menu.png[Screenshot des Begrüßungsbildschirms des Tools zum Ändern der IP-Adresse]
+
+. Wählen Sie optional *1* aus, um auszuwählen, welche Knoten aktualisiert werden sollen.  Wählen Sie dann eine der folgenden Optionen:
++
+** *1*: Einzelner Knoten – Auswahl nach Name
+** *2*: Einzelner Knoten – Auswahl nach Site, dann nach Name
+** *3*: Einzelner Knoten – Auswahl nach aktueller IP
+** *4*: Alle Knoten an einem Standort
+** *5*: Alle Knoten im Raster
++
+*Hinweis:* Wenn Sie alle Knoten aktualisieren möchten, lassen Sie „alle“ ausgewählt.
+
+
+
++
+Nachdem Sie Ihre Auswahl getroffen haben, wird das Hauptmenü angezeigt und das Feld *Ausgewählte Knoten* wird entsprechend Ihrer Auswahl aktualisiert.  Alle nachfolgenden Aktionen werden nur auf den angezeigten Knoten ausgeführt.
+
+. Wählen Sie im Hauptmenü Option *2*, um IP/Maske, Gateway und MTU-Informationen für die ausgewählten Knoten zu bearbeiten.
++
+.. Wählen Sie das Netzwerk aus, in dem Sie Änderungen vornehmen möchten:
++
+--
+*** *1*: Netz
+*** *2*: Admin-Netzwerk
+*** *3*: Client-Netzwerk
+*** *4*: Alle Netzwerke
+
+
+--
++
+--
+Nachdem Sie Ihre Auswahl getroffen haben, zeigt die Eingabeaufforderung den Knotennamen, den Netzwerknamen (Grid, Admin oder Client), den Datentyp (IP/Maske, Gateway oder MTU) und den aktuellen Wert an.
+
+Durch Bearbeiten der IP-Adresse, Präfixlänge, des Gateways oder der MTU einer DHCP-konfigurierten Schnittstelle wird die Schnittstelle auf statisch geändert.  Wenn Sie eine per DHCP konfigurierte Schnittstelle ändern, wird eine Warnung angezeigt, die Sie darüber informiert, dass die Schnittstelle auf statisch geändert wird.
+
+Schnittstellen konfiguriert als `fixed` kann nicht bearbeitet werden.
+
+--
+.. Um einen neuen Wert festzulegen, geben Sie ihn im für den aktuellen Wert angezeigten Format ein.
+.. Um den aktuellen Wert unverändert zu lassen, drücken Sie *Enter*.
+.. Wenn der Datentyp `IP/mask` können Sie das Admin- oder Client-Netzwerk vom Knoten löschen, indem Sie *d* oder *0.0.0.0/0* eingeben.
+.. Nachdem Sie alle Knoten bearbeitet haben, die Sie ändern möchten, geben Sie *q* ein, um zum Hauptmenü zurückzukehren.
++
+Ihre Änderungen werden zurückgehalten, bis sie gelöscht oder angewendet werden.
+
+
+
+. Überprüfen Sie Ihre Änderungen, indem Sie eine der folgenden Optionen auswählen:
++
+** *5*: Zeigt Bearbeitungen in der Ausgabe an, die isoliert sind, um nur das geänderte Element anzuzeigen.  Änderungen werden grün (Hinzufügungen) oder rot (Löschungen) hervorgehoben, wie in der Beispielausgabe gezeigt:
++
+image::../media/change_ip_tool_edit_ip_mask_sample_output.png[Screenshot durch umgebenden Text beschrieben]
+
+** *6*: Zeigt Änderungen in der Ausgabe an, die die vollständige Konfiguration anzeigen.  Änderungen werden grün (Hinzufügungen) oder rot (Löschungen) hervorgehoben.
++
+
+NOTE: Bestimmte Befehlszeilenschnittstellen zeigen Hinzufügungen und Löschungen möglicherweise durchgestrichen an.  Die korrekte Anzeige hängt davon ab, ob Ihr Terminalclient die erforderlichen VT100-Escapesequenzen unterstützt.
+
+
+
+. Wählen Sie Option *7*, um alle Änderungen zu bestätigen.
++
+Diese Validierung stellt sicher, dass die Regeln für das Grid-, Admin- und Client-Netzwerk, wie z. B. die Nichtverwendung überlappender Subnetze, nicht verletzt werden.
+
++
+In diesem Beispiel hat die Validierung Fehler zurückgegeben.
+
++
+image::../media/change_ip_tool_validate_sample_error_messages.gif[Screenshot durch umgebenden Text beschrieben]
+
++
+In diesem Beispiel wurde die Validierung erfolgreich durchgeführt.
+
++
+image::../media/change_ip_tool_validate_sample_passed_messages.gif[Screenshot durch umgebenden Text beschrieben]
+
+. Wählen Sie nach erfolgreicher Validierung eine der folgenden Optionen:
++
+** *8*: Nicht angewendete Änderungen speichern.
++
+Mit dieser Option können Sie das Tool „IP ändern“ beenden und später erneut starten, ohne dass nicht angewendete Änderungen verloren gehen.
+
+** *10*: Wenden Sie die neue Netzwerkkonfiguration an.
+
+
+. Wenn Sie Option *10* ausgewählt haben, wählen Sie eine der folgenden Optionen:
++
+** *Anwenden*: Wenden Sie die Änderungen sofort an und starten Sie jeden Knoten bei Bedarf automatisch neu.
++
+Wenn für die neue Netzwerkkonfiguration keine physischen Netzwerkänderungen erforderlich sind, können Sie „Übernehmen“ auswählen, um die Änderungen sofort anzuwenden.  Knoten werden bei Bedarf automatisch neu gestartet.  Knoten, die neu gestartet werden müssen, werden angezeigt.
+
+** *Phase*: Wenden Sie die Änderungen beim nächsten manuellen Neustart der Knoten an.
++
+Wenn Sie Änderungen an der physischen oder virtuellen Netzwerkkonfiguration vornehmen müssen, damit die neue Netzwerkkonfiguration funktioniert, müssen Sie die Option *stage* verwenden, die betroffenen Knoten herunterfahren, die erforderlichen physischen Netzwerkänderungen vornehmen und die betroffenen Knoten neu starten.  Wenn Sie „Übernehmen“ auswählen, ohne zuerst diese Netzwerkänderungen vorzunehmen, schlagen die Änderungen normalerweise fehl.
+
++
+
+NOTE: Wenn Sie die Option *Stage* verwenden, müssen Sie den Knoten nach der Bereitstellung so schnell wie möglich neu starten, um Störungen zu minimieren.
+
+** *Abbrechen*: Nehmen Sie derzeit keine Netzwerkänderungen vor.
++
+Wenn Sie nicht wussten, dass die vorgeschlagenen Änderungen einen Neustart der Knoten erfordern, können Sie die Änderungen verschieben, um die Auswirkungen auf die Benutzer zu minimieren.  Wenn Sie „Abbrechen“ auswählen, kehren Sie zum Hauptmenü zurück und Ihre Änderungen bleiben erhalten, sodass Sie sie später anwenden können.
+
++
+Wenn Sie *Übernehmen* oder *Stufe* auswählen, wird eine neue Netzwerkkonfigurationsdatei generiert, die Bereitstellung durchgeführt und die Knoten mit neuen Arbeitsinformationen aktualisiert.
+
++
+Während der Bereitstellung zeigt die Ausgabe den Status an, während Updates angewendet werden.
+
++
+[listing]
+----
+Generating new grid networking description file...
+
+Running provisioning...
+
+Updating grid network configuration on Name
+----
+
+
++
+Nachdem Sie Änderungen angewendet oder bereitgestellt haben, wird aufgrund der Änderung der Grid-Konfiguration ein neues Wiederherstellungspaket generiert.
+
+. Wenn Sie *Phase* ausgewählt haben, führen Sie nach Abschluss der Bereitstellung die folgenden Schritte aus:
++
+.. Nehmen Sie die erforderlichen physischen oder virtuellen Netzwerkänderungen vor.
++
+*Änderungen am physischen Netzwerk*: Nehmen Sie die erforderlichen Änderungen am physischen Netzwerk vor und fahren Sie den Knoten bei Bedarf sicher herunter.
+
++
+*Linux*: Wenn Sie den Knoten zum ersten Mal zu einem Admin-Netzwerk oder Client-Netzwerk hinzufügen, stellen Sie sicher, dass Sie die Schnittstelle wie in beschrieben hinzugefügt habenlink:linux-adding-interfaces-to-existing-node.html["Linux: Schnittstellen zum vorhandenen Knoten hinzufügen"] .
+
+.. Starten Sie die betroffenen Knoten neu.
+
+
+. Wählen Sie *0*, um das Tool „IP ändern“ nach Abschluss Ihrer Änderungen zu beenden.
+. Laden Sie ein neues Wiederherstellungspaket vom Grid Manager herunter.
++
+.. Wählen Sie *WARTUNG* > *System* > *Wiederherstellungspaket*.
+.. Geben Sie die Bereitstellungspassphrase ein.
+
+
+

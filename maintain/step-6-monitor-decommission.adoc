@@ -1,0 +1,246 @@
+---
+permalink: maintain/step-6-monitor-decommission.html 
+sidebar: sidebar 
+keywords: storagegrid, recover, monitor decommission, decommission 
+summary: 'Ab Schritt 6 (Außerbetriebnahme überwachen) des Assistenten zur Site-Außerbetriebnahme können Sie den Fortschritt beim Entfernen der Site überwachen.' 
+---
+= Schritt 6: Außerbetriebnahme überwachen
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Ab Schritt 6 (Außerbetriebnahme überwachen) des Assistenten „Site außer Betrieb nehmen“ können Sie den Fortschritt beim Entfernen der Site überwachen.
+
+.Informationen zu diesem Vorgang
+Wenn StorageGRID eine verbundene Site entfernt, werden die Knoten in dieser Reihenfolge entfernt:
+
+. Gateway-Knoten
+. Admin-Knoten
+. Speicherknoten
+
+
+Wenn StorageGRID eine getrennte Site entfernt, werden die Knoten in dieser Reihenfolge entfernt:
+
+. Gateway-Knoten
+. Speicherknoten
+. Admin-Knoten
+
+
+Das Entfernen jedes Gateway-Knotens oder Admin-Knotens kann möglicherweise nur wenige Minuten oder eine Stunde dauern, bei Speicherknoten kann es jedoch Tage oder Wochen dauern.
+
+.Schritte
+. Sobald ein neues Wiederherstellungspaket erstellt wurde, laden Sie die Datei herunter.
++
+image::../media/decommission_site_step_6_recovery_package.png[Wiederherstellungspaket für die Außerbetriebnahme des Standorts, Schritt 6]
+
++
+
+NOTE: Laden Sie das Wiederherstellungspaket so schnell wie möglich herunter, um sicherzustellen, dass Sie Ihr Netz wiederherstellen können, falls während der Außerbetriebnahme etwas schiefgeht.
+
++
+.. Wählen Sie den Link in der Nachricht oder wählen Sie *WARTUNG* > *System* > *Wiederherstellungspaket*.
+.. Laden Sie die `.zip` Datei.
++
+Siehe die Anweisungen fürlink:downloading-recovery-package.html["Herunterladen des Wiederherstellungspakets"] .
+
+
+
++
+
+NOTE: Die Datei des Wiederherstellungspakets muss gesichert werden, da sie Verschlüsselungsschlüssel und Passwörter enthält, mit denen Daten aus dem StorageGRID -System abgerufen werden können.
+
+. Überwachen Sie mithilfe des Datenbewegungsdiagramms die Bewegung von Objektdaten von dieser Site zu anderen Sites.
++
+Die Datenbewegung begann, als Sie in Schritt 3 (ILM-Richtlinie überarbeiten) die neue ILM-Richtlinie aktiviert haben.  Während des gesamten Außerbetriebnahmeverfahrens werden Daten verschoben.
+
++
+image::../media/decommission_site_step_6_data_movement.png[Außerbetriebnahme der Site – Schritt 6: Datenverschiebung]
+
+. Überwachen Sie im Abschnitt „Knotenfortschritt“ der Seite den Fortschritt des Außerbetriebnahmeverfahrens, während Knoten entfernt werden.
++
+Wenn ein Speicherknoten entfernt wird, durchläuft jeder Knoten eine Reihe von Phasen.  Obwohl die meisten dieser Phasen schnell oder sogar unmerklich ablaufen, müssen Sie je nach der zu verschiebenden Datenmenge möglicherweise Tage oder sogar Wochen warten, bis andere Phasen abgeschlossen sind.  Für die Verwaltung von Erasure-Coded-Daten und die Neubewertung von ILM ist zusätzliche Zeit erforderlich.
+
++
+image::../media/decommission_site_step_6_storage_node.png[Außerbetriebnahme des Standorts – Schritt 6 – Speicherknoten]
+
++
+Wenn Sie den Fortschritt der Außerbetriebnahme eines verbundenen Standorts überwachen, finden Sie in dieser Tabelle Informationen zu den Außerbetriebnahmephasen eines Speicherknotens:
+
++
+[cols="1a,2a"]
+|===
+| Bühne | Geschätzte Dauer 
+
+
+ a| 
+Ausstehend
+ a| 
+Minute oder weniger
+
+
+
+ a| 
+Warten auf Sperren
+ a| 
+Minuten
+
+
+
+ a| 
+Aufgabe vorbereiten
+ a| 
+Minute oder weniger
+
+
+
+ a| 
+Kennzeichnung LDR außer Betrieb genommen
+ a| 
+Minuten
+
+
+
+ a| 
+Außerbetriebnahme replizierter und Erasure-Coded-Daten
+ a| 
+Stunden, Tage oder Wochen, je nach Datenmenge
+
+*Hinweis*: Wenn Sie andere Wartungsaktivitäten durchführen müssen, können Sie die Außerbetriebnahme der Site während dieser Phase unterbrechen.
+
+
+
+ a| 
+LDR-Einstellungsstatus
+ a| 
+Minuten
+
+
+
+ a| 
+Audit-Warteschlangen leeren
+ a| 
+Minuten bis Stunden, basierend auf der Anzahl der Nachrichten und der Netzwerklatenz.
+
+
+
+ a| 
+Vollständig
+ a| 
+Minuten
+
+|===
++
+Wenn Sie den Fortschritt der Außerbetriebnahme eines getrennten Standorts überwachen, finden Sie in dieser Tabelle Informationen zu den Außerbetriebnahmephasen eines Speicherknotens:
+
++
+[cols="1a,1a"]
+|===
+| Bühne | Geschätzte Dauer 
+
+
+ a| 
+Ausstehend
+ a| 
+Minute oder weniger
+
+
+
+ a| 
+Warten auf Sperren
+ a| 
+Minuten
+
+
+
+ a| 
+Aufgabe vorbereiten
+ a| 
+Minute oder weniger
+
+
+
+ a| 
+Externe Dienste deaktivieren
+ a| 
+Minuten
+
+
+
+ a| 
+Zertifikatssperrung
+ a| 
+Minuten
+
+
+
+ a| 
+Knoten abmelden
+ a| 
+Minuten
+
+
+
+ a| 
+Storage Grade-Registrierung aufheben
+ a| 
+Minuten
+
+
+
+ a| 
+Entfernen einer Speichergruppe
+ a| 
+Minuten
+
+
+
+ a| 
+Entitätsentfernung
+ a| 
+Minuten
+
+
+
+ a| 
+Vollständig
+ a| 
+Minuten
+
+|===
+. Nachdem alle Knoten die Phase „Abgeschlossen“ erreicht haben, warten Sie, bis die verbleibenden Außerbetriebnahmevorgänge der Site abgeschlossen sind.
++
+** Während des Schritts *Cassandra reparieren* führt StorageGRID alle notwendigen Reparaturen an den Cassandra-Clustern durch, die in Ihrem Grid verbleiben.  Diese Reparaturen können mehrere Tage oder länger dauern, je nachdem, wie viele Speicherknoten in Ihrem Netz verbleiben.
++
+image::../media/decommission_site_step_6_repair_cassandra.png[Außerbetriebnahme der Site, Schritt 6: Cassandra reparieren]
+
+** Während des Schritts *EC-Profile deaktivieren und Speicherpools löschen* werden die folgenden ILM-Änderungen vorgenommen:
++
+*** Alle Erasure-Coding-Profile, die auf die Site verwiesen, werden deaktiviert.
+*** Alle Speicherpools, die auf die Site verwiesen, werden gelöscht.
++
+
+NOTE: Der Speicherpool „All Storage Nodes“ (StorageGRID 11.6 und früher) wird ebenfalls entfernt, da er die Site „All Sites“ verwendet.
+
+
+
+** Schließlich werden während des Schritts *Konfiguration entfernen* alle verbleibenden Verweise auf die Site und ihre Knoten aus dem Rest des Rasters entfernt.
++
+image::../media/decommission_site_step_6_remove_configuration.png[Site außer Betrieb nehmen Schritt 6 Konfiguration entfernen]
+
+
+
+. Wenn der Außerbetriebnahmevorgang abgeschlossen ist, wird auf der Seite „Site außer Betrieb nehmen“ eine Erfolgsmeldung angezeigt und die entfernte Site wird nicht mehr angezeigt.
++
+image::../media/decommission_site_success_message.png[Meldung zur erfolgreichen Außerbetriebnahme der Site]
+
+
+
+.Nach Abschluss
+Führen Sie diese Aufgaben aus, nachdem Sie das Verfahren zur Außerbetriebnahme der Site abgeschlossen haben:
+
+* Stellen Sie sicher, dass die Laufwerke aller Speicherknoten am stillgelegten Standort gelöscht werden.  Verwenden Sie ein handelsübliches Tool oder einen Dienst zum Löschen von Daten, um Daten dauerhaft und sicher von den Laufwerken zu entfernen.
+* Wenn die Site einen oder mehrere Admin-Knoten umfasst und Single Sign-On (SSO) für Ihr StorageGRID -System aktiviert ist, entfernen Sie alle Vertrauensstellungen der vertrauenden Seite für die Site aus Active Directory Federation Services (AD FS).
+* Nachdem die Knoten im Rahmen der Außerbetriebnahme der verbundenen Site automatisch und ordnungsgemäß ausgeschaltet wurden, entfernen Sie die zugehörigen virtuellen Maschinen.
+

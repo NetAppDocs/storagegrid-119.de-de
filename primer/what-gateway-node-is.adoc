@@ -1,0 +1,56 @@
+---
+permalink: primer/what-gateway-node-is.html 
+sidebar: sidebar 
+keywords: gateway nodes, api gateway 
+summary: Gateway-Knoten bieten eine dedizierte Lastausgleichsschnittstelle, die S3-Clientanwendungen zum Herstellen einer Verbindung mit StorageGRID verwenden können.  Durch Lastenausgleich werden Geschwindigkeit und Verbindungskapazität maximiert, indem die Arbeitslast auf mehrere Speicherknoten verteilt wird.  Gateway-Knoten sind optional. 
+---
+= Was ist ein Gateway-Knoten?
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Gateway-Knoten bieten eine dedizierte Lastausgleichsschnittstelle, die S3-Clientanwendungen zum Herstellen einer Verbindung mit StorageGRID verwenden können.  Durch Lastenausgleich werden Geschwindigkeit und Verbindungskapazität maximiert, indem die Arbeitslast auf mehrere Speicherknoten verteilt wird.  Gateway-Knoten sind optional.
+
+Der StorageGRID Load Balancer-Dienst wird auf allen Admin-Knoten und allen Gateway-Knoten bereitgestellt.  Es führt die Transport Layer Security (TLS)-Terminierung von Clientanforderungen durch, überprüft die Anforderungen und stellt neue sichere Verbindungen zu den Speicherknoten her.  Der Load Balancer-Dienst leitet Clients nahtlos zu einem optimalen Speicherknoten weiter, sodass der Ausfall von Knoten oder sogar einer ganzen Site transparent ist.
+
+Sie konfigurieren einen oder mehrere Load Balancer-Endpunkte, um den Port und das Netzwerkprotokoll (HTTPS oder HTTP) zu definieren, die eingehende und ausgehende Clientanforderungen für den Zugriff auf die Load Balancer-Dienste auf Gateway- und Admin-Knoten verwenden.  Der Load Balancer-Endpunkt definiert außerdem den Clienttyp (S3), den Bindungsmodus und optional eine Liste zulässiger oder blockierter Mandanten. Sehen link:../admin/managing-load-balancing.html["Überlegungen zum Lastenausgleich"] .
+
+Bei Bedarf können Sie die Netzwerkschnittstellen mehrerer Gateway-Knoten und Admin-Knoten in einer Hochverfügbarkeitsgruppe (HA) zusammenfassen.  Wenn die aktive Schnittstelle in der HA-Gruppe ausfällt, kann eine Backup-Schnittstelle die Arbeitslast der Client-Anwendung verwalten. Sehen link:../admin/managing-high-availability-groups.html["Verwalten von Hochverfügbarkeitsgruppen (HA)"] .
+
+
+
+== Primäre Dienste für Gateway-Knoten
+
+Die folgende Tabelle zeigt die primären Dienste für Gateway-Knoten. Allerdings sind in dieser Tabelle nicht alle Knotendienste aufgeführt.
+
+[cols="1a,2a"]
+|===
+| Service | Tastenfunktion 
+
+
+ a| 
+Hohe Verfügbarkeit
+ a| 
+Verwaltet hochverfügbare virtuelle IP-Adressen für Gruppen von Admin-Knoten und Gateway-Knoten.
+
+*Hinweis:* Dieser Dienst ist auch auf Admin-Knoten zu finden.
+
+
+
+ a| 
+Lastenausgleich
+ a| 
+Bietet Layer-7-Lastausgleich des S3-Verkehrs von Clients zu Speicherknoten.  Dies ist der empfohlene Lastausgleichsmechanismus.
+
+*Hinweis:* Dieser Dienst ist auch auf Admin-Knoten zu finden.
+
+
+
+ a| 
+Serverstatusmonitor (SSM)
+ a| 
+Überwacht das Betriebssystem und die zugrunde liegende Hardware.
+
+|===

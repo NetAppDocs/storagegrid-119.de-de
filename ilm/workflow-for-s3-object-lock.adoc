@@ -1,0 +1,52 @@
+---
+permalink: ilm/workflow-for-s3-object-lock.html 
+sidebar: sidebar 
+keywords: object lock workflow 
+summary: Als Grid-Administrator müssen Sie sich eng mit den Mandantenbenutzern abstimmen, um sicherzustellen, dass die Objekte auf eine Weise geschützt werden, die ihren Aufbewahrungsanforderungen entspricht. 
+---
+= S3 Object Lock-Aufgaben
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Als Grid-Administrator müssen Sie sich eng mit den Mandantenbenutzern abstimmen, um sicherzustellen, dass die Objekte auf eine Weise geschützt werden, die ihren Aufbewahrungsanforderungen entspricht.
+
+
+NOTE: Das Anwenden von Mandanteneinstellungen im gesamten Grid kann je nach Netzwerkkonnektivität, Knotenstatus und Cassandra-Vorgängen 15 Minuten oder länger dauern.
+
+Die folgenden Listen für Grid-Administratoren und Mandantenbenutzer enthalten die allgemeinen Aufgaben zur Verwendung der S3 Object Lock-Funktion.
+
+Grid-Administrator::
++
+--
+* Aktivieren Sie die globale S3-Objektsperreinstellung für das gesamte StorageGRID System.
+* Stellen Sie sicher, dass die Richtlinien für das Information Lifecycle Management (ILM) _konform_ sind; das heißt, sie erfüllen dielink:../ilm/managing-objects-with-s3-object-lock.html["Anforderungen an Buckets mit aktivierter S3-Objektsperre"] .
+* Erlauben Sie einem Mandanten bei Bedarf, Compliance als Aufbewahrungsmodus zu verwenden.  Andernfalls ist nur der Governance-Modus zulässig.
+* Legen Sie bei Bedarf eine maximale Aufbewahrungsdauer für einen Mandanten fest.
+
+
+--
+Mandantenbenutzer::
++
+--
+* Überprüfen Sie die Überlegungen zu Buckets und Objekten mit S3 Object Lock.
+* Wenden Sie sich bei Bedarf an den Grid-Administrator, um die globale S3-Objektsperreinstellung zu aktivieren und Berechtigungen festzulegen.
+* Erstellen Sie Buckets mit aktivierter S3-Objektsperre.
+* Konfigurieren Sie optional die Standardaufbewahrungseinstellungen für einen Bucket:
++
+** Standardaufbewahrungsmodus: Governance oder Compliance, sofern vom Grid-Administrator zugelassen.
+** Standardaufbewahrungszeitraum: Muss kleiner oder gleich dem vom Grid-Administrator festgelegten maximalen Aufbewahrungszeitraum sein.
+
+
+* Verwenden Sie die S3-Clientanwendung, um Objekte hinzuzufügen und optional eine objektspezifische Aufbewahrung festzulegen:
++
+** Aufbewahrungsmodus.  Governance oder Compliance, sofern vom Grid-Administrator zugelassen.
+** Aufbewahrungsdatum: Muss kleiner oder gleich dem vom Grid-Administrator festgelegten maximalen Aufbewahrungszeitraum sein.
+
+
+
+
+--
+

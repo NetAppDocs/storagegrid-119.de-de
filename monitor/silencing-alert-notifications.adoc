@@ -1,0 +1,127 @@
+---
+permalink: monitor/silencing-alert-notifications.html 
+sidebar: sidebar 
+keywords: how to disable alert rules, how to remove a custom alert rule 
+summary: Optional können Sie Stummschaltungen konfigurieren, um Warnbenachrichtigungen vorübergehend zu unterdrücken. 
+---
+= Warnmeldungen stummschalten
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Optional können Sie Stummschaltungen konfigurieren, um Warnbenachrichtigungen vorübergehend zu unterdrücken.
+
+.Bevor Sie beginnen
+* Sie sind beim Grid Manager angemeldet mit einemlink:../admin/web-browser-requirements.html["unterstützter Webbrowser"] .
+* Sie haben dielink:../admin/admin-group-permissions.html["Verwalten von Warnungen oder Root-Zugriffsberechtigungen"] .
+
+
+.Informationen zu diesem Vorgang
+Sie können Warnregeln für das gesamte Raster, eine einzelne Site oder einen einzelnen Knoten und für einen oder mehrere Schweregrade stummschalten.  Jede Stille unterdrückt alle Benachrichtigungen für eine einzelne Warnregel oder für alle Warnregeln.
+
+Wenn Sie den SNMP-Agenten aktiviert haben, werden durch Stummschalten auch SNMP-Traps und -Informationen unterdrückt.
+
+
+CAUTION: Seien Sie vorsichtig, wenn Sie sich entscheiden, eine Warnregel stummzuschalten.  Wenn Sie eine Warnung stummschalten, erkennen Sie ein zugrunde liegendes Problem möglicherweise erst, wenn es die Ausführung eines kritischen Vorgangs verhindert.
+
+.Schritte
+. Wählen Sie *WARNUNGEN* > *Stummschaltungen*.
++
+Die Seite „Stille“ wird angezeigt.
+
++
+image::../media/alerts_silences_page.png[Seite „Warnungen > Stummschaltungen“]
+
+. Wählen Sie *Erstellen*.
++
+Das Dialogfeld „Stille erstellen“ wird angezeigt.
+
++
+image::../media/alerts_create_silence.png[Warnungen > Stille erzeugen]
+
+. Wählen Sie die folgenden Informationen aus oder geben Sie sie ein:
++
+[cols="1a,3a"]
+|===
+| Feld | Beschreibung 
+
+
+ a| 
+Warnregel
+ a| 
+Der Name der Warnregel, die Sie stummschalten möchten.  Sie können jede Standard- oder benutzerdefinierte Warnregel auswählen, auch wenn die Warnregel deaktiviert ist.
+
+*Hinweis:* Wählen Sie *Alle Regeln* aus, wenn Sie alle Warnregeln anhand der in diesem Dialogfeld angegebenen Kriterien stummschalten möchten.
+
+
+
+ a| 
+Beschreibung
+ a| 
+Optional eine Beschreibung der Stille.  Beschreiben Sie beispielsweise den Zweck dieser Stille.
+
+
+
+ a| 
+Dauer
+ a| 
+Wie lange diese Stille in Kraft bleiben soll, in Minuten, Stunden oder Tagen.  Eine Sperre kann zwischen 5 Minuten und 1.825 Tagen (5 Jahren) wirksam sein.
+
+*Hinweis:* Sie sollten eine Warnregel nicht für einen längeren Zeitraum stummschalten.  Wenn eine Warnregel stummgeschaltet wird, erkennen Sie ein zugrunde liegendes Problem möglicherweise erst, wenn es die Ausführung eines kritischen Vorgangs verhindert.  Möglicherweise müssen Sie jedoch eine längere Stille verwenden, wenn eine Warnung durch eine bestimmte, absichtliche Konfiguration ausgelöst wird, wie dies beispielsweise bei den Warnungen „Link zur Service-Appliance unterbrochen“ und „Link zur Speicher-Appliance unterbrochen“ der Fall sein kann.
+
+
+
+ a| 
+Schwere
+ a| 
+Welcher oder welche Schweregrade der Warnungen sollten stummgeschaltet werden?  Wenn der Alarm bei einem der ausgewählten Schweregrade ausgelöst wird, werden keine Benachrichtigungen gesendet.
+
+
+
+ a| 
+Nodes
+ a| 
+Auf welchen Knoten oder welche Knoten soll diese Stille angewendet werden?  Sie können eine Warnregel oder alle Regeln für das gesamte Raster, eine einzelne Site oder einen einzelnen Knoten unterdrücken.  Wenn Sie das gesamte Raster auswählen, gilt die Stille für alle Sites und alle Knoten.  Wenn Sie einen Standort auswählen, gilt die Stille nur für die Knoten an diesem Standort.
+
+*Hinweis:* Sie können für jede Stille nicht mehr als einen Knoten oder mehr als eine Site auswählen.  Sie müssen zusätzliche Stummschaltungen erstellen, wenn Sie dieselbe Warnregel auf mehreren Knoten oder mehreren Sites gleichzeitig unterdrücken möchten.
+
+|===
+. Wählen Sie *Speichern*.
+. Wenn Sie eine Stille ändern oder beenden möchten, bevor sie abläuft, können Sie sie bearbeiten oder entfernen.
++
+[cols="1a,3a"]
+|===
+| Option | Beschreibung 
+
+
+ a| 
+Bearbeiten einer Stille
+ a| 
+.. Wählen Sie *WARNUNGEN* > *Stummschaltungen*.
+.. Wählen Sie in der Tabelle das Optionsfeld für die Stille aus, die Sie bearbeiten möchten.
+.. Wählen Sie *Bearbeiten*.
+.. Ändern Sie die Beschreibung, die verbleibende Zeit, die ausgewählten Schweregrade oder den betroffenen Knoten.
+.. Wählen Sie *Speichern*.
+
+
+
+
+ a| 
+Eine Stille entfernen
+ a| 
+.. Wählen Sie *WARNUNGEN* > *Stummschaltungen*.
+.. Wählen Sie in der Tabelle das Optionsfeld für die Stille aus, die Sie entfernen möchten.
+.. Wählen Sie *Entfernen*.
+.. Wählen Sie *OK*, um zu bestätigen, dass Sie diese Stille entfernen möchten.
++
+*Hinweis*: Wenn dieser Alarm ausgelöst wird, werden jetzt Benachrichtigungen gesendet (sofern sie nicht durch eine andere Stille unterdrückt werden).  Wenn diese Warnung derzeit ausgelöst wird, kann es einige Minuten dauern, bis E-Mail- oder SNMP-Benachrichtigungen gesendet werden und die Seite „Warnungen“ aktualisiert wird.
+
+
+
+|===
+
+
+.Ähnliche Informationen
+link:configuring-snmp-agent.html["Konfigurieren des SNMP-Agenten"]

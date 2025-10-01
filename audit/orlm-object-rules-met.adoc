@@ -1,0 +1,158 @@
+---
+permalink: audit/orlm-object-rules-met.html 
+sidebar: sidebar 
+keywords: audit message, ORLM, Object Rules Met, ilm rule 
+summary: Diese Nachricht wird generiert, wenn das Objekt gemäß den ILM-Regeln erfolgreich gespeichert und kopiert wurde. 
+---
+= ORLM: Objektregeln erfüllt
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Diese Nachricht wird generiert, wenn das Objekt gemäß den ILM-Regeln erfolgreich gespeichert und kopiert wurde.
+
+
+NOTE: Die ORLM-Meldung wird nicht generiert, wenn ein Objekt erfolgreich durch die Standardregel „2 Kopien erstellen“ gespeichert wurde und eine andere Regel in der Richtlinie den erweiterten Filter „Objektgröße“ verwendet.
+
+[cols="1a,1a,4a"]
+|===
+| Code | Feld | Beschreibung 
+
+
+ a| 
+BAUEN
+ a| 
+Schaufelkopf
+ a| 
+Bucket-ID-Feld.  Wird für interne Vorgänge verwendet.  Erscheint nur, wenn STAT PRGD ist.
+
+
+
+ a| 
+CBID
+ a| 
+Inhaltsblockkennung
+ a| 
+Die CBID des Objekts.
+
+
+
+ a| 
+CSIZ
+ a| 
+Inhaltsgröße
+ a| 
+Die Größe des Objekts in Bytes.
+
+
+
+ a| 
+LOCS
+ a| 
+Standorte
+ a| 
+Der Speicherort der Objektdaten innerhalb des StorageGRID -Systems.  Der Wert für LOCS ist "", wenn das Objekt keine Standorte hat (z. B. wenn es gelöscht wurde).
+
+CLEC: für Erasure-Coding-Objekte die Erasure-Coding-Profil-ID und die Erasure-Coding-Gruppen-ID, die auf die Daten des Objekts angewendet wird.
+
+CLDI: für replizierte Objekte die LDR-Knoten-ID und die Volume-ID des Objektstandorts.
+
+CLNL: ARC-Knoten-ID des Objektstandorts, wenn die Objektdaten archiviert sind.
+
+
+
+ a| 
+WEG
+ a| 
+S3-Bucket/Schlüssel
+ a| 
+Der S3-Bucket-Name und der S3-Schlüsselname.
+
+
+
+ a| 
+RSLT
+ a| 
+Ergebnis
+ a| 
+Das Ergebnis des ILM-Vorgangs.
+
+SUCS: Der ILM-Vorgang war erfolgreich.
+
+
+
+ a| 
+REGEL
+ a| 
+Regelbezeichnung
+ a| 
+Die für Menschen lesbare Bezeichnung für die auf dieses Objekt angewendete ILM-Regel.
+
+
+
+ a| 
+SEGC
+ a| 
+Container-UUID
+ a| 
+UUID des Containers für das segmentierte Objekt.  Dieser Wert ist nur verfügbar, wenn das Objekt segmentiert ist.
+
+
+
+ a| 
+SGCB
+ a| 
+Behälter CBID
+ a| 
+CBID des Containers für das segmentierte Objekt.  Dieser Wert ist nur für segmentierte und mehrteilige Objekte verfügbar.
+
+
+
+ a| 
+STAT
+ a| 
+Status
+ a| 
+Der Status des ILM-Vorgangs.
+
+FERTIG: ILM-Vorgänge für das Objekt wurden abgeschlossen.
+
+DFER: Das Objekt wurde für eine zukünftige ILM-Neubewertung markiert.
+
+PRGD: Das Objekt wurde aus dem StorageGRID -System gelöscht.
+
+NLOC: Die Objektdaten sind im StorageGRID -System nicht mehr auffindbar.  Dieser Status kann darauf hinweisen, dass alle Kopien der Objektdaten fehlen oder beschädigt sind.
+
+
+
+ a| 
+UUID
+ a| 
+Universell eindeutige Kennung
+ a| 
+Die Kennung des Objekts innerhalb des StorageGRID -Systems.
+
+
+
+ a| 
+VSID
+ a| 
+Versions-ID
+ a| 
+Die Versions-ID eines neuen Objekts, das in einem versionierten Bucket erstellt wurde.  Vorgänge an Buckets und Objekten in Buckets ohne Versionierung schließen dieses Feld nicht ein.
+
+|===
+Die ORLM-Audit-Nachricht kann für ein einzelnes Objekt mehr als einmal ausgegeben werden.  Es wird beispielsweise immer dann ausgegeben, wenn eines der folgenden Ereignisse eintritt:
+
+* ILM-Regeln für das Objekt werden dauerhaft erfüllt.
+* Die ILM-Regeln für das Objekt werden für diese Epoche erfüllt.
+* Das Objekt wurde durch ILM-Regeln gelöscht.
+* Der Hintergrundüberprüfungsprozess erkennt, dass eine Kopie der replizierten Objektdaten beschädigt ist.  Das StorageGRID -System führt eine ILM-Auswertung durch, um das beschädigte Objekt zu ersetzen.
+
+
+.Ähnliche Informationen
+* link:object-ingest-transactions.html["Objektaufnahmetransaktionen"]
+* link:object-delete-transactions.html["Objektlöschtransaktionen"]
+

@@ -1,0 +1,82 @@
+---
+section: rhel
+title: Installieren Sie StorageGRID unter Red Hat Enterprise Linux
+entries:
+- title: Schnellstart
+  pdf-filename: Installieren Sie StorageGRID unter Red Hat Enterprise Linux
+  url: "/rhel/index.html"
+- title: Planen und Vorbereiten der Installation auf Red Hat
+  entries:
+  - title: Benötigte Informationen und Materialien
+    url: "/rhel/required-materials.html"
+  - title: Laden Sie die StorageGRID Installationsdateien herunter und extrahieren
+      Sie sie
+    url: "/rhel/downloading-and-extracting-storagegrid-installation-files.html"
+  - title: Installationsdateien manuell überprüfen
+    url: "/rhel/download-files-verify.html"
+  - title: Softwareanforderungen
+    url: "/rhel/software-requirements.html"
+  - title: CPU- und RAM-Anforderungen
+    url: "/rhel/cpu-and-ram-requirements.html"
+  - title: Speicher- und Leistungsanforderungen
+    url: "/rhel/storage-and-performance-requirements.html"
+  - title: Anforderungen für die Migration von Knotencontainern
+    url: "/rhel/node-container-migration-requirements.html"
+  - title: Vorbereiten der Hosts (Red Hat)
+    entries:
+    - title: So ändern sich hostweite Einstellungen
+      url: "/rhel/how-host-wide-settings-change.html"
+    - title: Installieren Sie Linux
+      url: "/rhel/installing-linux.html"
+    - title: Hostnetzwerk konfigurieren (Red Hat)
+      url: "/rhel/configuring-host-network.html"
+    - title: Konfigurieren des Hostspeichers
+      url: "/rhel/configuring-host-storage.html"
+    - title: Konfigurieren des Speichervolumens der Container-Engine
+      url: "/rhel/configuring-docker-storage-volume.html"
+    - title: Installieren Sie die StorageGRID Hostdienste
+      url: "/rhel/installing-storagegrid-webscale-host-service.html"
+- title: Automatisieren Sie die Installation (Red Hat)
+  url: "/rhel/automating-installation.html"
+- title: Virtuelle Grid-Knoten bereitstellen (Red Hat)
+  entries:
+  - title: Erstellen Sie Knotenkonfigurationsdateien für Red Hat-Bereitstellungen
+    url: "/rhel/creating-node-configuration-files.html"
+  - title: So erkennen Grid-Knoten den primären Admin-Knoten
+    url: "/rhel/how-grid-nodes-discover-primary-admin-node.html"
+  - title: Beispiele für Knotenkonfigurationsdateien
+    url: "/rhel/example-node-configuration-files.html"
+  - title: Validieren der StorageGRID -Konfiguration
+    url: "/rhel/validating-storagegrid-configuration.html"
+  - title: Starten Sie den StorageGRID -Hostdienst
+    url: "/rhel/starting-storagegrid-host-service.html"
+- title: Konfigurieren Sie das Grid und schließen Sie die Installation ab (Red Hat)
+  entries:
+  - title: Navigieren Sie zum Grid Manager
+    url: "/rhel/navigating-to-grid-manager.html"
+  - title: Lizenzinformationen angeben
+    url: "/rhel/specifying-storagegrid-license-information.html"
+  - title: Websites hinzufügen
+    url: "/rhel/adding-sites.html"
+  - title: Grid-Netzwerk-Subnetze angeben
+    url: "/rhel/specifying-grid-network-subnets.html"
+  - title: Ausstehende Rasterknoten genehmigen
+    url: "/rhel/approving-pending-grid-nodes.html"
+  - title: Geben Sie die NTP-Serverinformationen an
+    url: "/rhel/specifying-network-time-protocol-server-information.html"
+  - title: DNS-Serverinformationen angeben
+    url: "/rhel/specifying-domain-name-system-server-information.html"
+  - title: Systemkennwörter festlegen
+    url: "/rhel/specifying-storagegrid-system-passwords.html"
+  - title: Überprüfen Sie die Konfiguration und schließen Sie die Installation ab
+    url: "/rhel/reviewing-your-configuration-and-completing-installation.html"
+  - title: Richtlinien nach der Installation
+    url: "/rhel/post-installation-guidelines.html"
+- title: Installation der REST-API
+  url: "/rhel/overview-of-installation-rest-api.html"
+- title: Wohin als nächstes?
+  url: "/rhel/where-to-go-next.html"
+- title: Beheben von Installationsproblemen
+  url: "/rhel/troubleshooting-installation-issues.html"
+- title: Beispiel /etc/sysconfig/network-scripts
+  url: "/rhel/example-etc-sysconfig-network-scripts.html"

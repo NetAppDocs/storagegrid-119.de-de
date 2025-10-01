@@ -1,0 +1,29 @@
+---
+permalink: maintain/recovering-storagegrid-appliance-storage-node.html 
+sidebar: sidebar 
+keywords: recover, appliance storage node failure, workflow 
+summary: Das Verfahren zum Wiederherstellen eines ausgefallenen StorageGRID -Geräte-Speicherknotens ist dasselbe, unabhängig davon, ob Sie die Wiederherstellung nach dem Verlust des Systemlaufwerks oder nur nach dem Verlust von Speichervolumes durchführen. 
+---
+= Warnungen zur Wiederherstellung von Appliance-Speicherknoten
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Das Verfahren zum Wiederherstellen eines ausgefallenen StorageGRID -Geräte-Speicherknotens ist dasselbe, unabhängig davon, ob Sie die Wiederherstellung nach dem Verlust des Systemlaufwerks oder nur nach dem Verlust von Speichervolumes durchführen.
+
+
+CAUTION: Wenn mehr als ein Speicherknoten ausgefallen ist (oder offline ist), wenden Sie sich an den technischen Support. Führen Sie das folgende Wiederherstellungsverfahren nicht durch. Es könnte zu Datenverlust kommen.
+
+
+CAUTION: Wenn dies der zweite Speicherknotenausfall innerhalb von weniger als 15 Tagen nach einem Speicherknotenausfall oder einer Wiederherstellung ist, wenden Sie sich an den technischen Support.  Der Wiederaufbau von Cassandra auf zwei oder mehr Speicherknoten innerhalb von 15 Tagen kann zu Datenverlust führen.
+
+
+NOTE: Wenn an einem Standort mehr als ein Speicherknoten ausgefallen ist, ist möglicherweise ein Standortwiederherstellungsverfahren erforderlich. Sehen link:how-site-recovery-is-performed-by-technical-support.html["So stellt der technische Support eine Site wieder her"] .
+
+
+CAUTION: Wenn ILM-Regeln so konfiguriert sind, dass nur eine replizierte Kopie gespeichert wird und die Kopie auf einem ausgefallenen Speichervolume vorhanden ist, können Sie das Objekt nicht wiederherstellen.
+
+
+NOTE: Informationen zur Hardware-Wartung, wie z. B. Anweisungen zum Austausch eines Controllers oder zur Neuinstallation von SANtricity OS, finden Sie im https://docs.netapp.com/us-en/storagegrid-appliances/commonhardware/index.html["Wartungsanweisungen für Ihr Speichergerät"^] .

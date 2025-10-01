@@ -1,0 +1,47 @@
+---
+permalink: audit/audit-messages-and-object-lifecycle.html 
+sidebar: sidebar 
+keywords: storagegrid, audit, message, log, object lifecycle, ingest, retrieve, delete, s3, timing, ILM, Information lifecycle management 
+summary: Jedes Mal, wenn ein Objekt aufgenommen, abgerufen oder gelöscht wird, werden Prüfmeldungen generiert.  Sie können diese Transaktionen im Prüfprotokoll identifizieren, indem Sie S3-API-spezifische Prüfmeldungen suchen. 
+---
+= Wann werden Prüfmeldungen generiert?
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Jedes Mal, wenn ein Objekt aufgenommen, abgerufen oder gelöscht wird, werden Prüfmeldungen generiert.  Sie können diese Transaktionen im Prüfprotokoll identifizieren, indem Sie S3-API-spezifische Prüfmeldungen suchen.
+
+Die Verknüpfung der Prüfmeldungen erfolgt über protokollspezifische Kennungen.
+
+[cols="1a,1a"]
+|===
+| Protokoll | Code 
+
+
+ a| 
+Verknüpfen von S3-Operationen
+ a| 
+S3BK (Bucket), S3KY (Schlüssel) oder beides
+
+
+
+ a| 
+Verknüpfen von Swift-Operationen
+ a| 
+WCON (Container), WOBJ (Objekt) oder beides
+
+
+
+ a| 
+Verknüpfung interner Vorgänge
+ a| 
+CBID (interne Kennung des Objekts)
+
+|===
+
+
+== Zeitpunkt der Prüfmeldungen
+
+Aufgrund von Faktoren wie Zeitunterschieden zwischen Grid-Knoten, Objektgröße und Netzwerkverzögerungen kann die Reihenfolge der von den verschiedenen Diensten generierten Prüfmeldungen von der in den Beispielen in diesem Abschnitt gezeigten abweichen.

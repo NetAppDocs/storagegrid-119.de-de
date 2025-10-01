@@ -1,0 +1,37 @@
+---
+permalink: admin/deleting-tenant-account.html 
+sidebar: sidebar 
+keywords: tenant, delete, remove tenant 
+summary: Sie können ein Mieterkonto löschen, wenn Sie dem Mieter den Zugriff auf das System dauerhaft entziehen möchten. 
+---
+= Mieterkonto löschen
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Sie können ein Mieterkonto löschen, wenn Sie dem Mieter den Zugriff auf das System dauerhaft entziehen möchten.
+
+.Bevor Sie beginnen
+* Sie sind beim Grid Manager angemeldet mit einemlink:../admin/web-browser-requirements.html["unterstützter Webbrowser"] .
+* Du hastlink:admin-group-permissions.html["spezifische Zugriffsberechtigungen"] .
+* Sie haben alle mit dem Mandantenkonto verknüpften S3-Buckets und -Objekte entfernt.
+* Wenn der Mieter eine Grid-Föderation-Verbindung verwenden darf, haben Sie die Überlegungen fürlink:grid-federation-manage-tenants.html["Löschen eines Mandanten mit der Berechtigung „Grid-Föderationsverbindung verwenden“"] .
+
+
+.Schritte
+. Wählen Sie *MIETER* aus.
+. Suchen Sie das oder die Mandantenkonten, die Sie löschen möchten.
++
+Verwenden Sie das Suchfeld, um nach einem Mieter anhand seines Namens oder seiner Mieter-ID zu suchen.
+
+. Um mehrere Mandanten zu löschen, aktivieren Sie die Kontrollkästchen und wählen Sie *Aktionen* > *Löschen*.
+. Um einen einzelnen Mandanten zu löschen, führen Sie einen der folgenden Schritte aus:
++
+** Aktivieren Sie das Kontrollkästchen und wählen Sie *Aktionen* > *Löschen*.
+** Wählen Sie den Mandantennamen aus, um die Detailseite anzuzeigen, und wählen Sie dann *Aktionen* > *Löschen*.
+
+
+. Wählen Sie *Ja*.
+

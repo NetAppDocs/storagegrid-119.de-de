@@ -1,0 +1,129 @@
+---
+section: tenant
+title: Verwenden eines Mandantenkontos
+entries:
+- title: Was ist ein Mieterkonto?
+  pdf-filename: Verwenden Sie ein StorageGRID Mandantenkonto
+  url: "/tenant/index.html"
+- title: So melden Sie sich an und ab
+  entries:
+  - title: Sign in
+    url: "/tenant/signing-in-to-tenant-manager.html"
+  - title: Vom Tenant Manager abmelden
+    url: "/tenant/signing-out-of-tenant-manager.html"
+- title: Mandantenmanager-Dashboard
+  url: "/tenant/understanding-tenant-manager-dashboard.html"
+- title: Mandantenverwaltungs-API
+  entries:
+  - title: Grundlegendes zur API für die Mandantenverwaltung
+    url: "/tenant/understanding-tenant-management-api.html"
+  - title: Versionierung der Mandantenverwaltungs-API
+    url: "/tenant/tenant-management-api-versioning.html"
+  - title: Schutz vor Cross-Site Request Forgery (CSRF)
+    url: "/tenant/protecting-against-cross-site-request-forgery-csrf.html"
+- title: Grid-Föderation-Verbindungen verwenden
+  entries:
+  - title: Mandantengruppen und Benutzer klonen
+    url: "/tenant/grid-federation-account-clone.html"
+  - title: Klonen Sie S3-Zugriffsschlüssel mithilfe der API
+    url: "/tenant/grid-federation-clone-keys-with-api.html"
+  - title: Verwalten der Cross-Grid-Replikation
+    url: "/tenant/grid-federation-manage-cross-grid-replication.html"
+  - title: Grid-Föderation-Verbindungen anzeigen
+    url: "/tenant/grid-federation-view-connections-tenant.html"
+- title: Verwalten von Gruppen und Benutzern
+  entries:
+  - title: Verwenden der Identitätsföderation
+    url: "/tenant/using-identity-federation.html"
+  - title: Verwalten von Mandantengruppen
+    entries:
+    - title: Erstellen von S3-Gruppen
+      url: "/tenant/creating-groups-for-s3-tenant.html"
+    - title: Swift-Gruppen erstellen
+      url: "/tenant/creating-groups-for-swift-tenant.html"
+    - title: Berechtigungen zur Mandantenverwaltung
+      url: "/tenant/tenant-management-permissions.html"
+    - title: Verwalten von Gruppen
+      url: "/tenant/manage-groups.html"
+  - title: Lokale Benutzer verwalten
+    url: "/tenant/managing-local-users.html"
+- title: S3-Zugriffsschlüssel verwalten
+  entries:
+  - title: Mandantenzugriffsschlüssel
+    pdf-filename: S3-Zugriffsschlüssel verwalten
+    url: "/tenant/managing-s3-access-keys.html"
+  - title: Erstellen Sie Ihre S3-Zugriffsschlüssel
+    url: "/tenant/creating-your-own-s3-access-keys.html"
+  - title: Zeigen Sie Ihre S3-Zugriffsschlüssel an
+    url: "/tenant/viewing-your-s3-access-keys.html"
+  - title: Löschen Sie Ihre S3-Zugriffsschlüssel
+    url: "/tenant/deleting-your-own-s3-access-keys.html"
+  - title: Erstellen Sie die S3-Zugriffsschlüssel eines anderen Benutzers
+    url: "/tenant/creating-another-users-s3-access-keys.html"
+  - title: Anzeigen der S3-Zugriffsschlüssel eines anderen Benutzers
+    url: "/tenant/viewing-another-users-s3-access-keys.html"
+  - title: Löschen Sie die S3-Zugriffsschlüssel eines anderen Benutzers
+    url: "/tenant/deleting-another-users-s3-access-keys.html"
+- title: S3-Buckets verwalten
+  entries:
+  - title: Bucket erstellen
+    url: "/tenant/creating-s3-bucket.html"
+  - title: Bucket-Details anzeigen
+    url: "/tenant/viewing-s3-bucket-details.html"
+  - title: ILM-Richtlinientag auf Bucket anwenden
+    url: "/tenant/ilm-policy-tags.html"
+  - title: Bucket-Richtlinie verwalten
+    url: "/tenant/manage-bucket-policy.html"
+  - title: Verwalten der Bucket-Konsistenz
+    url: "/tenant/manage-bucket-consistency.html"
+  - title: Aktivieren oder Deaktivieren der Aktualisierung der letzten Zugriffszeit
+    url: "/tenant/enabling-or-disabling-last-access-time-updates.html"
+  - title: Objektversionierung ändern
+    url: "/tenant/changing-bucket-versioning.html"
+  - title: S3-Objektsperre verwenden
+    url: "/tenant/using-s3-object-lock.html"
+  - title: Standardaufbewahrung für S3 Object Lock aktualisieren
+    url: "/tenant/update-default-retention-settings.html"
+  - title: Konfigurieren Sie Cross-Origin Resource Sharing (CORS)
+    url: "/tenant/configuring-cross-origin-resource-sharing-cors.html"
+  - title: Objekte im Bucket löschen
+    url: "/tenant/deleting-s3-bucket-objects.html"
+  - title: Bucket löschen
+    url: "/tenant/deleting-s3-bucket.html"
+  - title: Verwenden Sie die S3-Konsole
+    url: "/tenant/use-s3-console.html"
+- title: Verwalten von S3-Plattformdiensten
+  entries:
+  - title: S3-Plattformdienste
+    pdf-filename: Verwalten von S3-Plattformdiensten
+    entries:
+    - title: Überlegungen zu Plattformdiensten
+      url: "/tenant/considerations-for-platform-services.html"
+    - title: CloudMirror-Replikationsdienst
+      url: "/tenant/understanding-cloudmirror-replication-service.html"
+    - title: Benachrichtigungen für Buckets
+      url: "/tenant/understanding-notifications-for-buckets.html"
+    - title: Suchintegrationsdienst
+      url: "/tenant/understanding-search-integration-service.html"
+  - title: Verwalten von Plattformdienst-Endpunkten
+    entries:
+    - title: Konfigurieren von Plattformdienstendpunkten
+      url: "/tenant/configuring-platform-services-endpoints.html"
+    - title: URN angeben
+      url: "/tenant/specifying-urn-for-platform-services-endpoint.html"
+    - title: Endpunkt erstellen
+      url: "/tenant/creating-platform-services-endpoint.html"
+    - title: Testen der Verbindung
+      url: "/tenant/testing-connection-for-platform-services-endpoint.html"
+    - title: Endpunkt bearbeiten
+      url: "/tenant/editing-platform-services-endpoint.html"
+    - title: Endpunkt löschen
+      url: "/tenant/deleting-platform-services-endpoint.html"
+    - title: Beheben von Fehlern bei Plattformdiensten
+      url: "/tenant/troubleshooting-platform-services-endpoint-errors.html"
+  - title: Konfigurieren der CloudMirror-Replikation
+    url: "/tenant/configuring-cloudmirror-replication.html"
+  - title: Konfigurieren von Ereignisbenachrichtigungen
+    url: "/tenant/configuring-event-notifications.html"
+  - title: Suchintegrationsdienst konfigurieren
+    url: "/tenant/configuring-search-integration-service.html"

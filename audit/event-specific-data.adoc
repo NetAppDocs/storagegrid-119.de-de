@@ -1,0 +1,23 @@
+---
+permalink: audit/event-specific-data.html 
+sidebar: sidebar 
+keywords: audit message, event, shea, s3 head 
+summary: Jede Prüfmeldung im Prüfprotokoll zeichnet Daten auf, die für ein Systemereignis spezifisch sind. 
+---
+= Ereignisspezifische Daten
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Jede Prüfmeldung im Prüfprotokoll zeichnet Daten auf, die für ein Systemereignis spezifisch sind.
+
+Im Anschluss an die Eröffnung `[AUDT:` Container, der die Nachricht selbst identifiziert, der nächste Satz von Attributen liefert Informationen über das Ereignis oder die Aktion, die in der Prüfnachricht beschrieben wird.  Diese Attribute werden im folgenden Beispiel hervorgehoben:
+
+[]
+====
+2018-12-05T08:24:45.921845 [AUDT:*\[RSLT\(FC32\):SUCS\]* *\[TIME\(UI64\):11454\]\[SAIP\(IPAD\):"10.224.0.100"\]\[S3AI\(CSTR\):"60025621595611246499"\]* *\[SACC\(CSTR\):"Konto"\]\[S3AK\(CSTR\):"SGKH4_Nc8SO1H6w3w0nCOFCGgk__E6dYzKlumRsKJA=="\]* *\[SUSR\(CSTR\):"urn:sgws:identity::60025621595611246499:root"\]* *\[SBAI\(CSTR\):"60025621595611246499"\]\[SBAC\(CSTR\):"Konto"\]\[S3BK\(CSTR\):"Bucket"\]* *\[S3KY\(CSTR\):"Objekt"\]\[CBID\(UI64\):0xCC128B9B9E428347\]* *\[UUID\(CSTR\):"B975D2CE-E4DA-4D14-8A23-1CB4B83F2CD8"\]\[CSIZ\(UI64\):30720\]*[AVER(UI32):10] \[ATIM(UI64):1543998285921845]\[ATYP\(FC32\):SHEA\][ANID(UI32):12281045][AMID(FC32):S3RQ] \[ATID(UI64):15552417629170647261]]
+
+====
+Der `ATYP` Das Element (im Beispiel unterstrichen) identifiziert, welches Ereignis die Nachricht generiert hat.  Diese Beispielnachricht enthält dielink:shea-s3-head.html["SHEA"] Nachrichtencode ([ATYP(FC32):SHEA]), der angibt, dass er durch eine erfolgreiche S3-HEAD-Anforderung generiert wurde.

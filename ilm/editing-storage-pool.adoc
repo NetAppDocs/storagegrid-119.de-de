@@ -1,0 +1,46 @@
+---
+permalink: ilm/editing-storage-pool.html 
+sidebar: sidebar 
+keywords: edit storage pool 
+summary: Sie können einen Speicherpool bearbeiten, um seinen Namen zu ändern oder Standorte und Speicherklassen zu aktualisieren. 
+---
+= Speicherpool bearbeiten
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Sie können einen Speicherpool bearbeiten, um seinen Namen zu ändern oder Standorte und Speicherklassen zu aktualisieren.
+
+.Bevor Sie beginnen
+* Sie sind beim Grid Manager angemeldet mit einemlink:../admin/web-browser-requirements.html["unterstützter Webbrowser"] .
+* Du hastlink:../admin/admin-group-permissions.html["spezifische Zugriffsberechtigungen"] .
+* Sie haben dielink:guidelines-for-creating-storage-pools.html["Richtlinien zum Erstellen von Speicherpools"] .
+* Wenn Sie einen Speicherpool bearbeiten möchten, der von einer Regel in der aktiven ILM-Richtlinie verwendet wird, haben Sie berücksichtigt, wie sich Ihre Änderungen auf die Platzierung der Objektdaten auswirken.
+
+
+.Informationen zu diesem Vorgang
+Wenn Sie einem Speicherpool, der in der aktiven ILM-Richtlinie verwendet wird, einen neuen Standort oder eine neue Speicherklasse hinzufügen, beachten Sie, dass die Speicherknoten am neuen Standort oder in der neuen Speicherklasse nicht automatisch verwendet werden.  Um StorageGRID zur Verwendung einer neuen Site oder Speicherklasse zu zwingen, müssen Sie nach dem Speichern des bearbeiteten Speicherpools eine neue ILM-Richtlinie aktivieren.
+
+.Schritte
+. Wählen Sie *ILM* > *Speicherpools*.
+. Aktivieren Sie das Kontrollkästchen für den Speicherpool, den Sie bearbeiten möchten.
++
+Sie können den Speicherpool „Alle Speicherknoten“ (StorageGRID 11.6 und früher) nicht bearbeiten.
+
+. Wählen Sie *Bearbeiten*.
+. Ändern Sie bei Bedarf den Namen des Speicherpools.
+. Wählen Sie bei Bedarf andere Standorte und Lagerklassen aus.
++
+Sie können den Standort oder die Speicherklasse nicht ändern, wenn der Speicherpool in einem Erasure-Coding-Profil verwendet wird und die Änderung dazu führen würde, dass das Erasure-Coding-Schema ungültig wird.  Wenn beispielsweise ein in einem Erasure-Coding-Profil verwendeter Speicherpool derzeit eine Speicherklasse mit nur einem Standort enthält, können Sie keine Speicherklasse mit zwei Standorten verwenden, da die Änderung das Erasure-Coding-Schema ungültig machen würde.
+
++
+
+CAUTION: Durch das Hinzufügen oder Entfernen von Sites aus einem vorhandenen Speicherpool werden keine vorhandenen, löschcodierten Daten verschoben.  Wenn Sie die vorhandenen Daten von der Site verschieben möchten, müssen Sie einen neuen Speicherpool und ein neues EC-Profil erstellen, um die Daten neu zu kodieren.
+
+. Wählen Sie *Speichern*.
+
+
+.Nach Abschluss
+Wenn Sie einem in der aktiven ILM-Richtlinie verwendeten Speicherpool eine neue Site oder Speicherklasse hinzugefügt haben, aktivieren Sie eine neue ILM-Richtlinie, um StorageGRID zur Verwendung der neuen Site oder Speicherklasse zu zwingen.  Klonen Sie beispielsweise Ihre vorhandene ILM-Richtlinie und aktivieren Sie dann den Klon. Sehen link:working-with-ilm-rules-and-ilm-policies.html["Arbeiten mit ILM-Regeln und ILM-Richtlinien"] .

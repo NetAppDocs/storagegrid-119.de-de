@@ -1,0 +1,109 @@
+---
+permalink: maintain/identifying-and-unmounting-failed-storage-volumes.html 
+sidebar: sidebar 
+keywords: storagegrid, storage volume, failed storage volume, unmount failed volume 
+summary: Wenn Sie einen Speicherknoten mit ausgefallenen Speichervolumes wiederherstellen, müssen Sie die ausgefallenen Volumes identifizieren und aushängen.  Sie müssen sicherstellen, dass im Rahmen des Wiederherstellungsverfahrens nur die ausgefallenen Speichervolumes neu formatiert werden. 
+---
+= Identifizieren und Unmounten fehlerhafter Speichervolumes
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Wenn Sie einen Speicherknoten mit ausgefallenen Speichervolumes wiederherstellen, müssen Sie die ausgefallenen Volumes identifizieren und aushängen.  Sie müssen sicherstellen, dass im Rahmen des Wiederherstellungsverfahrens nur die ausgefallenen Speichervolumes neu formatiert werden.
+
+.Bevor Sie beginnen
+Sie sind beim Grid Manager angemeldet mit einemlink:../admin/web-browser-requirements.html["unterstützter Webbrowser"] .
+
+.Informationen zu diesem Vorgang
+Sie sollten ausgefallene Speichervolumes so schnell wie möglich wiederherstellen.
+
+Der erste Schritt des Wiederherstellungsprozesses besteht darin, Volumes zu erkennen, die getrennt wurden, ausgehängt werden müssen oder E/A-Fehler aufweisen.  Wenn ausgefallene Volumes noch angeschlossen sind, aber ein zufällig beschädigtes Dateisystem aufweisen, erkennt das System möglicherweise keine Beschädigung in nicht verwendeten oder nicht zugewiesenen Teilen der Festplatte.
+
+
+NOTE: Sie müssen diesen Vorgang abschließen, bevor Sie manuelle Schritte zur Wiederherstellung der Volumes durchführen, z. B. das Hinzufügen oder erneute Anschließen der Datenträger, das Stoppen des Knotens, das Starten des Knotens oder ein Neustart.  Andernfalls, wenn Sie die `reformat_storage_block_devices.rb` Skripts kann ein Dateisystemfehler auftreten, der dazu führt, dass das Skript hängen bleibt oder fehlschlägt.
+
+
+NOTE: Reparieren Sie die Hardware und schließen Sie die Festplatten ordnungsgemäß an, bevor Sie den `reboot` Befehl.
+
+
+CAUTION: Identifizieren Sie ausgefallene Speichervolumes sorgfältig.  Anhand dieser Informationen können Sie überprüfen, welche Datenträger neu formatiert werden müssen.  Nachdem ein Volume neu formatiert wurde, können die Daten auf dem Volume nicht wiederhergestellt werden.
+
+Um ausgefallene Speichervolumes korrekt wiederherzustellen, müssen Sie sowohl die Gerätenamen der ausgefallenen Speichervolumes als auch deren Volume-IDs kennen.
+
+Bei der Installation wird jedem Speichergerät eine universelle eindeutige Kennung (UUID) für das Dateisystem zugewiesen und es wird mithilfe dieser zugewiesenen Dateisystem-UUID in ein rangedb-Verzeichnis auf dem Speicherknoten eingebunden. Die Dateisystem-UUID und das rangedb-Verzeichnis sind in der `/etc/fstab` Datei. Der Gerätename, das Rangedb-Verzeichnis und die Größe des gemounteten Volumes werden im Grid Manager angezeigt.
+
+Im folgenden Beispiel wird das Gerät `/dev/sdc` hat eine Volume-Größe von 4 TB, ist gemountet auf `/var/local/rangedb/0` , unter Verwendung des Gerätenamens `/dev/disk/by-uuid/822b0547-3b2b-472e-ad5e-e1cf1809faba` im/`etc/fstab` Datei:
+
+image::../media/mounting_storage_devices.gif[Beispiel für die Datenträgergröße]
+
+.Schritte
+. Führen Sie die folgenden Schritte aus, um die ausgefallenen Speichervolumes und ihre Gerätenamen aufzuzeichnen:
++
+.. Wählen Sie *SUPPORT* > *Tools* > *Gittertopologie*.
+.. Wählen Sie *Site* > *Fehlerhafter Speicherknoten* > *LDR* > *Speicher* > *Übersicht* > *Haupt* und suchen Sie nach Objektspeichern mit Alarmen.
++
+image::../media/ldr_storage_object_stores.gif[Abschnitt „Objektspeicher“]
+
+.. Wählen Sie *Site* > *Fehlerhafter Speicherknoten* > *SSM* > *Ressourcen* > *Übersicht* > *Haupt*.  Bestimmen Sie den Bereitstellungspunkt und die Volumegröße jedes im vorherigen Schritt identifizierten ausgefallenen Speichervolumes.
++
+Objektspeicher werden in Hexadezimalnotation nummeriert.  Beispielsweise ist 0000 der erste Band und 000F der sechzehnte Band.  Im Beispiel entspricht der Objektspeicher mit der ID 0000 `/var/local/rangedb/0` mit dem Gerätenamen sdc und einer Größe von 107 GB.
+
++
+image::../media/ssm_storage_volumes.gif[Beispiel mit Objektspeichern und Einhängepunkten]
+
+
+
+. Melden Sie sich beim ausgefallenen Speicherknoten an:
++
+.. Geben Sie den folgenden Befehl ein: `ssh admin@_grid_node_IP_`
+.. Geben Sie das Passwort ein, das in der `Passwords.txt` Datei.
+.. Geben Sie den folgenden Befehl ein, um zum Root zu wechseln: `su -`
+.. Geben Sie das Passwort ein, das in der `Passwords.txt` Datei.
+
+
++
+Wenn Sie als Root angemeldet sind, ändert sich die Eingabeaufforderung von `$` Zu `#` .
+
+. Führen Sie das folgende Skript aus, um die Bereitstellung eines ausgefallenen Speichervolumes aufzuheben:
++
+`sn-unmount-volume object_store_ID`
+
++
+Der `object_store_ID` ist die ID des ausgefallenen Speichervolumes.  Geben Sie beispielsweise `0` im Befehl für einen Objektspeicher mit der ID 0000.
+
+. Drücken Sie bei entsprechender Aufforderung *y*, um den Cassandra-Dienst abhängig vom Speichervolumen 0 zu stoppen.
++
+
+NOTE: Wenn der Cassandra-Dienst bereits gestoppt ist, werden Sie nicht dazu aufgefordert.  Der Cassandra-Dienst wird nur für Volume 0 gestoppt.
+
++
+[listing]
+----
+root@Storage-180:~/var/local/tmp/storage~ # sn-unmount-volume 0
+Services depending on storage volume 0 (cassandra) aren't down.
+Services depending on storage volume 0 must be stopped before running this script.
+Stop services that require storage volume 0 [y/N]? y
+Shutting down services that require storage volume 0.
+Services requiring storage volume 0 stopped.
+Unmounting /var/local/rangedb/0
+/var/local/rangedb/0 is unmounted.
+----
++
+Innerhalb weniger Sekunden wird das Volume ausgehängt.  Es werden Meldungen angezeigt, die jeden Schritt des Vorgangs anzeigen.  Die letzte Meldung zeigt an, dass das Volume ausgehängt ist.
+
+. Wenn das Unmounten fehlschlägt, weil das Volume belegt ist, können Sie ein Unmounten erzwingen, indem Sie `--use-umountof` Option:
++
+
+NOTE: Erzwingen einer Aushängung mit dem `--use-umountof` Die Option kann dazu führen, dass Prozesse oder Dienste, die das Volume verwenden, sich unerwartet verhalten oder abstürzen.
+
++
+[listing]
+----
+root@Storage-180:~ # sn-unmount-volume --use-umountof /var/local/rangedb/2
+Unmounting /var/local/rangedb/2 using umountof
+/var/local/rangedb/2 is unmounted.
+Informing LDR service of changes to storage volumes
+----
+

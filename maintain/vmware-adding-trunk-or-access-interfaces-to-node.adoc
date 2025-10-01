@@ -1,0 +1,61 @@
+---
+permalink: maintain/vmware-adding-trunk-or-access-interfaces-to-node.html 
+sidebar: sidebar 
+keywords: add extra interface to node, access interface, VM interface 
+summary: Sie können einem VM-Knoten nach der Installation zusätzliche Trunk- oder Zugriffsschnittstellen hinzufügen.  Die von Ihnen hinzugefügten Schnittstellen werden auf der Seite „VLAN-Schnittstellen“ und der Seite „HA-Gruppen“ angezeigt. 
+---
+= VMware: Trunk- oder Zugriffsschnittstellen zu einem Knoten hinzufügen
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Sie können einem VM-Knoten nach der Installation des Knotens einen Trunk oder eine Zugriffsschnittstelle hinzufügen.  Die von Ihnen hinzugefügten Schnittstellen werden auf der Seite „VLAN-Schnittstellen“ und der Seite „HA-Gruppen“ angezeigt.
+
+.Bevor Sie beginnen
+* Sie haben Zugriff auf die Anleitungen fürlink:../vmware/index.html["Installieren von StorageGRID auf Ihrer VMware-Plattform"] .
+* Sie verfügen über virtuelle VMware-Maschinen mit Admin-Knoten und Gateway-Knoten.
+* Sie haben ein Netzwerk-Subnetz, das nicht als Grid-, Admin- oder Client-Netzwerk verwendet wird.
+* Sie haben die `Passwords.txt` Datei.
+* Du hastlink:../admin/admin-group-permissions.html["spezifische Zugriffsberechtigungen"] .
+
+
+
+CAUTION: Versuchen Sie nicht, einem Knoten Schnittstellen hinzuzufügen, während ein Software-Upgrade, ein Wiederherstellungsverfahren oder ein Erweiterungsverfahren aktiv ist.
+
+.Informationen zu diesem Vorgang
+Führen Sie die folgenden Schritte aus, um einem VMware-Knoten nach der Installation des Knotens eine oder mehrere zusätzliche Schnittstellen hinzuzufügen.  Sie möchten beispielsweise möglicherweise einem Admin- oder Gateway-Knoten eine Trunk-Schnittstelle hinzufügen, sodass Sie mithilfe von VLAN-Schnittstellen den Datenverkehr verschiedener Anwendungen oder Mandanten trennen können.  Oder Sie möchten möglicherweise eine Zugriffsschnittstelle zur Verwendung in einer Hochverfügbarkeitsgruppe (HA) hinzufügen.
+
+Wenn Sie eine Trunk-Schnittstelle hinzufügen, müssen Sie eine VLAN-Schnittstelle in StorageGRID konfigurieren.  Wenn Sie eine Zugriffsschnittstelle hinzufügen, können Sie die Schnittstelle direkt zu einer HA-Gruppe hinzufügen. Sie müssen keine VLAN-Schnittstelle konfigurieren.
+
+Beim Hinzufügen von Schnittstellen ist der Knoten möglicherweise für kurze Zeit nicht verfügbar.
+
+.Schritte
+. Fügen Sie in vCenter einem Admin-Knoten und einem Gateway-Knoten-VM einen neuen Netzwerkadapter (Typ VMXNET3) hinzu.  Aktivieren Sie die Kontrollkästchen *Verbunden* und *Beim Einschalten verbinden*.
++
+image::../media/vcenter.png[vCenter]
+
+. Verwenden Sie SSH, um sich beim Admin-Knoten oder Gateway-Knoten anzumelden.
+. Verwenden `ip link show` um zu bestätigen, dass die neue Netzwerkschnittstelle ens256 erkannt wurde.
++
+[listing]
+----
+ip link show
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN mode DEFAULT group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+2: eth0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1400 qdisc mq state UP mode DEFAULT group default qlen 1000
+    link/ether 00:50:56:a0:4e:5b brd ff:ff:ff:ff:ff:ff
+3: eth1: <BROADCAST,MULTICAST> mtu 1500 qdisc noop state DOWN mode DEFAULT group default qlen 1000
+    link/ether 00:50:56:a0:fa:ce brd ff:ff:ff:ff:ff:ff
+4: eth2: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1400 qdisc mq state UP mode DEFAULT group default qlen 1000
+    link/ether 00:50:56:a0:d6:87 brd ff:ff:ff:ff:ff:ff
+5: ens256: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq master ens256vrf state UP mode DEFAULT group default qlen 1000
+    link/ether 00:50:56:a0:ea:88 brd ff:ff:ff:ff:ff:ff
+----
+
+
+.Nach Abschluss
+* Wenn Sie eine oder mehrere Trunk-Schnittstellen hinzugefügt haben, gehen Sie zulink:../admin/configure-vlan-interfaces.html["VLAN-Schnittstellen konfigurieren"] um für jede neue übergeordnete Schnittstelle eine oder mehrere VLAN-Schnittstellen zu konfigurieren.
+* Wenn Sie eine oder mehrere Zugriffsschnittstellen hinzugefügt haben, gehen Sie zulink:../admin/configure-high-availability-group.html["Konfigurieren von Hochverfügbarkeitsgruppen"] um die neuen Schnittstellen direkt zu HA-Gruppen hinzuzufügen.
+

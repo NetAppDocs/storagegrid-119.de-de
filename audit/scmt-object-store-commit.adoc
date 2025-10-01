@@ -1,0 +1,40 @@
+---
+permalink: audit/scmt-object-store-commit.html 
+sidebar: sidebar 
+keywords: storagegrid, audit, message, SCMT, Object Store Commit 
+summary: 'Grid-Inhalte werden erst dann verfügbar gemacht oder als gespeichert erkannt, wenn sie festgeschrieben wurden (d. h. dauerhaft gespeichert wurden).  Dauerhaft gespeicherte Inhalte wurden vollständig auf die Festplatte geschrieben und haben die zugehörigen Integritätsprüfungen bestanden.  Diese Nachricht wird ausgegeben, wenn ein Inhaltsblock gespeichert wird.' 
+---
+= SCMT: Objektspeicher-Commit
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Grid-Inhalte werden erst verfügbar gemacht oder als gespeichert erkannt, wenn sie festgeschrieben (d. h. dauerhaft gespeichert) wurden.  Dauerhaft gespeicherte Inhalte wurden vollständig auf die Festplatte geschrieben und haben die zugehörigen Integritätsprüfungen bestanden.  Diese Nachricht wird ausgegeben, wenn ein Inhaltsblock gespeichert wird.
+
+[cols="1a,1a,4a"]
+|===
+| Code | Feld | Beschreibung 
+
+
+ a| 
+CBID
+ a| 
+Inhaltsblockkennung
+ a| 
+Die eindeutige Kennung des Inhaltsblocks, der dauerhaft gespeichert wird.
+
+
+
+ a| 
+RSLT
+ a| 
+Ergebniscode
+ a| 
+Status zum Zeitpunkt der Speicherung des Objekts auf der Festplatte:
+
+SUCS: Objekt erfolgreich gespeichert.
+
+|===
+Diese Meldung bedeutet, dass ein bestimmter Inhaltsblock vollständig gespeichert und überprüft wurde und nun angefordert werden kann.  Damit kann der Datenfluss innerhalb des Systems verfolgt werden.

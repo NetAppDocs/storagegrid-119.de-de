@@ -1,0 +1,69 @@
+---
+permalink: primer/index.html 
+sidebar: sidebar 
+keywords: grid primer, what is storagegrid, storagegrid basics 
+summary: NetApp StorageGRID ist eine softwaredefinierte Objektspeichersuite, die eine breite Palette von Anwendungsfällen in öffentlichen, privaten und hybriden Multicloud-Umgebungen unterstützt.  StorageGRID bietet native Unterstützung für die Amazon S3-API und liefert branchenführende Innovationen wie automatisiertes Lebenszyklusmanagement, um unstrukturierte Daten über lange Zeiträume kostengünstig zu speichern, zu sichern, zu schützen und aufzubewahren. 
+---
+= Was ist StorageGRID?
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+NetApp® StorageGRID® ist eine softwaredefinierte Objektspeichersuite, die eine breite Palette von Anwendungsfällen in öffentlichen, privaten und hybriden Multicloud-Umgebungen unterstützt.  StorageGRID bietet native Unterstützung für die Amazon S3-API und liefert branchenführende Innovationen wie automatisiertes Lebenszyklusmanagement, um unstrukturierte Daten über lange Zeiträume kostengünstig zu speichern, zu sichern, zu schützen und aufzubewahren.
+
+StorageGRID bietet sicheren, dauerhaften Speicher für unstrukturierte Daten in großem Umfang. Integrierte, metadatengesteuerte Richtlinien zur Lebenszyklusverwaltung optimieren den Verbleib Ihrer Daten während ihrer gesamten Lebensdauer. Um die Kosten zu senken, werden Inhalte zur richtigen Zeit am richtigen Ort und auf der richtigen Speicherebene platziert.
+
+StorageGRID besteht aus geografisch verteilten, redundanten, heterogenen Knoten, die sowohl in bestehende als auch in Clientanwendungen der nächsten Generation integriert werden können.
+
+image::../media/storagegrid_system_diagram.png[Bild mit mehreren Clients]
+
+
+NOTE: Die Unterstützung für Archivknoten wurde entfernt.  Das Verschieben von Objekten von einem Archivknoten in ein externes Archivspeichersystem über die S3-API wurde ersetzt durchlink:../ilm/what-cloud-storage-pool-is.html["ILM Cloud-Speicherpools"] , die mehr Funktionalität bieten.
+
+
+
+== Vorteile von StorageGRID
+
+Zu den Vorteilen des StorageGRID -Systems gehören:
+
+* Ein massiv skalierbares und benutzerfreundliches, geografisch verteiltes Daten-Repository für unstrukturierte Daten.
+* Standardprotokolle für die Objektspeicherung:
++
+** Amazon Web Services Simple Storage Service (S3)
+** OpenStack Swift
++
+
+NOTE: Die Unterstützung für Swift-Clientanwendungen ist veraltet und wird in einer zukünftigen Version entfernt.
+
+
+
+* Hybrid Cloud aktiviert.  Das richtlinienbasierte Information Lifecycle Management (ILM) speichert Objekte in öffentlichen Clouds, darunter Amazon Web Services (AWS) und Microsoft Azure.  Die Dienste der StorageGRID -Plattform ermöglichen die Inhaltsreplikation, Ereignisbenachrichtigung und Metadatensuche von in öffentlichen Clouds gespeicherten Objekten.
+* Flexibler Datenschutz zur Gewährleistung von Langlebigkeit und Verfügbarkeit.  Daten können durch Replikation und mehrschichtige Löschcodierung geschützt werden.  Die Überprüfung ruhender und übertragener Daten gewährleistet die Integrität für die langfristige Speicherung.
+* Dynamisches Datenlebenszyklusmanagement zur Unterstützung der Verwaltung der Speicherkosten.  Sie können ILM-Regeln erstellen, die den Datenlebenszyklus auf Objektebene verwalten und dabei Datenlokalität, Haltbarkeit, Leistung, Kosten und Aufbewahrungszeit anpassen.
+* Hohe Verfügbarkeit der Datenspeicherung und einiger Verwaltungsfunktionen mit integriertem Lastenausgleich zur Optimierung der Datenlast über StorageGRID -Ressourcen hinweg.
+* Unterstützung für mehrere Speichermandantenkonten, um die auf Ihrem System nach verschiedenen Entitäten gespeicherten Objekte zu trennen.
+* Zahlreiche Tools zur Überwachung des Zustands Ihres StorageGRID -Systems, darunter ein umfassendes Warnsystem, ein grafisches Dashboard und detaillierte Statusinformationen für alle Knoten und Sites.
+* Unterstützung für software- oder hardwarebasierte Bereitstellung.  Sie können StorageGRID auf einem der folgenden Geräte bereitstellen:
++
+** Virtuelle Maschinen, die in VMware ausgeführt werden.
+** Container-Engines auf Linux-Hosts.
+** Von StorageGRID entwickelte Geräte.
++
+*** Speichergeräte bieten Objektspeicher.
+*** Service-Appliances bieten Netzverwaltungs- und Lastausgleichsdienste.
+
+
+
+
+* Konform mit den relevanten Aufbewahrungsanforderungen dieser Verordnung:
++
+** Securities and Exchange Commission (SEC) in 17 CFR § 240.17a-4(f), die Börsenmitglieder, Makler oder Händler reguliert.
+** Regel 4511(c) der Financial Industry Regulatory Authority (FINRA), die sich den Format- und Medienanforderungen der SEC-Regel 17a-4(f) unterwirft.
+** Commodity Futures Trading Commission (CFTC) in Verordnung 17 CFR § 1.31(c)-(d), die den Handel mit Rohstoff-Futures regelt.
+
+
+* Unterbrechungsfreie Upgrade- und Wartungsvorgänge.  Behalten Sie den Zugriff auf Inhalte während Upgrade-, Erweiterungs-, Außerbetriebnahme- und Wartungsverfahren bei.
+* Föderiertes Identitätsmanagement.  Integriert sich zur Benutzerauthentifizierung in Active Directory, OpenLDAP oder Oracle Directory Service.  Unterstützt Single Sign-On (SSO) mithilfe des Security Assertion Markup Language 2.0 (SAML 2.0)-Standards zum Austausch von Authentifizierungs- und Autorisierungsdaten zwischen StorageGRID und Active Directory Federation Services (AD FS).
+

@@ -1,0 +1,106 @@
+---
+permalink: tenant/tenant-management-permissions.html 
+sidebar: sidebar 
+keywords: tenant management permissions 
+summary: Überlegen Sie vor dem Erstellen einer Mandantengruppe, welche Berechtigungen Sie dieser Gruppe zuweisen möchten.  Die Berechtigungen zur Mandantenverwaltung legen fest, welche Aufgaben Benutzer mit dem Mandantenmanager oder der Mandantenverwaltungs-API ausführen können.  Ein Benutzer kann einer oder mehreren Gruppen angehören.  Berechtigungen sind kumulativ, wenn ein Benutzer mehreren Gruppen angehört. 
+---
+= Berechtigungen zur Mandantenverwaltung
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Überlegen Sie vor dem Erstellen einer Mandantengruppe, welche Berechtigungen Sie dieser Gruppe zuweisen möchten.  Die Berechtigungen zur Mandantenverwaltung legen fest, welche Aufgaben Benutzer mit dem Mandantenmanager oder der Mandantenverwaltungs-API ausführen können.  Ein Benutzer kann einer oder mehreren Gruppen angehören.  Berechtigungen sind kumulativ, wenn ein Benutzer mehreren Gruppen angehört.
+
+Um sich beim Tenant Manager anzumelden oder die Tenant Management API zu verwenden, müssen Benutzer einer Gruppe angehören, die über mindestens eine Berechtigung verfügt.  Alle Benutzer, die sich anmelden können, können die folgenden Aufgaben ausführen:
+
+* Dashboard anzeigen
+* Das eigene Passwort ändern (für lokale Benutzer)
+
+
+Bei allen Berechtigungen bestimmt die Einstellung „Zugriffsmodus“ der Gruppe, ob Benutzer Einstellungen ändern und Vorgänge ausführen können oder ob sie die zugehörigen Einstellungen und Funktionen nur anzeigen können.
+
+
+NOTE: Wenn ein Benutzer mehreren Gruppen angehört und für eine der Gruppen der Lesezugriff aktiviert ist, hat der Benutzer nur Lesezugriff auf alle ausgewählten Einstellungen und Funktionen.
+
+Sie können einer Gruppe die folgenden Berechtigungen zuweisen. Beachten Sie, dass S3-Mandanten und Swift-Mandanten unterschiedliche Gruppenberechtigungen haben.
+
+[cols="1a,3a,3a"]
+|===
+| Erlaubnis | Beschreibung | Details 
+
+
+ a| 
+Root-Zugriff
+ a| 
+Bietet vollständigen Zugriff auf den Tenant Manager und die Tenant Management API.
+ a| 
+Swift-Benutzer müssen über Root-Zugriffsberechtigungen verfügen, um sich beim Mandantenkonto anmelden zu können.
+
+
+
+ a| 
+Administrator
+ a| 
+Nur Swift-Mieter.  Bietet vollständigen Zugriff auf die Swift-Container und -Objekte für dieses Mandantenkonto
+ a| 
+Swift-Benutzer müssen über die Berechtigung „Swift-Administrator“ verfügen, um Vorgänge mit der Swift-REST-API ausführen zu können.
+
+
+
+ a| 
+Verwalten Sie Ihre eigenen S3-Anmeldeinformationen
+ a| 
+Ermöglicht Benutzern das Erstellen und Entfernen eigener S3-Zugriffsschlüssel.
+ a| 
+Benutzer ohne diese Berechtigung sehen die Menüoption *STORAGE (S3)* > *Meine S3-Zugriffsschlüssel* nicht.
+
+
+
+ a| 
+Alle Eimer anzeigen
+ a| 
+*S3-Mandanten*: Ermöglicht Benutzern, alle Buckets und Bucket-Konfigurationen anzuzeigen.
+
+*Swift-Mandanten*: Ermöglicht Swift-Benutzern, alle Container und Containerkonfigurationen mithilfe der Tenant Management API anzuzeigen.
+ a| 
+Benutzer, die weder über die Berechtigung „Alle Buckets anzeigen“ noch über die Berechtigung „Alle Buckets verwalten“ verfügen, können die Menüoption *Buckets* nicht sehen.
+
+Diese Berechtigung wird durch die Berechtigung „Alle Buckets verwalten“ ersetzt. Es hat keine Auswirkungen auf S3-Bucket- oder Gruppenrichtlinien, die von S3-Clients oder der S3-Konsole verwendet werden.
+
+Sie können diese Berechtigung nur Swift-Gruppen über die Tenant Management API zuweisen.  Sie können diese Berechtigung nicht mithilfe des Mandanten-Managers Swift-Gruppen zuweisen.
+
+
+
+ a| 
+Alle Buckets verwalten
+ a| 
+*S3-Mandanten*: Ermöglicht Benutzern die Verwendung des Mandantenmanagers und der Mandantenverwaltungs-API zum Erstellen und Löschen von S3-Buckets und zum Verwalten der Einstellungen für alle S3-Buckets im Mandantenkonto, unabhängig von S3-Bucket- oder Gruppenrichtlinien.
+
+*Swift-Mandanten*: Ermöglicht Swift-Benutzern, die Konsistenz für Swift-Container mithilfe der Tenant Management API zu steuern.
+ a| 
+Benutzer, die weder über die Berechtigung „Alle Buckets anzeigen“ noch über die Berechtigung „Alle Buckets verwalten“ verfügen, können die Menüoption *Buckets* nicht sehen.
+
+Diese Berechtigung ersetzt die Berechtigung „Alle Buckets anzeigen“. Es hat keine Auswirkungen auf S3-Bucket- oder Gruppenrichtlinien, die von S3-Clients oder der S3-Konsole verwendet werden.
+
+Sie können diese Berechtigung nur Swift-Gruppen über die Tenant Management API zuweisen.  Sie können diese Berechtigung nicht mithilfe des Mandanten-Managers Swift-Gruppen zuweisen.
+
+
+
+ a| 
+Verwalten von Endpunkten
+ a| 
+Ermöglicht Benutzern die Verwendung des Tenant Managers oder der Tenant Management API zum Erstellen oder Bearbeiten von Plattformdienst-Endpunkten, die als Ziel für StorageGRID -Plattformdienste verwendet werden.
+ a| 
+Benutzern ohne diese Berechtigung wird die Menüoption *Plattformdienst-Endpunkte* nicht angezeigt.
+
+
+
+ a| 
+Registerkarte „S3-Konsole verwenden“
+ a| 
+In Kombination mit der Berechtigung „Alle Buckets anzeigen“ oder „Alle Buckets verwalten“ können Benutzer Objekte über die Registerkarte „S3-Konsole“ auf der Detailseite für einen Bucket anzeigen und verwalten.
+ a| 
+
+|===

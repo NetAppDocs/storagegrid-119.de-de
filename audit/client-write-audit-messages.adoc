@@ -1,0 +1,100 @@
+---
+permalink: audit/client-write-audit-messages.html 
+sidebar: sidebar 
+keywords: storagegrid, audit, message, messages, client write, OVWR, SDEL, SPOS, SPUT, SUPD, WDEL, WPUT, S3 
+summary: Client-Schreibprüfmeldungen werden protokolliert, wenn eine S3-Clientanwendung eine Anforderung zum Erstellen oder Ändern eines Objekts stellt. 
+---
+= Client schreibt Prüfmeldungen
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Client-Schreibprüfmeldungen werden protokolliert, wenn eine S3-Clientanwendung eine Anforderung zum Erstellen oder Ändern eines Objekts stellt.
+
+[cols="1a,3a,1a,1a"]
+|===
+| Code | Beschreibung | Verwendet von | Siehe 
+
+
+ a| 
+OVWR
+ a| 
+Objektüberschreiben: Protokolliert eine Transaktion zum Überschreiben eines Objekts mit einem anderen Objekt.
+ a| 
+S3- und Swift-Clients
+ a| 
+link:ovwr-object-overwrite.html["OVWR: Objektüberschreiben"]
+
+
+
+ a| 
+SDEL
+ a| 
+S3 DELETE: Protokolliert eine erfolgreiche Transaktion zum Löschen eines Objekts oder Buckets.
+
+*Hinweis:* Wenn die Transaktion auf einer Unterressource ausgeführt wird, enthält die Prüfnachricht das Feld S3SR.
+ a| 
+S3-Client
+ a| 
+link:sdel-s3-delete.html["SDEL: S3 LÖSCHEN"]
+
+
+
+ a| 
+SPOS
+ a| 
+S3 POST: Protokolliert eine erfolgreiche Transaktion zum Wiederherstellen eines Objekts aus dem AWS Glacier-Speicher in einem Cloud-Speicherpool.
+ a| 
+S3-Client
+ a| 
+link:spos-s3-post.html["SPOS: S3 POST"]
+
+
+
+ a| 
+SPUT
+ a| 
+S3 PUT: Protokolliert eine erfolgreiche Transaktion zum Erstellen eines neuen Objekts oder Buckets.
+
+*Hinweis:* Wenn die Transaktion auf einer Unterressource ausgeführt wird, enthält die Prüfnachricht das Feld S3SR.
+ a| 
+S3-Client
+ a| 
+link:sput-s3-put.html["SPUT: S3 PUT"]
+
+
+
+ a| 
+SUPD
+ a| 
+S3-Metadaten aktualisiert: Protokolliert eine erfolgreiche Transaktion zum Aktualisieren der Metadaten für ein vorhandenes Objekt oder einen vorhandenen Bucket.
+ a| 
+S3-Client
+ a| 
+link:supd-s3-metadata-updated.html["SUPD: S3-Metadaten aktualisiert"]
+
+
+
+ a| 
+WDEL
+ a| 
+Swift DELETE: Protokolliert eine erfolgreiche Transaktion zum Löschen eines Objekts oder Containers.
+ a| 
+Swift-Client
+ a| 
+link:wdel-swift-delete.html["WDEL: Schnelles LÖSCHEN"]
+
+
+
+ a| 
+WPUT
+ a| 
+Swift PUT: Protokolliert eine erfolgreiche Transaktion zum Erstellen eines neuen Objekts oder Containers.
+ a| 
+Swift-Client
+ a| 
+link:wput-swift-put.html["WPUT: Schnelles PUT"]
+
+|===

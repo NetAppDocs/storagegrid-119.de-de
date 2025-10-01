@@ -1,0 +1,98 @@
+---
+permalink: ilm/advantages-disadvantages-of-ingest-options.html 
+sidebar: sidebar 
+keywords: ingest options, balance ingest, strict ingest, dual commit ingest 
+summary: 'Wenn Sie die Vor- und Nachteile der drei Optionen zum Schutz von Daten bei der Aufnahme (Balanced, Strict oder Dual Commit) kennen, können Sie leichter entscheiden, welche Option Sie für eine ILM-Regel auswählen.' 
+---
+= Vorteile, Nachteile und Einschränkungen der Aufnahmeoptionen
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Wenn Sie die Vor- und Nachteile der drei Optionen zum Schutz von Daten bei der Aufnahme (Balanced, Strict oder Dual Commit) kennen, können Sie leichter entscheiden, welche Option Sie für eine ILM-Regel auswählen.
+
+Eine Übersicht über die Aufnahmeoptionen finden Sie unterlink:data-protection-options-for-ingest.html["Aufnahmeoptionen"] .
+
+
+
+== Vorteile der Optionen „Ausgewogen“ und „Streng“
+
+Im Vergleich zum Dual Commit, bei dem während der Aufnahme Zwischenkopien erstellt werden, können die beiden synchronen Platzierungsoptionen die folgenden Vorteile bieten:
+
+* *Bessere Datensicherheit*: Objektdaten werden sofort gemäß den Platzierungsanweisungen der ILM-Regel geschützt. Diese können so konfiguriert werden, dass sie vor einer Vielzahl von Fehlerbedingungen schützen, einschließlich des Ausfalls von mehr als einem Speicherort.  Dual Commit kann nur vor dem Verlust einer einzigen lokalen Kopie schützen.
+* *Effizienterer Grid-Betrieb*: Jedes Objekt wird bei der Aufnahme nur einmal verarbeitet.  Da das StorageGRID -System keine Zwischenkopien verfolgen oder löschen muss, ist die Verarbeitungslast geringer und es wird weniger Datenbankspeicherplatz verbraucht.
+* *(Ausgewogen) Empfohlen*: Die Option „Ausgewogen“ bietet optimale ILM-Effizienz.  Die Verwendung der Option „Ausgewogen“ wird empfohlen, es sei denn, es ist ein striktes Aufnahmeverhalten erforderlich oder das Raster erfüllt alle Kriterien für die Verwendung von Dual Commit.
+* *(Strenge) Sicherheit bezüglich der Objektstandorte*: Die Option „Strenge“ garantiert, dass Objekte sofort gemäß den Platzierungsanweisungen in der ILM-Regel gespeichert werden.
+
+
+
+
+== Nachteile der Optionen „Ausgewogen“ und „Streng“
+
+Im Vergleich zu Dual Commit haben die Optionen Balanced und Strict einige Nachteile:
+
+* *Längere Client-Aufnahmen*: Die Latenzen bei der Client-Aufnahme können länger sein.  Wenn Sie die Optionen „Ausgewogen“ oder „Streng“ verwenden, wird die Meldung „Aufnahme erfolgreich“ erst dann an den Client zurückgegeben, wenn alle Erasure-Coded-Fragmente oder replizierten Kopien erstellt und gespeichert wurden.  Allerdings erreichen die Objektdaten ihre endgültige Platzierung höchstwahrscheinlich viel schneller.
+* *(Streng) Höhere Fehlerraten bei der Aufnahme*: Bei der Option „Streng“ schlägt die Aufnahme fehl, wenn StorageGRID nicht sofort alle in der ILM-Regel angegebenen Kopien erstellen kann.  Wenn ein erforderlicher Speicherort vorübergehend offline ist oder wenn Netzwerkprobleme zu Verzögerungen beim Kopieren von Objekten zwischen Sites führen, kann es zu hohen Aufnahmefehlerraten kommen.
+* *(Streng) Platzierungen von mehrteiligen S3-Uploads können unter bestimmten Umständen nicht wie erwartet erfolgen*: Bei „Streng“ erwarten Sie, dass Objekte entweder wie in der ILM-Regel beschrieben platziert werden oder dass die Aufnahme fehlschlägt.  Bei einem mehrteiligen S3-Upload wird ILM jedoch für jeden Teil des Objekts beim Einlesen und für das gesamte Objekt ausgewertet, wenn der mehrteilige Upload abgeschlossen ist.  Unter folgenden Umständen kann dies zu Platzierungen führen, die anders ausfallen als erwartet:
++
+** *Wenn sich ILM während eines laufenden S3-Multipart-Uploads ändert*: Da jeder Teil gemäß der Regel platziert wird, die beim Aufnehmen des Teils aktiv ist, erfüllen einige Teile des Objekts möglicherweise nicht die aktuellen ILM-Anforderungen, wenn der Multipart-Upload abgeschlossen ist.  In diesen Fällen schlägt die Aufnahme des Objekts nicht fehl.  Stattdessen wird jedes Teil, das nicht richtig platziert ist, zur erneuten ILM-Bewertung in die Warteschlange gestellt und später an die richtige Position verschoben.
+** *Wenn ILM-Regeln nach Größe filtern*: Beim Auswerten von ILM für ein Teil filtert StorageGRID nach der Größe des Teils, nicht nach der Größe des Objekts.  Dies bedeutet, dass Teile eines Objekts an Orten gespeichert werden können, die die ILM-Anforderungen für das gesamte Objekt nicht erfüllen.  Wenn beispielsweise eine Regel angibt, dass alle Objekte mit 10 GB oder mehr bei DC1 gespeichert werden, während alle kleineren Objekte bei DC2 gespeichert werden, wird bei der Aufnahme jeder 1-GB-Teil eines 10-teiligen mehrteiligen Uploads bei DC2 gespeichert.  Wenn ILM für das Objekt ausgewertet wird, werden alle Teile des Objekts nach DC1 verschoben.
+
+
+* *(Streng) Die Aufnahme schlägt nicht fehl, wenn Objekt-Tags oder Metadaten aktualisiert werden und neu erforderliche Platzierungen nicht vorgenommen werden können*: Bei „Streng“ erwarten Sie, dass Objekte entweder wie in der ILM-Regel beschrieben platziert werden oder dass die Aufnahme fehlschlägt.  Wenn Sie jedoch Metadaten oder Tags für ein Objekt aktualisieren, das bereits im Raster gespeichert ist, wird das Objekt nicht erneut aufgenommen.  Dies bedeutet, dass alle durch das Update ausgelösten Änderungen an der Objektplatzierung nicht sofort vorgenommen werden.  Platzierungsänderungen werden vorgenommen, wenn ILM durch normale ILM-Hintergrundprozesse neu ausgewertet wird.  Wenn erforderliche Platzierungsänderungen nicht vorgenommen werden können (beispielsweise weil ein neu erforderlicher Speicherort nicht verfügbar ist), behält das aktualisierte Objekt seine aktuelle Platzierung bei, bis die Platzierungsänderungen möglich sind.
+
+
+
+
+== Einschränkungen bei der Objektplatzierung mit den Optionen „Ausgewogen“ und „Streng“
+
+Die Optionen „Ausgewogen“ oder „Streng“ können nicht für ILM-Regeln verwendet werden, die eine der folgenden Platzierungsanweisungen enthalten:
+
+* Platzierung in einem Cloud-Speicherpool am Tag 0.
+* Platzierungen in einem Cloud-Speicherpool, wenn die Regel eine benutzerdefinierte Erstellungszeit als Referenzzeit hat.
+
+
+Diese Einschränkungen bestehen, weil StorageGRID keine synchronen Kopien in einem Cloud-Speicherpool erstellen kann und eine benutzerdefinierte Erstellungszeit bis zur Gegenwart reichen könnte.
+
+
+
+== Wie sich ILM-Regeln und Konsistenz auf den Datenschutz auswirken
+
+Sowohl Ihre ILM-Regel als auch Ihre Wahl der Konsistenz wirken sich darauf aus, wie Objekte geschützt werden.  Diese Einstellungen können interagieren.
+
+Beispielsweise wirkt sich das für eine ILM-Regel ausgewählte Aufnahmeverhalten auf die anfängliche Platzierung von Objektkopien aus, während die beim Speichern eines Objekts verwendete Konsistenz die anfängliche Platzierung von Objektmetadaten beeinflusst.  Da StorageGRID zur Erfüllung von Clientanforderungen Zugriff auf die Daten und Metadaten eines Objekts benötigt, kann die Auswahl passender Schutzebenen für Konsistenz und Aufnahmeverhalten einen besseren anfänglichen Datenschutz und vorhersehbarere Systemreaktionen bieten.
+
+Hier ist eine kurze Zusammenfassung der Konsistenzwerte, die in StorageGRID verfügbar sind:
+
+* *Alle*: Alle Knoten erhalten die Objektmetadaten sofort, andernfalls schlägt die Anforderung fehl.
+* *Stark-global*: Objektmetadaten werden sofort an alle Sites verteilt.  Garantiert Lese- und Schreibkonsistenz für alle Clientanforderungen auf allen Sites.
+* *Strong-Site*: Objektmetadaten werden sofort an andere Knoten der Site verteilt.  Garantiert die Lese- und Schreibkonsistenz für alle Clientanforderungen innerhalb einer Site.
+* *Lesen nach neuem Schreiben*: Bietet Lese-nach-Schreib-Konsistenz für neue Objekte und letztendliche Konsistenz für Objektaktualisierungen.  Bietet hohe Verfügbarkeit und Datenschutzgarantien.  Für die meisten Fälle empfohlen.
+* *Verfügbar*: Bietet letztendliche Konsistenz sowohl für neue Objekte als auch für Objektaktualisierungen.  Verwenden Sie es für S3-Buckets nur nach Bedarf (z. B. für einen Bucket, der Protokollwerte enthält, die selten gelesen werden, oder für HEAD- oder GET-Operationen für nicht vorhandene Schlüssel).  Wird für S3 FabricPool Buckets nicht unterstützt.
+
+
+
+NOTE: Bevor Sie einen Konsistenzwert auswählen,link:../s3/consistency-controls.html["Lesen Sie die vollständige Beschreibung der Konsistenz"] . Sie sollten die Vorteile und Einschränkungen verstehen, bevor Sie den Standardwert ändern.
+
+
+
+== Beispiel für die Interaktion von Konsistenz- und ILM-Regeln
+
+Angenommen, Sie haben ein Grid mit zwei Sites mit der folgenden ILM-Regel und der folgenden Konsistenz:
+
+* *ILM-Regel*: Erstellen Sie zwei Objektkopien, eine am lokalen Standort und eine an einem Remote-Standort. Verwenden Sie ein striktes Aufnahmeverhalten.
+* *Konsistenz*: Stark global (Objektmetadaten werden sofort an alle Sites verteilt).
+
+
+Wenn ein Client ein Objekt im Grid speichert, erstellt StorageGRID Kopien beider Objekte und verteilt Metadaten an beide Sites, bevor dem Client die Erfolgsmeldung zurückgegeben wird.
+
+Zum Zeitpunkt der erfolgreichen Aufnahme der Nachricht ist das Objekt vollständig vor Verlust geschützt. Wenn beispielsweise die lokale Site kurz nach der Aufnahme verloren geht, sind am Remote-Standort weiterhin Kopien der Objektdaten und der Objektmetadaten vorhanden.  Das Objekt ist vollständig abrufbar.
+
+Wenn Sie stattdessen dieselbe ILM-Regel und die starke Site-Konsistenz verwenden, erhält der Client möglicherweise eine Erfolgsmeldung, nachdem die Objektdaten auf die Remote-Site repliziert wurden, aber bevor die Objektmetadaten dorthin verteilt werden. In diesem Fall entspricht das Schutzniveau der Objektmetadaten nicht dem Schutzniveau der Objektdaten. Wenn die lokale Site kurz nach der Aufnahme verloren geht, gehen die Objektmetadaten verloren. Das Objekt kann nicht abgerufen werden.
+
+Die Wechselbeziehung zwischen Konsistenz und ILM-Regeln kann komplex sein.  Wenden Sie sich an NetApp , wenn Sie Hilfe benötigen.
+
+.Ähnliche Informationen
+link:example-5-ilm-rules-and-policy-for-strict-ingest-behavior.html["Beispiel 5: ILM-Regeln und -Richtlinien für striktes Aufnahmeverhalten"]

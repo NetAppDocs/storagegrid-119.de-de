@@ -1,0 +1,43 @@
+---
+permalink: rhel/installing-storagegrid-webscale-host-service.html 
+sidebar: sidebar 
+keywords: how to install host services 
+summary: Sie verwenden das StorageGRID RPM-Paket, um die StorageGRID Hostdienste zu installieren. 
+---
+= Installieren Sie die StorageGRID Hostdienste
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Sie verwenden das StorageGRID RPM-Paket, um die StorageGRID Hostdienste zu installieren.
+
+.Informationen zu diesem Vorgang
+Diese Anweisungen beschreiben, wie Sie die Hostdienste aus den RPM-Paketen installieren.  Alternativ können Sie die im Installationsarchiv enthaltenen DNF-Repository-Metadaten verwenden, um die RPM-Pakete remote zu installieren.  Siehe die DNF-Repository-Anweisungen für Ihr Linux-Betriebssystem.
+
+.Schritte
+. Kopieren Sie die StorageGRID RPM-Pakete auf jeden Ihrer Hosts oder stellen Sie sie auf einem gemeinsam genutzten Speicher zur Verfügung.
++
+Platzieren Sie sie beispielsweise in der `/tmp` Verzeichnis, sodass Sie den Beispielbefehl im nächsten Schritt verwenden können.
+
+. Melden Sie sich bei jedem Host als Root oder mit einem Konto mit Sudo-Berechtigung an und führen Sie die folgenden Befehle in der angegebenen Reihenfolge aus:
++
+[listing]
+----
+sudo dnf --nogpgcheck localinstall /tmp/StorageGRID-Webscale-Images-version-SHA.rpm
+----
++
+[listing]
+----
+sudo dnf --nogpgcheck localinstall /tmp/StorageGRID-Webscale-Service-version-SHA.rpm
+----
++
+
+CAUTION: Sie müssen zuerst das Images-Paket und dann das Service-Paket installieren.
+
++
+
+NOTE: Wenn Sie die Pakete in einem anderen Verzeichnis als `/tmp` , ändern Sie den Befehl, um den von Ihnen verwendeten Pfad wiederzugeben.
+
+

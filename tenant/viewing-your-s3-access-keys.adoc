@@ -1,0 +1,34 @@
+---
+permalink: tenant/viewing-your-s3-access-keys.html 
+sidebar: sidebar 
+keywords: how to view your s3 access key 
+summary: Wenn Sie einen S3-Mandanten verwenden und über die entsprechende Berechtigung verfügen, können Sie eine Liste Ihrer S3-Zugriffsschlüssel anzeigen.  Sie können die Liste nach Ablaufzeit sortieren, um festzustellen, welche Schlüssel bald ablaufen.  Bei Bedarf können Sie neue Schlüssel erstellen oder nicht mehr verwendete Schlüssel löschen. 
+---
+= Zeigen Sie Ihre S3-Zugriffsschlüssel an
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Wenn Sie einen S3-Tenant verwenden und über dielink:tenant-management-permissions.html["entsprechende Erlaubnis"] können Sie eine Liste Ihrer S3-Zugriffsschlüssel anzeigen.  Sie können die Liste nach Ablaufzeit sortieren, um festzustellen, welche Schlüssel bald ablaufen.  Bei Bedarf können Sielink:creating-your-own-s3-access-keys.html["neue Schlüssel erstellen"] oderlink:deleting-your-own-s3-access-keys.html["Schlüssel löschen"] die Sie nicht mehr verwenden.
+
+
+CAUTION: Auf die zu Ihrem Konto gehörenden S3-Buckets und -Objekte kann mithilfe der Zugriffsschlüssel-ID und des geheimen Zugriffsschlüssels zugegriffen werden, die für Ihr Konto im Tenant Manager angezeigt werden.  Schützen Sie daher Zugriffsschlüssel wie ein Passwort.  Wechseln Sie die Zugriffsschlüssel regelmäßig, entfernen Sie alle nicht verwendeten Schlüssel aus Ihrem Konto und geben Sie sie niemals an andere Benutzer weiter.
+
+.Bevor Sie beginnen
+* Sie sind beim Tenant Manager angemeldet mit einemlink:../admin/web-browser-requirements.html["unterstützter Webbrowser"] .
+* Sie gehören zu einer Benutzergruppe, die über die Berechtigung „S3-Anmeldeinformationen selbst verwalten“ verfügt.link:tenant-management-permissions.html["Erlaubnis"] .
+
+
+.Schritte
+. Wählen Sie *SPEICHER (S3)* > *Meine Zugriffsschlüssel*.
+. Sortieren Sie auf der Seite „Meine Zugriffsschlüssel“ alle vorhandenen Zugriffsschlüssel nach *Ablaufzeit* oder *Zugriffsschlüssel-ID*.
+. Erstellen Sie bei Bedarf neue Schlüssel oder löschen Sie alle Schlüssel, die Sie nicht mehr verwenden.
++
+Wenn Sie neue Schlüssel erstellen, bevor die vorhandenen Schlüssel ablaufen, können Sie die neuen Schlüssel verwenden, ohne vorübergehend den Zugriff auf die Objekte im Konto zu verlieren.
+
++
+Abgelaufene Schlüssel werden automatisch entfernt.
+
+

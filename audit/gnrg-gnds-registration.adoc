@@ -1,0 +1,79 @@
+---
+permalink: audit/gnrg-gnds-registration.html 
+sidebar: sidebar 
+keywords: storagegrid, audi, message, GNRG, GNDS Registration 
+summary: Der CMN-Dienst generiert diese Prüfnachricht, wenn ein Dienst Informationen über sich selbst im StorageGRID System aktualisiert oder registriert hat. 
+---
+= GNRG: GNDS-Registrierung
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Der CMN-Dienst generiert diese Prüfnachricht, wenn ein Dienst Informationen über sich selbst im StorageGRID System aktualisiert oder registriert hat.
+
+[cols="1a,1a,4a"]
+|===
+| Code | Feld | Beschreibung 
+
+
+ a| 
+RSLT
+ a| 
+Ergebnis
+ a| 
+Das Ergebnis der Aktualisierungsanfrage:
+
+* SUCS: Erfolgreich
+* SUNV: Dienst nicht verfügbar
+* GERR: Anderer Fehler
+
+
+
+
+ a| 
+GNID
+ a| 
+Knoten-ID
+ a| 
+Die Knoten-ID des Dienstes, der die Aktualisierungsanforderung initiiert hat.
+
+
+
+ a| 
+GNTP
+ a| 
+Gerätetyp
+ a| 
+Der Gerätetyp des Grid-Knotens (z. B. BLDR für einen LDR-Dienst).
+
+
+
+ a| 
+GNDV
+ a| 
+Gerätemodellversion
+ a| 
+Die Zeichenfolge, die die Gerätemodellversion des Grid-Knotens im DMDL-Paket identifiziert.
+
+
+
+ a| 
+GNGP
+ a| 
+Gruppe
+ a| 
+Die Gruppe, zu der der Grid-Knoten gehört (im Kontext der Link-Kosten und der Rangfolge der Service-Abfragen).
+
+
+
+ a| 
+GNIA
+ a| 
+IP-Adresse
+ a| 
+Die IP-Adresse des Grid-Knotens.
+
+|===
+Diese Nachricht wird immer dann generiert, wenn ein Grid-Knoten seinen Eintrag im Grid-Knoten-Paket aktualisiert.

@@ -1,0 +1,68 @@
+---
+permalink: ubuntu/required-materials.html 
+sidebar: sidebar 
+keywords: installation materials ubuntu debian 
+summary: Bevor Sie StorageGRID installieren, sammeln und bereiten Sie die erforderlichen Informationen und Materialien vor. 
+---
+= Benötigte Informationen und Materialien
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Bevor Sie StorageGRID installieren, sammeln und bereiten Sie die erforderlichen Informationen und Materialien vor.
+
+
+
+== Erforderliche Informationen
+
+Netzwerkplan:: Welche Netzwerke Sie an jeden StorageGRID Knoten anschließen möchten.  StorageGRID unterstützt mehrere Netzwerke zur Verkehrstrennung, Sicherheit und Verwaltungsfreundlichkeit.
++
+--
+Zum StorageGRIDlink:../network/index.html["Netzwerkrichtlinien"] .
+
+--
+Netzwerkinformationen:: Jedem Grid-Knoten zuzuweisende IP-Adressen und die IP-Adressen der DNS- und NTP-Server.
+Server für Grid-Knoten:: Identifizieren Sie eine Reihe von Servern (physisch, virtuell oder beides), die insgesamt ausreichend Ressourcen bereitstellen, um die Anzahl und Art der StorageGRID Knoten zu unterstützen, die Sie bereitstellen möchten.
++
+--
+
+NOTE: Wenn Ihre StorageGRID Installation keine StorageGRID Appliance-(Hardware-)Speicherknoten verwendet, müssen Sie Hardware-RAID-Speicher mit batteriegepuffertem Schreibcache (BBWC) verwenden.  StorageGRID unterstützt nicht die Verwendung von virtuellen Storage Area Networks (vSANs), Software-RAID oder keinen RAID-Schutz.
+
+--
+Knotenmigration (falls erforderlich):: Verstehen Sie dielink:node-container-migration-requirements.html["Anforderungen für die Knotenmigration"] , wenn Sie geplante Wartungsarbeiten an physischen Hosts ohne Dienstunterbrechung durchführen möchten.
+Ähnliche Informationen:: https://imt.netapp.com/matrix/#welcome["NetApp Interoperabilitätsmatrix-Tool"^]
+
+
+
+
+== Benötigtes Material
+
+NetApp StorageGRID -Lizenz:: Sie müssen über eine gültige, digital signierte NetApp -Lizenz verfügen.
+
+
+
+NOTE: Eine Nicht-Produktionslizenz, die zum Testen und Proof-of-Concept-Grids verwendet werden kann, ist im StorageGRID -Installationsarchiv enthalten.
+
+StorageGRID -Installationsarchiv:: link:downloading-and-extracting-storagegrid-installation-files.html["Laden Sie das StorageGRID Installationsarchiv herunter und extrahieren Sie die Dateien"] .
+Service-Laptop:: Die Installation des StorageGRID -Systems erfolgt über einen Service-Laptop.
++
+--
+Der Dienstlaptop muss über Folgendes verfügen:
+
+* Netzwerkanschluss
+* SSH-Client (z. B. PuTTY)
+* link:../admin/web-browser-requirements.html["Unterstützte Webbrowser"]
+
+
+--
+StorageGRID -Dokumentation::
++
+--
+* link:../release-notes/index.html["Versionshinweise"]
+* link:../admin/index.html["Anleitung zur Administration von StorageGRID"]
+
+
+--
+

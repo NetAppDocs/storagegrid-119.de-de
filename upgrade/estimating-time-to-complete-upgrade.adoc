@@ -1,0 +1,144 @@
+---
+permalink: upgrade/estimating-time-to-complete-upgrade.html 
+sidebar: sidebar 
+keywords: upgrade, time estimate, duration, cassandra upgrade 
+summary: Überlegen Sie, wann Sie ein Upgrade durchführen sollten, und berücksichtigen Sie dabei, wie lange das Upgrade dauern könnte.  Machen Sie sich bewusst, welche Vorgänge Sie in den einzelnen Phasen des Upgrades durchführen können und welche nicht. 
+---
+= Schätzen Sie die Zeit, die für die Durchführung eines Upgrades benötigt wird
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Überlegen Sie, wann Sie ein Upgrade durchführen sollten, und berücksichtigen Sie dabei, wie lange das Upgrade dauern könnte.  Achten Sie darauf, welche Vorgänge Sie in den einzelnen Phasen des Upgrades ausführen können und welche nicht.
+
+.Informationen zu diesem Vorgang
+Die für die Durchführung eines StorageGRID -Upgrades erforderliche Zeit hängt von verschiedenen Faktoren ab, beispielsweise von der Client-Auslastung und der Hardwareleistung.
+
+In der Tabelle sind die wichtigsten Upgrade-Aufgaben zusammengefasst und die ungefähre für jede Aufgabe erforderliche Zeit aufgeführt.  Die Schritte nach der Tabelle enthalten Anweisungen, mit denen Sie die Upgrade-Zeit für Ihr System abschätzen können.
+
+[cols="1a,2a,2a,4a"]
+|===
+| Upgrade-Aufgabe | Beschreibung | Ungefähre benötigte Zeit | Während dieser Aufgabe 
+
+
+ a| 
+Führen Sie Vorprüfungen durch und aktualisieren Sie den primären Admin-Knoten
+ a| 
+Die Upgrade-Vorprüfungen werden ausgeführt und der primäre Admin-Knoten wird gestoppt, aktualisiert und neu gestartet.
+ a| 
+30 Minuten bis 1 Stunde, wobei die Knoten der Service-Appliance die meiste Zeit benötigen.
+
+Ungelöste Vorprüfungsfehler verlängern diese Zeit.
+ a| 
+Sie können nicht auf den primären Admin-Knoten zugreifen.  Möglicherweise werden Verbindungsfehler gemeldet, die Sie ignorieren können.
+
+Durch Ausführen der Upgrade-Vorprüfungen vor dem Starten des Upgrades können Sie alle Fehler vor dem geplanten Wartungsfenster für das Upgrade beheben.
+
+
+
+ a| 
+Upgrade-Service starten
+ a| 
+Die Softwaredatei wird verteilt und der Upgrade-Dienst gestartet.
+ a| 
+3 Minuten pro Grid-Knoten
+ a| 
+
+
+
+ a| 
+Aktualisieren Sie andere Grid-Knoten
+ a| 
+Die Software auf allen anderen Grid-Knoten wird in der Reihenfolge aktualisiert, in der Sie die Knoten genehmigen.  Jeder Knoten in Ihrem System wird einzeln heruntergefahren.
+ a| 
+15 Minuten bis 1 Stunde pro Knoten, wobei Appliance-Knoten die meiste Zeit benötigen
+
+*Hinweis*: Für Appliance-Knoten wird das StorageGRID Appliance Installer automatisch auf die neueste Version aktualisiert.
+ a| 
+* Ändern Sie nicht die Rasterkonfiguration.
+* Ändern Sie die Konfiguration der Überwachungsebene nicht.
+* Aktualisieren Sie die ILM-Konfiguration nicht.
+* Sie können keine anderen Wartungsvorgänge wie Hotfixes, Außerbetriebnahmen oder Erweiterungen durchführen.
+
+
+*Hinweis*: Wenn Sie eine Wiederherstellung durchführen müssen, wenden Sie sich an den technischen Support.
+
+
+
+ a| 
+Funktionen aktivieren
+ a| 
+Die neuen Funktionen für die neue Version sind aktiviert.
+ a| 
+Weniger als 5 Minuten
+ a| 
+* Ändern Sie nicht die Rasterkonfiguration.
+* Ändern Sie die Konfiguration der Überwachungsebene nicht.
+* Aktualisieren Sie die ILM-Konfiguration nicht.
+* Sie können keine weiteren Wartungsvorgänge durchführen.
+
+
+
+
+ a| 
+Datenbank aktualisieren
+ a| 
+Der Upgrade-Prozess überprüft jeden Knoten, um sicherzustellen, dass die Cassandra-Datenbank nicht aktualisiert werden muss.
+ a| 
+10 Sekunden pro Knoten oder einige Minuten für das gesamte Raster
+ a| 
+Das Upgrade von StorageGRID 11.8 auf 11.9 erfordert kein Upgrade der Cassandra-Datenbank. Der Cassandra-Dienst wird jedoch auf jedem Speicherknoten gestoppt und neu gestartet.
+
+Bei zukünftigen StorageGRID Funktionsversionen kann die Aktualisierung der Cassandra-Datenbank mehrere Tage dauern.
+
+
+
+ a| 
+Abschließende Upgrade-Schritte
+ a| 
+Temporäre Dateien werden entfernt und das Upgrade auf die neue Version abgeschlossen.
+ a| 
+5 Minuten
+ a| 
+Wenn die Aufgabe *Letzte Upgrade-Schritte* abgeschlossen ist, können Sie alle Wartungsverfahren durchführen.
+
+|===
+.Schritte
+. Schätzen Sie die erforderliche Zeit zum Aktualisieren aller Grid-Knoten.
++
+.. Multiplizieren Sie die Anzahl der Knoten in Ihrem StorageGRID -System mit 1 Stunde/Knoten.
++
+Generell dauert die Aktualisierung von Appliance-Knoten länger als die von softwarebasierten Knoten.
+
+.. Fügen Sie zu dieser Zeit 1 Stunde hinzu, um die Zeit zu berücksichtigen, die zum Herunterladen der `.upgrade` Datei, führen Sie Vorabprüfungen durch und schließen Sie die letzten Upgrade-Schritte ab.
+
+
+. Wenn Sie Linux-Knoten haben, fügen Sie für jeden Knoten 15 Minuten hinzu, um die zum Herunterladen und Installieren des RPM- oder DEB-Pakets erforderliche Zeit zu berücksichtigen.
+. Berechnen Sie die geschätzte Gesamtzeit für das Upgrade, indem Sie die Ergebnisse der Schritte 1 und 2 addieren.
+
+
+
+
+== Beispiel: Geschätzte Zeit für das Upgrade auf StorageGRID 11.9
+
+Angenommen, Ihr System verfügt über 14 Grid-Knoten, von denen 8 Linux-Knoten sind.
+
+. Multiplizieren Sie 14 mit 1 Stunde/Knoten.
+. Fügen Sie 1 Stunde hinzu, um den Download, die Vorprüfung und die letzten Schritte zu berücksichtigen.
++
+Die geschätzte Zeit zum Upgrade aller Knoten beträgt 15 Stunden.
+
+. Multiplizieren Sie 8 mit 15 Minuten/Knoten, um die Zeit für die Installation des RPM- oder DEB-Pakets auf den Linux-Knoten zu berücksichtigen.
++
+Die geschätzte Zeit für diesen Schritt beträgt 2 Stunden.
+
+. Addieren Sie die Werte.
++
+Sie sollten bis zu 17 Stunden einplanen, um das Upgrade Ihres Systems auf StorageGRID 11.9.0 abzuschließen.
+
+
+
+
+NOTE: Bei Bedarf können Sie das Wartungsfenster in kleinere Fenster aufteilen, indem Sie die Aktualisierung von Teilmengen von Grid-Knoten in mehreren Sitzungen genehmigen.  Beispielsweise möchten Sie möglicherweise die Knoten an Standort A in einer Sitzung aktualisieren und dann die Knoten an Standort B in einer späteren Sitzung aktualisieren.  Wenn Sie das Upgrade in mehreren Sitzungen durchführen möchten, beachten Sie, dass Sie die neuen Funktionen erst verwenden können, wenn alle Knoten aktualisiert wurden.

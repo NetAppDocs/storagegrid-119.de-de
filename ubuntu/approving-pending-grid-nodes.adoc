@@ -1,0 +1,131 @@
+---
+permalink: ubuntu/approving-pending-grid-nodes.html 
+sidebar: sidebar 
+keywords: how to approve a grid node 
+summary: Sie müssen jeden Grid-Knoten genehmigen, bevor er dem StorageGRID -System beitreten kann. 
+---
+= Ausstehende Rasterknoten genehmigen
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Sie müssen jeden Grid-Knoten genehmigen, bevor er dem StorageGRID -System beitreten kann.
+
+.Bevor Sie beginnen
+Sie haben alle virtuellen und StorageGRID -Appliance-Grid-Knoten bereitgestellt.
+
+
+NOTE: Es ist effizienter, eine einzige Installation aller Knoten durchzuführen, als einige Knoten jetzt und einige Knoten später zu installieren.
+
+.Schritte
+. Überprüfen Sie die Liste der ausstehenden Knoten und vergewissern Sie sich, dass alle von Ihnen bereitgestellten Grid-Knoten angezeigt werden.
++
+
+NOTE: Wenn ein Grid-Knoten fehlt, bestätigen Sie, dass er erfolgreich bereitgestellt wurde und die richtige Grid-Netzwerk-IP des primären Admin-Knotens für ADMIN_IP festgelegt ist.
+
+. Wählen Sie das Optionsfeld neben einem ausstehenden Knoten aus, den Sie genehmigen möchten.
++
+image::../media/5_gmi_installer_grid_nodes_pending.gif[Dieses Bild wird durch den umgebenden Text erklärt.]
+
+. Klicken Sie auf *Genehmigen*.
+. Ändern Sie unter „Allgemeine Einstellungen“ nach Bedarf die Einstellungen für die folgenden Eigenschaften:
++
+** *Site*: Der Systemname der Site für diesen Grid-Knoten.
+** *Name*: Der Systemname für den Knoten.  Der Name ist standardmäßig der Name, den Sie bei der Konfiguration des Knotens angegeben haben.
++
+Systemnamen sind für interne StorageGRID -Vorgänge erforderlich und können nach Abschluss der Installation nicht mehr geändert werden.  Während dieses Schritts des Installationsvorgangs können Sie die Systemnamen jedoch nach Bedarf ändern.
+
+** *NTP-Rolle*: Die Network Time Protocol (NTP)-Rolle des Grid-Knotens.  Die Optionen sind *Automatisch*, *Primär* und *Client*.  Wenn Sie „*Automatisch*“ auswählen, wird die primäre Rolle den Admin-Knoten, Speicherknoten mit ADC-Diensten, Gateway-Knoten und allen Grid-Knoten mit nicht statischen IP-Adressen zugewiesen.  Allen anderen Grid-Knoten wird die Client-Rolle zugewiesen.
++
+
+NOTE: Stellen Sie sicher, dass mindestens zwei Knoten an jedem Standort auf mindestens vier externe NTP-Quellen zugreifen können.  Wenn an einem Standort nur ein Knoten die NTP-Quellen erreichen kann, treten bei einem Ausfall dieses Knotens Zeitprobleme auf.  Darüber hinaus gewährleistet die Festlegung von zwei Knoten pro Site als primäre NTP-Quellen eine genaue Zeitmessung, wenn eine Site vom Rest des Netzes isoliert ist.
+
+** *Speichertyp* (nur Speicherknoten): Geben Sie an, dass ein neuer Speicherknoten ausschließlich für Daten, nur für Metadaten oder für beides verwendet werden soll.  Die Optionen sind *Daten und Metadaten* („kombiniert“), *Nur Daten* und *Nur Metadaten*.
++
+
+CAUTION: Sehenlink:../primer/what-storage-node-is.html#types-of-storage-nodes["Arten von Speicherknoten"] Informationen zu den Anforderungen für diese Knotentypen finden Sie unter.
+
+** *ADC-Dienst* (nur Speicherknoten): Wählen Sie *Automatisch*, damit das System ermittelt, ob der Knoten den Administrative Domain Controller (ADC)-Dienst benötigt. Der ADC-Dienst verfolgt den Standort und die Verfügbarkeit von Grid-Diensten. Mindestens drei Speicherknoten an jedem Standort müssen den ADC-Dienst enthalten.  Sie können den ADC-Dienst nach der Bereitstellung nicht mehr zu einem Knoten hinzufügen.
+
+
+. Ändern Sie im Grid-Netzwerk nach Bedarf die Einstellungen für die folgenden Eigenschaften:
++
+** *IPv4-Adresse (CIDR)*: Die CIDR-Netzwerkadresse für die Grid-Netzwerkschnittstelle (eth0 innerhalb des Containers).  Beispiel: 192.168.1.234/21
+** *Gateway*: Das Grid-Netzwerk-Gateway.  Beispiel: 192.168.0.1
++
+Das Gateway wird benötigt, wenn mehrere Grid-Subnetze vorhanden sind.
+
+
+
++
+
+NOTE: Wenn Sie DHCP für die Grid-Netzwerkkonfiguration ausgewählt haben und den Wert hier ändern, wird der neue Wert als statische Adresse auf dem Knoten konfiguriert.  Sie müssen sicherstellen, dass sich die konfigurierte IP-Adresse nicht in einem DHCP-Adresspool befindet.
+
+. Wenn Sie das Admin-Netzwerk für den Grid-Knoten konfigurieren möchten, fügen Sie die Einstellungen im Abschnitt „Admin-Netzwerk“ nach Bedarf hinzu oder aktualisieren Sie sie.
++
+Geben Sie die Zielsubnetze der Routen aus dieser Schnittstelle in das Textfeld *Subnetze (CIDR)* ein.  Wenn mehrere Admin-Subnetze vorhanden sind, ist das Admin-Gateway erforderlich.
+
++
+
+NOTE: Wenn Sie DHCP für die Admin-Netzwerkkonfiguration ausgewählt haben und den Wert hier ändern, wird der neue Wert als statische Adresse auf dem Knoten konfiguriert.  Sie müssen sicherstellen, dass sich die konfigurierte IP-Adresse nicht in einem DHCP-Adresspool befindet.
+
++
+*Geräte:* Wenn das Admin-Netzwerk für ein StorageGRID -Gerät während der Erstinstallation mit dem StorageGRID Appliance Installer nicht konfiguriert wurde, kann es in diesem Grid Manager-Dialogfeld nicht konfiguriert werden.  Stattdessen müssen Sie die folgenden Schritte ausführen:
+
++
+.. Starten Sie das Gerät neu: Wählen Sie im Geräteinstallationsprogramm *Erweitert* > *Neustart*.
++
+Der Neustart kann mehrere Minuten dauern.
+
+.. Wählen Sie *Netzwerk konfigurieren* > *Linkkonfiguration* und aktivieren Sie die entsprechenden Netzwerke.
+.. Wählen Sie *Netzwerk konfigurieren* > *IP-Konfiguration* und konfigurieren Sie die aktivierten Netzwerke.
+.. Kehren Sie zur Startseite zurück und klicken Sie auf *Installation starten*.
+.. Im Grid Manager: Wenn der Knoten in der Tabelle „Genehmigte Knoten“ aufgeführt ist, entfernen Sie den Knoten.
+.. Entfernen Sie den Knoten aus der Tabelle „Ausstehende Knoten“.
+.. Warten Sie, bis der Knoten wieder in der Liste „Ausstehende Knoten“ angezeigt wird.
+.. Bestätigen Sie, dass Sie die entsprechenden Netzwerke konfigurieren können.  Sie sollten bereits mit den Informationen ausgefüllt sein, die Sie auf der IP-Konfigurationsseite des Appliance-Installationsprogramms angegeben haben.
++
+Weitere Informationen finden Sie im https://docs.netapp.com/us-en/storagegrid-appliances/installconfig/index.html["Schnellstart für die Hardwareinstallation"^] um Anweisungen für Ihr Gerät zu finden.
+
+
+
+. Wenn Sie das Client-Netzwerk für den Grid-Knoten konfigurieren möchten, fügen Sie die Einstellungen im Abschnitt „Client-Netzwerk“ nach Bedarf hinzu oder aktualisieren Sie sie.  Wenn das Client-Netzwerk konfiguriert ist, ist das Gateway erforderlich und wird nach der Installation zum Standard-Gateway für den Knoten.
++
+
+NOTE: Wenn Sie DHCP für die Client-Netzwerkkonfiguration ausgewählt haben und den Wert hier ändern, wird der neue Wert als statische Adresse auf dem Knoten konfiguriert.  Sie müssen sicherstellen, dass sich die konfigurierte IP-Adresse nicht in einem DHCP-Adresspool befindet.
+
++
+*Geräte:* Wenn das Client-Netzwerk eines StorageGRID Geräts während der Erstinstallation mit dem StorageGRID -Geräteinstallationsprogramm nicht konfiguriert wurde, kann es in diesem Grid Manager-Dialogfeld nicht konfiguriert werden.  Stattdessen müssen Sie die folgenden Schritte ausführen:
+
++
+.. Starten Sie das Gerät neu: Wählen Sie im Geräteinstallationsprogramm *Erweitert* > *Neustart*.
++
+Der Neustart kann mehrere Minuten dauern.
+
+.. Wählen Sie *Netzwerk konfigurieren* > *Linkkonfiguration* und aktivieren Sie die entsprechenden Netzwerke.
+.. Wählen Sie *Netzwerk konfigurieren* > *IP-Konfiguration* und konfigurieren Sie die aktivierten Netzwerke.
+.. Kehren Sie zur Startseite zurück und klicken Sie auf *Installation starten*.
+.. Im Grid Manager: Wenn der Knoten in der Tabelle „Genehmigte Knoten“ aufgeführt ist, entfernen Sie den Knoten.
+.. Entfernen Sie den Knoten aus der Tabelle „Ausstehende Knoten“.
+.. Warten Sie, bis der Knoten wieder in der Liste „Ausstehende Knoten“ angezeigt wird.
+.. Bestätigen Sie, dass Sie die entsprechenden Netzwerke konfigurieren können.  Sie sollten bereits mit den Informationen ausgefüllt sein, die Sie auf der IP-Konfigurationsseite des Appliance-Installationsprogramms angegeben haben.
++
+Informationen zur Installation von StorageGRID -Geräten finden Sie im https://docs.netapp.com/us-en/storagegrid-appliances/installconfig/index.html["Schnellstart für die Hardwareinstallation"^] um Anweisungen für Ihr Gerät zu finden.
+
+
+
+. Klicken Sie auf *Speichern*.
++
+Der Rasterknoteneintrag wird in die Liste „Genehmigte Knoten“ verschoben.
+
++
+image::../media/7_gmi_installer_grid_nodes_approved.gif[Dieses Bild wird durch den umgebenden Text erklärt.]
+
+. Wiederholen Sie diese Schritte für jeden ausstehenden Rasterknoten, den Sie genehmigen möchten.
++
+Sie müssen alle Knoten genehmigen, die Sie im Raster haben möchten.  Sie können jedoch jederzeit zu dieser Seite zurückkehren, bevor Sie auf der Zusammenfassungsseite auf *Installieren* klicken.  Sie können die Eigenschaften eines genehmigten Rasterknotens ändern, indem Sie dessen Optionsfeld auswählen und auf *Bearbeiten* klicken.
+
+. Wenn Sie mit der Genehmigung der Rasterknoten fertig sind, klicken Sie auf *Weiter*.
+

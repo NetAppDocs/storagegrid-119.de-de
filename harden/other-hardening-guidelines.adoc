@@ -1,0 +1,70 @@
+---
+permalink: harden/other-hardening-guidelines.html 
+sidebar: sidebar 
+keywords: Hardening guidelines, security 
+summary: Zusätzlich zur Befolgung der Härtungsrichtlinien für StorageGRID -Netzwerke und -Knoten sollten Sie die Härtungsrichtlinien für andere Bereiche des StorageGRID Systems befolgen. 
+---
+= Weitere Härtungsrichtlinien
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Zusätzlich zur Befolgung der Härtungsrichtlinien für StorageGRID -Netzwerke und -Knoten sollten Sie die Härtungsrichtlinien für andere Bereiche des StorageGRID Systems befolgen.
+
+
+
+== Temporäres Installationskennwort
+
+Um das StorageGRID -System während der Installation zu sichern, legen Sie auf der Seite mit dem temporären Installationskennwort in der StorageGRID Installationsbenutzeroberfläche oder in der Installations-API ein Kennwort fest.  Wenn dieses Passwort festgelegt ist, gilt es für alle Methoden zur Installation von StorageGRID, einschließlich der Benutzeroberfläche, der Installations-API und `configure-storagegrid.py` Skript.
+
+Weitere Informationen finden Sie unter:
+
+* link:../rhel/index.html["Installieren Sie StorageGRID unter Red Hat Enterprise Linux"]
+* link:../ubuntu/index.html["Installieren Sie StorageGRID unter Ubuntu oder Debian"]
+* link:../vmware/index.html["Installieren Sie StorageGRID auf VMware"]
+* https://docs.netapp.com/us-en/storagegrid-appliances/installconfig/index.html["Installieren Sie das StorageGRID -Gerät"^]
+
+
+
+
+== Protokolle und Prüfmeldungen
+
+Schützen Sie StorageGRID -Protokolle und die Ausgabe von Prüfnachrichten stets auf sichere Weise.  StorageGRID -Protokolle und Prüfmeldungen liefern aus Sicht des Supports und der Systemverfügbarkeit wertvolle Informationen.  Darüber hinaus sind die in den Protokollen und Prüfnachrichten von StorageGRID enthaltenen Informationen und Details im Allgemeinen vertraulicher Natur.
+
+Konfigurieren Sie StorageGRID so, dass Sicherheitsereignisse an einen externen Syslog-Server gesendet werden.  Wenn Sie den Syslog-Export verwenden, wählen Sie TLS und RELP/TLS als Transportprotokolle aus.
+
+Siehe dielink:../monitor/logs-files-reference.html["Referenz zu Protokolldateien"] Weitere Informationen zu StorageGRID Protokollen.  Sehenlink:../audit/audit-messages-main.html["Prüfmeldungen"] Weitere Informationen zu StorageGRID -Auditmeldungen finden Sie unter.
+
+
+
+== NetApp AutoSupport
+
+Mit der AutoSupport Funktion von StorageGRID können Sie den Zustand Ihres Systems proaktiv überwachen und automatisch Pakete an die NetApp -Support-Site, das interne Support-Team Ihres Unternehmens oder einen Support-Partner senden.  Standardmäßig ist das Senden von AutoSupport Paketen an NetApp aktiviert, wenn StorageGRID zum ersten Mal konfiguriert wird.
+
+Die AutoSupport Funktion kann deaktiviert werden.  NetApp empfiehlt jedoch, es zu aktivieren, da AutoSupport die Problemidentifizierung und -lösung beschleunigt, falls auf Ihrem StorageGRID -System ein Problem auftritt.
+
+AutoSupport unterstützt HTTPS, HTTP und SMTP als Transportprotokolle.  Aufgrund der sensiblen Natur von AutoSupport Paketen empfiehlt NetApp dringend, HTTPS als Standardtransportprotokoll zum Senden von AutoSupport Paketen an NetApp zu verwenden.
+
+
+
+== Cross-Origin-Ressourcenfreigabe (CORS)
+
+Sie können Cross-Origin Resource Sharing (CORS) für einen S3-Bucket konfigurieren, wenn dieser Bucket und die darin enthaltenen Objekte für Webanwendungen in anderen Domänen zugänglich sein sollen.  Aktivieren Sie CORS grundsätzlich nur, wenn es erforderlich ist.  Wenn CORS erforderlich ist, beschränken Sie es auf vertrauenswürdige Ursprünge.
+
+Sehen Sie sich die Schritte fürlink:../tenant/configuring-cross-origin-resource-sharing-cors.html["Konfigurieren der Cross-Origin-Ressourcenfreigabe (CORS)"] .
+
+
+
+== Externe Sicherheitsgeräte
+
+Eine vollständige Härtungslösung muss Sicherheitsmechanismen außerhalb von StorageGRID berücksichtigen.  Die Verwendung zusätzlicher Infrastrukturgeräte zum Filtern und Beschränken des Zugriffs auf StorageGRID ist eine effektive Möglichkeit, eine strenge Sicherheitslage zu etablieren und aufrechtzuerhalten.  Zu diesen externen Sicherheitsgeräten gehören Firewalls, Intrusion Prevention Systems (IPS) und andere Sicherheitsgeräte.
+
+Für nicht vertrauenswürdigen Client-Datenverkehr wird ein Load Balancer eines Drittanbieters empfohlen.  Der Lastenausgleich durch Drittanbieter bietet mehr Kontrolle und zusätzliche Schutzebenen gegen Angriffe.
+
+
+
+== Ransomware-Minderung
+
+Schützen Sie Ihre Objektdaten vor Ransomware-Angriffen, indem Sie die Empfehlungen in https://www.netapp.com/media/69498-tr-4921.pdf["Ransomware-Abwehr mit StorageGRID"^] .

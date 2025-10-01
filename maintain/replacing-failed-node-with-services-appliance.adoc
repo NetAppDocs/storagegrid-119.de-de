@@ -1,0 +1,35 @@
+---
+permalink: maintain/replacing-failed-node-with-services-appliance.html 
+sidebar: sidebar 
+keywords: storagegrid, recover, replace failed node, services appliance 
+summary: Sie können eine Service-Appliance verwenden, um einen ausgefallenen Gateway-Knoten, einen ausgefallenen nicht-primären Admin-Knoten oder einen ausgefallenen primären Admin-Knoten wiederherzustellen, der auf VMware, einem Linux-Host oder einer Service-Appliance gehostet wurde.  Dieses Verfahren ist ein Schritt des Grid-Knoten-Wiederherstellungsverfahrens. 
+---
+= Ersetzen Sie den ausgefallenen Knoten durch eine Service-Appliance
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Sie können eine Service-Appliance verwenden, um einen ausgefallenen Gateway-Knoten, einen ausgefallenen nicht-primären Admin-Knoten oder einen ausgefallenen primären Admin-Knoten wiederherzustellen, der auf VMware, einem Linux-Host oder einer Service-Appliance gehostet wurde.  Dieses Verfahren ist ein Schritt des Grid-Knoten-Wiederherstellungsverfahrens.
+
+.Bevor Sie beginnen
+* Sie haben festgestellt, dass eine der folgenden Situationen zutrifft:
++
+** Die virtuelle Maschine, auf der der Knoten gehostet wird, kann nicht wiederhergestellt werden.
+** Der physische oder virtuelle Linux-Host für den Grid-Knoten ist ausgefallen und muss ersetzt werden.
+** Die Service-Appliance, die den Grid-Knoten hostet, muss ersetzt werden.
+
+
+* Sie haben bestätigt, dass die Version des StorageGRID Appliance Installer auf der Service-Appliance mit der Softwareversion Ihres StorageGRID -Systems übereinstimmt. Sehen https://docs.netapp.com/us-en/storagegrid-appliances/installconfig/verifying-and-upgrading-storagegrid-appliance-installer-version.html["Überprüfen und aktualisieren Sie die Version des StorageGRID Appliance Installer"^] .
+
+
+
+NOTE: Stellen Sie nicht sowohl ein SG110- als auch ein SG1100-Servicegerät oder ein SG100- und ein SG1000-Servicegerät am selben Standort bereit.  Dies kann zu unvorhersehbarer Leistung führen.
+
+.Informationen zu diesem Vorgang
+Sie können eine Service-Appliance verwenden, um einen ausgefallenen Grid-Knoten in den folgenden Fällen wiederherzustellen:
+
+* Der ausgefallene Knoten wurde auf VMware oder Linux gehostet (link:installing-services-appliance-platform-change-only.html["Plattformwechsel"] )
+* Der ausgefallene Knoten wurde auf einer Service-Appliance gehostet (link:preparing-appliance-for-reinstallation-platform-replacement-only.html["Plattformaustausch"] )
+

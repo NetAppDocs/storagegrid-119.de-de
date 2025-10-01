@@ -1,0 +1,50 @@
+---
+permalink: maintain/viewing-server-manager-status-and-version.html 
+sidebar: sidebar 
+keywords: storagegrid, recover, server manager, status, version 
+summary: Für jeden Grid-Knoten können Sie den aktuellen Status und die Version des Server Managers anzeigen, der auf diesem Grid-Knoten ausgeführt wird.  Sie können auch den aktuellen Status aller auf diesem Grid-Knoten ausgeführten Dienste abrufen. 
+---
+= Anzeigen des Status und der Version des Server-Managers
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Für jeden Grid-Knoten können Sie den aktuellen Status und die Version des Server Managers anzeigen, der auf diesem Grid-Knoten ausgeführt wird.  Sie können auch den aktuellen Status aller auf diesem Grid-Knoten ausgeführten Dienste abrufen.
+
+.Bevor Sie beginnen
+Sie haben die `Passwords.txt` Datei.
+
+.Schritte
+. Melden Sie sich beim Grid-Knoten an:
++
+.. Geben Sie den folgenden Befehl ein: `ssh admin@_grid_node_IP_`
+.. Geben Sie das Passwort ein, das in der `Passwords.txt` Datei.
+.. Geben Sie den folgenden Befehl ein, um zum Root zu wechseln: `su -`
+.. Geben Sie das Passwort ein, das in der `Passwords.txt` Datei.
+
+
++
+Wenn Sie als Root angemeldet sind, ändert sich die Eingabeaufforderung von `$` Zu `#` .
+
+. Zeigen Sie den aktuellen Status des Server Managers an, der auf dem Grid-Knoten ausgeführt wird: `*service servermanager status*`
++
+Der aktuelle Status des auf dem Grid-Knoten ausgeführten Server Managers wird gemeldet (läuft oder nicht).  Wenn der Status des Server Managers `running` wird die Laufzeit seit dem letzten Start aufgelistet. Beispiel:
+
++
+[listing]
+----
+servermanager running for 1d, 13h, 0m, 30s
+----
+. Zeigen Sie die aktuelle Version von Server Manager an, die auf einem Grid-Knoten ausgeführt wird: `*service servermanager version*`
++
+Die aktuelle Version wird aufgelistet. Beispiel:
+
++
+[listing]
+----
+11.1.0-20180425.1905.39c9493
+----
+. Melden Sie sich von der Befehlsshell ab: `*exit*`
+

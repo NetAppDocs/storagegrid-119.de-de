@@ -1,0 +1,99 @@
+---
+permalink: fabricpool/creating-ha-group-for-fabricpool.html 
+sidebar: sidebar 
+keywords: fabricPool, high availability group, HA group, create, creating, virtual IP, VIP, active interface, backup interface 
+summary: 'Wenn Sie StorageGRID für die Verwendung mit FabricPool konfigurieren, können Sie optional eine oder mehrere Hochverfügbarkeitsgruppen (HA) erstellen.  Eine HA-Gruppe ist eine Sammlung von Knoten, die jeweils den StorageGRID Load Balancer-Dienst enthalten.  Eine HA-Gruppe kann Gateway-Knoten, Admin-Knoten oder beides enthalten.' 
+---
+= Erstellen einer Hochverfügbarkeitsgruppe (HA) für FabricPool
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Wenn Sie StorageGRID für die Verwendung mit FabricPool konfigurieren, können Sie optional eine oder mehrere Hochverfügbarkeitsgruppen (HA) erstellen.  Eine HA-Gruppe ist eine Sammlung von Knoten, die jeweils den StorageGRID Load Balancer-Dienst enthalten.  Eine HA-Gruppe kann Gateway-Knoten, Admin-Knoten oder beides enthalten.
+
+Sie können eine HA-Gruppe verwenden, um die Verfügbarkeit von FabricPool Datenverbindungen aufrechtzuerhalten.  Eine HA-Gruppe verwendet virtuelle IP-Adressen (VIPs), um hochverfügbaren Zugriff auf den Load Balancer-Dienst bereitzustellen.  Wenn die aktive Schnittstelle in der HA-Gruppe ausfällt, kann eine Backup-Schnittstelle die Arbeitslast mit geringen Auswirkungen auf den FabricPool -Betrieb verwalten.
+
+Einzelheiten zu dieser Aufgabe finden Sie unterlink:../admin/managing-high-availability-groups.html["Verwalten von Hochverfügbarkeitsgruppen"] .  Um diese Aufgabe mit dem FabricPool -Setup-Assistenten abzuschließen, gehen Sie zulink:use-fabricpool-setup-wizard-steps.html["Greifen Sie auf den FabricPool -Setup-Assistenten zu und schließen Sie ihn ab"] .
+
+.Bevor Sie beginnen
+* Sie haben dielink:best-practices-for-high-availability-groups.html["Best Practices für Hochverfügbarkeitsgruppen"] .
+* Sie sind beim Grid Manager angemeldet mit einemlink:../admin/web-browser-requirements.html["unterstützter Webbrowser"] .
+* Sie haben dielink:../admin/admin-group-permissions.html["Root-Zugriffsberechtigung"] .
+* Wenn Sie ein VLAN verwenden möchten, haben Sie die VLAN-Schnittstelle erstellt. Sehen link:../admin/configure-vlan-interfaces.html["Konfigurieren von VLAN-Schnittstellen"] .
+
+
+.Schritte
+. Wählen Sie *KONFIGURATION* > *Netzwerk* > *Hochverfügbarkeitsgruppen*.
+. Wählen Sie *Erstellen*.
+. Füllen Sie für den Schritt *Details eingeben* die folgenden Felder aus.
++
+[cols="1a,2a"]
+|===
+| Feld | Beschreibung 
+
+
+ a| 
+HA-Gruppenname
+ a| 
+Ein eindeutiger Anzeigename für diese HA-Gruppe.
+
+
+
+ a| 
+Beschreibung (optional)
+ a| 
+Die Beschreibung dieser HA-Gruppe.
+
+|===
+. Wählen Sie im Schritt *Schnittstellen hinzufügen* die Knotenschnittstellen aus, die Sie in dieser HA-Gruppe verwenden möchten.
++
+Nutzen Sie die Spaltenüberschriften zum Sortieren der Zeilen oder geben Sie einen Suchbegriff ein, um Schnittstellen schneller zu finden.
+
++
+Sie können einen oder mehrere Knoten auswählen, aber Sie können für jeden Knoten nur eine Schnittstelle auswählen.
+
+. Bestimmen Sie für den Schritt *Schnittstellen priorisieren* die primäre Schnittstelle und alle Backup-Schnittstellen für diese HA-Gruppe.
++
+Ziehen Sie Zeilen, um die Werte in der Spalte *Prioritätsreihenfolge* zu ändern.
+
++
+Die erste Schnittstelle in der Liste ist die primäre Schnittstelle.  Die primäre Schnittstelle ist die aktive Schnittstelle, sofern kein Fehler auftritt.
+
++
+Wenn die HA-Gruppe mehr als eine Schnittstelle umfasst und die aktive Schnittstelle ausfällt, werden die virtuellen IP-Adressen (VIP) zur ersten Backup-Schnittstelle in der Prioritätsreihenfolge verschoben.  Wenn diese Schnittstelle ausfällt, werden die VIP-Adressen zur nächsten Backup-Schnittstelle verschoben und so weiter.  Wenn die Fehler behoben sind, werden die VIP-Adressen wieder an die Schnittstelle mit der höchsten verfügbaren Priorität zurückversetzt.
+
+. Füllen Sie für den Schritt *IP-Adressen eingeben* die folgenden Felder aus.
++
+[cols="1a,2a"]
+|===
+| Feld | Beschreibung 
+
+
+ a| 
+Subnetz-CIDR
+ a| 
+Die Adresse des VIP-Subnetzes in CIDR-Notation – eine IPv4-Adresse, gefolgt von einem Schrägstrich und der Subnetzlänge (0–32).
+
+Für die Netzwerkadresse dürfen keine Hostbits gesetzt sein. Beispiel:  `192.16.0.0/22` .
+
+
+
+ a| 
+Gateway-IP-Adresse (optional)
+ a| 
+Optional.  Wenn sich die für den Zugriff auf StorageGRID verwendeten ONTAP -IP-Adressen nicht im selben Subnetz wie die StorageGRID VIP-Adressen befinden, geben Sie die lokale Gateway-IP-Adresse des StorageGRID VIP ein.  Die lokale Gateway-IP-Adresse muss sich innerhalb des VIP-Subnetzes befinden.
+
+
+
+ a| 
+Virtuelle IP-Adresse
+ a| 
+Geben Sie mindestens eine und höchstens zehn VIP-Adressen für die aktive Schnittstelle in der HA-Gruppe ein.  Alle VIP-Adressen müssen sich innerhalb des VIP-Subnetzes befinden.
+
+Mindestens eine Adresse muss IPv4 sein.  Optional können Sie zusätzliche IPv4- und IPv6-Adressen angeben.
+
+|===
+. Wählen Sie *HA-Gruppe erstellen* und dann *Fertig stellen*.
+

@@ -1,0 +1,53 @@
+---
+permalink: tenant/configuring-platform-services-endpoints.html 
+sidebar: sidebar 
+keywords: how to configure platform services endpoint 
+summary: Bevor Sie einen Plattformdienst für einen Bucket konfigurieren können, müssen Sie mindestens einen Endpunkt als Ziel für den Plattformdienst konfigurieren. 
+---
+= Konfigurieren von Plattformdienstendpunkten
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Bevor Sie einen Plattformdienst für einen Bucket konfigurieren können, müssen Sie mindestens einen Endpunkt als Ziel für den Plattformdienst konfigurieren.
+
+Der Zugriff auf Plattformdienste wird pro Mandant von einem StorageGRID -Administrator aktiviert.  Um einen Plattformdienst-Endpunkt zu erstellen oder zu verwenden, müssen Sie ein Mandantenbenutzer mit der Berechtigung „Endpunkte verwalten“ oder „Root-Zugriff“ in einem Grid sein, dessen Netzwerk so konfiguriert wurde, dass Speicherknoten auf externe Endpunktressourcen zugreifen können.  Für einen einzelnen Mandanten können Sie maximal 500 Plattformdienst-Endpunkte konfigurieren.  Wenden Sie sich für weitere Informationen an Ihren StorageGRID Administrator.
+
+
+
+== Was ist ein Plattformdienst-Endpunkt?
+
+Ein Plattformdienst-Endpunkt gibt die Informationen an, die StorageGRID für den Zugriff auf das externe Ziel benötigt.
+
+Wenn Sie beispielsweise Objekte aus einem StorageGRID Bucket in einen Amazon S3-Bucket replizieren möchten, erstellen Sie einen Plattformdienst-Endpunkt, der die Informationen und Anmeldeinformationen enthält, die StorageGRID für den Zugriff auf den Ziel-Bucket bei Amazon benötigt.
+
+Jeder Plattformdiensttyp erfordert einen eigenen Endpunkt. Sie müssen daher für jeden Plattformdienst, den Sie verwenden möchten, mindestens einen Endpunkt konfigurieren.  Nachdem Sie einen Plattformdienst-Endpunkt definiert haben, verwenden Sie die URN des Endpunkts als Ziel in der Konfigurations-XML, die zum Aktivieren des Dienstes verwendet wird.
+
+Sie können denselben Endpunkt als Ziel für mehr als einen Quell-Bucket verwenden.  Sie können beispielsweise mehrere Quell-Buckets so konfigurieren, dass sie Objektmetadaten an denselben Suchintegrationsendpunkt senden, sodass Sie Suchvorgänge über mehrere Buckets hinweg durchführen können.  Sie können einen Quell-Bucket auch so konfigurieren, dass er mehr als einen Endpunkt als Ziel verwendet. Dadurch können Sie beispielsweise Benachrichtigungen über die Objekterstellung an ein Amazon Simple Notification Service (Amazon SNS)-Thema und Benachrichtigungen über die Objektlöschung an ein zweites Amazon SNS-Thema senden.
+
+
+
+== Endpunkte für die CloudMirror-Replikation
+
+StorageGRID unterstützt Replikationsendpunkte, die S3-Buckets darstellen.  Diese Buckets können auf Amazon Web Services, derselben oder einer Remote- StorageGRID Bereitstellung oder einem anderen Dienst gehostet werden.
+
+
+
+== Endpunkte für Benachrichtigungen
+
+StorageGRID unterstützt Amazon SNS- und Kafka-Endpunkte. Simple Queue Service (SQS) oder AWS Lambda-Endpunkte werden nicht unterstützt.
+
+Für Kafka-Endpunkte wird Mutual TLS nicht unterstützt. Wenn Sie also `ssl.client.auth` eingestellt auf `required` in Ihrer Kafka-Broker-Konfiguration kann es zu Problemen bei der Kafka-Endpunktkonfiguration kommen.
+
+
+
+== Endpunkte für den Suchintegrationsdienst
+
+StorageGRID unterstützt Suchintegrationsendpunkte, die Elasticsearch-Cluster darstellen.  Diese Elasticsearch-Cluster können sich in einem lokalen Rechenzentrum befinden oder in einer AWS-Cloud oder anderswo gehostet werden.
+
+Der Endpunkt der Suchintegration bezieht sich auf einen bestimmten Elasticsearch-Index und -Typ.  Sie müssen den Index in Elasticsearch erstellen, bevor Sie den Endpunkt in StorageGRID erstellen, sonst schlägt die Endpunkterstellung fehl.  Sie müssen den Typ nicht erstellen, bevor Sie den Endpunkt erstellen.  StorageGRID erstellt den Typ bei Bedarf, wenn es Objektmetadaten an den Endpunkt sendet.
+
+.Ähnliche Informationen
+link:../admin/index.html["StorageGRID verwalten"]

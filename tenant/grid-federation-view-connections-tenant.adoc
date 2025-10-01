@@ -1,0 +1,91 @@
+---
+permalink: tenant/grid-federation-view-connections-tenant.html 
+sidebar: sidebar 
+keywords: grid federation connection, view, clear error, last error 
+summary: Wenn Ihr Mandantenkonto über die Berechtigung „Grid-Föderationsverbindung verwenden“ verfügt, können Sie die zulässigen Verbindungen anzeigen. 
+---
+= Grid-Föderation-Verbindungen anzeigen
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Wenn Ihr Mandantenkonto über die Berechtigung *Grid-Föderationsverbindung verwenden* verfügt, können Sie die zulässigen Verbindungen anzeigen.
+
+.Bevor Sie beginnen
+* Das Mandantenkonto verfügt über die Berechtigung *Grid-Föderationsverbindung verwenden*.
+* Sie sind beim Tenant Manager angemeldet mit einemlink:../admin/web-browser-requirements.html["unterstützter Webbrowser"] .
+* Sie gehören einer Benutzergruppe an, die über dielink:tenant-management-permissions.html["Root-Zugriffsberechtigung"] .
+
+
+.Schritte
+. Wählen Sie *STORAGE (S3)* > *Grid-Föderationsverbindungen*.
++
+Die Seite „Grid-Föderationsverbindung“ wird angezeigt und enthält eine Tabelle mit einer Zusammenfassung der folgenden Informationen:
+
++
+[cols="1a,2a"]
+|===
+| Spalte | Beschreibung 
+
+
+ a| 
+Verbindungsname
+ a| 
+Die Grid-Föderation-Verbindungen, für deren Verwendung dieser Mandant berechtigt ist.
+
+
+
+ a| 
+Buckets mit Cross-Grid-Replikation
+ a| 
+Für jede Grid-Föderationsverbindung die Mandanten-Buckets, für die die Cross-Grid-Replikation aktiviert ist.  Zu diesen Buckets hinzugefügte Objekte werden in das andere Raster in der Verbindung repliziert.
+
+
+
+ a| 
+Letzter Fehler
+ a| 
+Für jede Grid-Föderationsverbindung der letzte Fehler, der ggf. beim Replizieren der Daten in das andere Grid aufgetreten ist. Sehen <<clear-last-error,Löschen Sie den letzten Fehler>> .
+
+|===
+. Wählen Sie optional einen Bucket-Namen aus, umlink:viewing-s3-bucket-details.html["Bucket-Details anzeigen"] .
+
+
+
+
+== [[clear-last-error]]Lösche den letzten Fehler
+
+In der Spalte *Letzter Fehler* kann aus einem der folgenden Gründe ein Fehler angezeigt werden:
+
+* Die Quellobjektversion wurde nicht gefunden.
+* Der Quell-Bucket wurde nicht gefunden.
+* Der Ziel-Bucket wurde gelöscht.
+* Der Ziel-Bucket wurde von einem anderen Konto neu erstellt.
+* Die Versionsverwaltung des Ziel-Buckets ist ausgesetzt.
+* Der Ziel-Bucket wurde vom selben Konto neu erstellt, ist jetzt aber nicht mehr versioniert.
+
+
+
+NOTE: In dieser Spalte wird nur der letzte aufgetretene Cross-Grid-Replikationsfehler angezeigt. Eventuell zuvor aufgetretene Fehler werden nicht angezeigt.
+
+.Schritte
+. Wenn in der Spalte *Letzter Fehler* eine Meldung angezeigt wird, sehen Sie sich den Nachrichtentext an.
++
+Dieser Fehler weist beispielsweise darauf hin, dass sich der Ziel-Bucket für die Cross-Grid-Replikation in einem ungültigen Zustand befand, möglicherweise weil die Versionierung ausgesetzt oder die S3-Objektsperre aktiviert war.
+
++
+image::../media/grid-federation-cgr-object-example-last-error.png[Grid-Föderation-CGR-Objekt-Beispiel-letzter-Fehler]
+
+. Führen Sie alle empfohlenen Aktionen aus.  Wenn beispielsweise die Versionierung für den Ziel-Bucket für die Cross-Grid-Replikation ausgesetzt wurde, aktivieren Sie die Versionierung für diesen Bucket erneut.
+. Wählen Sie die Verbindung aus der Tabelle aus.
+. Wählen Sie *Fehler löschen*.
+. Wählen Sie *Ja*, um die Nachricht zu löschen und den Systemstatus zu aktualisieren.
+. Warten Sie 5–6 Minuten und nehmen Sie dann einen neuen Gegenstand in den Eimer.  Vergewissern Sie sich, dass die Fehlermeldung nicht erneut angezeigt wird.
++
+
+NOTE: Um sicherzustellen, dass die Fehlermeldung gelöscht wird, warten Sie nach dem Zeitstempel in der Nachricht mindestens 5 Minuten, bevor Sie ein neues Objekt aufnehmen.
+
+. Um festzustellen, ob Objekte aufgrund des Bucket-Fehlers nicht repliziert werden konnten, siehelink:../admin/grid-federation-retry-failed-replication.html["Identifizieren und wiederholen Sie fehlgeschlagene Replikationsvorgänge"] .
+

@@ -1,0 +1,40 @@
+---
+permalink: audit/srem-object-store-remove.html 
+sidebar: sidebar 
+keywords: storagegrid, audit, message, SREM, Object Store Remove 
+summary: Diese Nachricht wird ausgegeben, wenn Inhalte aus dem permanenten Speicher entfernt werden und nicht mehr über reguläre APIs zugänglich sind. 
+---
+= SREM: Objektspeicher entfernen
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Diese Nachricht wird ausgegeben, wenn Inhalte aus dem permanenten Speicher entfernt werden und nicht mehr über reguläre APIs zugänglich sind.
+
+[cols="1a,1a,4a"]
+|===
+| Code | Feld | Beschreibung 
+
+
+ a| 
+CBID
+ a| 
+Inhaltsblockkennung
+ a| 
+Die eindeutige Kennung des aus dem permanenten Speicher gelöschten Inhaltsblocks.
+
+
+
+ a| 
+RSLT
+ a| 
+Ergebniscode
+ a| 
+Gibt das Ergebnis der Inhaltsentfernungsvorgänge an.  Der einzige definierte Wert ist:
+
+SUCS: Inhalt aus dem persistenten Speicher entfernt
+
+|===
+Diese Prüfmeldung bedeutet, dass ein bestimmter Inhaltsblock aus einem Knoten gelöscht wurde und nicht mehr direkt angefordert werden kann.  Mithilfe der Nachricht kann der Fluss gelöschter Inhalte innerhalb des Systems verfolgt werden.

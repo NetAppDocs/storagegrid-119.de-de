@@ -1,0 +1,57 @@
+---
+permalink: audit/svrf-object-store-verify-fail.html 
+sidebar: sidebar 
+keywords: storagegrid, audit, message, SVRF, Object Store Verify Fail 
+summary: Diese Meldung wird immer dann ausgegeben, wenn ein Inhaltsblock den Überprüfungsprozess nicht besteht.  Jedes Mal, wenn replizierte Objektdaten von der Festplatte gelesen oder auf die Festplatte geschrieben werden, werden mehrere Überprüfungen und Integritätsprüfungen durchgeführt, um sicherzustellen, dass die an den anfordernden Benutzer gesendeten Daten mit den ursprünglich in das System aufgenommenen Daten identisch sind.  Wenn eine dieser Prüfungen fehlschlägt, stellt das System die beschädigten replizierten Objektdaten automatisch unter Quarantäne, um zu verhindern, dass sie erneut abgerufen werden. 
+---
+= SVRF: Objektspeicherüberprüfung fehlgeschlagen
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Diese Meldung wird immer dann ausgegeben, wenn ein Inhaltsblock den Überprüfungsprozess nicht besteht.  Jedes Mal, wenn replizierte Objektdaten von der Festplatte gelesen oder auf die Festplatte geschrieben werden, werden mehrere Überprüfungen und Integritätsprüfungen durchgeführt, um sicherzustellen, dass die an den anfordernden Benutzer gesendeten Daten mit den ursprünglich in das System aufgenommenen Daten identisch sind.  Wenn eine dieser Prüfungen fehlschlägt, stellt das System die beschädigten replizierten Objektdaten automatisch unter Quarantäne, um zu verhindern, dass sie erneut abgerufen werden.
+
+[cols="1a,1a,4a"]
+|===
+| Code | Feld | Beschreibung 
+
+
+ a| 
+CBID
+ a| 
+Inhaltsblockkennung
+ a| 
+Die eindeutige Kennung des Inhaltsblocks, dessen Überprüfung fehlgeschlagen ist.
+
+
+
+ a| 
+RSLT
+ a| 
+Ergebniscode
+ a| 
+Art des Überprüfungsfehlers:
+
+CRCF: Zyklische Redundanzprüfung (CRC) fehlgeschlagen.
+
+HMAC: Die Prüfung des Hash-basierten Nachrichtenauthentifizierungscodes (HMAC) ist fehlgeschlagen.
+
+EHSH: Unerwarteter Hash für verschlüsselten Inhalt.
+
+PHSH: Unerwarteter Hash des Originalinhalts.
+
+SEQC: Falsche Datensequenz auf der Festplatte.
+
+PERR: Ungültige Struktur der Datenträgerdatei.
+
+DERR: Festplattenfehler.
+
+FNAM: Ungültiger Dateiname.
+
+|===
+
+NOTE: Diese Nachricht sollte genau beobachtet werden.  Fehler bei der Inhaltsüberprüfung können auf bevorstehende Hardwarefehler hinweisen.
+
+Um festzustellen, welcher Vorgang die Nachricht ausgelöst hat, sehen Sie sich den Wert des AMID-Felds (Modul-ID) an.  Beispielsweise gibt ein SVFY-Wert an, dass die Nachricht vom Storage Verifier-Modul generiert wurde, also durch Hintergrundüberprüfung, und STOR gibt an, dass die Nachricht durch Inhaltsabruf ausgelöst wurde.

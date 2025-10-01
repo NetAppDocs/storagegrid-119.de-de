@@ -1,0 +1,185 @@
+---
+permalink: expand/considerations-for-rebalancing-erasure-coded-data.html 
+sidebar: sidebar 
+keywords: erasure coding, rebalance, ec rebalance, site rebalance 
+summary: Wenn Sie eine Erweiterung durchführen, um Speicherknoten hinzuzufügen, und ILM-Regeln zum Löschen von Codedaten verwenden, müssen Sie möglicherweise das EC-Neuausgleichsverfahren durchführen, wenn Sie nicht genügend Speicherknoten für das von Ihnen verwendete Löschcodierungsschema hinzufügen können. 
+---
+= Überlegungen zum Neuausgleich von Erasure-Coded-Daten
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Wenn Sie eine Erweiterung durchführen, um Speicherknoten hinzuzufügen, und ILM-Regeln zum Löschen von Codedaten verwenden, müssen Sie möglicherweise das Neuausgleichsverfahren für die Löschcodierung (EC) durchführen, wenn Sie nicht genügend Speicherknoten für das von Ihnen verwendete Löschcodierungsschema hinzufügen können.
+
+Nachdem Sie diese Überlegungen überprüft haben, führen Sie die Erweiterung durch und gehen Sie dann zulink:rebalancing-erasure-coded-data-after-adding-storage-nodes.html["Neuausgleich von erasure-coded Daten nach dem Hinzufügen von Speicherknoten"] um die Prozedur auszuführen.
+
+
+
+== Was ist EC-Rebalancing?
+
+EC-Rebalancing ist ein StorageGRID -Verfahren, das nach einer Storage Node-Erweiterung erforderlich sein kann.  Das Verfahren wird als Befehlszeilenskript vom primären Admin-Knoten aus ausgeführt.  Wenn Sie das EC-Neuausgleichsverfahren ausführen, verteilt StorageGRID Erasure-Coded-Fragmente unter den vorhandenen und den neu hinzugefügten Speicherknoten an einem Standort neu.
+
+Das Verfahren zur Neugewichtung der EG:
+
+* Verschiebt nur löschcodierte Objektdaten.  Es werden keine replizierten Objektdaten verschoben.
+* Verteilt die Daten innerhalb einer Site neu.  Es werden keine Daten zwischen Standorten verschoben.
+* Verteilt Daten auf alle Speicherknoten an einem Standort neu.  Es werden keine Daten innerhalb von Speichervolumes neu verteilt.
+* Berücksichtigt bei der Bestimmung, wohin die löschcodierten Daten verschoben werden sollen, nicht die replizierte Datennutzung auf jedem Speicherknoten.
+* Verteilt löschcodierte Daten gleichmäßig zwischen Speicherknoten, ohne die relativen Kapazitäten der einzelnen Knoten zu berücksichtigen.
+* Verteilt keine erasure-coded Daten an Speicherknoten, die zu mehr als 80 % voll sind.
+* Kann die Leistung von ILM-Operationen und S3-Client-Operationen während der Ausführung beeinträchtigen. Für die Neuverteilung der Erasure-Coding-Fragmente sind zusätzliche Ressourcen erforderlich.
+
+
+Wenn der EC-Neuausgleichsvorgang abgeschlossen ist:
+
+* Löschcodierte Daten werden von Speicherknoten mit weniger verfügbarem Speicherplatz auf Speicherknoten mit mehr verfügbarem Speicherplatz verschoben.
+* Der Datenschutz von Erasure-Coded-Objekten bleibt unverändert.
+* Die Werte für „Verwendet (%)“ können zwischen Speicherknoten aus zwei Gründen unterschiedlich sein:
++
+** Replizierte Objektkopien belegen weiterhin Speicherplatz auf den vorhandenen Knoten – das EC-Neuausgleichsverfahren verschiebt keine replizierten Daten.
+** Knoten mit größerer Kapazität sind relativ weniger voll als Knoten mit kleinerer Kapazität, obwohl alle Knoten am Ende ungefähr die gleiche Menge an Erasure-Codierten Daten enthalten.
++
+Nehmen wir beispielsweise an, dass drei 200-TB-Knoten jeweils zu 80 % gefüllt sind (200 &#215; 0,8 = 160 TB auf jedem Knoten oder 480 TB für die Site).  Wenn Sie einen 400-TB-Knoten hinzufügen und das Neuausgleichsverfahren ausführen, verfügen alle Knoten nun über ungefähr die gleiche Menge an Erasure-Code-Daten (480/4 = 120 TB).  Allerdings ist der Wert für „Verwendet (%)“ für den größeren Knoten geringer als der Wert für „Verwendet (%)“ für die kleineren Knoten.
+
++
+image::../media/used_space_with_larger_node.png[Genutzter Platz vor der Erweiterung]
+
+
+
+
+
+
+
+== Wann sollten Erasure-Codierte Daten neu ausgeglichen werden?
+
+Stellen Sie sich folgendes Szenario vor:
+
+* StorageGRID wird an einem einzelnen Standort ausgeführt, der drei Speicherknoten enthält.
+* Die ILM-Richtlinie verwendet eine 2+1-Erasure-Coding-Regel für alle Objekte, die größer als 1,0 MB sind, und eine 2-Kopien-Replikationsregel für kleinere Objekte.
+* Alle Speicherknoten sind vollständig belegt.  Die Warnung *Niedriger Objektspeicher* wurde mit dem Schweregrad „Schwer“ ausgelöst.
++
+image::../media/used_space_before_expansion.png[Genutzter Platz vor der Erweiterung]
+
+
+
+
+
+=== Eine Neuverteilung ist nicht erforderlich, wenn Sie genügend Knoten hinzufügen
+
+Um zu verstehen, wann keine EC-Neuverteilung erforderlich ist, nehmen wir an, Sie haben drei (oder mehr) neue Speicherknoten hinzugefügt.  In diesem Fall müssen Sie keine EC-Neugewichtung durchführen.  Die ursprünglichen Speicherknoten bleiben voll, aber neue Objekte verwenden jetzt die drei neuen Knoten für 2+1-Löschcodierung – die beiden Datenfragmente und das eine Paritätsfragment können jeweils auf einem anderen Knoten gespeichert werden.
+
+image::../media/used_space_after_3_node_expansion.png[Verwendeter Speicherplatz nach 3-Knoten-Erweiterung]
+
+
+CAUTION: Obwohl Sie in diesem Fall das EC-Neuausgleichsverfahren ausführen können, wird durch das Verschieben der vorhandenen Erasure-Coded-Daten die Leistung des Grids vorübergehend verringert, was sich auf den Clientbetrieb auswirken kann.
+
+
+
+=== Eine Neuverteilung ist erforderlich, wenn Sie nicht genügend Knoten hinzufügen können
+
+Um zu verstehen, wann eine EC-Neuausrichtung erforderlich ist, nehmen Sie an, dass Sie nur zwei statt drei Speicherknoten hinzufügen können.  Da für das 2+1-Schema mindestens drei Speicherknoten über freien Speicherplatz verfügen müssen, können die leeren Knoten nicht für neue erasure-coded Daten verwendet werden.
+
+image::../media/used_space_after_2_node_expansion.png[Verwendeter Speicherplatz nach 2-Knoten-Erweiterung]
+
+Um die neuen Speicherknoten zu nutzen, sollten Sie das EC-Neuausgleichsverfahren ausführen.  Wenn dieser Vorgang ausgeführt wird, verteilt StorageGRID vorhandene erasure-coded Daten und Paritätsfragmente auf alle Speicherknoten am Standort neu.  In diesem Beispiel sind nach Abschluss des EC-Neuausgleichsvorgangs alle fünf Knoten nur noch zu 60 % gefüllt und Objekte können weiterhin in das 2+1-Erasure-Coding-Schema auf allen Speicherknoten aufgenommen werden.
+
+image::../media/used_space_after_ec_rebalance.png[Verwendeter Speicherplatz nach EC-Neuausgleich]
+
+
+
+== Empfehlungen zur Neuausrichtung der EG
+
+NetApp erfordert eine EC-Neuausrichtung, wenn _alle_ der folgenden Aussagen zutreffen:
+
+* Sie verwenden Erasure Coding für Ihre Objektdaten.
+* Für einen oder mehrere Speicherknoten an einem Standort wurde die Warnung „Wenig Objektspeicher“ ausgelöst, die darauf hinweist, dass die Knoten zu 80 % oder mehr belegt sind.
+* Sie können nicht genügend neue Speicherknoten für das verwendete Erasure-Coding-Schema hinzufügen. Sehen link:adding-storage-capacity-for-erasure-coded-objects.html["Speicherkapazität für Erasure-Coded-Objekte hinzufügen"] .
+* Ihre S3-Clients können eine geringere Leistung bei ihren Schreib- und Lesevorgängen tolerieren, während das EC-Neuausgleichsverfahren ausgeführt wird.
+
+
+Sie können das EC-Neuausgleichsverfahren optional ausführen, wenn Sie es vorziehen, dass die Speicherknoten auf einem ähnlichen Niveau gefüllt werden und Ihre S3-Clients eine geringere Leistung für ihre Schreib- und Lesevorgänge tolerieren können, während das EC-Neuausgleichsverfahren ausgeführt wird.
+
+
+
+== Wie das EC-Neuausgleichsverfahren mit anderen Wartungsaufgaben interagiert
+
+Sie können bestimmte Wartungsvorgänge nicht gleichzeitig mit dem EC-Neuausgleichsverfahren durchführen.
+
+[cols="1a,2a"]
+|===
+| Verfahren | Während des EC-Neuausgleichsverfahrens zulässig? 
+
+
+ a| 
+Zusätzliche Verfahren zur Neugewichtung der EG
+ a| 
+NEIN.
+
+Sie können jeweils nur einen EC-Neuausgleichsvorgang ausführen.
+
+
+
+ a| 
+Außerbetriebnahmeverfahren
+
+EC-Datenreparaturauftrag
+ a| 
+NEIN.
+
+* Während der EC-Neuausgleich läuft, können Sie keinen Außerbetriebnahmevorgang oder keine EC-Datenreparatur starten.
+* Sie können den EC-Neuausgleichsvorgang nicht starten, während ein Verfahren zur Außerbetriebnahme eines Speicherknotens oder eine EC-Datenreparatur ausgeführt wird.
+
+
+
+
+ a| 
+Erweiterungsverfahren
+ a| 
+NEIN.
+
+Wenn Sie in einer Erweiterung neue Speicherknoten hinzufügen müssen, führen Sie nach dem Hinzufügen aller neuen Knoten das EC-Neuausgleichsverfahren aus.
+
+
+
+ a| 
+Upgrade-Verfahren
+ a| 
+NEIN.
+
+Wenn Sie die StorageGRID -Software aktualisieren müssen, führen Sie den Aktualisierungsvorgang vor oder nach dem Ausführen des EC-Neuausgleichsverfahrens durch.  Bei Bedarf können Sie den EC-Neuausgleichsvorgang beenden, um ein Software-Upgrade durchzuführen.
+
+
+
+ a| 
+Verfahren zum Klonen von Appliance-Knoten
+ a| 
+NEIN.
+
+Wenn Sie einen Appliance-Speicherknoten klonen müssen, führen Sie nach dem Hinzufügen des neuen Knotens das EC-Neuausgleichsverfahren aus.
+
+
+
+ a| 
+Hotfix-Verfahren
+ a| 
+Ja.
+
+Sie können einen StorageGRID Hotfix anwenden, während der EC-Neuausgleichsvorgang ausgeführt wird.
+
+
+
+ a| 
+Andere Wartungsverfahren
+ a| 
+NEIN.
+
+Sie müssen das EC-Neuausgleichsverfahren beenden, bevor Sie andere Wartungsvorgänge ausführen.
+
+|===
+
+
+== Wie das EC-Neuausgleichsverfahren mit ILM interagiert
+
+Vermeiden Sie während der Ausführung des EC-Neuausgleichsverfahrens ILM-Änderungen, die den Speicherort vorhandener Erasure-Coded-Objekte ändern könnten.  Beginnen Sie beispielsweise nicht mit der Verwendung einer ILM-Regel, die ein anderes Erasure-Coding-Profil hat.  Wenn Sie solche ILM-Änderungen vornehmen müssen, sollten Sie das EC-Neuausgleichsverfahren beenden.

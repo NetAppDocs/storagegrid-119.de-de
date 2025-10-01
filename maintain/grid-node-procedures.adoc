@@ -1,0 +1,30 @@
+---
+permalink: maintain/grid-node-procedures.html 
+sidebar: sidebar 
+keywords: storagegrid, grid node procedure 
+summary: Möglicherweise müssen Sie Wartungsverfahren im Zusammenhang mit bestimmten Grid-Knoten oder Knotendiensten durchführen. 
+---
+= Knotenwartungsverfahren
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Möglicherweise müssen Sie Wartungsverfahren im Zusammenhang mit bestimmten Grid-Knoten oder Knotendiensten durchführen.
+
+Server Manager-Verfahren:: Der Server Manager wird auf jedem Grid-Knoten ausgeführt, um das Starten und Stoppen von Diensten zu überwachen und sicherzustellen, dass die Dienste dem StorageGRID -System ordnungsgemäß beitreten und es verlassen.  Server Manager überwacht außerdem die Dienste auf jedem Grid-Knoten und versucht automatisch, alle Dienste neu zu starten, die Fehler melden.
++
+--
+Um Server Manager-Verfahren auszuführen, müssen Sie normalerweise auf die Befehlszeile des Knotens zugreifen.
+
+
+NOTE: Sie sollten nur auf den Server Manager zugreifen, wenn Sie vom technischen Support dazu aufgefordert wurden.
+
+
+NOTE: Sie müssen die aktuelle Befehlsshell-Sitzung schließen und sich abmelden, nachdem Sie mit Server Manager fertig sind.  Eingeben: `exit`
+
+--
+Neustart-, Herunterfahr- und Einschaltvorgänge für Knoten:: Mit diesen Verfahren können Sie einen oder mehrere Knoten neu starten, Knoten herunterfahren und neu starten oder Knoten aus- und wieder einschalten.
+Port-Neuzuordnungsverfahren:: Sie können die Port-Neuzuordnungsverfahren verwenden, um die Port-Neuzuordnungen von einem Knoten zu entfernen, beispielsweise, wenn Sie einen Load Balancer-Endpunkt mit einem zuvor neu zugeordneten Port konfigurieren möchten.
+

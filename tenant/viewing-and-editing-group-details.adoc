@@ -1,0 +1,62 @@
+---
+permalink: tenant/viewing-and-editing-group-details.html 
+sidebar: sidebar 
+keywords: how to view and edit group 
+summary: Wenn Sie die Details einer Gruppe anzeigen, können Sie den Anzeigenamen, die Berechtigungen, die Richtlinien und die Benutzer der Gruppe ändern, die zur Gruppe gehören. 
+---
+= Anzeigen und Bearbeiten von Gruppendetails
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Wenn Sie die Details einer Gruppe anzeigen, können Sie den Anzeigenamen, die Berechtigungen, die Richtlinien und die Benutzer der Gruppe ändern, die zur Gruppe gehören.
+
+.Bevor Sie beginnen
+* Sie sind beim Tenant Manager angemeldet mit einemlink:../admin/web-browser-requirements.html["unterstützter Webbrowser"] .
+* Sie gehören zu einer Benutzergruppe, die über die Root-Zugriffsberechtigung verfügt.
+
+
+.Schritte
+. Wählen Sie *ZUGRIFFSVERWALTUNG* > *Gruppen*.
+. Wählen Sie den Namen der Gruppe aus, deren Details Sie anzeigen oder bearbeiten möchten.
++
+Alternativ können Sie *Aktionen* > *Gruppendetails anzeigen* auswählen.
+
++
+Die Seite mit den Gruppendetails wird angezeigt.  Das folgende Beispiel zeigt die S3-Gruppendetailseite.
+
++
+image::../media/tenant_group_details.png[Gruppendetails anzeigen]
+
+. Nehmen Sie bei Bedarf Änderungen an den Gruppeneinstellungen vor.
++
+
+TIP: Um sicherzustellen, dass Ihre Änderungen gespeichert werden, wählen Sie *Änderungen speichern*, nachdem Sie in jedem Abschnitt Änderungen vorgenommen haben.  Wenn Ihre Änderungen gespeichert sind, wird in der oberen rechten Ecke der Seite eine Bestätigungsmeldung angezeigt.
+
++
+.. Wählen Sie optional den Anzeigenamen oder das Bearbeitungssymbolimage:../media/icon_edit_tm.png["Symbol „Bearbeiten“"] um den Anzeigenamen zu aktualisieren.
++
+Sie können den eindeutigen Namen einer Gruppe nicht ändern.  Sie können den Anzeigenamen für eine föderierte Gruppe nicht bearbeiten.
+
+.. Aktualisieren Sie optional die Berechtigungen.
+.. Nehmen Sie für die Gruppenrichtlinie die entsprechenden Änderungen für Ihren S3-Mandanten vor.
++
+*** Wenn Sie eine Gruppe für einen S3-Mandanten bearbeiten, wählen Sie optional eine andere S3-Gruppenrichtlinie aus.  Wenn Sie eine benutzerdefinierte S3-Richtlinie auswählen, aktualisieren Sie die JSON-Zeichenfolge nach Bedarf.
+*** Wenn Sie eine Gruppe für einen Swift-Mandanten bearbeiten, aktivieren oder deaktivieren Sie optional das Kontrollkästchen *Swift-Administrator*.
++
+Weitere Informationen zur Swift-Administratorberechtigung finden Sie in den Anweisungen zum Erstellen von Gruppen für einen Swift-Mandanten.
+
+
+
+.. Optional können Sie Benutzer hinzufügen oder entfernen.
+
+
+. Bestätigen Sie, dass Sie für jeden geänderten Abschnitt *Änderungen speichern* ausgewählt haben.
+
+
+.Ähnliche Informationen
+* link:creating-groups-for-s3-tenant.html["Erstellen Sie Gruppen für den S3-Mandanten"]
+* link:creating-groups-for-swift-tenant.html["Erstellen Sie Gruppen für den Swift-Mandanten"]
+

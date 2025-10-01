@@ -1,0 +1,75 @@
+---
+permalink: s3/get-storage-usage-request.html 
+sidebar: sidebar 
+keywords: S3 REST API, S3 operations, GET storage usage request 
+summary: Die Anforderung „GET Storage Usage“ gibt Auskunft über die Gesamtmenge des von einem Konto und jedem mit dem Konto verknüpften Bucket verwendeten Speichers. 
+---
+= GET-Speichernutzungsanforderung
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Die Anforderung „GET Storage Usage“ gibt Auskunft über die Gesamtmenge des von einem Konto und jedem mit dem Konto verknüpften Bucket verwendeten Speichers.
+
+Die Menge des von einem Konto und seinen Buckets verwendeten Speichers kann durch eine modifizierte ListBuckets-Anfrage mit dem `x-ntap-sg-usage` Abfrageparameter.  Die Bucket-Speichernutzung wird getrennt von den vom System verarbeiteten PUT- und DELETE-Anfragen verfolgt.  Es kann zu einer gewissen Verzögerung kommen, bevor die Nutzungswerte den erwarteten Werten auf Grundlage der Verarbeitung von Anfragen entsprechen, insbesondere wenn das System stark ausgelastet ist.
+
+Standardmäßig versucht StorageGRID , Nutzungsinformationen mithilfe einer starken globalen Konsistenz abzurufen.  Wenn keine starke globale Konsistenz erreicht werden kann, versucht StorageGRID , die Nutzungsinformationen mit einer starken Site-Konsistenz abzurufen.
+
+Sie müssen über die Berechtigung s3:ListAllMyBuckets verfügen oder Root-Kontoinhaber sein, um diesen Vorgang abzuschließen.
+
+
+
+== Anforderungsbeispiel
+
+[listing, subs="specialcharacters,quotes"]
+----
+GET /?x-ntap-sg-usage HTTP/1.1
+Date: _date_
+Authorization: _authorization string_
+Host: _host_
+----
+
+
+== Antwortbeispiel
+
+Dieses Beispiel zeigt ein Konto mit vier Objekten und 12 Byte Daten in zwei Buckets.  Jeder Bucket enthält zwei Objekte und sechs Bytes Daten.
+
+[listing]
+----
+HTTP/1.1 200 OK
+Date: Sat, 29 Nov 2015 00:49:05 GMT
+Connection: KEEP-ALIVE
+Server: StorageGRID/10.2.0
+x-amz-request-id: 727237123
+Content-Length: 427
+Content-Type: application/xml
+
+<?xml version="1.0" encoding="UTF-8"?>
+<UsageResult xmlns="http://s3.storagegrid.com/doc/2015-02-01">
+<CalculationTime>2014-11-19T05:30:11.000000Z</CalculationTime>
+<ObjectCount>4</ObjectCount>
+<DataBytes>12</DataBytes>
+<Buckets>
+<Bucket>
+<Name>bucket1</Name>
+<ObjectCount>2</ObjectCount>
+<DataBytes>6</DataBytes>
+</Bucket>
+<Bucket>
+<Name>bucket2</Name>
+<ObjectCount>2</ObjectCount>
+<DataBytes>6</DataBytes>
+</Bucket>
+</Buckets>
+</UsageResult>
+----
+
+
+== Versionierung
+
+Jede gespeicherte Objektversion trägt dazu bei, `ObjectCount` Und `DataBytes` Werte in der Antwort.  Löschmarkierungen werden nicht hinzugefügt zum `ObjectCount` gesamt.
+
+.Ähnliche Informationen
+link:consistency-controls.html["Konsistenzwerte"]

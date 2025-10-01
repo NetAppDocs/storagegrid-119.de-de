@@ -1,0 +1,166 @@
+---
+permalink: upgrade/troubleshooting-upgrade-issues.html 
+sidebar: sidebar 
+keywords: upgrade, troubleshoot, troubleshooting, errors, upgrade precheck 
+summary: Wenn bei der Durchführung eines Upgrades etwas schief geht, können Sie das Problem möglicherweise selbst beheben.  Wenn Sie ein Problem nicht lösen können, sammeln Sie so viele Informationen wie möglich und wenden Sie sich dann an den technischen Support. 
+---
+= Beheben von Upgradeproblemen
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Wenn bei der Durchführung eines Upgrades etwas schief geht, können Sie das Problem möglicherweise selbst beheben.  Wenn Sie ein Problem nicht lösen können, sammeln Sie so viele Informationen wie möglich und wenden Sie sich dann an den technischen Support.
+
+
+
+== Das Upgrade wird nicht abgeschlossen
+
+In den folgenden Abschnitten wird beschrieben, wie Sie Situationen wiederherstellen, in denen das Upgrade teilweise fehlgeschlagen ist.
+
+
+
+=== Upgrade-Vorabprüfungsfehler
+
+Um Probleme zu erkennen und zu beheben, können Sie die Upgrade-Vorprüfungen manuell ausführen, bevor Sie mit dem eigentlichen Upgrade beginnen.  Die meisten Vorprüfungsfehler enthalten Informationen zur Lösung des Problems.
+
+
+
+=== Bereitstellungsfehler
+
+Wenn der automatische Bereitstellungsprozess fehlschlägt, wenden Sie sich an den technischen Support.
+
+
+
+=== Grid-Knoten stürzt ab oder kann nicht gestartet werden
+
+Wenn ein Grid-Knoten während des Upgrade-Vorgangs abstürzt oder nach Abschluss des Upgrades nicht erfolgreich gestartet werden kann, wenden Sie sich an den technischen Support, um die zugrunde liegenden Probleme zu untersuchen und zu beheben.
+
+
+
+=== Die Aufnahme oder der Datenabruf wird unterbrochen
+
+Wenn die Datenaufnahme oder der Datenabruf unerwartet unterbrochen wird, während Sie keinen Grid-Knoten aktualisieren, wenden Sie sich an den technischen Support.
+
+
+
+=== Datenbank-Upgradefehler
+
+Wenn das Datenbank-Upgrade mit einem Fehler fehlschlägt, versuchen Sie es erneut.  Wenn es erneut fehlschlägt, wenden Sie sich an den technischen Support.
+
+.Ähnliche Informationen
+link:checking-systems-condition-before-upgrading-software.html["Überprüfen des Systemzustands vor dem Upgrade der Software"]
+
+
+
+== Probleme mit der Benutzeroberfläche
+
+Während oder nach dem Upgrade können Probleme mit dem Grid Manager oder dem Tenant Manager auftreten.
+
+
+
+=== Grid Manager zeigt während des Upgrades mehrere Fehlermeldungen an
+
+Wenn Sie Ihren Browser aktualisieren oder zu einer anderen Grid Manager-Seite navigieren, während der primäre Admin-Knoten aktualisiert wird, werden möglicherweise mehrere Meldungen „503: Dienst nicht verfügbar“ und „Problem beim Verbinden mit dem Server“ angezeigt.  Sie können diese Meldungen getrost ignorieren. Sie werden nicht mehr angezeigt, sobald der Knoten aktualisiert ist.
+
+Wenn diese Meldungen nach dem Start des Upgrades länger als eine Stunde angezeigt werden, ist möglicherweise etwas passiert, das das Upgrade des primären Admin-Knotens verhindert hat.  Wenn Sie das Problem nicht selbst lösen können, wenden Sie sich an den technischen Support.
+
+
+
+=== Die Weboberfläche reagiert nicht wie erwartet
+
+Der Grid Manager oder der Tenant Manager reagiert nach der Aktualisierung der StorageGRID -Software möglicherweise nicht wie erwartet.
+
+Wenn Sie Probleme mit der Weboberfläche haben:
+
+* Stellen Sie sicher, dass Sie einlink:../admin/web-browser-requirements.html["unterstützter Webbrowser"] .
++
+
+NOTE: Die Browserunterstützung ändert sich normalerweise für jede StorageGRID Version.
+
+* Leeren Sie den Cache Ihres Webbrowsers.
++
+Durch das Leeren des Caches werden veraltete Ressourcen entfernt, die von der vorherigen Version der StorageGRID -Software verwendet wurden, und die Benutzeroberfläche kann wieder ordnungsgemäß funktionieren.  Anweisungen finden Sie in der Dokumentation Ihres Webbrowsers.
+
+
+
+
+
+== Fehlermeldungen zur Überprüfung der Verfügbarkeit von Docker-Images
+
+Beim Versuch, den Upgrade-Vorgang zu starten, erhalten Sie möglicherweise die Fehlermeldung „Die folgenden Probleme wurden von der Validierungssuite zur Überprüfung der Verfügbarkeit von Docker-Images festgestellt.“  Alle Probleme müssen gelöst werden, bevor Sie das Upgrade abschließen können.
+
+Wenden Sie sich an den technischen Support, wenn Sie sich nicht sicher sind, welche Änderungen zur Lösung der festgestellten Probleme erforderlich sind.
+
+[cols="1a,1a,1a"]
+|===
+| Nachricht | Ursache | Lösung 
+
+
+ a| 
+Die Upgrade-Version konnte nicht ermittelt werden.  Upgrade-Versionsinformationsdatei `{file_path}` entsprach nicht dem erwarteten Format.
+ a| 
+Das Upgrade-Paket ist beschädigt.
+ a| 
+Laden Sie das Upgrade-Paket erneut hoch und versuchen Sie es erneut.  Wenn das Problem weiterhin besteht, wenden Sie sich an den technischen Support.
+
+
+
+ a| 
+Upgrade-Versionsinformationsdatei `{file_path}` wurde nicht gefunden.  Die Upgrade-Version konnte nicht ermittelt werden.
+ a| 
+Das Upgrade-Paket ist beschädigt.
+ a| 
+Laden Sie das Upgrade-Paket erneut hoch und versuchen Sie es erneut.  Wenn das Problem weiterhin besteht, wenden Sie sich an den technischen Support.
+
+
+
+ a| 
+Die aktuell installierte Release-Version kann nicht ermittelt werden auf `{node_name}` .
+ a| 
+Eine wichtige Datei auf dem Knoten ist beschädigt.
+ a| 
+Wenden Sie sich an den technischen Support.
+
+
+
+ a| 
+Verbindungsfehler beim Versuch, Versionen aufzulisten auf `{node_name}`
+ a| 
+Der Knoten ist offline oder die Verbindung wurde unterbrochen.
+ a| 
+Stellen Sie sicher, dass alle Knoten online und vom primären Admin-Knoten aus erreichbar sind, und versuchen Sie es erneut.
+
+
+
+ a| 
+Der Host für den Knoten `{node_name}` hat kein StorageGRID `{upgrade_version}` Bild geladen.  Bilder und Dienste müssen auf dem Host installiert werden, bevor das Upgrade fortgesetzt werden kann.
+ a| 
+Die RPM- oder DEB-Pakete für das Upgrade wurden nicht auf dem Host installiert, auf dem der Knoten ausgeführt wird, oder die Images werden noch importiert.
+
+*Hinweis:* Dieser Fehler betrifft nur Knoten, die als Container unter Linux ausgeführt werden.
+ a| 
+Stellen Sie sicher, dass die RPM- oder DEB-Pakete auf allen Linux-Hosts installiert wurden, auf denen Knoten ausgeführt werden.  Stellen Sie sicher, dass die Version sowohl für den Dienst als auch für die Bilddatei korrekt ist.  Warten Sie einige Minuten und versuchen Sie es erneut.
+
+Sehen link:../upgrade/linux-installing-rpm-or-deb-package-on-all-hosts.html["Linux: Installieren Sie das RPM- oder DEB-Paket auf allen Hosts"] .
+
+
+
+ a| 
+Fehler beim Überprüfen des Knotens `{node_name}`
+ a| 
+Ein unerwarteter Fehler ist aufgetreten.
+ a| 
+Warten Sie einige Minuten und versuchen Sie es erneut.
+
+
+
+ a| 
+Beim Ausführen der Vorprüfungen ist ein nicht abgefangener Fehler aufgetreten. `{error_string}`
+ a| 
+Ein unerwarteter Fehler ist aufgetreten.
+ a| 
+Warten Sie einige Minuten und versuchen Sie es erneut.
+
+|===

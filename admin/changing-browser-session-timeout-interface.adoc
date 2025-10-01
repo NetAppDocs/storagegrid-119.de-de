@@ -1,0 +1,70 @@
+---
+permalink: admin/changing-browser-session-timeout-interface.html 
+sidebar: sidebar 
+keywords: security, browser inactivity timeout, management API stack track 
+summary: Über die Sicherheitseinstellungen der Schnittstelle können Sie steuern, ob Benutzer abgemeldet werden, wenn sie länger als die angegebene Zeit inaktiv sind, und ob in den API-Fehlerantworten ein Stacktrace enthalten sein soll. 
+---
+= Ändern der Schnittstellensicherheitseinstellungen
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Über die Sicherheitseinstellungen der Schnittstelle können Sie steuern, ob Benutzer abgemeldet werden, wenn sie länger als die angegebene Zeit inaktiv sind, und ob in den API-Fehlerantworten ein Stacktrace enthalten sein soll.
+
+.Bevor Sie beginnen
+* Sie sind beim Grid Manager angemeldet mit einemlink:../admin/web-browser-requirements.html["unterstützter Webbrowser"] .
+* Du hastlink:admin-group-permissions.html["Root-Zugriffsberechtigung"] .
+
+
+.Informationen zu diesem Vorgang
+Die Seite *Sicherheitseinstellungen* enthält die Einstellungen *Browser-Inaktivitäts-Timeout* und *Management-API-Stack-Trace*.
+
+Browser-Inaktivitäts-Timeout:: Gibt an, wie lange der Browser eines Benutzers inaktiv sein kann, bevor der Benutzer abgemeldet wird.  Der Standardwert beträgt 15 Minuten.
++
+--
+Das Timeout für Browserinaktivität wird auch durch Folgendes gesteuert:
+
+* Ein separater, nicht konfigurierbarer StorageGRID Timer, der zur Systemsicherheit enthalten ist.  Das Authentifizierungstoken jedes Benutzers läuft 16 Stunden nach der Anmeldung des Benutzers ab. Wenn die Authentifizierung eines Benutzers abläuft, wird dieser Benutzer automatisch abgemeldet, auch wenn das Inaktivitätstimeout des Browsers deaktiviert ist oder der Wert für das Browsertimeout nicht erreicht wurde.  Um das Token zu erneuern, muss sich der Benutzer erneut anmelden.
+* Timeout-Einstellungen für den Identitätsanbieter, vorausgesetzt, Single Sign-On (SSO) ist für StorageGRID aktiviert.
++
+Wenn SSO aktiviert ist und es beim Browser eines Benutzers zu einer Zeitüberschreitung kommt, muss der Benutzer seine SSO-Anmeldeinformationen erneut eingeben, um wieder auf StorageGRID zugreifen zu können. Sehen link:configuring-sso.html["Konfigurieren der einmaligen Anmeldung"] .
+
+
+
+--
+Stapelüberwachung der Verwaltungs-API:: Steuert, ob in den Fehlerantworten der Grid Manager- und Tenant Manager-API ein Stacktrace zurückgegeben wird.
++
+--
+Diese Option ist standardmäßig deaktiviert, Sie möchten diese Funktion jedoch möglicherweise für eine Testumgebung aktivieren.  Im Allgemeinen sollten Sie den Stacktrace in Produktionsumgebungen deaktiviert lassen, um zu vermeiden, dass beim Auftreten von API-Fehlern interne Softwaredetails preisgegeben werden.
+
+--
+
+
+.Schritte
+. Wählen Sie *KONFIGURATION* > *Sicherheit* > *Sicherheitseinstellungen*.
+. Wählen Sie die Registerkarte *Schnittstelle*.
+. So ändern Sie die Einstellung für das Inaktivitäts-Timeout des Browsers:
++
+.. Erweitern Sie das Akkordeon.
+.. Um die Zeitüberschreitungsdauer zu ändern, geben Sie einen Wert zwischen 60 Sekunden und 7 Tagen an.  Das Standard-Timeout beträgt 15 Minuten.
+.. Um diese Funktion zu deaktivieren, deaktivieren Sie das Kontrollkästchen.
+.. Wählen Sie *Speichern*.
++
+Die neue Einstellung wirkt sich nicht auf Benutzer aus, die derzeit angemeldet sind. Benutzer müssen sich erneut anmelden oder ihren Browser aktualisieren, damit die neue Timeout-Einstellung wirksam wird.
+
+
+
+. So ändern Sie die Einstellung für den Management-API-Stack-Trace:
++
+.. Erweitern Sie das Akkordeon.
+.. Aktivieren Sie das Kontrollkästchen, um in den Fehlerantworten der Grid Manager- und Tenant Manager-API einen Stacktrace zurückzugeben.
++
+
+CAUTION: Lassen Sie den Stacktrace in Produktionsumgebungen deaktiviert, um zu vermeiden, dass beim Auftreten von API-Fehlern interne Softwaredetails preisgegeben werden.
+
+.. Wählen Sie *Speichern*.
+
+
+

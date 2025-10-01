@@ -1,0 +1,102 @@
+---
+permalink: monitor/updating-snmp-agent.html 
+sidebar: sidebar 
+keywords: how to update the SNMP agent 
+summary: Sie können SNMP-Benachrichtigungen deaktivieren, Community-Strings aktualisieren oder Agentenadressen, USM-Benutzer und Trap-Ziele hinzufügen oder entfernen. 
+---
+= Aktualisieren Sie den SNMP-Agenten
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Sie können SNMP-Benachrichtigungen deaktivieren, Community-Strings aktualisieren oder Agentenadressen, USM-Benutzer und Trap-Ziele hinzufügen oder entfernen.
+
+.Bevor Sie beginnen
+* Sie sind beim Grid Manager angemeldet mit einemlink:../admin/web-browser-requirements.html["unterstützter Webbrowser"] .
+* Sie haben dielink:../admin/admin-group-permissions.html["Root-Zugriffsberechtigung"] .
+
+
+.Informationen zu diesem Vorgang
+Sehenlink:configuring-snmp-agent.html["Konfigurieren des SNMP-Agenten"] für Details zu jedem Feld auf der SNMP-Agent-Seite.  Sie müssen unten auf der Seite *Speichern* auswählen, um alle auf den einzelnen Registerkarten vorgenommenen Änderungen zu übernehmen.
+
+.Schritte
+. Wählen Sie *KONFIGURATION* > *Überwachung* > *SNMP-Agent*.
++
+Die SNMP-Agent-Seite wird angezeigt.
+
+. Um den SNMP-Agenten auf allen Grid-Knoten zu deaktivieren, deaktivieren Sie das Kontrollkästchen *SNMP aktivieren* und wählen Sie *Speichern*.
++
+Wenn Sie den SNMP-Agenten erneut aktivieren, bleiben alle vorherigen SNMP-Konfigurationseinstellungen erhalten.
+
+. Aktualisieren Sie optional die Informationen im Abschnitt „Grundkonfiguration“:
++
+.. Aktualisieren Sie bei Bedarf den *Systemkontakt* und den *Systemstandort*.
+.. Aktivieren oder deaktivieren Sie optional das Kontrollkästchen *SNMP-Agent-Benachrichtigungen aktivieren*, um zu steuern, ob der StorageGRID -SNMP-Agent Trap- und Inform-Benachrichtigungen sendet.
++
+Wenn dieses Kontrollkästchen deaktiviert ist, unterstützt der SNMP-Agent schreibgeschützten MIB-Zugriff, sendet jedoch keine SNMP-Benachrichtigungen.
+
+.. Aktivieren oder deaktivieren Sie optional das Kontrollkästchen *Authentifizierungs-Traps aktivieren*, um zu steuern, ob der StorageGRID SNMP-Agent Authentifizierungs-Traps sendet, wenn er nicht ordnungsgemäß authentifizierte Protokollnachrichten empfängt.
+
+
+. Wenn Sie SNMPv1 oder SNMPv2c verwenden, aktualisieren oder fügen Sie optional eine *Nur-Lese-Community* im Abschnitt „Community-Strings“ hinzu.
+. Um Trap-Ziele zu aktualisieren, wählen Sie die Registerkarte Trap-Ziele im Abschnitt „Andere Konfigurationen“ aus.
++
+Verwenden Sie diese Registerkarte, um ein oder mehrere Ziele für StorageGRID Trap- oder Inform-Benachrichtigungen zu definieren.  Wenn Sie den SNMP-Agenten aktivieren und *Speichern* auswählen, sendet StorageGRID Benachrichtigungen an jedes definierte Ziel, wenn Warnungen ausgelöst werden.  Für die unterstützten MIB-II-Entitäten werden auch Standardbenachrichtigungen gesendet (z. B. ifDown und coldStart).
+
++
+Einzelheiten zu den einzugebenden Informationen finden Sie unterlink:../monitor/configuring-snmp-agent.html#create-trap-destinations["Erstellen von Trap-Zielen"] .
+
++
+** Aktualisieren oder entfernen Sie optional die Standard-Trap-Community.
++
+Wenn Sie die Standard-Trap-Community entfernen, müssen Sie zunächst sicherstellen, dass alle vorhandenen Trap-Ziele eine benutzerdefinierte Community-Zeichenfolge verwenden.
+
+** Um ein Trap-Ziel hinzuzufügen, wählen Sie *Erstellen*.
+** Um ein Trap-Ziel zu bearbeiten, wählen Sie das Optionsfeld und dann *Bearbeiten*.
+** Um ein Trap-Ziel zu entfernen, wählen Sie das Optionsfeld und dann *Entfernen*.
+** Um Ihre Änderungen zu übernehmen, wählen Sie unten auf der Seite *Speichern* aus.
+
+
+. Um Agentenadressen zu aktualisieren, wählen Sie die Registerkarte Agentenadressen im Abschnitt „Weitere Konfigurationen“ aus.
++
+Verwenden Sie diese Registerkarte, um eine oder mehrere „Abhöradressen“ anzugeben.  Dies sind die StorageGRID -Adressen, unter denen der SNMP-Agent Abfragen empfangen kann.
+
++
+Einzelheiten zu den einzugebenden Informationen finden Sie unterlink:../monitor/configuring-snmp-agent.html#create-agent-addresses["Agentenadressen erstellen"] .
+
++
+** Um eine Agentenadresse hinzuzufügen, wählen Sie *Erstellen*.
+** Um eine Agentenadresse zu bearbeiten, wählen Sie das Optionsfeld und dann *Bearbeiten*.
+** Um eine Agentenadresse zu entfernen, wählen Sie das Optionsfeld und dann *Entfernen*.
+** Um Ihre Änderungen zu übernehmen, wählen Sie unten auf der Seite *Speichern* aus.
+
+
+. Um USM-Benutzer zu aktualisieren, wählen Sie im Abschnitt „Andere Konfigurationen“ die Registerkarte „USM-Benutzer“ aus.
++
+Verwenden Sie diese Registerkarte, um die USM-Benutzer zu definieren, die zum Abfragen der MIB oder zum Empfangen von Traps und Informationen berechtigt sind.
+
++
+Einzelheiten zu den einzugebenden Informationen finden Sie unterlink:../monitor/configuring-snmp-agent.html#create-usm-users["Erstellen von USM-Benutzern"] .
+
++
+** Um einen USM-Benutzer hinzuzufügen, wählen Sie *Erstellen*.
+** Um einen USM-Benutzer zu bearbeiten, aktivieren Sie das Optionsfeld und wählen Sie *Bearbeiten*.
++
+Der Benutzername eines vorhandenen USM-Benutzers kann nicht geändert werden.  Wenn Sie einen Benutzernamen ändern müssen, müssen Sie den Benutzer entfernen und einen neuen erstellen.
+
++
+
+NOTE: Wenn Sie die autoritative Engine-ID eines Benutzers hinzufügen oder entfernen und dieser Benutzer derzeit für ein Ziel ausgewählt ist, müssen Sie das Ziel bearbeiten oder entfernen.  Andernfalls tritt beim Speichern der SNMP-Agent-Konfiguration ein Validierungsfehler auf.
+
+** Um einen USM-Benutzer zu entfernen, aktivieren Sie das Optionsfeld und wählen Sie *Entfernen*.
++
+
+NOTE: Wenn der von Ihnen entfernte Benutzer derzeit für ein Trap-Ziel ausgewählt ist, müssen Sie das Ziel bearbeiten oder entfernen.  Andernfalls tritt beim Speichern der SNMP-Agent-Konfiguration ein Validierungsfehler auf.
+
+** Um Ihre Änderungen zu übernehmen, wählen Sie unten auf der Seite *Speichern* aus.
+
+
+. Wenn Sie die SNMP-Agentenkonfiguration aktualisiert haben, wählen Sie *Speichern*.
+

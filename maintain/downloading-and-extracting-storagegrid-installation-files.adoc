@@ -1,0 +1,340 @@
+---
+permalink: maintain/downloading-and-extracting-storagegrid-installation-files.html 
+sidebar: sidebar 
+keywords: storagegrid, installation files, download 
+summary: Bevor Sie StorageGRID -Knoten wiederherstellen können, müssen Sie die Software herunterladen und die Dateien extrahieren. 
+---
+= Laden Sie die StorageGRID Installationsdateien herunter und extrahieren Sie sie
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Bevor Sie StorageGRID -Knoten wiederherstellen können, müssen Sie die Software herunterladen und die Dateien extrahieren.
+
+Sie müssen die Version von StorageGRID verwenden, die derzeit im Grid ausgeführt wird.
+
+.Schritte
+. Ermitteln Sie, welche Version der Software aktuell installiert ist.  Wählen Sie oben im Grid Manager das Hilfesymbol und dann *Info* aus.
+. Gehen Sie zur NetApp -Downloadseite für StorageGRID.
++
+https://mysupport.netapp.com/site/products/all/details/storagegrid/downloads-tab["NetApp Downloads: StorageGRID"^]
+
+. Wählen Sie die Version von StorageGRID aus, die derzeit im Grid ausgeführt wird.
++
+StorageGRID -Softwareversionen haben dieses Format: 11.xy
+
+. Melden Sie sich mit dem Benutzernamen und dem Kennwort für Ihr NetApp -Konto an .
+. Lesen Sie die Endbenutzer-Lizenzvereinbarung, aktivieren Sie das Kontrollkästchen und wählen Sie dann *Akzeptieren und fortfahren*.
+. Wählen Sie in der Spalte *Install StorageGRID* der Download-Seite die `.tgz` oder `.zip` Datei für Ihre Plattform.
++
+Die in der Installationsarchivdatei angezeigte Version muss mit der Version der aktuell installierten Software übereinstimmen.
+
++
+Verwenden Sie die `.zip` Datei, wenn Sie Windows verwenden.
+
++
+[cols="1a,2a"]
+|===
+| Plattform | Installationsarchiv 
+
+
+ a| 
+Red Hat Enterprise Linux
+| `StorageGRID-Webscale-_version_-RPM-_uniqueID_.zip` 
+`StorageGRID-Webscale-_version_-RPM-_uniqueID_.tgz` 
+
+
+ a| 
+Ubuntu oder Debian oder Appliances
+| `StorageGRID-Webscale-_version_-DEB-_uniqueID_.zip` 
+`StorageGRID-Webscale-_version_-DEB-_uniqueID_.tgz` 
+
+
+ a| 
+VMware
+| `StorageGRID-Webscale-_version_-VMware-_uniqueID_.zip` 
+`StorageGRID-Webscale-_version_-VMware-_uniqueID_.tgz` 
+|===
+. Laden Sie die Archivdatei herunter und extrahieren Sie sie.
+. Befolgen Sie die entsprechenden Schritte für Ihre Plattform, um die benötigten Dateien basierend auf Ihrer Plattform und den Grid-Knoten auszuwählen, die Sie wiederherstellen müssen.
++
+Die im Schritt für jede Plattform aufgeführten Pfade beziehen sich auf das von der Archivdatei installierte Verzeichnis der obersten Ebene.
+
+. Wenn Sie einelink:../rhel/index.html["Red Hat Enterprise Linux-System"] , wählen Sie die entsprechenden Dateien aus.
+
+
+[cols="1a,1a"]
+|===
+| Pfad und Dateiname | Beschreibung 
+
+
+| ./rpms/README  a| 
+Eine Textdatei, die alle in der StorageGRID Downloaddatei enthaltenen Dateien beschreibt.
+
+
+
+| ./rpms/NLF000000.txt  a| 
+Eine kostenlose Lizenz, die keinen Anspruch auf Support für das Produkt bietet.
+
+
+
+| ./rpms/ StorageGRID-Webscale-Images-_version_-SHA.rpm  a| 
+RPM-Paket zum Installieren der StorageGRID -Knotenimages auf Ihren RHEL-Hosts.
+
+
+
+| ./rpms/ StorageGRID-Webscale-Service-_version_-SHA.rpm  a| 
+RPM-Paket zum Installieren des StorageGRID Hostdienstes auf Ihren RHEL-Hosts.
+
+
+
+| Bereitstellungsskripttool | Beschreibung 
+
+
+| ./rpms/configure-storagegrid.py  a| 
+Ein Python-Skript zur Automatisierung der Konfiguration eines StorageGRID -Systems.
+
+
+
+| ./rpms/configure-sga.py  a| 
+Ein Python-Skript zur Automatisierung der Konfiguration von StorageGRID Geräten.
+
+
+
+| ./rpms/configure-storagegrid.sample.json  a| 
+Eine Beispielkonfigurationsdatei zur Verwendung mit dem `configure-storagegrid.py` Skript.
+
+
+
+| ./rpms/storagegrid-ssoauth.py  a| 
+Ein Beispiel-Python-Skript, das Sie verwenden können, um sich bei der Grid Management API anzumelden, wenn Single Sign-On aktiviert ist.  Sie können dieses Skript auch für die Ping Federate-Integration verwenden.
+
+
+
+| ./rpms/configure-storagegrid.blank.json  a| 
+Eine leere Konfigurationsdatei zur Verwendung mit dem `configure-storagegrid.py` Skript.
+
+
+
+| ./rpms/extras/ansible  a| 
+Beispiel für eine Ansible-Rolle und ein Playbook zum Konfigurieren von RHEL-Hosts für die Bereitstellung von StorageGRID Containern.  Sie können die Rolle oder das Playbook nach Bedarf anpassen.
+
+
+
+| ./rpms/storagegrid-ssoauth-azure.py  a| 
+Ein Beispiel-Python-Skript, das Sie zum Anmelden bei der Grid Management API verwenden können, wenn Single Sign-On (SSO) mit Active Directory oder Ping Federate aktiviert ist.
+
+
+
+| ./rpms/storagegrid-ssoauth-azure.js  a| 
+Ein Hilfsskript, das vom Begleiter aufgerufen wird `storagegrid-ssoauth-azure.py` Python-Skript zum Durchführen von SSO-Interaktionen mit Azure.
+
+
+
+| ./rpms/extras/api-schemas  a| 
+API-Schemas für StorageGRID.
+
+*Hinweis*: Bevor Sie ein Upgrade durchführen, können Sie diese Schemata verwenden, um zu bestätigen, dass der gesamte Code, den Sie zur Verwendung der StorageGRID Verwaltungs-APIs geschrieben haben, mit der neuen StorageGRID Version kompatibel ist, wenn Sie keine nicht produktive StorageGRID Umgebung zum Testen der Upgrade-Kompatibilität haben.
+
+|===
+. Wenn Sie einelink:../ubuntu/index.html["Ubuntu- oder Debian-System"] , wählen Sie die entsprechenden Dateien aus.
+
+
+[cols="1a,1a"]
+|===
+| Pfad und Dateiname | Beschreibung 
+
+
+| ./debs/README  a| 
+Eine Textdatei, die alle in der StorageGRID Downloaddatei enthaltenen Dateien beschreibt.
+
+
+
+| ./debs/NLF000000.txt  a| 
+Eine nicht für die Produktion NetApp -Lizenzdatei, die Sie für Tests und Proof-of-Concept-Bereitstellungen verwenden können.
+
+
+
+| ./debs/storagegrid-webscale-images-version-SHA.deb  a| 
+DEB-Paket zum Installieren der StorageGRID -Knotenimages auf Ubuntu- oder Debian-Hosts.
+
+
+
+| ./debs/storagegrid-webscale-images-version-SHA.deb.md5  a| 
+MD5-Prüfsumme für die Datei `/debs/storagegrid-webscale-images-version-SHA.deb` .
+
+
+
+| ./debs/storagegrid-webscale-service-version-SHA.deb  a| 
+DEB-Paket zum Installieren des StorageGRID -Hostdienstes auf Ubuntu- oder Debian-Hosts.
+
+
+
+| Bereitstellungsskripttool | Beschreibung 
+
+
+| ./debs/configure-storagegrid.py  a| 
+Ein Python-Skript zur Automatisierung der Konfiguration eines StorageGRID -Systems.
+
+
+
+| ./debs/configure-sga.py  a| 
+Ein Python-Skript zur Automatisierung der Konfiguration von StorageGRID Geräten.
+
+
+
+| ./debs/storagegrid-ssoauth.py  a| 
+Ein Beispiel-Python-Skript, das Sie verwenden können, um sich bei der Grid Management API anzumelden, wenn Single Sign-On aktiviert ist.  Sie können dieses Skript auch für die Ping Federate-Integration verwenden.
+
+
+
+| ./debs/configure-storagegrid.sample.json  a| 
+Eine Beispielkonfigurationsdatei zur Verwendung mit dem `configure-storagegrid.py` Skript.
+
+
+
+| ./debs/configure-storagegrid.blank.json  a| 
+Eine leere Konfigurationsdatei zur Verwendung mit dem `configure-storagegrid.py` Skript.
+
+
+
+| ./debs/extras/ansible  a| 
+Beispiel für eine Ansible-Rolle und ein Playbook zum Konfigurieren von Ubuntu- oder Debian-Hosts für die Bereitstellung von StorageGRID Containern.  Sie können die Rolle oder das Playbook nach Bedarf anpassen.
+
+
+
+| ./debs/storagegrid-ssoauth-azure.py  a| 
+Ein Beispiel-Python-Skript, das Sie zum Anmelden bei der Grid Management API verwenden können, wenn Single Sign-On (SSO) mit Active Directory oder Ping Federate aktiviert ist.
+
+
+
+| ./debs/storagegrid-ssoauth-azure.js  a| 
+Ein Hilfsskript, das vom Begleiter aufgerufen wird `storagegrid-ssoauth-azure.py` Python-Skript zum Durchführen von SSO-Interaktionen mit Azure.
+
+
+
+| ./debs/extras/api-schemas  a| 
+API-Schemas für StorageGRID.
+
+*Hinweis*: Bevor Sie ein Upgrade durchführen, können Sie diese Schemata verwenden, um zu bestätigen, dass der gesamte Code, den Sie zur Verwendung der StorageGRID Verwaltungs-APIs geschrieben haben, mit der neuen StorageGRID Version kompatibel ist, wenn Sie keine nicht produktive StorageGRID Umgebung zum Testen der Upgrade-Kompatibilität haben.
+
+|===
+. Wenn Sie einelink:../vmware/index.html["VMware-System"] , wählen Sie die entsprechenden Dateien aus.
+
+
+[cols="1a,1a"]
+|===
+| Pfad und Dateiname | Beschreibung 
+
+
+| ./vsphere/README  a| 
+Eine Textdatei, die alle in der StorageGRID Downloaddatei enthaltenen Dateien beschreibt.
+
+
+
+| ./vsphere/NLF000000.txt  a| 
+Eine kostenlose Lizenz, die keinen Anspruch auf Support für das Produkt bietet.
+
+
+
+| ./vsphere/ NetApp-SG-version-SHA.vmdk  a| 
+Die Festplattendatei der virtuellen Maschine, die als Vorlage zum Erstellen virtueller Grid-Knotenmaschinen verwendet wird.
+
+
+
+| ./vsphere/vsphere-primary-admin.ovf ./vsphere/vsphere-primary-admin.mf  a| 
+Die Open Virtualization Format-Vorlagendatei(`.ovf` ) und Manifestdatei(`.mf` ) zum Bereitstellen des primären Admin-Knotens.
+
+
+
+| ./vsphere/vsphere-non-primary-admin.ovf ./vsphere/vsphere-non-primary-admin.mf  a| 
+Die Vorlagendatei(`.ovf` ) und Manifestdatei(`.mf` ) zum Bereitstellen nicht primärer Admin-Knoten.
+
+
+
+| ./vsphere/vsphere-gateway.ovf ./vsphere/vsphere-gateway.mf  a| 
+Die Vorlagendatei(`.ovf` ) und Manifestdatei(`.mf` ) zum Bereitstellen von Gateway-Knoten.
+
+
+
+| ./vsphere/vsphere-storage.ovf ./vsphere/vsphere-storage.mf  a| 
+Die Vorlagendatei(`.ovf` ) und Manifestdatei(`.mf` ) zum Bereitstellen von Speicherknoten auf Basis virtueller Maschinen.
+
+
+
+| Bereitstellungsskripttool | Beschreibung 
+
+
+| ./vsphere/deploy-vsphere-ovftool.sh  a| 
+Ein Bash-Shell-Skript zur Automatisierung der Bereitstellung virtueller Grid-Knoten.
+
+
+
+| ./vsphere/deploy-vsphere-ovftool-sample.ini  a| 
+Eine Beispielkonfigurationsdatei zur Verwendung mit dem `deploy-vsphere-ovftool.sh` Skript.
+
+
+
+| ./vsphere/configure-storagegrid.py  a| 
+Ein Python-Skript zur Automatisierung der Konfiguration eines StorageGRID -Systems.
+
+
+
+| ./vsphere/configure-sga.py  a| 
+Ein Python-Skript zur Automatisierung der Konfiguration von StorageGRID Geräten.
+
+
+
+| ./vsphere/storagegrid-ssoauth.py  a| 
+Ein Beispiel-Python-Skript, das Sie verwenden können, um sich bei der Grid Management API anzumelden, wenn Single Sign-On (SSO) aktiviert ist.  Sie können dieses Skript auch für die Ping Federate-Integration verwenden.
+
+
+
+| ./vsphere/configure-storagegrid.sample.json  a| 
+Eine Beispielkonfigurationsdatei zur Verwendung mit dem `configure-storagegrid.py` Skript.
+
+
+
+| ./vsphere/configure-storagegrid.blank.json  a| 
+Eine leere Konfigurationsdatei zur Verwendung mit dem `configure-storagegrid.py` Skript.
+
+
+
+| ./vsphere/storagegrid-ssoauth-azure.py  a| 
+Ein Beispiel-Python-Skript, das Sie zum Anmelden bei der Grid Management API verwenden können, wenn Single Sign-On (SSO) mit Active Directory oder Ping Federate aktiviert ist.
+
+
+
+| ./vsphere/storagegrid-ssoauth-azure.js  a| 
+Ein Hilfsskript, das vom Begleiter aufgerufen wird `storagegrid-ssoauth-azure.py` Python-Skript zum Durchführen von SSO-Interaktionen mit Azure.
+
+
+
+| ./vsphere/extras/api-schemas  a| 
+API-Schemas für StorageGRID.
+
+*Hinweis*: Bevor Sie ein Upgrade durchführen, können Sie diese Schemata verwenden, um zu bestätigen, dass der gesamte Code, den Sie zur Verwendung der StorageGRID Verwaltungs-APIs geschrieben haben, mit der neuen StorageGRID Version kompatibel ist, wenn Sie keine nicht produktive StorageGRID Umgebung zum Testen der Upgrade-Kompatibilität haben.
+
+|===
+. Wenn Sie ein auf einem StorageGRID -Gerät basierendes System wiederherstellen, wählen Sie die entsprechenden Dateien aus.
+
+
+[cols="1a,1a"]
+|===
+| Pfad und Dateiname | Beschreibung 
+
+
+| ./debs/storagegrid-webscale-images-version-SHA.deb  a| 
+DEB-Paket zum Installieren der StorageGRID -Knotenimages auf Ihren Geräten.
+
+
+
+| ./debs/storagegrid-webscale-images-version-SHA.deb.md5  a| 
+MD5-Prüfsumme für die Datei `/debs/storagegridwebscale-
+images-version-SHA.deb` .
+
+|===
+
+NOTE: Für die Installation der Appliance sind diese Dateien nur erforderlich, wenn Sie Netzwerkverkehr vermeiden müssen.  Das Gerät kann die erforderlichen Dateien vom primären Admin-Knoten herunterladen.

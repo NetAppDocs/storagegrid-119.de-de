@@ -1,0 +1,30 @@
+---
+permalink: maintain/recovering-from-primary-admin-node-failures.html 
+sidebar: sidebar 
+keywords: storagegrid, recover, primary admin node failure 
+summary: 'Sie müssen eine Reihe bestimmter Aufgaben ausführen, um einen Ausfall des primären Admin-Knotens zu beheben.  Der primäre Admin-Knoten hostet den Configuration Management Node \(CMN\)-Dienst für das Grid.' 
+---
+= Wiederherstellung nach Fehlern des primären Admin-Knotens
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Sie müssen eine Reihe bestimmter Aufgaben ausführen, um einen Ausfall des primären Admin-Knotens zu beheben.  Der primäre Admin-Knoten hostet den Configuration Management Node (CMN)-Dienst für das Grid.
+
+
+CAUTION: Sie müssen einen ausgefallenen primären Admin-Knoten umgehend reparieren oder ersetzen, da das Grid sonst möglicherweise nicht mehr in der Lage ist, neue Objekte aufzunehmen.  Der genaue Zeitraum hängt von Ihrer Objektaufnahmerate ab: Wenn Sie eine genauere Einschätzung des Zeitrahmens für Ihr Raster benötigen, wenden Sie sich an den technischen Support.
+
+Der Configuration Management Node (CMN)-Dienst auf dem primären Admin-Knoten ist für die Ausgabe von Blöcken mit Objektkennungen für das Grid verantwortlich.  Diese Kennungen werden den Objekten bei der Aufnahme zugewiesen.  Neue Objekte können nur aufgenommen werden, wenn Kennungen verfügbar sind.  Die Objektaufnahme kann fortgesetzt werden, während das CMN nicht verfügbar ist, da im Raster ein Vorrat an Kennungen für etwa einen Monat zwischengespeichert ist.  Wenn die zwischengespeicherten Kennungen jedoch aufgebraucht sind, können keine neuen Objekte mehr hinzugefügt werden.
+
+Befolgen Sie diese allgemeinen Schritte, um einen primären Admin-Knoten wiederherzustellen:
+
+. link:copying-audit-logs-from-failed-primary-admin-node.html["Kopieren Sie die Prüfprotokolle vom ausgefallenen primären Admin-Knoten"]
+. link:replacing-primary-admin-node.html["Ersetzen Sie den primären Admin-Knoten"]
+. link:configuring-replacement-primary-admin-node.html["Konfigurieren Sie den Ersatz-Primäradministratorknoten"]
+. link:assess-hotfix-requirement-during-primary-admin-node-recovery.html["Ermitteln Sie, ob für den wiederhergestellten primären Admin-Knoten ein Hotfix erforderlich ist."]
+. link:restoring-audit-log-on-recovered-primary-admin-node.html["Stellen Sie das Überwachungsprotokoll auf dem wiederhergestellten primären Admin-Knoten wieder her"]
+. link:restoring-admin-node-database-primary-admin-node.html["Wiederherstellen der Admin-Knoten-Datenbank beim Wiederherstellen eines primären Admin-Knotens"]
+. link:restoring-prometheus-metrics-primary-admin-node.html["Stellen Sie Prometheus-Metriken wieder her, wenn Sie einen primären Admin-Knoten wiederherstellen"]
+

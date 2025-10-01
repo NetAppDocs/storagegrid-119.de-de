@@ -1,0 +1,41 @@
+---
+permalink: monitor/viewing-grid-topology-tree.html 
+sidebar: sidebar 
+keywords: how to view the Grid Topology tree 
+summary: Der Grid-Topologie-Baum bietet Zugriff auf detaillierte Informationen zu StorageGRID -Systemelementen, einschließlich Sites, Grid-Knoten, Diensten und Komponenten.  In den meisten Fällen müssen Sie nur auf den Grid-Topologie-Baum zugreifen, wenn Sie in der Dokumentation dazu aufgefordert werden oder wenn Sie mit dem technischen Support zusammenarbeiten. 
+---
+= Den Netztopologie-Baum anzeigen
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Der Grid-Topologie-Baum bietet Zugriff auf detaillierte Informationen zu StorageGRID -Systemelementen, einschließlich Sites, Grid-Knoten, Diensten und Komponenten.  In den meisten Fällen müssen Sie nur auf den Grid-Topologie-Baum zugreifen, wenn Sie in der Dokumentation dazu aufgefordert werden oder wenn Sie mit dem technischen Support zusammenarbeiten.
+
+Um auf den Gittertopologie-Baum zuzugreifen, wählen Sie *SUPPORT* > *Tools* > *Gittertopologie*.
+
+image::../media/grid_topology_tree.gif[Teile des Grid-Topologie-Baums]
+
+Um den Gittertopologie-Baum zu erweitern oder zu reduzieren, klicken Sie aufimage:../media/nms_tree_expand.gif["Pluszeichen-Symbol"] oderimage:../media/nms_tree_collapse.gif["Minuszeichen-Symbol"] auf Site-, Knoten- oder Serviceebene.  Um alle Elemente der gesamten Site oder in jedem Knoten zu erweitern oder zu reduzieren, halten Sie die Taste *<Strg>* gedrückt und klicken Sie.
+
+
+
+== StorageGRID -Attribute
+
+Attribute melden Werte und Status für viele Funktionen des StorageGRID Systems.  Attributwerte sind für jeden Rasterknoten, jeden Standort und das gesamte Raster verfügbar.
+
+StorageGRID -Attribute werden an mehreren Stellen im Grid Manager verwendet:
+
+* *Knotenseite*: Viele der auf der Knotenseite angezeigten Werte sind StorageGRID -Attribute.  (Prometheus-Metriken werden auch auf den Knotenseiten angezeigt.)
+* *Gittertopologiebaum*: Attributwerte werden im Gittertopologiebaum angezeigt (*SUPPORT* > *Tools* > *Gittertopologie*).
+* *Ereignisse*: Systemereignisse treten auf, wenn bestimmte Attribute einen Fehler oder Störungszustand für einen Knoten aufzeichnen, einschließlich Fehlern wie Netzwerkfehlern.
+
+
+
+
+=== Attributwerte
+
+Die Attribute werden nach bestem Wissen und Gewissen gemeldet und sind annähernd richtig.  Attributaktualisierungen können unter bestimmten Umständen verloren gehen, beispielsweise beim Absturz eines Dienstes oder beim Ausfall und Wiederaufbau eines Grid-Knotens.
+
+Darüber hinaus können Ausbreitungsverzögerungen die Meldung von Attributen verlangsamen.  Aktualisierte Werte für die meisten Attribute werden in festen Intervallen an das StorageGRID System gesendet.  Es kann mehrere Minuten dauern, bis eine Aktualisierung im System sichtbar ist, und zwei Attribute, die sich mehr oder weniger gleichzeitig ändern, können zu leicht unterschiedlichen Zeitpunkten gemeldet werden.

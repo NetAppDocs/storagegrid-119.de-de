@@ -1,0 +1,185 @@
+---
+permalink: s3/put-object-copy.html 
+sidebar: sidebar 
+keywords: put object copy, CopyObject 
+summary: Mit der S3 CopyObject-Anforderung können Sie eine Kopie eines Objekts erstellen, das bereits in S3 gespeichert ist.  Ein CopyObject-Vorgang ist dasselbe wie das Ausführen eines GET und anschließend eines PUT. 
+---
+= Objekt kopieren
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Mit der S3 CopyObject-Anforderung können Sie eine Kopie eines Objekts erstellen, das bereits in S3 gespeichert ist.  Ein CopyObject-Vorgang ist dasselbe wie die Ausführung von GetObject gefolgt von PutObject.
+
+
+
+== Konflikte lösen
+
+Widersprüchliche Clientanforderungen, beispielsweise wenn zwei Clients auf denselben Schlüssel schreiben, werden nach dem Prinzip „Latest Wins“ gelöst.  Der Zeitpunkt für die Auswertung der „Latest Wins“ basiert darauf, wann das StorageGRID -System eine bestimmte Anfrage abschließt, und nicht darauf, wann S3-Clients einen Vorgang beginnen.
+
+
+
+== Objektgröße
+
+Die maximal _empfohlene_ Größe für einen einzelnen PutObject-Vorgang beträgt 5 GiB (5.368.709.120 Bytes).  Wenn Sie Objekte haben, die größer als 5 GiB sind, verwenden Sielink:operations-for-multipart-uploads.html["mehrteiliger Upload"] stattdessen.
+
+Die maximal _unterstützte_ Größe für einen einzelnen PutObject-Vorgang beträgt 5 TiB (5.497.558.138.880 Bytes).
+
+
+NOTE: Wenn Sie ein Upgrade von StorageGRID 11.6 oder früher durchgeführt haben, wird die Warnung „S3 PUT-Objektgröße zu groß“ ausgelöst, wenn Sie versuchen, ein Objekt hochzuladen, das 5 GiB überschreitet.  Wenn Sie eine Neuinstallation von StorageGRID 11.7 oder 11.8 haben, wird der Alarm in diesem Fall nicht ausgelöst.  Um jedoch dem AWS S3-Standard zu entsprechen, werden zukünftige Versionen von StorageGRID keine Uploads von Objekten unterstützen, die größer als 5 GiB sind.
+
+
+
+== UTF-8-Zeichen in Benutzermetadaten
+
+Wenn eine Anfrage (nicht maskierte) UTF-8-Werte im Schlüsselnamen oder Wert benutzerdefinierter Metadaten enthält, ist das StorageGRID Verhalten undefiniert.
+
+StorageGRID analysiert oder interpretiert keine Escape-UTF-8-Zeichen, die im Schlüsselnamen oder -wert benutzerdefinierter Metadaten enthalten sind.  Escape-UTF-8-Zeichen werden als ASCII-Zeichen behandelt:
+
+* Anforderungen sind erfolgreich, wenn benutzerdefinierte Metadaten Escape-UTF-8-Zeichen enthalten.
+* StorageGRID gibt nicht zurück `x-amz-missing-meta` Header, wenn der interpretierte Wert des Schlüsselnamens oder -werts nicht druckbare Zeichen enthält.
+
+
+
+
+== Unterstützte Anforderungsheader
+
+Die folgenden Anforderungsheader werden unterstützt:
+
+* `Content-Type`
+* `x-amz-copy-source`
+* `x-amz-copy-source-if-match`
+* `x-amz-copy-source-if-none-match`
+* `x-amz-copy-source-if-unmodified-since`
+* `x-amz-copy-source-if-modified-since`
+* `x-amz-meta-`, gefolgt von einem Name-Wert-Paar mit benutzerdefinierten Metadaten
+* `x-amz-metadata-directive`: Der Standardwert ist `COPY` , wodurch Sie das Objekt und die zugehörigen Metadaten kopieren können.
++
+Sie können angeben `REPLACE` um die vorhandenen Metadaten beim Kopieren des Objekts zu überschreiben oder die Objektmetadaten zu aktualisieren.
+
+* `x-amz-storage-class`
+* `x-amz-tagging-directive`: Der Standardwert ist `COPY` , wodurch Sie das Objekt und alle Tags kopieren können.
++
+Sie können angeben `REPLACE` um die vorhandenen Tags beim Kopieren des Objekts zu überschreiben oder die Tags zu aktualisieren.
+
+* S3 Object Lock-Anforderungsheader:
++
+** `x-amz-object-lock-mode`
+** `x-amz-object-lock-retain-until-date`
+** `x-amz-object-lock-legal-hold`
++
+Wenn eine Anfrage ohne diese Header gestellt wird, werden die Bucket-Standardaufbewahrungseinstellungen verwendet, um den Objektversionsmodus und das Aufbewahrungsdatum zu berechnen. Sehen link:use-s3-api-for-s3-object-lock.html["Verwenden Sie die S3 REST API, um S3 Object Lock zu konfigurieren"] .
+
+
+
+* SSE-Anforderungsheader:
++
+** `x-amz-copy-source​-server-side​-encryption​-customer-algorithm`
+** `x-amz-copy-source​-server-side-encryption-customer-key`
+** `x-amz-copy-source​-server-side-encryption-customer-key-MD5`
+** `x-amz-server-side-encryption`
+** `x-amz-server-side-encryption-customer-key-MD5`
+** `x-amz-server-side-encryption-customer-key`
+** `x-amz-server-side-encryption-customer-algorithm`
++
+Sehen<<Anforderungsheader für serverseitige Verschlüsselung>>
+
+
+
+
+
+
+
+== Nicht unterstützte Anforderungsheader
+
+Die folgenden Anforderungsheader werden nicht unterstützt:
+
+* `Cache-Control`
+* `Content-Disposition`
+* `Content-Encoding`
+* `Content-Language`
+* `Expires`
+* `x-amz-checksum-algorithm`
++
+Wenn Sie ein Objekt kopieren und das Quellobjekt eine Prüfsumme hat, kopiert StorageGRID diesen Prüfsummenwert nicht in das neue Objekt.  Dieses Verhalten gilt unabhängig davon, ob Sie versuchen, `x-amz-checksum-algorithm` in der Objektanforderung.
+
+* `x-amz-website-redirect-location`
+
+
+
+
+== Speicherklassenoptionen
+
+Der `x-amz-storage-class` Der Anforderungsheader wird unterstützt und beeinflusst, wie viele Objektkopien StorageGRID erstellt, wenn die entsprechende ILM-Regel Dual Commit oder Balanced verwendet.link:../ilm/data-protection-options-for-ingest.html["Aufnahmeoption"] .
+
+* `STANDARD`
++
+(Standard) Gibt einen Dual-Commit-Aufnahmevorgang an, wenn die ILM-Regel die Option „Dual Commit“ verwendet oder wenn die Option „Balanced“ auf die Erstellung von Zwischenkopien zurückgreift.
+
+* `REDUCED_REDUNDANCY`
++
+Gibt einen Single-Commit-Ingest-Vorgang an, wenn die ILM-Regel die Option „Dual Commit“ verwendet oder wenn die Option „Balanced“ auf die Erstellung von Zwischenkopien zurückgreift.
+
++
+
+NOTE: Wenn Sie ein Objekt in einen Bucket mit aktivierter S3-Objektsperre aufnehmen, wird die `REDUCED_REDUNDANCY` Option wird ignoriert.  Wenn Sie ein Objekt in einen Legacy-Compliant-Bucket aufnehmen, `REDUCED_REDUNDANCY` Option gibt einen Fehler zurück.  StorageGRID führt immer eine Dual-Commit-Aufnahme durch, um sicherzustellen, dass die Compliance-Anforderungen erfüllt werden.
+
+
+
+
+
+== Verwenden von x-amz-copy-source in CopyObject
+
+Wenn der Quell-Bucket und -Schlüssel, angegeben in `x-amz-copy-source` Header, unterscheiden sich vom Ziel-Bucket und -Schlüssel, eine Kopie der Quellobjektdaten wird in das Ziel geschrieben.
+
+Wenn Quelle und Ziel übereinstimmen und die `x-amz-metadata-directive` Der Header wird wie folgt angegeben: `REPLACE` , werden die Metadaten des Objekts mit den in der Anfrage angegebenen Metadatenwerten aktualisiert.  In diesem Fall nimmt StorageGRID das Objekt nicht erneut auf.  Dies hat zwei wichtige Konsequenzen:
+
+* Sie können CopyObject nicht verwenden, um ein vorhandenes Objekt vor Ort zu verschlüsseln oder die Verschlüsselung eines vorhandenen Objekts vor Ort zu ändern.  Wenn Sie die `x-amz-server-side-encryption` Kopfzeile oder die `x-amz-server-side-encryption-customer-algorithm` Header, StorageGRID lehnt die Anfrage ab und gibt zurück `XNotImplemented` .
+* Die in der entsprechenden ILM-Regel angegebene Option für das Aufnahmeverhalten wird nicht verwendet.  Alle durch die Aktualisierung ausgelösten Änderungen an der Objektplatzierung werden vorgenommen, wenn ILM durch normale ILM-Hintergrundprozesse neu ausgewertet wird.
++
+Dies bedeutet, dass keine Aktion ausgeführt wird, wenn die ILM-Regel die Option „Streng“ für das Aufnahmeverhalten verwendet und die erforderlichen Objektplatzierungen nicht vorgenommen werden können (z. B. weil ein neu erforderlicher Speicherort nicht verfügbar ist).  Das aktualisierte Objekt behält seine aktuelle Platzierung bei, bis die erforderliche Platzierung möglich ist.
+
+
+
+
+
+== Anforderungsheader für serverseitige Verschlüsselung
+
+Wenn dulink:using-server-side-encryption.html["Verwenden Sie serverseitige Verschlüsselung"] , die von Ihnen bereitgestellten Anforderungsheader hängen davon ab, ob das Quellobjekt verschlüsselt ist und ob Sie das Zielobjekt verschlüsseln möchten.
+
+* Wenn das Quellobjekt mit einem vom Kunden bereitgestellten Schlüssel (SSE-C) verschlüsselt ist, müssen Sie die folgenden drei Header in die CopyObject-Anforderung aufnehmen, damit das Objekt entschlüsselt und dann kopiert werden kann:
++
+** `x-amz-copy-source​-server-side​-encryption​-customer-algorithm`: Angeben `AES256` .
+** `x-amz-copy-source​-server-side-encryption-customer-key`: Geben Sie den Verschlüsselungsschlüssel an, den Sie beim Erstellen des Quellobjekts angegeben haben.
+** `x-amz-copy-source​-server-side-encryption-customer-key-MD5`: Geben Sie den MD5-Digest an, den Sie beim Erstellen des Quellobjekts angegeben haben.
+
+
+* Wenn Sie das Zielobjekt (die Kopie) mit einem eindeutigen Schlüssel verschlüsseln möchten, den Sie bereitstellen und verwalten, schließen Sie die folgenden drei Header ein:
++
+** `x-amz-server-side-encryption-customer-algorithm`: Angeben `AES256` .
+** `x-amz-server-side-encryption-customer-key`: Geben Sie einen neuen Verschlüsselungsschlüssel für das Zielobjekt an.
+** `x-amz-server-side-encryption-customer-key-MD5`: Geben Sie den MD5-Digest des neuen Verschlüsselungsschlüssels an.
+
+
++
+
+CAUTION: Die von Ihnen bereitgestellten Verschlüsselungsschlüssel werden niemals gespeichert.  Wenn Sie einen Verschlüsselungsschlüssel verlieren, verlieren Sie das entsprechende Objekt.  Bevor Sie vom Kunden bereitgestellte Schlüssel zum Sichern von Objektdaten verwenden, lesen Sie die Überlegungen fürlink:using-server-side-encryption.html["Verwendung serverseitiger Verschlüsselung"] .
+
+* Wenn Sie das Zielobjekt (die Kopie) mit einem eindeutigen, von StorageGRID (SSE) verwalteten Schlüssel verschlüsseln möchten, fügen Sie diesen Header in die CopyObject-Anforderung ein:
++
+** `x-amz-server-side-encryption`
++
+
+NOTE: Der `server-side-encryption` Der Wert des Objekts kann nicht aktualisiert werden.  Erstellen Sie stattdessen eine Kopie mit einem neuen `server-side-encryption` Wert mit `x-amz-metadata-directive` : `REPLACE` .
+
+
+
+
+
+
+
+== Versionierung
+
+Wenn der Quell-Bucket versioniert ist, können Sie die `x-amz-copy-source` Header, um die neueste Version eines Objekts zu kopieren.  Um eine bestimmte Version eines Objekts zu kopieren, müssen Sie die zu kopierende Version explizit angeben, indem Sie `versionId` Unterressource.  Wenn der Ziel-Bucket versioniert ist, wird die generierte Version im `x-amz-version-id` Antwortheader.  Wenn die Versionierung für den Ziel-Bucket ausgesetzt ist, dann `x-amz-version-id` gibt einen „Null“-Wert zurück.

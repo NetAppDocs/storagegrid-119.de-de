@@ -1,0 +1,31 @@
+---
+permalink: ilm/what-replication-is.html 
+sidebar: sidebar 
+keywords: replication, object copies 
+summary: Die Replikation ist eine von zwei Methoden, die StorageGRID zum Speichern von Objektdaten verwendet.  Wenn Objekte einer ILM-Regel entsprechen, die Replikation verwendet, erstellt das System exakte Kopien der Objektdaten und speichert die Kopien auf Speicherknoten. 
+---
+= Was ist Replikation?
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Die Replikation ist eine von zwei Methoden, die von StorageGRID zum Speichern von Objektdaten verwendet werden (die andere Methode ist Erasure Coding).  Wenn Objekte einer ILM-Regel entsprechen, die Replikation verwendet, erstellt das System exakte Kopien der Objektdaten und speichert die Kopien auf Speicherknoten.
+
+Wenn Sie eine ILM-Regel zum Erstellen replizierter Kopien konfigurieren, geben Sie an, wie viele Kopien erstellt werden sollen, wo diese Kopien abgelegt werden sollen und wie lange die Kopien an jedem Standort gespeichert werden sollen.
+
+Im folgenden Beispiel gibt die ILM-Regel an, dass zwei replizierte Kopien jedes Objekts in einem Speicherpool abgelegt werden, der drei Speicherknoten enthält.
+
+image::../media/ilm_replication_make_2_copies.png[Regel „2 Kopien erstellen“]
+
+Wenn StorageGRID Objekte mit dieser Regel abgleicht, erstellt es zwei Kopien des Objekts und platziert jede Kopie auf einem anderen Speicherknoten im Speicherpool.  Die beiden Kopien können auf zwei beliebigen der drei verfügbaren Speicherknoten platziert werden.  In diesem Fall platzierte die Regel Objektkopien auf den Speicherknoten 2 und 3.  Da zwei Kopien vorhanden sind, kann das Objekt abgerufen werden, wenn einer der Knoten im Speicherpool ausfällt.
+
+
+NOTE: StorageGRID kann auf einem bestimmten Speicherknoten nur eine replizierte Kopie eines Objekts speichern.  Wenn Ihr Grid drei Speicherknoten enthält und Sie eine ILM-Regel mit 4 Kopien erstellen, werden nur drei Kopien erstellt – eine Kopie für jeden Speicherknoten.  Die Warnung *ILM-Platzierung nicht erreichbar* wird ausgelöst, um anzuzeigen, dass die ILM-Regel nicht vollständig angewendet werden konnte.
+
+.Ähnliche Informationen
+* link:what-erasure-coding-is.html["Was ist Erasure Coding"]
+* link:what-storage-pool-is.html["Was ist ein Speicherpool?"]
+* link:using-multiple-storage-pools-for-cross-site-replication.html["Aktivieren Sie den Site-Loss-Schutz durch Replikation und Erasure Coding"]
+

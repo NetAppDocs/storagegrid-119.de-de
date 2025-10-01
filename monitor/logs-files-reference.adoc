@@ -1,0 +1,232 @@
+---
+permalink: monitor/logs-files-reference.html 
+sidebar: sidebar 
+keywords: log, logs, log files 
+summary: StorageGRID bietet Protokolle, die zum Erfassen von Ereignissen, Diagnosemeldungen und Fehlerzuständen verwendet werden.  Möglicherweise werden Sie gebeten, Protokolldateien zu sammeln und sie an den technischen Support weiterzuleiten, um bei der Fehlerbehebung zu helfen. 
+---
+= Referenz zu Protokolldateien
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+StorageGRID bietet Protokolle, die zum Erfassen von Ereignissen, Diagnosemeldungen und Fehlerzuständen verwendet werden.  Möglicherweise werden Sie gebeten, Protokolldateien zu sammeln und sie an den technischen Support weiterzuleiten, um bei der Fehlerbehebung zu helfen.
+
+Die Protokolle sind wie folgt kategorisiert:
+
+* link:storagegrid-software-logs.html["StorageGRID -Softwareprotokolle"]
+* link:deployment-and-maintenance-logs.html["Bereitstellungs- und Wartungsprotokolle"]
+* link:about-bycast-log.html["Über das bycast.log"]
+
+
+
+NOTE: Die für jeden Protokolltyp bereitgestellten Details dienen nur als Referenz.  Die Protokolle sind für die erweiterte Fehlerbehebung durch den technischen Support vorgesehen.  Fortgeschrittene Techniken, bei denen der Problemverlauf mithilfe der Prüfprotokolle und der Anwendungsprotokolldateien rekonstruiert wird, gehen über den Rahmen dieser Anweisungen hinaus.
+
+
+
+== Zugriff auf die Protokolle
+
+Um auf die Protokolle zuzugreifen, können Sielink:collecting-log-files-and-system-data.html["Sammeln von Protokolldateien und Systemdaten"] von einem oder mehreren Knoten als einzelnes Protokolldateiarchiv. Oder wenn der primäre Admin-Knoten nicht verfügbar ist oder einen bestimmten Knoten nicht erreichen kann, können Sie wie folgt auf einzelne Protokolldateien für jeden Grid-Knoten zugreifen:
+
+. Geben Sie den folgenden Befehl ein: `ssh admin@grid_node_IP`
+. Geben Sie das Passwort ein, das in der `Passwords.txt` Datei.
+. Geben Sie den folgenden Befehl ein, um zum Root zu wechseln: `su -`
+. Geben Sie das Passwort ein, das in der `Passwords.txt` Datei.
+
+
+
+
+== Exportieren Sie Protokolle auf den Syslog-Server
+
+Das Exportieren der Protokolle auf den Syslog-Server bietet folgende Möglichkeiten:
+
+* Erhalten Sie eine Liste aller Grid Manager- und Tenant Manager-Anfragen sowie S3- und Swift-Anfragen.
+* Bessere Transparenz bei S3-Anfragen, die Fehler zurückgeben, ohne die durch Audit-Protokollierungsmethoden verursachten Leistungseinbußen.
+* Zugriff auf HTTP-Layer-Anfragen und Fehlercodes, die leicht zu analysieren sind.
+* Bessere Transparenz bei Anfragen, die von Verkehrsklassifizierern beim Load Balancer blockiert wurden.
+
+
+Informationen zum Exportieren der Protokolle finden Sie unterlink:../monitor/configure-audit-messages.html["Konfigurieren von Überwachungsmeldungen und Protokollzielen"] .
+
+
+
+== Protokolldateikategorien
+
+Das StorageGRID Protokolldateiarchiv enthält die für jede Kategorie beschriebenen Protokolle und zusätzliche Dateien, die Metriken und die Ausgabe von Debugbefehlen enthalten.
+
+[cols="1a,3a"]
+|===
+| Archivspeicherort | Beschreibung 
+
+
+| Prüfung  a| 
+Während des normalen Systembetriebs generierte Prüfmeldungen.
+
+
+
+| Basis-Betriebssystem-Protokolle  a| 
+Grundlegende Informationen zum Betriebssystem, einschließlich StorageGRID Image-Versionen.
+
+
+
+| Bündel  a| 
+Globale Konfigurationsinformationen (Bundles).
+
+
+
+| Kassandra  a| 
+Cassandra-Datenbankinformationen und Reaper-Reparaturprotokolle.
+
+
+
+| ec  a| 
+VCS-Informationen zum aktuellen Knoten und EC-Gruppeninformationen nach Profil-ID.
+
+
+
+| Netz  a| 
+Allgemeine Grid-Protokolle einschließlich Debug(`bycast.log` ) Und `servermanager` Protokolle.
+
+
+
+| grid.json  a| 
+Von allen Knoten gemeinsam genutzte Grid-Konfigurationsdatei.  Zusätzlich, `node.json` ist spezifisch für den aktuellen Knoten.
+
+
+
+| hagroups  a| 
+Metriken und Protokolle für Hochverfügbarkeitsgruppen.
+
+
+
+| installieren  a| 
+`Gdu-server`und Protokolle installieren.
+
+
+
+| Lambda-Schiedsrichter  a| 
+Protokolle im Zusammenhang mit der S3 Select-Proxy-Anforderung.
+
+
+
+| lumberjack.log  a| 
+Debug-Meldungen im Zusammenhang mit der Protokollsammlung.
+
+
+
+| Metriken  a| 
+Serviceprotokolle für Grafana, Jaeger, Node Exporter und Prometheus.
+
+
+
+| Sonstiges  a| 
+Verschiedene Zugriffs- und Fehlerprotokolle.
+
+
+
+| MySQL  a| 
+Die MariaDB-Datenbankkonfiguration und zugehörige Protokolle.
+
+
+
+| netto  a| 
+Von netzwerkbezogenen Skripten und dem Dynip-Dienst generierte Protokolle.
+
+
+
+| nginx  a| 
+Konfigurationsdateien und Protokolle für Load Balancer und Grid-Föderation.  Enthält auch Grid Manager- und Tenant Manager-Verkehrsprotokolle.
+
+
+
+| nginx-gw  a| 
+* `access.log`: Grid Manager und Tenant Manager fordern Protokollnachrichten an.
++
+** Diesen Nachrichten vorangestellt ist `mgmt:` beim Exportieren mit Syslog.
+** Das Format dieser Protokollnachrichten ist `[$time_iso8601] $remote_addr $status $bytes_sent $request_length $request_time "$endpointId" "$request" "$http_host" "$http_user_agent" "$http_referer"`
+
+
+* `cgr-access.log.gz`: Eingehende Cross-Grid-Replikationsanforderungen.
++
+** Diesen Nachrichten vorangestellt ist `cgr:` beim Exportieren mit Syslog.
+** Das Format dieser Protokollnachrichten ist `[$time_iso8601] $remote_addr $status $bytes_sent $request_length $request_time "$endpointId" "$upstream_addr" "$request" "$http_host"`
+
+
+* `endpoint-access.log.gz`: S3- und Swift-Anfragen an Load Balancer-Endpunkte.
++
+** Diesen Nachrichten vorangestellt ist `endpoint:` beim Exportieren mit Syslog.
+** Das Format dieser Protokollnachrichten ist `[$time_iso8601] $remote_addr $status $bytes_sent $request_length $request_time "$endpointId" "$upstream_addr" "$request" "$http_host"`
+
+
+* `nginx-gw-dns-check.log`: Bezieht sich auf die neue DNS-Check-Warnung.
+
+
+
+
+| ntp  a| 
+NTP-Konfigurationsdatei und -Protokolle.
+
+
+
+ a| 
+Verwaiste Objekte
+ a| 
+Protokolle zu verwaisten Objekten.
+
+
+
+| Betriebssystem  a| 
+Knoten- und Netzzustandsdatei, einschließlich Dienste `pid` .
+
+
+
+| andere  a| 
+Protokolldateien unter `/var/local/log` die nicht in anderen Ordnern gesammelt werden.
+
+
+
+| Leistung  a| 
+Leistungsinformationen zu CPU, Netzwerk und Festplatten-E/A.
+
+
+
+| Prometheus-Daten  a| 
+Aktuelle Prometheus-Metriken, wenn die Protokollsammlung Prometheus-Daten enthält.
+
+
+
+| Bereitstellung  a| 
+Protokolle im Zusammenhang mit dem Grid-Bereitstellungsprozess.
+
+
+
+| Floß  a| 
+Protokolle vom Raft-Cluster, die in Plattformdiensten verwendet werden.
+
+
+
+| ssh  a| 
+Protokolle im Zusammenhang mit der SSH-Konfiguration und dem SSH-Dienst.
+
+
+
+| SNMP  a| 
+SNMP-Agentenkonfiguration zum Senden von SNMP-Benachrichtigungen.
+
+
+
+| Sockets-Daten  a| 
+Socket-Daten für die Netzwerkfehlerbehebung.
+
+
+
+| system-commands.txt  a| 
+Ausgabe von StorageGRID Containerbefehlen.  Enthält Systeminformationen, beispielsweise zur Netzwerk- und Festplattennutzung.
+
+
+
+| Synchronisierungs-Wiederherstellungspaket  a| 
+Bezieht sich auf die Aufrechterhaltung der Konsistenz des neuesten Wiederherstellungspakets auf allen Admin-Knoten und Speicherknoten, die den ADC-Dienst hosten.
+
+|===

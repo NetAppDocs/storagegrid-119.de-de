@@ -1,0 +1,65 @@
+---
+permalink: ilm/manage-ilm-policy-tags.html 
+sidebar: sidebar 
+keywords: ILM policy tag 
+summary: Sie können Details zu ILM-Richtlinien-Tags anzeigen, ein Tag bearbeiten oder ein Tag entfernen. 
+---
+= Verwalten von ILM-Richtlinientags
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Sie können Details zu ILM-Richtlinien-Tags anzeigen, ein Tag bearbeiten oder ein Tag entfernen.
+
+.Bevor Sie beginnen
+* Sie sind beim Grid Manager angemeldet mit einemlink:../admin/web-browser-requirements.html["unterstützter Webbrowser"] .
+* Sie haben dielink:../admin/admin-group-permissions.html["erforderliche Zugriffsberechtigungen"] .
+
+
+
+
+== Anzeigen von ILM-Richtlinientagdetails
+
+So zeigen Sie die Details für ein Tag an:
+
+. Wählen Sie *ILM* > *Richtlinien-Tags*.
+. Wählen Sie den Namen der Richtlinie aus der Tabelle aus.  Die Detailseite für das Tag wird angezeigt.
+. Zeigen Sie auf der Detailseite den bisherigen Verlauf der zugewiesenen Richtlinien an.
+. Zeigen Sie eine Richtlinie an, indem Sie sie auswählen.
+
+
+
+
+== ILM-Richtlinientag bearbeiten
+
+
+NOTE: Tag-Namen und -Beschreibungen sind für Mieter sichtbar.  Wählen Sie Werte aus, die den Mandanten dabei helfen, eine fundierte Entscheidung zu treffen, wenn sie Richtlinien-Tags auswählen, die sie ihren Buckets zuweisen möchten.  Wenn die zugewiesene Richtlinie beispielsweise das Löschen von Objekten nach einer bestimmten Zeit vorsieht, können Sie dies in der Beschreibung mitteilen.  Geben Sie in diese Felder keine vertraulichen Informationen ein.
+
+So bearbeiten Sie die Beschreibung für ein vorhandenes Tag:
+
+. Wählen Sie *ILM* > *Richtlinien-Tags*.
+. Aktivieren Sie das Kontrollkästchen für das Tag und wählen Sie dann *Bearbeiten*.
++
+Alternativ können Sie den Namen des Tags auswählen.  Die Detailseite für das Tag wird angezeigt und Sie können auf dieser Seite *Bearbeiten* auswählen.
+
+. Ändern Sie die Tag-Beschreibung nach Bedarf
+. Wählen Sie *Speichern*.
+
+
+
+
+== ILM-Richtlinientag entfernen
+
+Wenn Sie ein Richtlinien-Tag entfernen, wird auf alle Buckets, denen dieses Tag zugewiesen ist, die Standardrichtlinie angewendet.
+
+So entfernen Sie ein Tag:
+
+. Wählen Sie *ILM* > *Richtlinien-Tags*.
+. Aktivieren Sie das Kontrollkästchen für das Tag und wählen Sie dann *Entfernen*.  Ein Bestätigungsdialogfeld wird angezeigt.
++
+Alternativ können Sie den Namen des Tags auswählen.  Die Detailseite für das Tag wird angezeigt und Sie können auf dieser Seite *Entfernen* auswählen.
+
+. Wählen Sie *Ja*, um das Tag zu löschen.
+

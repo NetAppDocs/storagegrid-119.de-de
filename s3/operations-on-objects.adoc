@@ -1,0 +1,191 @@
+---
+permalink: s3/operations-on-objects.html 
+sidebar: sidebar 
+keywords: bucket, buckets, operations on buckets 
+summary: In diesem Abschnitt wird beschrieben, wie das StorageGRID -System S3 REST-API-Operationen für Objekte implementiert. 
+---
+= Operationen an Objekten
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+In diesem Abschnitt wird beschrieben, wie das StorageGRID -System S3 REST-API-Operationen für Objekte implementiert.
+
+Für alle Objektoperationen gelten folgende Bedingungen:
+
+* StorageGRIDlink:consistency-controls.html["Konsistenzwerte"] werden von allen Operationen an Objekten unterstützt, mit Ausnahme der folgenden:
++
+** GetObjectAcl
+** `OPTIONS /`
+** PutObjectLegalHold
+** PutObjectRetention
+** SelectObjectContent
+
+
+* Widersprüchliche Clientanforderungen, beispielsweise wenn zwei Clients auf denselben Schlüssel schreiben, werden nach dem Prinzip „Latest Wins“ gelöst.  Der Zeitpunkt für die Auswertung der „Latest Wins“ basiert darauf, wann das StorageGRID -System eine bestimmte Anfrage abschließt, und nicht darauf, wann S3-Clients einen Vorgang beginnen.
+* Alle Objekte in einem StorageGRID Bucket sind Eigentum des Bucket-Eigentümers, einschließlich der von einem anonymen Benutzer oder einem anderen Konto erstellten Objekte.
+* Auf Datenobjekte, die über Swift in das StorageGRID System aufgenommen werden, kann nicht über S3 zugegriffen werden.
+
+
+Die folgende Tabelle beschreibt, wie StorageGRID S3 REST API-Objektoperationen implementiert.
+
+[cols="1a,2a"]
+|===
+| Betrieb | Durchführung 
+
+
+ a| 
+Objekt löschen
+ a| 
+Multi-Faktor-Authentifizierung (MFA) und der Antwortheader `x-amz-mfa` werden nicht unterstützt.
+
+Bei der Verarbeitung einer DeleteObject-Anforderung versucht StorageGRID , alle Kopien des Objekts sofort von allen gespeicherten Standorten zu entfernen.  Bei Erfolg gibt StorageGRID sofort eine Antwort an den Client zurück.  Wenn nicht alle Kopien innerhalb von 30 Sekunden entfernt werden können (z. B. weil ein Speicherort vorübergehend nicht verfügbar ist), stellt StorageGRID die Kopien zur Entfernung in die Warteschlange und zeigt dem Client anschließend den Erfolg an.
+
+Versionierung:: Um eine bestimmte Version zu entfernen, muss der Anforderer der Bucket-Eigentümer sein und die `versionId` Unterressource.  Durch die Verwendung dieser Unterressource wird die Version dauerhaft gelöscht.  Wenn die `versionId` entspricht einem Löschmarker, der Antwortheader `x-amz-delete-marker` wird zurückgegeben auf `true` .
++
+--
+* Wenn ein Objekt gelöscht wird, ohne dass `versionId` Unterressource auf einem Bucket mit aktivierter Versionierung, führt dies zur Generierung einer Löschmarkierung.  Der `versionId` für die Löschmarkierung wird mit dem `x-amz-version-id` Antwortheader und der `x-amz-delete-marker` Der Antwortheader wird auf `true` .
+* Wenn ein Objekt gelöscht wird, ohne dass `versionId` Unterressource auf einem Bucket mit ausgesetzter Versionierung, führt dies zu einer dauerhaften Löschung einer bereits vorhandenen „Null“-Version oder eines „Null“-Löschmarkers und zur Generierung eines neuen „Null“-Löschmarkers.  Der `x-amz-delete-marker` Der Antwortheader wird auf `true` .
++
+*Hinweis*: In bestimmten Fällen können für ein Objekt mehrere Löschmarkierungen vorhanden sein.
+
+
+
+--
+
+
+Sehenlink:../s3/use-s3-api-for-s3-object-lock.html["Verwenden Sie die S3 REST API, um S3 Object Lock zu konfigurieren"] um zu erfahren, wie Sie Objektversionen im GOVERNANCE-Modus löschen.
+
+
+
+ a| 
+Objekte löschen
+
+(früher „DELETE Multiple Objects“ genannt)
+ a| 
+Multi-Faktor-Authentifizierung (MFA) und der Antwortheader `x-amz-mfa` werden nicht unterstützt.
+
+In derselben Anforderungsnachricht können mehrere Objekte gelöscht werden.
+
+Sehenlink:../s3/use-s3-api-for-s3-object-lock.html["Verwenden Sie die S3 REST API, um S3 Object Lock zu konfigurieren"] um zu erfahren, wie Sie Objektversionen im GOVERNANCE-Modus löschen.
+
+
+
+ a| 
+DeleteObjectTagging
+ a| 
+Verwendet die `tagging` Unterressource zum Entfernen aller Tags von einem Objekt.
+
+Versionierung:: Wenn die `versionId` Wenn in der Anforderung kein Abfrageparameter angegeben ist, löscht der Vorgang alle Tags aus der aktuellsten Version des Objekts in einem versionierten Bucket.  Wenn die aktuelle Version des Objekts eine Löschmarkierung ist, wird der Status "MethodNotAllowed" mit der `x-amz-delete-marker` Antwortheader gesetzt auf `true` .
+
+
+
+
+ a| 
+GetObject
+ a| 
+link:get-object.html["GetObject"]
+
+
+
+ a| 
+GetObjectAcl
+ a| 
+Wenn die erforderlichen Zugriffsberechtigungen für das Konto bereitgestellt werden, gibt der Vorgang eine positive Antwort sowie die ID, den Anzeigenamen und die Berechtigung des Objektbesitzers zurück, was darauf hinweist, dass der Besitzer vollen Zugriff auf das Objekt hat.
+
+
+
+ a| 
+GetObjectLegalHold
+ a| 
+link:../s3/use-s3-api-for-s3-object-lock.html["Verwenden Sie die S3 REST API, um S3 Object Lock zu konfigurieren"]
+
+
+
+ a| 
+GetObjectRetention
+ a| 
+link:../s3/use-s3-api-for-s3-object-lock.html["Verwenden Sie die S3 REST API, um S3 Object Lock zu konfigurieren"]
+
+
+
+ a| 
+GetObjectTagging
+ a| 
+Verwendet die `tagging` Unterressource, um alle Tags für ein Objekt zurückzugeben.
+
+Versionierung:: Wenn die `versionId` Wenn in der Anforderung kein Abfrageparameter angegeben ist, gibt der Vorgang alle Tags aus der aktuellsten Version des Objekts in einem versionierten Bucket zurück.  Wenn die aktuelle Version des Objekts eine Löschmarkierung ist, wird der Status "MethodNotAllowed" mit der `x-amz-delete-marker` Antwortheader gesetzt auf `true` .
+
+
+
+
+ a| 
+HeadObject
+ a| 
+link:head-object.html["HeadObject"]
+
+
+
+ a| 
+RestoreObject
+ a| 
+link:post-object-restore.html["RestoreObject"]
+
+
+
+ a| 
+PutObject
+ a| 
+link:put-object.html["PutObject"]
+
+
+
+ a| 
+Objekt kopieren
+
+(früher PUT-Objekt – Kopieren genannt)
+ a| 
+link:put-object-copy.html["Objekt kopieren"]
+
+
+
+ a| 
+PutObjectLegalHold
+ a| 
+link:../s3/use-s3-api-for-s3-object-lock.html["Verwenden Sie die S3 REST API, um S3 Object Lock zu konfigurieren"]
+
+
+
+ a| 
+PutObjectRetention
+ a| 
+link:../s3/use-s3-api-for-s3-object-lock.html["Verwenden Sie die S3 REST API, um S3 Object Lock zu konfigurieren"]
+
+
+
+ a| 
+PutObjectTagging
+ a| 
+Verwendet die `tagging` Unterressource zum Hinzufügen einer Reihe von Tags zu einem vorhandenen Objekt.
+
+Objekt-Tag-Grenzwerte:: Sie können neuen Objekten beim Hochladen Tags hinzufügen oder Sie können sie vorhandenen Objekten hinzufügen.  Sowohl StorageGRID als auch Amazon S3 unterstützen bis zu 10 Tags für jedes Objekt.  Mit einem Objekt verknüpfte Tags müssen eindeutige Tag-Schlüssel haben.  Ein Tag-Schlüssel kann bis zu 128 Unicode-Zeichen lang sein und Tag-Werte können bis zu 256 Unicode-Zeichen lang sein.  Bei Schlüsseln und Werten wird zwischen Groß- und Kleinschreibung unterschieden.
+Tag-Updates und Aufnahmeverhalten:: Wenn Sie PutObjectTagging verwenden, um die Tags eines Objekts zu aktualisieren, nimmt StorageGRID das Objekt nicht erneut auf.  Dies bedeutet, dass die in der entsprechenden ILM-Regel angegebene Option für das Aufnahmeverhalten nicht verwendet wird.  Alle durch die Aktualisierung ausgelösten Änderungen an der Objektplatzierung werden vorgenommen, wenn ILM durch normale ILM-Hintergrundprozesse neu ausgewertet wird.
++
+--
+Dies bedeutet, dass keine Aktion ausgeführt wird, wenn die ILM-Regel die Option „Streng“ für das Aufnahmeverhalten verwendet und die erforderlichen Objektplatzierungen nicht vorgenommen werden können (z. B. weil ein neu erforderlicher Speicherort nicht verfügbar ist).  Das aktualisierte Objekt behält seine aktuelle Platzierung bei, bis die erforderliche Platzierung möglich ist.
+
+--
+Konflikte lösen:: Widersprüchliche Clientanforderungen, beispielsweise wenn zwei Clients auf denselben Schlüssel schreiben, werden nach dem Prinzip „Latest Wins“ gelöst.  Der Zeitpunkt für die Auswertung der „Latest Wins“ basiert darauf, wann das StorageGRID -System eine bestimmte Anfrage abschließt, und nicht darauf, wann S3-Clients einen Vorgang beginnen.
+Versionierung:: Wenn die `versionId` Wenn in der Anforderung kein Abfrageparameter angegeben ist, fügt der Vorgang der aktuellsten Version des Objekts in einem versionierten Bucket Tags hinzu.  Wenn die aktuelle Version des Objekts eine Löschmarkierung ist, wird der Status "MethodNotAllowed" mit der `x-amz-delete-marker` Antwortheader gesetzt auf `true` .
+
+
+
+
+ a| 
+SelectObjectContent
+ a| 
+link:select-object-content.html["SelectObjectContent"]
+
+|===

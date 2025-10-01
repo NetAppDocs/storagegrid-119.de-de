@@ -1,0 +1,201 @@
+---
+permalink: admin/managing-users.html 
+sidebar: sidebar 
+keywords: how to manage local users 
+summary: Sie können lokale und föderierte Benutzer anzeigen.  Sie können auch lokale Benutzer erstellen und sie lokalen Administratorgruppen zuweisen, um festzulegen, auf welche Grid Manager-Funktionen diese Benutzer zugreifen können. 
+---
+= Benutzer verwalten
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Sie können lokale und föderierte Benutzer anzeigen.  Sie können auch lokale Benutzer erstellen und sie lokalen Administratorgruppen zuweisen, um festzulegen, auf welche Grid Manager-Funktionen diese Benutzer zugreifen können.
+
+.Bevor Sie beginnen
+* Sie sind beim Grid Manager angemeldet mit einemlink:../admin/web-browser-requirements.html["unterstützter Webbrowser"] .
+* Du hastlink:admin-group-permissions.html["spezifische Zugriffsberechtigungen"] .
+
+
+
+
+== Erstellen eines lokalen Benutzers
+
+Sie können einen oder mehrere lokale Benutzer erstellen und jeden Benutzer einer oder mehreren lokalen Gruppen zuweisen.  Die Berechtigungen der Gruppe steuern, auf welche Grid Manager- und Grid Management API-Funktionen der Benutzer zugreifen kann.
+
+Sie können nur lokale Benutzer erstellen.  Verwenden Sie die externe Identitätsquelle, um föderierte Benutzer und Gruppen zu verwalten.
+
+Der Grid Manager enthält einen vordefinierten lokalen Benutzer namens „root“.  Sie können den Root-Benutzer nicht entfernen.
+
+
+NOTE: Wenn Single Sign-On (SSO) aktiviert ist, können sich lokale Benutzer nicht bei StorageGRID anmelden.
+
+
+
+=== Zugriff auf den Assistenten
+
+.Schritte
+. Wählen Sie *KONFIGURATION* > *Zugriffskontrolle* > *Admin-Benutzer*.
+. Wählen Sie *Benutzer erstellen*.
+
+
+
+
+=== Benutzeranmeldeinformationen eingeben
+
+.Schritte
+. Geben Sie den vollständigen Namen des Benutzers, einen eindeutigen Benutzernamen und ein Passwort ein.
+. Wählen Sie optional *Ja* aus, wenn dieser Benutzer keinen Zugriff auf den Grid Manager oder die Grid Management API haben soll.
+. Wählen Sie *Weiter*.
+
+
+
+
+=== Zu Gruppen zuweisen
+
+.Schritte
+. Optional können Sie den Benutzer einer oder mehreren Gruppen zuweisen, um die Berechtigungen des Benutzers festzulegen.
++
+Wenn Sie noch keine Gruppen erstellt haben, können Sie den Benutzer speichern, ohne Gruppen auszuwählen.  Sie können diesen Benutzer auf der Seite „Gruppen“ zu einer Gruppe hinzufügen.
+
++
+Wenn ein Benutzer mehreren Gruppen angehört, sind die Berechtigungen kumulativ. Sehenlink:managing-admin-groups.html["Verwalten von Administratorgruppen"] für Details.
+
+. Wählen Sie *Benutzer erstellen* und dann *Fertig*.
+
+
+
+
+== Anzeigen und Bearbeiten lokaler Benutzer
+
+Sie können Details zu vorhandenen lokalen und föderierten Benutzern anzeigen.  Sie können einen lokalen Benutzer ändern, um den vollständigen Namen, das Kennwort oder die Gruppenmitgliedschaft des Benutzers zu ändern.  Sie können einem Benutzer auch vorübergehend den Zugriff auf den Grid Manager und die Grid Management API verweigern.
+
+Sie können nur lokale Benutzer bearbeiten.  Verwenden Sie die externe Identitätsquelle, um föderierte Benutzer zu verwalten.
+
+* Um grundlegende Informationen zu allen lokalen und föderierten Benutzern anzuzeigen, sehen Sie sich die Tabelle auf der Seite „Benutzer“ an.
+* Um alle Details für einen bestimmten Benutzer anzuzeigen, einen lokalen Benutzer zu bearbeiten oder das Kennwort eines lokalen Benutzers zu ändern, verwenden Sie das Menü *Aktionen* oder die Detailseite.
++
+Alle Änderungen werden angewendet, wenn sich der Benutzer das nächste Mal abmeldet und sich dann wieder beim Grid Manager anmeldet.
+
++
+
+NOTE: Lokale Benutzer können ihre eigenen Passwörter mit der Option *Passwort ändern* im Grid Manager-Banner ändern.
+
++
+[cols="1a,2a,2a"]
+|===
+| Aufgabe | Menü „Aktionen“ | Detailseite 
+
+
+ a| 
+Benutzerdetails anzeigen
+ a| 
+.. Aktivieren Sie das Kontrollkästchen für den Benutzer.
+.. Wählen Sie *Aktionen* > *Benutzerdetails anzeigen*.
+
+ a| 
+Wählen Sie den Namen des Benutzers in der Tabelle aus.
+
+
+
+ a| 
+Vollständigen Namen bearbeiten (nur lokale Benutzer)
+ a| 
+.. Aktivieren Sie das Kontrollkästchen für den Benutzer.
+.. Wählen Sie *Aktionen* > *Vollständigen Namen bearbeiten*.
+.. Geben Sie den neuen Namen ein.
+.. Wählen Sie *Änderungen speichern*.
+
+ a| 
+.. Wählen Sie den Namen des Benutzers aus, um die Details anzuzeigen.
+.. Wählen Sie das Bearbeitungssymbolimage:../media/icon_edit_tm.png["Symbol „Bearbeiten“"] .
+.. Geben Sie den neuen Namen ein.
+.. Wählen Sie *Änderungen speichern*.
+
+
+
+
+ a| 
+StorageGRID Zugriff verweigern oder zulassen
+ a| 
+.. Aktivieren Sie das Kontrollkästchen für den Benutzer.
+.. Wählen Sie *Aktionen* > *Benutzerdetails anzeigen*.
+.. Wählen Sie die Registerkarte „Zugriff“ aus.
+.. Wählen Sie *Ja*, um zu verhindern, dass sich der Benutzer beim Grid Manager oder der Grid Management API anmeldet, oder wählen Sie *Nein*, um dem Benutzer die Anmeldung zu ermöglichen.
+.. Wählen Sie *Änderungen speichern*.
+
+ a| 
+.. Wählen Sie den Namen des Benutzers aus, um die Details anzuzeigen.
+.. Wählen Sie die Registerkarte „Zugriff“ aus.
+.. Wählen Sie *Ja*, um zu verhindern, dass sich der Benutzer beim Grid Manager oder der Grid Management API anmeldet, oder wählen Sie *Nein*, um dem Benutzer die Anmeldung zu ermöglichen.
+.. Wählen Sie *Änderungen speichern*.
+
+
+
+
+ a| 
+Passwort ändern (nur lokale Benutzer)
+ a| 
+.. Aktivieren Sie das Kontrollkästchen für den Benutzer.
+.. Wählen Sie *Aktionen* > *Benutzerdetails anzeigen*.
+.. Wählen Sie die Registerkarte „Passwort“.
+.. Geben Sie ein neues Passwort ein.
+.. Wählen Sie *Passwort ändern*.
+
+ a| 
+.. Wählen Sie den Namen des Benutzers aus, um die Details anzuzeigen.
+.. Wählen Sie die Registerkarte „Passwort“.
+.. Geben Sie ein neues Passwort ein.
+.. Wählen Sie *Passwort ändern*.
+
+
+
+
+ a| 
+Gruppen ändern (nur lokale Benutzer)
+ a| 
+.. Aktivieren Sie das Kontrollkästchen für den Benutzer.
+.. Wählen Sie *Aktionen* > *Benutzerdetails anzeigen*.
+.. Wählen Sie die Registerkarte Gruppen aus.
+.. Wählen Sie optional den Link nach einem Gruppennamen aus, um die Details der Gruppe in einem neuen Browser-Tab anzuzeigen.
+.. Wählen Sie *Gruppen bearbeiten*, um andere Gruppen auszuwählen.
+.. Wählen Sie *Änderungen speichern*.
+
+ a| 
+.. Wählen Sie den Namen des Benutzers aus, um die Details anzuzeigen.
+.. Wählen Sie die Registerkarte Gruppen aus.
+.. Wählen Sie optional den Link nach einem Gruppennamen aus, um die Details der Gruppe in einem neuen Browser-Tab anzuzeigen.
+.. Wählen Sie *Gruppen bearbeiten*, um andere Gruppen auszuwählen.
+.. Wählen Sie *Änderungen speichern*.
+
+
+|===
+
+
+
+
+== Duplizieren eines Benutzers
+
+Sie können einen vorhandenen Benutzer duplizieren, um einen neuen Benutzer mit denselben Berechtigungen zu erstellen.
+
+.Schritte
+. Aktivieren Sie das Kontrollkästchen für den Benutzer.
+. Wählen Sie *Aktionen* > *Benutzer duplizieren*.
+. Schließen Sie den Assistenten zum Duplizieren von Benutzern ab.
+
+
+
+
+== Löschen eines Benutzers
+
+Sie können einen lokalen Benutzer löschen, um ihn dauerhaft aus dem System zu entfernen.
+
+
+NOTE: Sie können den Root-Benutzer nicht löschen.
+
+.Schritte
+. Aktivieren Sie auf der Seite „Benutzer“ das Kontrollkästchen für jeden Benutzer, den Sie entfernen möchten.
+. Wählen Sie *Aktionen* > *Benutzer löschen*.
+. Wählen Sie *Benutzer löschen*.
+

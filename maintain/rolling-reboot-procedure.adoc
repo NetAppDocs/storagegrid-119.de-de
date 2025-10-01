@@ -1,0 +1,134 @@
+---
+permalink: maintain/rolling-reboot-procedure.html 
+sidebar: sidebar 
+keywords: reboot nodes, rolling reboot procedure 
+summary: Sie können einen Rolling Reboot durchführen, um mehrere Grid-Knoten neu zu starten, ohne eine Dienstunterbrechung zu verursachen. 
+---
+= Führen Sie einen Rolling Reboot durch
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Sie können einen Rolling Reboot durchführen, um mehrere Grid-Knoten neu zu starten, ohne eine Dienstunterbrechung zu verursachen.
+
+.Bevor Sie beginnen
+* Sie sind beim Grid Manager auf dem primären Admin-Knoten angemeldet und verwenden einenlink:../admin/web-browser-requirements.html["unterstützter Webbrowser"] .
++
+
+NOTE: Sie müssen beim primären Admin-Knoten angemeldet sein, um dieses Verfahren durchzuführen.
+
+* Sie haben dielink:../admin/admin-group-permissions.html["Wartungs- oder Root-Zugriffsberechtigung"] .
+
+
+.Informationen zu diesem Vorgang
+Verwenden Sie dieses Verfahren, wenn Sie mehrere Knoten gleichzeitig neu starten müssen.  Sie können dieses Verfahren beispielsweise verwenden, nachdem Sie den FIPS-Modus für das Grid geändert haben.link:../admin/manage-tls-ssh-policy.html["TLS- und SSH-Sicherheitsrichtlinie"] .  Wenn sich der FIPS-Modus ändert, müssen Sie alle Knoten neu starten, damit die Änderung wirksam wird.
+
+
+TIP: Wenn Sie nur einen Knoten neu starten müssen, können Sielink:../maintain/rebooting-grid-node-from-grid-manager.html["Starten Sie den Knoten über die Registerkarte „Aufgaben“ neu."] .
+
+Wenn StorageGRID Grid-Knoten neu startet, gibt es die `reboot` Befehl auf jedem Knoten, der dazu führt, dass der Knoten heruntergefahren und neu gestartet wird.  Alle Dienste werden automatisch neu gestartet.
+
+* Durch den Neustart eines VMware-Knotens wird die virtuelle Maschine neu gestartet.
+* Durch den Neustart eines Linux-Knotens wird der Container neu gestartet.
+* Durch den Neustart eines StorageGRID Appliance-Knotens wird der Compute-Controller neu gestartet.
+
+
+Mit dem Rolling-Reboot-Verfahren können mehrere Knoten gleichzeitig neu gestartet werden, mit folgenden Ausnahmen:
+
+* Zwei Knoten desselben Typs werden nicht gleichzeitig neu gestartet.
+* Gateway-Knoten und Admin-Knoten werden nicht gleichzeitig neu gestartet.
+
+
+Stattdessen werden diese Knoten nacheinander neu gestartet, um sicherzustellen, dass HA-Gruppen, Objektdaten und kritische Knotendienste immer verfügbar bleiben.
+
+Wenn Sie den primären Admin-Knoten neu starten, verliert Ihr Browser vorübergehend den Zugriff auf den Grid Manager, sodass Sie den Vorgang nicht mehr überwachen können.  Aus diesem Grund wird der primäre Admin-Knoten zuletzt neu gestartet.
+
+
+
+== Führen Sie einen Rolling Reboot durch
+
+Sie wählen die Knoten aus, die Sie neu starten möchten, überprüfen Ihre Auswahl, starten den Neustartvorgang und überwachen den Fortschritt.
+
+
+
+=== Knoten auswählen
+
+Rufen Sie als ersten Schritt die Seite „Rolling Reboot“ auf und wählen Sie die Knoten aus, die Sie neu starten möchten.
+
+.Schritte
+. Wählen Sie *WARTUNG* > *Aufgaben* > *Rollierender Neustart*.
+. Überprüfen Sie den Verbindungsstatus und die Warnsymbole in der Spalte *Knotenname*.
++
+
+TIP: Sie können einen Knoten nicht neu starten, wenn er vom Netz getrennt ist.  Die Kontrollkästchen sind für Knoten mit diesen Symbolen deaktiviert:image:../media/icon_alarm_gray_administratively_down.png["graues Fragezeichensymbol"] oderimage:../media/icon_alarm_blue_unknown.png["blaues Fragezeichen-Symbol"] .
+
+. Wenn für Knoten aktive Warnungen vorliegen, überprüfen Sie die Liste der Warnungen in der Spalte *Warnungszusammenfassung*.
++
+
+TIP: Um alle aktuellen Warnungen für einen Knoten anzuzeigen, können Sie auch dielink:../monitor/viewing-overview-tab.html["Knoten > Registerkarte „Übersicht“"] .
+
+. Führen Sie optional die empfohlenen Aktionen aus, um alle aktuellen Warnungen zu beheben.
+. Wenn alle Knoten verbunden sind und Sie alle neu starten möchten, aktivieren Sie optional das Kontrollkästchen in der Tabellenüberschrift und wählen Sie *Alle auswählen*.  Andernfalls wählen Sie jeden Knoten aus, den Sie neu starten möchten.
++
+Sie können die Filteroptionen der Tabelle verwenden, um Teilmengen von Knoten anzuzeigen.  Sie können beispielsweise nur Speicherknoten oder alle Knoten an einem bestimmten Standort anzeigen und auswählen.
+
+. Wählen Sie *Auswahl überprüfen*.
+
+
+
+
+=== Auswahl überprüfen
+
+In diesem Schritt können Sie bestimmen, wie lange der gesamte Neustartvorgang dauern könnte, und bestätigen, dass Sie die richtigen Knoten ausgewählt haben.
+
+. Überprüfen Sie auf der Seite „Auswahl überprüfen“ die Zusammenfassung. Darin wird angegeben, wie viele Knoten neu gestartet werden und wie lange der Neustart aller Knoten voraussichtlich insgesamt dauern wird.
+. Um optional einen bestimmten Knoten aus der Neustartliste zu entfernen, wählen Sie *Entfernen*.
+. Um optional weitere Knoten hinzuzufügen, wählen Sie *Vorheriger Schritt*, wählen Sie die zusätzlichen Knoten aus und wählen Sie *Auswahl überprüfen*.
+. Wenn Sie bereit sind, den Rolling-Reboot-Vorgang für alle ausgewählten Knoten zu starten, wählen Sie *Knoten neu starten*.
+. Wenn Sie den Neustart des primären Admin-Knotens ausgewählt haben, lesen Sie die Informationsmeldung und wählen Sie *Ja*.
++
+
+NOTE: Der primäre Admin-Knoten ist der letzte Knoten, der neu gestartet wird.  Während dieser Knoten neu gestartet wird, geht die Verbindung Ihres Browsers verloren.  Wenn der primäre Admin-Knoten wieder verfügbar ist, müssen Sie die Seite „Rolling Reboot“ neu laden.
+
+
+
+
+
+=== Überwachen eines rollierenden Neustarts
+
+Während der Rolling-Reboot-Vorgang ausgeführt wird, können Sie ihn vom primären Admin-Knoten aus überwachen.
+
+.Schritte
+. Überprüfen Sie den Gesamtfortschritt des Vorgangs, der die folgenden Informationen enthält:
++
+** Anzahl der neu gestarteten Knoten
+** Anzahl der Knoten, die gerade neu gestartet werden
+** Anzahl der Knoten, die noch neu gestartet werden müssen
+
+
+. Überprüfen Sie die Tabelle für jeden Knotentyp.
++
+Die Tabellen bieten einen Fortschrittsbalken für den Vorgang auf jedem Knoten und zeigen die Neustartphase für diesen Knoten an. Dabei kann es sich um eine der folgenden handeln:
+
++
+** Warten auf den Neustart
+** Dienste beenden
+** System neu starten
+** Starten von Diensten
+** Neustart abgeschlossen
+
+
+
+
+
+
+== Stoppen Sie den Rolling Reboot-Vorgang
+
+Sie können den Rolling-Reboot-Vorgang vom primären Admin-Knoten aus stoppen.  Wenn Sie den Vorgang beenden, wird der Neustartvorgang für alle Knoten mit dem Status „Dienste werden gestoppt“, „System wird neu gestartet“ oder „Dienste werden gestartet“ abgeschlossen.  Diese Knoten werden im Rahmen des Verfahrens jedoch nicht mehr verfolgt.
+
+.Schritte
+. Wählen Sie *WARTUNG* > *Aufgaben* > *Rollierender Neustart*.
+. Wählen Sie im Schritt *Neustart überwachen* die Option *Neustartvorgang stoppen*.
+

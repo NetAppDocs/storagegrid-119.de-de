@@ -1,0 +1,156 @@
+---
+permalink: audit/s3-select-request.html 
+sidebar: sidebar 
+keywords: storagegrid, audit, message, S3SL, S3 Select request 
+summary: Diese Nachricht zeigt an, dass ein Benutzer einen S3 Select-Job initiiert hat. 
+---
+= S3SL: S3-Auswahlanforderung
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Diese Nachricht protokolliert einen Abschluss, nachdem eine S3 Select-Anforderung an den Client zurückgegeben wurde.  Die S3SL-Nachricht kann Fehlermeldungs- und Fehlercodedetails enthalten.  Die Anfrage war möglicherweise nicht erfolgreich.
+
+[cols="1a,1a,4a"]
+|===
+| Code | Feld | Beschreibung 
+
+
+ a| 
+BYSC
+ a| 
+Gescannte Bytes
+ a| 
+Anzahl der von Speicherknoten gescannten (empfangenen) Bytes.
+
+BYSC und BYPR sind wahrscheinlich unterschiedlich, wenn das Objekt komprimiert ist.  Wenn das Objekt komprimiert ist, enthält BYSC die komprimierte Byteanzahl und BYPR die Bytes nach der Dekomprimierung.
+
+
+
+ a| 
+BYPR
+ a| 
+Verarbeitete Bytes
+ a| 
+Anzahl der verarbeiteten Bytes.  Gibt an, wie viele Bytes der „gescannten Bytes“ tatsächlich von einem S3 Select-Job verarbeitet oder bearbeitet wurden.
+
+
+
+ a| 
+BYRT
+ a| 
+Zurückgegebene Bytes
+ a| 
+Anzahl der Bytes, die ein S3 Select-Job an den Client zurückgegeben hat.
+
+
+
+ a| 
+REPR
+ a| 
+Verarbeitete Datensätze
+ a| 
+Anzahl der Datensätze oder Zeilen, die ein S3 Select-Job von Speicherknoten empfangen hat.
+
+
+
+ a| 
+RERT
+ a| 
+Zurückgegebene Datensätze
+ a| 
+Anzahl der Datensätze oder Zeilen, die ein S3 Select-Job an den Client zurückgegeben hat.
+
+
+
+ a| 
+JOFI
+ a| 
+Auftrag abgeschlossen
+ a| 
+Gibt an, ob die Verarbeitung des S3 Select-Jobs abgeschlossen ist oder nicht.  Wenn dieser Wert falsch ist, konnte der Auftrag nicht abgeschlossen werden und die Fehlerfelder enthalten wahrscheinlich Daten.  Der Kunde hat möglicherweise nur Teilergebnisse oder gar keine Ergebnisse erhalten.
+
+
+
+ a| 
+REID
+ a| 
+Anforderungs-ID
+ a| 
+Kennung für die S3 Select-Anfrage.
+
+
+
+ a| 
+EXTM
+ a| 
+Ausführungszeit
+ a| 
+Die Zeit in Sekunden, die für die Ausführung des S3 Select-Jobs benötigt wurde.
+
+
+
+ a| 
+ERMG
+ a| 
+Fehlermeldung
+ a| 
+Fehlermeldung, die der S3 Select-Job generiert hat.
+
+
+
+ a| 
+ERTY
+ a| 
+Fehlertyp
+ a| 
+Fehlertyp, der vom S3 Select-Job generiert wurde.
+
+
+
+ a| 
+ERST
+ a| 
+Fehler-Stacktrace
+ a| 
+Fehler-Stacktrace, den der S3 Select-Job generiert hat.
+
+
+
+ a| 
+S3BK
+ a| 
+S3-Bucket
+ a| 
+Der Name des S3-Buckets.
+
+
+
+ a| 
+S3AK
+ a| 
+S3-Zugriffsschlüssel-ID (Absender der Anfrage)
+ a| 
+Die S3-Zugriffsschlüssel-ID für den Benutzer, der die Anfrage gesendet hat.
+
+
+
+ a| 
+S3AI
+ a| 
+S3-Mandantenkonto-ID (Absender der Anfrage)
+ a| 
+Die Mandantenkonto-ID des Benutzers, der die Anfrage gesendet hat.
+
+
+
+ a| 
+S3KY
+ a| 
+S3-Schlüssel
+ a| 
+Der S3-Schlüsselname, ohne den Bucket-Namen.
+
+|===

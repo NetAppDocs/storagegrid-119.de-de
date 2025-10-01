@@ -1,0 +1,204 @@
+---
+permalink: admin/grid-federation-retry-failed-replication.html 
+sidebar: sidebar 
+keywords: grid federation, troubleshoot 
+summary: Nachdem Sie die Warnung „Dauerhafter Fehler bei der Grid-übergreifenden Replikation“ behoben haben, sollten Sie feststellen, ob bei der Replikation von Objekten oder Löschmarkierungen in das andere Grid ein Fehler aufgetreten ist.  Sie können diese Objekte dann erneut aufnehmen oder die Grid Management-API verwenden, um die Replikation erneut zu versuchen. 
+---
+= Identifizieren und wiederholen Sie fehlgeschlagene Replikationsvorgänge
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Nachdem Sie die Warnung „Dauerhafter Fehler bei der gitterübergreifenden Replikation“ behoben haben, sollten Sie feststellen, ob bei der Replikation von Objekten oder Löschmarkierungen in das andere Gitter ein Fehler aufgetreten ist.  Sie können diese Objekte dann erneut aufnehmen oder die Grid Management-API verwenden, um die Replikation erneut zu versuchen.
+
+Die Warnung *Dauerhafter Fehler bei der gitterübergreifenden Replikation* weist darauf hin, dass Mandantenobjekte aus einem Grund, für dessen Lösung ein Benutzereingriff erforderlich ist, nicht zwischen den Buckets auf zwei Gittern repliziert werden können.  Diese Warnung wird normalerweise durch eine Änderung am Quell- oder Ziel-Bucket verursacht. Weitere Informationen finden Sie unter link:grid-federation-troubleshoot.html["Beheben von Grid-Föderationsfehlern"] .
+
+
+
+== Ermitteln Sie, ob bei der Replikation von Objekten Fehler aufgetreten sind.
+
+Um festzustellen, ob Objekte oder Löschmarkierungen nicht in das andere Raster repliziert wurden, können Sie das Überwachungsprotokoll nachlink:../audit/cgrr-cross-grid-replication-request.html["CGRR (Cross-Grid-Replikationsanforderung)"] Nachrichten.  Diese Nachricht wird dem Protokoll hinzugefügt, wenn StorageGRID ein Objekt, ein mehrteiliges Objekt oder eine Löschmarkierung nicht in den Ziel-Bucket replizieren kann.
+
+Sie können dielink:../audit/using-audit-explain-tool.html["Audit-Erklärtool"] um die Ergebnisse in ein leichter lesbares Format zu übersetzen.
+
+.Bevor Sie beginnen
+* Sie verfügen über Root-Zugriffsberechtigung.
+* Sie haben die `Passwords.txt` Datei.
+* Sie kennen die IP-Adresse des primären Admin-Knotens.
+
+
+.Schritte
+. Melden Sie sich beim primären Admin-Knoten an:
++
+.. Geben Sie den folgenden Befehl ein: `ssh admin@_primary_Admin_Node_IP_`
+.. Geben Sie das Passwort ein, das in der `Passwords.txt` Datei.
+.. Geben Sie den folgenden Befehl ein, um zum Root zu wechseln: `su -`
+.. Geben Sie das Passwort ein, das in der `Passwords.txt` Datei.
++
+Wenn Sie als Root angemeldet sind, ändert sich die Eingabeaufforderung von `$` Zu `#` .
+
+
+
+. Durchsuchen Sie das Audit.log nach CGRR-Nachrichten und formatieren Sie die Ergebnisse mit dem Audit-Explain-Tool.
++
+Dieser Befehl sucht beispielsweise nach allen CGRR-Nachrichten der letzten 30 Minuten und verwendet das Tool „Audit-Explain“.
+
++
+`# awk -vdate=$(date -d "30 minutes ago" '+%Y-%m-%dT%H:%M:%S') '$1$2 >= date { print }' audit.log | grep CGRR | audit-explain`
+
++
+Die Ergebnisse des Befehls sehen wie in diesem Beispiel aus, das Einträge für sechs CGRR-Nachrichten enthält.  Im Beispiel gaben alle Cross-Grid-Replikationsanforderungen einen allgemeinen Fehler zurück, da das Objekt nicht repliziert werden konnte.  Die ersten drei Fehler betreffen Vorgänge zum Replizieren von Objekten und die letzten drei Fehler betreffen Vorgänge zum Replizieren von Löschmarkierungen.
+
++
+[listing]
+----
+CGRR Cross-Grid Replication Request tenant:50736445269627437748 connection:447896B6-6F9C-4FB2-95EA-AEBF93A774E9 operation:"replicate object" bucket:bucket123 object:"audit-0" version:QjRBNDIzODAtNjQ3My0xMUVELTg2QjEtODJBMjAwQkI3NEM4 error:general error
+CGRR Cross-Grid Replication Request tenant:50736445269627437748 connection:447896B6-6F9C-4FB2-95EA-AEBF93A774E9 operation:"replicate object" bucket:bucket123 object:"audit-3" version:QjRDOTRCOUMtNjQ3My0xMUVELTkzM0YtOTg1MTAwQkI3NEM4 error:general error
+CGRR Cross-Grid Replication Request tenant:50736445269627437748 connection:447896B6-6F9C-4FB2-95EA-AEBF93A774E9 operation:"replicate delete marker" bucket:bucket123 object:"audit-1" version:NUQ0OEYxMDAtNjQ3NC0xMUVELTg2NjMtOTY5NzAwQkI3NEM4 error:general error
+CGRR Cross-Grid Replication Request tenant:50736445269627437748 connection:447896B6-6F9C-4FB2-95EA-AEBF93A774E9 operation:"replicate delete marker" bucket:bucket123 object:"audit-5" version:NUQ1ODUwQkUtNjQ3NC0xMUVELTg1NTItRDkwNzAwQkI3NEM4 error:general error
+----
++
+Jeder Eintrag enthält die folgenden Informationen:
+
++
+[cols="1a,2a"]
+|===
+| Feld | Beschreibung 
+
+
+| CGRR Cross-Grid-Replikationsanforderung  a| 
+Der Name der Anfrage
+
+
+
+| Mieter  a| 
+Die Konto-ID des Mieters
+
+
+
+| Verbindung  a| 
+Die ID der Grid-Föderation-Verbindung
+
+
+
+| Betrieb  a| 
+Der Typ des Replikationsvorgangs, der versucht wurde:
+
+** Objekt replizieren
+** Löschmarkierung replizieren
+** mehrteiliges Objekt replizieren
+
+
+
+
+| Eimer  a| 
+Der Bucket-Name
+
+
+
+| Objekt  a| 
+Der Objektname
+
+
+
+| Version  a| 
+Die Versions-ID für das Objekt
+
+
+
+| Fehler  a| 
+Der Fehlertyp.  Wenn die Cross-Grid-Replikation fehlgeschlagen ist, lautet der Fehler „Allgemeiner Fehler“.
+
+|===
+
+
+
+
+== Wiederholen Sie fehlgeschlagene Replikationen
+
+Nachdem Sie eine Liste der Objekte und Löschmarkierungen erstellt haben, die nicht in den Ziel-Bucket repliziert wurden, und die zugrunde liegenden Probleme behoben haben, können Sie die Replikation auf zwei Arten wiederholen:
+
+* Nehmen Sie jedes Objekt erneut in den Quell-Bucket auf.
+* Verwenden Sie die private Grid Management-API wie beschrieben.
+
+
+.Schritte
+. Wählen Sie oben im Grid Manager das Hilfesymbol und dann *API-Dokumentation* aus.
+. Wählen Sie *Zur privaten API-Dokumentation gehen*.
++
+
+NOTE: Die als „Privat“ gekennzeichneten StorageGRID -API-Endpunkte können ohne vorherige Ankündigung geändert werden.  Private StorageGRID Endpunkte ignorieren auch die API-Version der Anfrage.
+
+. Wählen Sie im Abschnitt *cross-grid-replication-advanced* den folgenden Endpunkt aus:
++
+`POST /private/cross-grid-replication-retry-failed`
+
+. Wählen Sie *Ausprobieren*.
+. Ersetzen Sie im Textfeld *body* den Beispieleintrag für *versionID* durch eine Versions-ID aus dem Audit-Log, die einer fehlgeschlagenen Cross-Grid-Replikationsanforderung entspricht.
++
+Achten Sie darauf, die doppelten Anführungszeichen um die Zeichenfolge beizubehalten.
+
+. Wählen Sie *Ausführen*.
+. Bestätigen Sie, dass der Serverantwortcode *204* lautet. Dies bedeutet, dass das Objekt oder die Löschmarkierung für die Cross-Grid-Replikation in das andere Grid als ausstehend markiert wurde.
++
+
+NOTE: Ausstehend bedeutet, dass die Cross-Grid-Replikationsanforderung zur internen Warteschlange zur Verarbeitung hinzugefügt wurde.
+
+
+
+
+
+== Überwachen von Replikationswiederholungen
+
+Sie sollten die Wiederholungsvorgänge der Replikation überwachen, um sicherzustellen, dass sie abgeschlossen werden.
+
+
+TIP: Es kann mehrere Stunden oder länger dauern, bis ein Objekt oder eine Löschmarkierung auf das andere Raster repliziert wird.
+
+Sie können Wiederholungsvorgänge auf zwei Arten überwachen:
+
+* Verwenden Sie ein S3link:../s3/head-object.html["HeadObject"] oderlink:../s3/get-object.html["GetObject"] Anfrage.  Die Antwort enthält die StorageGRID-spezifischen `x-ntap-sg-cgr-replication-status` Antwortheader, der einen der folgenden Werte hat:
++
+[cols="1a,2a"]
+|===
+| Netz | Replikationsstatus 
+
+
+ a| 
+Quelle
+ a| 
+** *ABGESCHLOSSEN*: Die Replikation war erfolgreich.
+** *AUSSTEHEND*: Das Objekt wurde noch nicht repliziert.
+** *FEHLER*: Die Replikation ist mit einem dauerhaften Fehler fehlgeschlagen. Der Fehler muss von einem Benutzer behoben werden.
+
+
+
+
+ a| 
+Ziel
+ a| 
+*REPLICA*: Das Objekt wurde aus dem Quellraster repliziert.
+
+|===
+* Verwenden Sie die private Grid Management-API wie beschrieben.
+
+
+.Schritte
+. Wählen Sie im Abschnitt *cross-grid-replication-advanced* der privaten API-Dokumentation den folgenden Endpunkt aus:
++
+`GET /private/cross-grid-replication-object-status/{id}`
+
+. Wählen Sie *Ausprobieren*.
+. Geben Sie im Abschnitt „Parameter“ die Versions-ID ein, die Sie in der `cross-grid-replication-retry-failed` Anfrage.
+. Wählen Sie *Ausführen*.
+. Bestätigen Sie, dass der Serverantwortcode *200* ist.
+. Überprüfen Sie den Replikationsstatus. Dieser kann einer der folgenden sein:
++
+** *AUSSTEHEND*: Das Objekt wurde noch nicht repliziert.
+** *ABGESCHLOSSEN*: Die Replikation war erfolgreich.
+** *FEHLGESCHLAGEN*: Die Replikation ist mit einem dauerhaften Fehler fehlgeschlagen. Der Fehler muss von einem Benutzer behoben werden.
+
+
+

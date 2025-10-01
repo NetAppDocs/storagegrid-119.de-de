@@ -1,0 +1,22 @@
+---
+permalink: maintain/vmware-configuring-virtual-machine-for-automatic-restart.html 
+sidebar: sidebar 
+keywords: storagegrid, recover, vmware, automatic restart, auto restart, configure automatic restart, configure auto restart 
+summary: Wenn die virtuelle Maschine nach dem Neustart von VMware vSphere Hypervisor nicht neu gestartet wird, müssen Sie die virtuelle Maschine möglicherweise für den automatischen Neustart konfigurieren. 
+---
+= VMware: Virtuelle Maschine für automatischen Neustart konfigurieren
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Wenn die virtuelle Maschine nach dem Neustart von VMware vSphere Hypervisor nicht neu gestartet wird, müssen Sie die virtuelle Maschine möglicherweise für den automatischen Neustart konfigurieren.
+
+Sie sollten dieses Verfahren durchführen, wenn Sie feststellen, dass eine virtuelle Maschine nicht neu gestartet wird, während Sie einen Grid-Knoten wiederherstellen oder ein anderes Wartungsverfahren durchführen.
+
+.Schritte
+. Wählen Sie in der VMware vSphere-Clientstruktur die virtuelle Maschine aus, die nicht gestartet ist.
+. Klicken Sie mit der rechten Maustaste auf die virtuelle Maschine und wählen Sie *Einschalten*.
+. Konfigurieren Sie VMware vSphere Hypervisor so, dass die virtuelle Maschine in Zukunft automatisch neu gestartet wird.
+

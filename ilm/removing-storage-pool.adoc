@@ -1,0 +1,30 @@
+---
+permalink: ilm/removing-storage-pool.html 
+sidebar: sidebar 
+keywords: remove storage pool 
+summary: Sie können einen Speicherpool entfernen, der nicht verwendet wird. 
+---
+= Entfernen eines Speicherpools
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Sie können einen Speicherpool entfernen, der nicht verwendet wird.
+
+.Bevor Sie beginnen
+* Sie sind beim Grid Manager angemeldet mit einemlink:../admin/web-browser-requirements.html["unterstützter Webbrowser"] .
+* Sie haben dielink:../admin/admin-group-permissions.html["erforderliche Zugriffsberechtigungen"] .
+
+
+.Schritte
+. Wählen Sie *ILM* > *Speicherpools*.
+. Sehen Sie sich die Spalte „ILM-Nutzung“ in der Tabelle an, um festzustellen, ob Sie den Speicherpool entfernen können.
++
+Sie können einen Speicherpool nicht entfernen, wenn er in einer ILM-Regel oder in einem Erasure-Coding-Profil verwendet wird.  Wählen Sie bei Bedarf *_Speicherpoolname_* > *ILM-Verwendung* aus, um zu bestimmen, wo der Speicherpool verwendet wird.
+
+. Wenn der Speicherpool, den Sie entfernen möchten, nicht verwendet wird, aktivieren Sie das Kontrollkästchen.
+. Wählen Sie *Entfernen*.
+. Wählen Sie *OK*.
+

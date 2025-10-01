@@ -1,0 +1,30 @@
+---
+permalink: audit/audit-log-file-rotation.html 
+sidebar: sidebar 
+keywords: storagegrid, audit, log file, audit.log, audit.log file, rotation, save, autosave, auto save, auto-save 
+summary: Audit-Protokolldateien werden im Verzeichnis /var/local/log eines Admin-Knotens gespeichert. Die aktiven Audit-Protokolldateien heißen audit.log. 
+---
+= Rotation der Überwachungsprotokolldateien
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Audit-Protokolldateien werden auf einem Admin-Knoten gespeichert `/var/local/log` Verzeichnis. Die aktiven Audit-Protokolldateien heißen `audit.log` .
+
+
+NOTE: Optional können Sie das Ziel der Überwachungsprotokolle ändern und Überwachungsinformationen an einen externen Syslog-Server senden. Wenn ein externer Syslog-Server konfiguriert ist, werden weiterhin lokale Protokolle von Prüfdatensätzen generiert und gespeichert. Sehen link:../monitor/configure-audit-messages.html["Konfigurieren von Überwachungsmeldungen und Protokollzielen"] .
+
+Einmal täglich wird der aktive `audit.log` Datei wird gespeichert und eine neue `audit.log` Datei wird gestartet.  Der Name der gespeicherten Datei gibt an, wann sie gespeichert wurde, im Format `_yyyy-mm-dd.txt_` .  Wenn an einem Tag mehr als ein Prüfprotokoll erstellt wird, verwenden die Dateinamen das Datum, an dem die Datei gespeichert wurde, gefolgt von einer Zahl im Format `_yyyy-mm-dd.txt.n_` .  Zum Beispiel, `2018-04-15.txt` Und `2018-04-15.txt.1` sind die erste und zweite Protokolldatei, die am 15. April 2018 erstellt und gespeichert wurden.
+
+Nach einem Tag wird die gespeicherte Datei komprimiert und umbenannt, im Format `_yyyy-mm-dd.txt.gz_` , wodurch das ursprüngliche Datum erhalten bleibt. Im Laufe der Zeit führt dies dazu, dass der für Prüfprotokolle auf dem Admin-Knoten zugewiesene Speicherplatz verbraucht wird. Ein Skript überwacht den Speicherplatzverbrauch des Audit-Protokolls und löscht Protokolldateien nach Bedarf, um Speicherplatz im `/var/local/log` Verzeichnis.  Prüfprotokolle werden basierend auf dem Datum ihrer Erstellung gelöscht, wobei die ältesten zuerst gelöscht werden. Sie können die Aktionen des Skripts in der folgenden Datei überwachen: `/var/local/log/manage-audit.log` .
+
+Dieses Beispiel zeigt die aktive `audit.log` Datei, die Datei vom Vortag(`2018-04-15.txt` ) und die komprimierte Datei für den Vortag(`2018-04-14.txt.gz` ).
+
+[listing]
+----
+audit.log
+2018-04-15.txt
+2018-04-14.txt.gz
+----

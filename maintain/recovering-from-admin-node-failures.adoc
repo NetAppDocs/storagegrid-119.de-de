@@ -1,0 +1,23 @@
+---
+permalink: maintain/recovering-from-admin-node-failures.html 
+sidebar: sidebar 
+keywords: recover, admin node failure, workflow 
+summary: Der Wiederherstellungsprozess für einen Admin-Knoten hängt davon ab, ob es sich um den primären Admin-Knoten oder einen nicht-primären Admin-Knoten handelt. 
+---
+= Wiederherstellung des primären oder nicht primären Admin-Knotens
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Der Wiederherstellungsprozess für einen Admin-Knoten hängt davon ab, ob es sich um den primären Admin-Knoten oder einen nicht-primären Admin-Knoten handelt.
+
+Die allgemeinen Schritte zum Wiederherstellen eines primären oder nicht primären Admin-Knotens sind dieselben, auch wenn sich die Details der Schritte unterscheiden.
+
+Befolgen Sie immer das richtige Wiederherstellungsverfahren für den Admin-Knoten, den Sie wiederherstellen.  Die Verfahren sehen auf hoher Ebene gleich aus, unterscheiden sich jedoch im Detail.
+
+.Auswahlmöglichkeiten
+* link:recovering-from-primary-admin-node-failures.html["Wiederherstellung nach Fehlern des primären Admin-Knotens"]
+* link:recovering-from-non-primary-admin-node-failures.html["Wiederherstellung nach Fehlern nicht-primärer Admin-Knoten"]
+

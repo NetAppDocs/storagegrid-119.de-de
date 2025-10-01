@@ -1,0 +1,76 @@
+---
+permalink: audit/client-read-audit-messages.html 
+sidebar: sidebar 
+keywords: storagegrid, audit, message, messages, client read, S3SL, SGET, SHEA, WGET, WHEA, S3, swift 
+summary: Wenn eine S3-Clientanwendung eine Anforderung zum Abrufen eines Objekts stellt, werden Prüfmeldungen zum Lesen des Clients protokolliert. 
+---
+= Client liest Audit-Nachrichten
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Wenn eine S3-Clientanwendung eine Anforderung zum Abrufen eines Objekts stellt, werden Prüfmeldungen zum Lesen des Clients protokolliert.
+
+[cols="1a,3a,1a,1a"]
+|===
+| Code | Beschreibung | Verwendet von | Siehe 
+
+
+ a| 
+S3SL
+ a| 
+S3 Select-Anforderung: Protokolliert einen Abschluss, nachdem eine S3 Select-Anforderung an den Client zurückgegeben wurde.  Die S3SL-Nachricht kann Fehlermeldungs- und Fehlercodedetails enthalten.  Die Anfrage war möglicherweise nicht erfolgreich.
+ a| 
+S3-Client
+ a| 
+link:s3-select-request.html["S3SL: S3-Auswahlanforderung"]
+
+
+
+ a| 
+SGET
+ a| 
+S3 GET: Protokolliert eine erfolgreiche Transaktion zum Abrufen eines Objekts oder zum Auflisten der Objekte in einem Bucket.
+
+*Hinweis:* Wenn die Transaktion auf einer Unterressource ausgeführt wird, enthält die Prüfnachricht das Feld S3SR.
+ a| 
+S3-Client
+ a| 
+link:sget-s3-get.html["SGET: S3 GET"]
+
+
+
+ a| 
+SHEA
+ a| 
+S3 HEAD: Protokolliert eine erfolgreiche Transaktion, um die Existenz eines Objekts oder Buckets zu überprüfen.
+ a| 
+S3-Client
+ a| 
+link:shea-s3-head.html["SHEA: S3 KOPF"]
+
+
+
+ a| 
+WGET
+ a| 
+Swift GET: Protokolliert eine erfolgreiche Transaktion zum Abrufen eines Objekts oder zum Auflisten der Objekte in einem Container.
+ a| 
+Swift-Client
+ a| 
+link:wget-swift-get.html["WGET: Schnelles GET"]
+
+
+
+ a| 
+WHEA
+ a| 
+Swift HEAD: Protokolliert eine erfolgreiche Transaktion, um die Existenz eines Objekts oder Containers zu überprüfen.
+ a| 
+Swift-Client
+ a| 
+link:whea-swift-head.html["WHEA: Schneller Kopf"]
+
+|===

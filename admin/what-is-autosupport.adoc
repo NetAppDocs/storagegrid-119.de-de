@@ -1,0 +1,236 @@
+---
+permalink: admin/what-is-autosupport.html 
+sidebar: sidebar 
+keywords: autosupport, technical support, storagegrid health, system status, Active IQ 
+summary: Mit der AutoSupport -Funktion kann StorageGRID Integritäts- und Statuspakete an den technischen Support von NetApp senden. 
+---
+= Was ist AutoSupport?
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Mit der AutoSupport -Funktion kann StorageGRID Integritäts- und Statuspakete an den technischen Support von NetApp senden.
+
+Die Verwendung von AutoSupport kann die Problembestimmung und -lösung erheblich beschleunigen.  Der technische Support kann auch den Speicherbedarf Ihres Systems überwachen und Ihnen dabei helfen, festzustellen, ob Sie neue Knoten oder Sites hinzufügen müssen.  Optional können Sie AutoSupport Pakete so konfigurieren, dass sie an ein zusätzliches Ziel gesendet werden.
+
+StorageGRID bietet zwei Arten von AutoSupport:
+
+* * StorageGRID AutoSupport* meldet Probleme mit der StorageGRID -Software.  Standardmäßig aktiviert, wenn Sie StorageGRID zum ersten Mal installieren.  Du kannstlink:configure-autosupport-grid-manager.html["Ändern Sie die Standardkonfiguration von AutoSupport"] falls erforderlich.
++
+
+NOTE: Wenn StorageGRID AutoSupport nicht aktiviert ist, wird eine Meldung auf dem Grid Manager-Dashboard angezeigt. Die Nachricht enthält einen Link zur AutoSupport Konfigurationsseite.  Wenn Sie die Nachricht schließen, wird sie erst wieder angezeigt, wenn Ihr Browser-Cache geleert wird, auch wenn AutoSupport deaktiviert bleibt.
+
+* * AutoSupport für Appliance-Hardware * meldet Probleme mit StorageGRID Geräten.  Sie müssenlink:configure-autosupport-grid-manager.html#autosupport-for-appliances["Konfigurieren Sie Hardware AutoSupport auf jedem Gerät"] .
+
+
+
+
+== Was ist Active IQ?
+
+Active IQ ist ein cloudbasierter digitaler Berater, der prädiktive Analysen und das Wissen der Community aus der installierten Basis von NetApp nutzt.  Die kontinuierlichen Risikobewertungen, prädiktiven Warnmeldungen, präskriptiven Anleitungen und automatisierten Aktionen helfen Ihnen, Probleme zu verhindern, bevor sie auftreten, was zu einer verbesserten Systemintegrität und höheren Systemverfügbarkeit führt.
+
+Wenn Sie die Active IQ Dashboards und -Funktionen auf der NetApp -Support-Site verwenden möchten, müssen Sie AutoSupport aktivieren.
+
+https://docs.netapp.com/us-en/active-iq/index.html["Active IQ Digital Advisor Dokumentation"^]
+
+
+
+== Im AutoSupport Paket enthaltene Informationen
+
+Ein AutoSupport -Paket enthält die folgenden Dateien und Details.
+
+[cols="2a,2a,3a"]
+|===
+| Dateiname | Felder | Beschreibung 
+
+
+ a| 
+AUTOSUPPORT-HISTORY.XML
+ a| 
+AutoSupport Sequenznummer + Ziel für diesen AutoSupport + Status der Zustellung + Zustellungsversuche + AutoSupport Betreff + Zustellungs-URI + Letzter Fehler + AutoSupport -PUT-Dateiname + Zeitpunkt der Generierung + Komprimierte AutoSupport-Größe + Dekomprimierte AutoSupport-Größe + Gesamte Erfassungszeit (ms)
+ a| 
+AutoSupport -Verlaufsdatei.
+
+
+
+ a| 
+AUTOSUPPORT.XML
+ a| 
+Knoten + Protokoll zur Kontaktaufnahme mit dem Support + Support-URL für HTTP/HTTPS + Support-Adresse + AutoSupport OnDemand-Status + AutoSupport OnDemand-Server-URL + AutoSupport OnDemand-Abfrageintervall
+ a| 
+AutoSupport -Statusdatei.  Bietet Details zum verwendeten Protokoll, zur URL und Adresse des technischen Supports, zum Abfrageintervall und zu OnDemand AutoSupport , falls aktiviert oder deaktiviert.
+
+
+
+ a| 
+BUCKETS.XML
+ a| 
+Bucket-ID + Konto-ID + Build-Version + Standortbeschränkungskonfiguration + Compliance aktiviert + Compliance-Konfiguration + S3-Objektsperre aktiviert + S3-Objektsperre-Konfiguration + Konsistenzkonfiguration + CORS aktiviert + CORS-Konfiguration + Letzter Zugriffszeitpunkt aktiviert + Richtlinie aktiviert + Richtlinienkonfiguration + Benachrichtigungen aktiviert + Benachrichtigungskonfiguration + Cloud Mirror aktiviert + Cloud Mirror-Konfiguration + Suche aktiviert + Suchkonfiguration + Bucket-Tagging aktiviert + Bucket-Tagging-Konfiguration + Versionierungskonfiguration
+ a| 
+Bietet Konfigurationsdetails und Statistiken auf Bucket-Ebene.  Beispiele für Bucket-Konfigurationen sind Plattformdienste, Compliance und Bucket-Konsistenz.
+
+
+
+ a| 
+GRID-CONFIGURATIONEN.XML
+ a| 
+Attribut-ID + Attributname + Wert + Index + Tabellen-ID + Tabellenname
+ a| 
+Gridweite Konfigurationsinformationsdatei.  Enthält Informationen zu Grid-Zertifikaten, reserviertem Speicherplatz für Metadaten, Grid-weiten Konfigurationseinstellungen (Compliance, S3 Object Lock, Objektkomprimierung, Warnungen, Syslog und ILM-Konfiguration), Details zum Erasure-Coding-Profil, DNS-Namen undlink:../primer/nodes-and-services.html#storagegrid-services["NMS-Name"] .
+
+
+
+ a| 
+GRID-SPEC.XML
+ a| 
+Rasterspezifikationen, Roh-XML
+ a| 
+Wird zum Konfigurieren und Bereitstellen von StorageGRID verwendet.  Enthält Grid-Spezifikationen, NTP-Server-IP, DNS-Server-IP, Netzwerktopologie und Hardwareprofile der Knoten.
+
+
+
+ a| 
+GRID-TASKS.XML
+ a| 
+Knoten + Servicepfad + Attribut-ID + Attributname + Wert + Index + Tabellen-ID + Tabellenname
+ a| 
+Statusdatei für Grid-Aufgaben (Wartungsverfahren).  Bietet Details zu den aktiven, beendeten, abgeschlossenen, fehlgeschlagenen und ausstehenden Aufgaben des Rasters.
+
+
+
+ a| 
+GRID.JSON
+ a| 
+Raster + Revision + Softwareversion + Beschreibung + Lizenz + Passwörter + DNS + NTP + Sites + Knoten
+ a| 
+Rasterinformationen.
+
+
+
+ a| 
+ILM-CONFIGURATION.XML
+ a| 
+Attribut-ID + Attributname + Wert + Index + Tabellen-ID + Tabellenname
+ a| 
+Liste der Attribute für ILM-Konfigurationen.
+
+
+
+ a| 
+ILM-STATUS.XML
+ a| 
+Knoten + Dienstpfad + Attribut-ID + Attributname + Wert + Index + Tabellen-ID + Tabellenname
+ a| 
+Informationsdatei zu ILM-Metriken.  Enthält ILM-Bewertungsraten für jeden Knoten und netzweite Metriken.
+
+
+
+ a| 
+ILM.XML
+ a| 
+ILM-Roh-XML
+ a| 
+Aktive ILM-Richtliniendatei.  Enthält Details zu den aktiven ILM-Richtlinien, z. B. Speicherpool-ID, Aufnahmeverhalten, Filter, Regeln und Beschreibung.
+
+
+
+ a| 
+LOG.TGZ
+ a| 
+_n / A_
+ a| 
+Herunterladbare Protokolldatei.  Enthält `bycast-err.log` Und `servermanager.log` von jedem Knoten.
+
+
+
+ a| 
+MANIFEST.XML
+ a| 
+Sammelreihenfolge + AutoSupport -Inhaltsdateiname für diese Daten + Beschreibung dieses Datenelements + Anzahl der gesammelten Bytes + Zeitaufwand für die Sammlung + Status dieses Datenelements + Beschreibung des Fehlers + AutoSupport -Inhaltstyp für diese Daten +
+ a| 
+Enthält AutoSupport Metadaten und kurze Beschreibungen aller AutoSupport Dateien.
+
+
+
+ a| 
+NMS-ENTITIES.XML
+ a| 
+Attributindex + Entitäts-OID + Knoten-ID + Gerätemodell-ID + Gerätemodellversion + Entitätsname
+ a| 
+Konzern- und Servicegesellschaften in derlink:../primer/nodes-and-services.html#storagegrid-services["NMS-Baum"] .  Bietet Details zur Netztopologie.  Der Knoten kann anhand der auf dem Knoten laufenden Dienste ermittelt werden.
+
+
+
+ a| 
+OBJECTS-STATUS.XML
+ a| 
+Knoten + Dienstpfad + Attribut-ID + Attributname + Wert + Index + Tabellen-ID + Tabellenname
+ a| 
+Objektstatus, einschließlich Hintergrundscanstatus, aktive Übertragung, Übertragungsrate, Gesamtübertragungen, Löschrate, beschädigte Fragmente, verlorene Objekte, fehlende Objekte, Reparaturversuch, Scanrate, geschätzter Scanzeitraum und Status der Reparaturfertigstellung.
+
+
+
+ a| 
+SERVER-STATUS.XML
+ a| 
+Knoten + Dienstpfad + Attribut-ID + Attributname + Wert + Index + Tabellen-ID + Tabellenname
+ a| 
+Serverkonfigurationen.  Enthält diese Details für jeden Knoten: Plattformtyp, Betriebssystem, installierter Speicher, verfügbarer Speicher, Speicherkonnektivität, Seriennummer des Speichergerätegehäuses, Anzahl ausgefallener Laufwerke des Speichercontrollers, Gehäusetemperatur des Compute-Controllers, Compute-Hardware, Seriennummer des Compute-Controllers, Stromversorgung, Laufwerksgröße und Laufwerkstyp.
+
+
+
+ a| 
+SERVICE-STATUS.XML
+ a| 
+Knoten + Dienstpfad + Attribut-ID + Attributname + Wert + Index + Tabellen-ID + Tabellenname
+ a| 
+Serviceknoten-Informationsdatei.  Enthält Details wie zugewiesenen Tabellenspeicherplatz, freien Tabellenspeicherplatz, Reaper-Metriken der Datenbank, Segmentreparaturdauer, Reparaturauftragsdauer, automatische Auftragsneustarts und automatische Auftragsbeendigung.
+
+
+
+ a| 
+STORAGE-GRADES.XML
+ a| 
+Speicherklassen-ID + Speicherklassenname + Speicherknoten-ID + Speicherknotenpfad
+ a| 
+Datei mit Speicherklassendefinitionen für jeden Speicherknoten.
+
+
+
+ a| 
+SUMMARY-ATTRIBUTES.XML
+ a| 
+Gruppen-OID + Gruppenpfad + Zusammenfassungsattribut-ID + Zusammenfassungsattributname + Wert + Index + Tabellen-ID + Tabellenname
+ a| 
+Ausführliche Systemstatusdaten, die StorageGRID Nutzungsinformationen zusammenfassen.  Bietet Details wie den Namen des Grids, die Namen der Sites, die Anzahl der Speicherknoten pro Grid und pro Site, den Lizenztyp, die Lizenzkapazität und -nutzung, die Bedingungen für den Software-Support und Details zu S3-Vorgängen.
+
+
+
+ a| 
+SYSTEM-ALERTS.XML
+ a| 
+Name + Schweregrad + Knotenname + Alarmstatus + Sitename + Auslösezeit des Alarms + Lösungszeit des Alarms + Regel-ID + Knoten-ID + Site-ID + Stummgeschaltet + Andere Anmerkungen + Andere Bezeichnungen
+ a| 
+Aktuelle Systemwarnungen, die auf mögliche Probleme im StorageGRID -System hinweisen.
+
+
+
+ a| 
+USERAGENTS.XML
+ a| 
+Benutzeragent + Anzahl der Tage + Gesamtzahl der HTTP-Anfragen + Gesamtzahl der aufgenommenen Bytes + Gesamtzahl der abgerufenen Bytes + PUT-Anfragen + GET-Anfragen + DELETE-Anfragen + HEAD-Anfragen + POST-Anfragen + OPTIONS-Anfragen + Durchschnittliche Anfragezeit (ms) + Durchschnittliche PUT-Anfragezeit (ms) + Durchschnittliche GET-Anfragezeit (ms) + Durchschnittliche DELETE-Anfragezeit (ms) + Durchschnittliche HEAD-Anfragezeit (ms) + Durchschnittliche POST-Anfragezeit (ms) + Durchschnittliche OPTIONS-Anfragezeit (ms)
+ a| 
+Statistiken basierend auf den Benutzeragenten der Anwendung.  Beispielsweise die Anzahl der PUT/GET/DELETE/HEAD-Operationen pro Benutzeragent und die Gesamtbytegröße jeder Operation.
+
+
+
+ a| 
+X-HEADER-DATA
+ a| 
+X-Netapp-asup-generated-on + X-Netapp-asup-hostname + X-Netapp-asup-os-version + X-Netapp-asup-serial-num + X-Netapp-asup-subject +
+ a| 
+AutoSupport -Headerdaten.
+
+|===

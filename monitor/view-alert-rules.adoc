@@ -1,0 +1,80 @@
+---
+permalink: monitor/view-alert-rules.html 
+sidebar: sidebar 
+keywords: how to manage alert rules 
+summary: Warnregeln definieren die Bedingungen, die bestimmte Warnmeldungen auslösen.  StorageGRID enthält eine Reihe von Standard-Alarmregeln, die Sie unverändert verwenden oder ändern können, oder Sie können benutzerdefinierte Alarmregeln erstellen. 
+---
+= Anzeigen von Warnregeln
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Warnregeln definieren die Bedingungen, die auslösenlink:alerts-reference.html["spezifische Warnungen"] .  StorageGRID enthält eine Reihe von Standard-Alarmregeln, die Sie unverändert verwenden oder ändern können, oder Sie können benutzerdefinierte Alarmregeln erstellen.
+
+Sie können die Liste aller standardmäßigen und benutzerdefinierten Warnregeln anzeigen, um zu erfahren, welche Bedingungen die einzelnen Warnmeldungen auslösen und um zu sehen, ob Warnmeldungen deaktiviert sind.
+
+.Bevor Sie beginnen
+* Sie sind beim Grid Manager angemeldet mit einemlink:../admin/web-browser-requirements.html["unterstützter Webbrowser"] .
+* Sie haben dielink:../admin/admin-group-permissions.html["Verwalten von Warnungen oder Root-Zugriffsberechtigungen"] .
+* Optional haben Sie das Video angesehen: https://netapp.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=2eea81c5-8323-417f-b0a0-b1ff008506c1["Video: Übersicht über Warnungen"^]
++
+[link=https://netapp.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=2eea81c5-8323-417f-b0a0-b1ff008506c1]
+image::../media/video-screenshot-alert-overview-118.png[Video: Übersicht über Warnungen]
+
+
+
+.Schritte
+. Wählen Sie *WARNUNGEN* > *Regeln*.
++
+Die Seite „Warnregeln“ wird angezeigt.
+
++
+image::../media/alert_rules_page.png[Seite „Alarmregeln“]
+
+. Überprüfen Sie die Informationen in der Tabelle mit den Warnregeln:
++
+[cols="1a,3a"]
+|===
+| Spaltenüberschrift | Beschreibung 
+
+
+ a| 
+Name
+ a| 
+Der eindeutige Name und die Beschreibung der Warnregel.  Benutzerdefinierte Warnregeln werden zuerst aufgeführt, gefolgt von Standardwarnregeln.  Der Name der Warnregel ist der Betreff für E-Mail-Benachrichtigungen.
+
+
+
+ a| 
+Bedingungen
+ a| 
+Die Prometheus-Ausdrücke, die bestimmen, wann dieser Alarm ausgelöst wird.  Ein Alarm kann bei einem oder mehreren der folgenden Schweregrade ausgelöst werden, es ist jedoch nicht für jeden Schweregrad eine Bedingung erforderlich.
+
+** *Kritisch*image:../media/icon_alert_red_critical.png["Symbol Alarm Rot Kritisch"] : Es liegt ein anormaler Zustand vor, der den normalen Betrieb eines StorageGRID Knotens oder -Dienstes gestoppt hat.  Sie müssen das zugrunde liegende Problem sofort angehen.  Wenn das Problem nicht behoben wird, kann es zu Dienstunterbrechungen und Datenverlust kommen.
+** *Wesentlich*image:../media/icon_alert_orange_major.png["Symbol Alarm Orange Major"] : Es liegt ein anormaler Zustand vor, der entweder den aktuellen Betrieb beeinträchtigt oder sich dem Schwellenwert für eine kritische Warnung nähert.  Sie sollten wichtige Warnungen untersuchen und alle zugrunde liegenden Probleme beheben, um sicherzustellen, dass der anormale Zustand den normalen Betrieb eines StorageGRID Knotens oder -Dienstes nicht stoppt.
+** *Unerheblich*image:../media/icon_alert_yellow_minor.png["Symbol Warnung Gelb Geringfügig"] : Das System funktioniert normal, es liegt jedoch ein anormaler Zustand vor, der die Funktionsfähigkeit des Systems beeinträchtigen könnte, wenn er anhält.  Sie sollten kleinere Warnungen, die nicht von selbst verschwinden, überwachen und beheben, um sicherzustellen, dass sie nicht zu einem ernsteren Problem führen.
+
+
+
+
+ a| 
+Typ
+ a| 
+Der Typ der Warnregel:
+
+** *Standard*: Eine mit dem System bereitgestellte Warnregel.  Sie können eine Standardwarnregel deaktivieren oder die Bedingungen und die Dauer einer Standardwarnregel bearbeiten.  Sie können eine Standardwarnregel nicht entfernen.
+** *Standard**: Eine Standardwarnregel, die eine bearbeitete Bedingung oder Dauer enthält.  Bei Bedarf können Sie einen geänderten Zustand problemlos wieder auf den ursprünglichen Standard zurücksetzen.
+** *Benutzerdefiniert*: Eine von Ihnen erstellte Warnregel.  Sie können benutzerdefinierte Warnregeln deaktivieren, bearbeiten und entfernen.
+
+
+
+
+ a| 
+Status
+ a| 
+Ob diese Warnregel derzeit aktiviert oder deaktiviert ist.  Die Bedingungen für deaktivierte Warnregeln werden nicht ausgewertet, daher werden keine Warnmeldungen ausgelöst.
+
+|===
+

@@ -1,0 +1,32 @@
+= Optionale Aufgaben
+:allow-uri-read: 
+
+
+* link:../admin/managing-tenants.html["Erstellen Sie ein Mieterkonto"]für das S3-Clientprotokoll, das zum Speichern von Objekten auf Ihrem StorageGRID System verwendet wird.
+* link:../admin/controlling-storagegrid-access.html["Kontrollsystemzugriff"]durch Konfigurieren von Gruppen und Benutzerkonten.  Optional können Sielink:../admin/using-identity-federation.html["Konfigurieren einer föderierten Identitätsquelle"] (wie Active Directory oder OpenLDAP), sodass Sie Administrationsgruppen und Benutzer importieren können.  Oder Sie könnenlink:../admin/managing-users.html#create-a-local-user["Erstellen Sie lokale Gruppen und Benutzer"] .
+* Integrieren und testen Sie dielink:../s3/configuring-tenant-accounts-and-connections.html["S3 API"] Clientanwendungen, die Sie zum Hochladen von Objekten in Ihr StorageGRID System verwenden.
+* link:../ilm/index.html["Konfigurieren der Regeln und Richtlinien für das Information Lifecycle Management (ILM)"]Sie zum Schutz der Objektdaten verwenden möchten.
+* Wenn Ihre Installation Appliance-Speicherknoten umfasst, verwenden Sie SANtricity OS, um die folgenden Aufgaben auszuführen:
++
+** Stellen Sie eine Verbindung zu jedem StorageGRID Gerät her.
+** Überprüfen Sie den Erhalt der AutoSupport -Daten.
++
+Sehen https://docs.netapp.com/us-en/storagegrid-appliances/installconfig/configuring-hardware.html["Hardware einrichten"^] .
+
+
+
+* Überprüfen und befolgen Sie dielink:../harden/index.html["Richtlinien zur Systemhärtung von StorageGRID"] um Sicherheitsrisiken auszuschließen.
+* link:../monitor/email-alert-notifications.html["Konfigurieren Sie E-Mail-Benachrichtigungen für Systemwarnungen"] .
+
+
+
+
+== Optionale Aufgaben
+
+* link:../maintain/changing-ip-addresses-and-mtu-values-for-all-nodes-in-grid.html["Aktualisieren Sie die IP-Adressen der Grid-Knoten"]ob sie sich seit der Planung Ihrer Bereitstellung und der Generierung des Wiederherstellungspakets geändert haben.
+* link:../admin/changing-network-options-object-encryption.html["Konfigurieren der Speicherverschlüsselung"], falls erforderlich.
+* link:../admin/configuring-stored-object-compression.html["Konfigurieren der Speicherkomprimierung"]um die Größe gespeicherter Objekte bei Bedarf zu reduzieren.
+* link:../admin/configure-vlan-interfaces.html["Konfigurieren von VLAN-Schnittstellen"]um den Netzwerkverkehr bei Bedarf zu isolieren und zu partitionieren.
+* link:../admin/configure-high-availability-group.html["Konfigurieren von Hochverfügbarkeitsgruppen"]um bei Bedarf die Verbindungsverfügbarkeit für Grid Manager, Tenant Manager und S3-Clients zu verbessern.
+* link:../admin/configuring-load-balancer-endpoints.html["Konfigurieren von Load Balancer-Endpunkten"]für S3-Client-Konnektivität, falls erforderlich.
+

@@ -1,0 +1,118 @@
+= Hostnamen für Speicherknoten suchen
+:allow-uri-read: 
+
+
+
+
+== Hostnamen für Speicherknoten suchen
+
+. Melden Sie sich beim primären Admin-Knoten an:
++
+.. Geben Sie den folgenden Befehl ein: `ssh admin@_primary_Admin_Node_IP_`
+.. Geben Sie das Passwort ein, das in der `Passwords.txt` Datei.
+.. Geben Sie den folgenden Befehl ein, um zum Root zu wechseln: `su -`
+.. Geben Sie das Passwort ein, das in der `Passwords.txt` Datei.
++
+Wenn Sie als Root angemeldet sind, ändert sich die Eingabeaufforderung von `$` Zu `#` .
+
+
+
+. Verwenden Sie die `/etc/hosts` Datei, um den Hostnamen des Speicherknotens für die wiederhergestellten Speichervolumes zu finden.  Um eine Liste aller Knoten im Raster anzuzeigen, geben Sie Folgendes ein: `cat /etc/hosts` .
+
+
+
+
+== Reparieren Sie Daten, wenn alle Volumes ausgefallen sind
+
+Wenn alle Speichervolumes ausgefallen sind, reparieren Sie den gesamten Knoten.  Befolgen Sie die Anweisungen für *replizierte Daten*, *löschcodierte (EC) Daten* oder beides, je nachdem, ob Sie replizierte Daten, löschcodierte (EC) Daten oder beides verwenden.
+
+Wenn nur einige Volumes ausgefallen sind, gehen Sie zu<<Reparieren Sie Daten, wenn nur einige Volumes ausgefallen sind>> .
+
+
+NOTE: Du kannst nicht rennen `repair-data` Operationen für mehr als einen Knoten gleichzeitig.  Um mehrere Knoten wiederherzustellen, wenden Sie sich an den technischen Support.
+
+[role="tabbed-block"]
+====
+.Replizierte Daten
+--
+Wenn Ihr Raster replizierte Daten enthält, verwenden Sie die `repair-data start-replicated-node-repair` Befehl mit dem `--nodes` Option, wobei `--nodes` ist der Hostname (Systemname), um den gesamten Speicherknoten zu reparieren.
+
+Dieser Befehl repariert die replizierten Daten auf einem Speicherknoten namens SG-DC-SN3:
+
+`repair-data start-replicated-node-repair --nodes SG-DC-SN3`
+
+
+NOTE: Beim Wiederherstellen von Objektdaten wird die Warnung „Objekte verloren“ ausgelöst, wenn das StorageGRID System replizierte Objektdaten nicht finden kann. Auf Speicherknoten im gesamten System können Warnungen ausgelöst werden. Sie sollten die Ursache des Verlusts ermitteln und feststellen, ob eine Wiederherstellung möglich ist. Sehen link:../troubleshoot/investigating-lost-objects.html["Untersuchen Sie verlorene Gegenstände"] .
+
+--
+.Löschcodierte (EC) Daten
+--
+Wenn Ihr Grid Erasure-Coding-Daten enthält, verwenden Sie die `repair-data start-ec-node-repair` Befehl mit dem `--nodes` Option, wobei `--nodes` ist der Hostname (Systemname), um den gesamten Speicherknoten zu reparieren.
+
+Dieser Befehl repariert die erasure-coded Daten auf einem Speicherknoten namens SG-DC-SN3:
+
+`repair-data start-ec-node-repair --nodes SG-DC-SN3`
+
+Die Operation gibt einen eindeutigen `repair ID` das identifiziert dies `repair_data` Betrieb.  Verwenden Sie diese `repair ID` um den Fortschritt und das Ergebnis der `repair_data` Betrieb.  Nach Abschluss des Wiederherstellungsprozesses wird keine weitere Rückmeldung zurückgegeben.
+
+Die Reparatur von Daten mit Löschcode kann beginnen, während einige Speicherknoten offline sind.  Die Reparatur wird abgeschlossen, nachdem alle Knoten verfügbar sind.
+
+--
+====
+
+
+== Reparieren Sie Daten, wenn nur einige Volumes ausgefallen sind
+
+Wenn nur einige der Volumes ausgefallen sind, reparieren Sie die betroffenen Volumes.  Befolgen Sie die Anweisungen für *replizierte Daten*, *löschcodierte (EC) Daten* oder beides, je nachdem, ob Sie replizierte Daten, löschcodierte (EC) Daten oder beides verwenden.
+
+Wenn alle Volumes ausgefallen sind, gehen Sie zu<<Reparieren Sie Daten, wenn alle Volumes ausgefallen sind>> .
+
+Geben Sie die Volume-IDs im Hexadezimalformat ein.  Zum Beispiel, `0000` ist der erste Band und `000F` ist der sechzehnte Band.  Sie können ein Volume, einen Volumebereich oder mehrere Volumes angeben, die nicht in einer Sequenz stehen.
+
+Alle Volumes müssen sich auf demselben Speicherknoten befinden.  Wenn Sie Volumes für mehr als einen Speicherknoten wiederherstellen müssen, wenden Sie sich an den technischen Support.
+
+[role="tabbed-block"]
+====
+.Replizierte Daten
+--
+Wenn Ihr Grid replizierte Daten enthält, verwenden Sie die `start-replicated-volume-repair` Befehl mit dem `--nodes` Option zum Identifizieren des Knotens (wo `--nodes` ist der Hostname des Knotens).  Fügen Sie dann entweder die `--volumes` oder `--volume-range` Option, wie in den folgenden Beispielen gezeigt.
+
+*Einzelnes Volume*: Dieser Befehl stellt replizierte Daten auf dem Volume wieder her `0002` auf einem Speicherknoten namens SG-DC-SN3:
+
+`repair-data start-replicated-volume-repair --nodes SG-DC-SN3 --volumes 0002`
+
+*Bereich von Volumes*: Dieser Befehl stellt replizierte Daten auf allen Volumes im Bereich wieder her `0003` Zu `0009` auf einem Speicherknoten namens SG-DC-SN3:
+
+`repair-data start-replicated-volume-repair --nodes SG-DC-SN3 --volume-range 0003,0009`
+
+*Mehrere Volumes, nicht in einer Sequenz*: Dieser Befehl stellt replizierte Daten auf Volumes wieder her `0001` , `0005` , Und `0008` auf einem Speicherknoten namens SG-DC-SN3:
+
+`repair-data start-replicated-volume-repair --nodes SG-DC-SN3 --volumes 0001,0005,0008`
+
+
+NOTE: Beim Wiederherstellen von Objektdaten wird die Warnung „Objekte verloren“ ausgelöst, wenn das StorageGRID System replizierte Objektdaten nicht finden kann. Auf Speicherknoten im gesamten System können Warnungen ausgelöst werden. Beachten Sie die Alarmbeschreibung und die empfohlenen Maßnahmen, um die Ursache des Verlusts zu ermitteln und festzustellen, ob eine Wiederherstellung möglich ist.
+
+--
+.Löschcodierte (EC) Daten
+--
+Wenn Ihr Grid Erasure-Coding-Daten enthält, verwenden Sie die `start-ec-volume-repair` Befehl mit dem `--nodes` Option zum Identifizieren des Knotens (wo `--nodes` ist der Hostname des Knotens).  Fügen Sie dann entweder die `--volumes` oder `--volume-range` Option, wie in den folgenden Beispielen gezeigt.
+
+*Einzelnes Volume*: Dieser Befehl stellt löschcodierte Daten auf dem Volume wieder her `0007` auf einem Speicherknoten namens SG-DC-SN3:
+
+`repair-data start-ec-volume-repair --nodes SG-DC-SN3 --volumes 0007`
+
+*Bereich von Volumes*: Dieser Befehl stellt die löschcodierten Daten auf allen Volumes im Bereich wieder her `0004` Zu `0006` auf einem Speicherknoten namens SG-DC-SN3:
+
+`repair-data start-ec-volume-repair --nodes SG-DC-SN3 --volume-range 0004,0006`
+
+*Mehrere Volumes, nicht in einer Sequenz*: Dieser Befehl stellt erased-coded Daten auf Volumes wieder her `000A` , `000C` , Und `000E` auf einem Speicherknoten namens SG-DC-SN3:
+
+`repair-data start-ec-volume-repair --nodes SG-DC-SN3 --volumes 000A,000C,000E`
+
+Der `repair-data` Operation gibt einen eindeutigen `repair ID` das identifiziert dies `repair_data` Betrieb.  Verwenden Sie diese `repair ID` um den Fortschritt und das Ergebnis der `repair_data` Betrieb.  Nach Abschluss des Wiederherstellungsprozesses wird keine weitere Rückmeldung zurückgegeben.
+
+
+NOTE: Die Reparatur von Daten mit Löschcode kann beginnen, während einige Speicherknoten offline sind.  Die Reparatur wird abgeschlossen, nachdem alle Knoten verfügbar sind.
+
+--
+====

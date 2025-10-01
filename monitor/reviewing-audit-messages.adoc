@@ -1,0 +1,36 @@
+---
+permalink: monitor/reviewing-audit-messages.html 
+sidebar: sidebar 
+keywords: how to review audit messages, how to view audit messages 
+summary: Mithilfe von Audit-Meldungen können Sie die detaillierten Vorgänge Ihres StorageGRID Systems besser verstehen.  Sie können Überwachungsprotokolle verwenden, um Probleme zu beheben und die Leistung zu bewerten. 
+---
+= Überprüfen von Auditmeldungen
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Mithilfe von Audit-Meldungen können Sie die detaillierten Vorgänge Ihres StorageGRID Systems besser verstehen.  Sie können Überwachungsprotokolle verwenden, um Probleme zu beheben und die Leistung zu bewerten.
+
+Während des normalen Systembetriebs generieren alle StorageGRID -Dienste folgende Prüfmeldungen:
+
+* Systemprüfungsmeldungen beziehen sich auf das Prüfsystem selbst, den Zustand der Grid-Knoten, die systemweite Aufgabenaktivität und die Sicherungsvorgänge der Dienste.
+* Prüfmeldungen zum Objektspeicher beziehen sich auf die Speicherung und Verwaltung von Objekten innerhalb von StorageGRID, einschließlich der Speicherung und Abfrage von Objekten, Übertragungen von Grid-Knoten zu Grid-Knoten und Überprüfungen.
+* Wenn eine S3-Clientanwendung eine Anforderung zum Erstellen, Ändern oder Abrufen eines Objekts stellt, werden Prüfmeldungen zum Lesen und Schreiben des Clients protokolliert.
+* Management-Audit-Meldungen protokollieren Benutzeranfragen an die Management-API.
+
+
+Jeder Admin-Knoten speichert Audit-Nachrichten in Textdateien.  Die Audit-Freigabe enthält die aktive Datei (audit.log) sowie komprimierte Audit-Protokolle der vorherigen Tage.  Jeder Knoten im Raster speichert außerdem eine Kopie der auf dem Knoten generierten Prüfinformationen.
+
+Sie können direkt über die Befehlszeile des Admin-Knotens auf die Audit-Protokolldateien zugreifen.
+
+StorageGRID kann standardmäßig Audit-Informationen senden, oder Sie können das Ziel ändern:
+
+* StorageGRID verwendet standardmäßig lokale Knoten-Auditziele.
+* Prüfprotokolleinträge von Grid Manager und Tenant Manager können an einen Speicherknoten gesendet werden.
+* Optional können Sie das Ziel der Überwachungsprotokolle ändern und Überwachungsinformationen an einen externen Syslog-Server senden. Wenn ein externer Syslog-Server konfiguriert ist, werden weiterhin lokale Protokolle von Prüfdatensätzen generiert und gespeichert.
+* link:../monitor/configure-audit-messages.html["Erfahren Sie mehr über die Konfiguration von Audit-Meldungen und Protokollzielen"] .
+
+
+Weitere Informationen zur Audit-Protokolldatei, zum Format der Audit-Meldungen, zu den Typen der Audit-Meldungen und zu den verfügbaren Tools zur Analyse der Audit-Meldungen finden Sie unterlink:../audit/index.html["Überprüfen der Überwachungsprotokolle"] .

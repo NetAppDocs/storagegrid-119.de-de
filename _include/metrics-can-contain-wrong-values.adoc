@@ -1,0 +1,6 @@
+= 
+:allow-uri-read: 
+
+
+
+NOTE: Wenn ein Knoten nicht mit dem Grid verbunden ist, beispielsweise während eines Upgrades oder in einem getrennten Zustand, sind bestimmte Metriken möglicherweise nicht verfügbar oder aus den Site- und Grid-Gesamtwerten ausgeschlossen.  Nachdem ein Knoten die Verbindung zum Netz wiederhergestellt hat, warten Sie einige Minuten, bis sich die Werte stabilisiert haben.

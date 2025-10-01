@@ -1,0 +1,99 @@
+---
+permalink: admin/guidelines-for-storagegrid-networks.html 
+sidebar: sidebar 
+keywords: admin network, client network, grid network, access interface, trunk interface 
+summary: StorageGRID unterstützt bis zu drei Netzwerkschnittstellen pro Grid-Knoten, sodass Sie die Vernetzung für jeden einzelnen Grid-Knoten entsprechend Ihren Sicherheits- und Zugriffsanforderungen konfigurieren können. 
+---
+= Richtlinien für StorageGRID -Netzwerke
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Mit dem Grid Manager können Sie StorageGRID -Netzwerke und -Verbindungen konfigurieren und verwalten.
+
+Sehenlink:configuring-client-connections.html["Konfigurieren von S3-Clientverbindungen"] um zu erfahren, wie Sie S3-Clients verbinden.
+
+
+
+== Standard StorageGRID -Netzwerke
+
+Standardmäßig unterstützt StorageGRID drei Netzwerkschnittstellen pro Grid-Knoten, sodass Sie die Vernetzung für jeden einzelnen Grid-Knoten entsprechend Ihren Sicherheits- und Zugriffsanforderungen konfigurieren können.
+
+Weitere Informationen zur Netzwerktopologie finden Sie unterlink:../network/index.html["Netzwerkrichtlinien"] .
+
+
+
+=== Netznetzwerk
+
+Erforderlich.  Das Grid-Netzwerk wird für den gesamten internen StorageGRID Verkehr verwendet.  Es bietet Konnektivität zwischen allen Knoten im Grid, über alle Standorte und Subnetze hinweg.
+
+
+
+=== Admin-Netzwerk
+
+Optional.  Das Admin-Netzwerk wird normalerweise für die Systemadministration und -wartung verwendet.  Es kann auch für den Clientprotokollzugriff verwendet werden.  Das Admin-Netzwerk ist normalerweise ein privates Netzwerk und muss nicht zwischen Standorten geroutet werden können.
+
+
+
+=== Kundennetzwerk
+
+Optional.  Das Client-Netzwerk ist ein offenes Netzwerk, das normalerweise verwendet wird, um Zugriff auf S3-Client-Anwendungen bereitzustellen, sodass das Grid-Netzwerk isoliert und gesichert werden kann.  Das Client-Netzwerk kann mit jedem Subnetz kommunizieren, das über das lokale Gateway erreichbar ist.
+
+
+
+== Richtlinien
+
+* Jeder StorageGRID Knoten benötigt eine dedizierte Netzwerkschnittstelle, IP-Adresse, Subnetzmaske und ein Gateway für jedes Netzwerk, dem er zugewiesen ist.
+* Ein Grid-Knoten kann nicht mehr als eine Schnittstelle in einem Netzwerk haben.
+* Es wird ein einzelnes Gateway pro Netzwerk und Grid-Knoten unterstützt, das sich im selben Subnetz wie der Knoten befinden muss.  Bei Bedarf können Sie im Gateway ein komplexeres Routing implementieren.
+* Auf jedem Knoten wird jedes Netzwerk einer bestimmten Netzwerkschnittstelle zugeordnet.
++
+[cols="1a,1a"]
+|===
+| Netzwerk | Schnittstellenname 
+
+
+ a| 
+Netz
+ a| 
+eth0
+
+
+
+ a| 
+Administrator (optional)
+ a| 
+eth1
+
+
+
+ a| 
+Kunde (optional)
+ a| 
+eth2
+
+|===
+* Wenn der Knoten mit einem StorageGRID -Gerät verbunden ist, werden für jedes Netzwerk bestimmte Ports verwendet.  Einzelheiten finden Sie in der Installationsanleitung Ihres Geräts.
+* Die Standardroute wird automatisch pro Knoten generiert.  Wenn eth2 aktiviert ist, verwendet 0.0.0.0/0 das Client-Netzwerk auf eth2.  Wenn eth2 nicht aktiviert ist, verwendet 0.0.0.0/0 das Grid-Netzwerk auf eth0.
+* Das Client-Netzwerk wird erst betriebsbereit, wenn der Grid-Knoten dem Grid beigetreten ist
+* Das Admin-Netzwerk kann während der Bereitstellung des Grid-Knotens so konfiguriert werden, dass der Zugriff auf die Installationsbenutzeroberfläche möglich ist, bevor das Grid vollständig installiert ist.
+
+
+
+
+== Optionale Schnittstellen
+
+Optional können Sie einem Knoten zusätzliche Schnittstellen hinzufügen.  Beispielsweise möchten Sie möglicherweise eine Trunk-Schnittstelle zu einem Admin- oder Gateway-Knoten hinzufügen, sodass Sielink:../admin/configure-vlan-interfaces.html["VLAN-Schnittstellen"] um den Datenverkehr verschiedener Anwendungen oder Mandanten zu trennen.  Oder Sie möchten eine Zugriffsschnittstelle hinzufügen, die Sie in einemlink:../admin/configure-high-availability-group.html["Hochverfügbarkeitsgruppe (HA)"] .
+
+Informationen zum Hinzufügen von Trunk- oder Zugriffsschnittstellen finden Sie im Folgenden:
+
+* *VMware (nach der Installation des Knotens)*:link:../maintain/vmware-adding-trunk-or-access-interfaces-to-node.html["VMware: Trunk- oder Zugriffsschnittstellen zu einem Knoten hinzufügen"]
++
+** *Red Hat Enterprise Linux (vor der Installation des Knotens)*:link:../rhel/creating-node-configuration-files.html["Erstellen Sie Knotenkonfigurationsdateien"]
+** *Ubuntu oder Debian (vor der Installation des Knotens)*:link:../ubuntu/creating-node-configuration-files.html["Erstellen Sie Knotenkonfigurationsdateien"]
+** *RHEL, Ubuntu oder Debian (nach der Installation des Knotens)*:link:../maintain/linux-adding-trunk-or-access-interfaces-to-node.html["Linux: Trunk oder Zugriffsschnittstellen zu einem Knoten hinzufügen"]
+
+
+

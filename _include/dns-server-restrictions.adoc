@@ -1,0 +1,7 @@
+= 
+:allow-uri-read: 
+
+
+Um einen ordnungsgemäßen Betrieb sicherzustellen, geben Sie zwei oder drei DNS-Server an.  Wenn Sie mehr als drei angeben, ist es möglich, dass aufgrund bekannter Betriebssystembeschränkungen auf einigen Plattformen nur drei verwendet werden.  Wenn in Ihrer Umgebung Routing-Einschränkungen bestehen, können Sielink:../maintain/modifying-dns-configuration-for-single-grid-node.html["Passen Sie die DNS-Serverliste an"] für einzelne Knoten (normalerweise alle Knoten an einem Standort), einen anderen Satz von bis zu drei DNS-Servern zu verwenden.
+
+Verwenden Sie nach Möglichkeit DNS-Server, auf die jeder Standort lokal zugreifen kann, um sicherzustellen, dass ein isolierter Standort die FQDNs für externe Ziele auflösen kann.

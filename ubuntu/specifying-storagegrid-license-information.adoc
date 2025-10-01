@@ -1,0 +1,33 @@
+---
+permalink: ubuntu/specifying-storagegrid-license-information.html 
+sidebar: sidebar 
+keywords: how to specify the StorageGRID license information 
+summary: Sie müssen den Namen für Ihr StorageGRID -System angeben und die von NetApp bereitgestellte Lizenzdatei hochladen. 
+---
+= Geben Sie die StorageGRID -Lizenzinformationen an
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Sie müssen den Namen für Ihr StorageGRID -System angeben und die von NetApp bereitgestellte Lizenzdatei hochladen.
+
+.Schritte
+. Geben Sie auf der Lizenzseite im Feld *Grid-Name* einen aussagekräftigen Namen für Ihr StorageGRID -System ein.
++
+Nach der Installation wird der Name oben im Knotenmenü angezeigt.
+
+. Wählen Sie *Durchsuchen*, suchen Sie die NetApp -Lizenzdatei(`NLF-_unique-id_.txt` ) und wählen Sie *Öffnen*.
++
+Die Lizenzdatei wird validiert und die Seriennummer angezeigt.
+
++
+
+NOTE: Das StorageGRID -Installationsarchiv enthält eine kostenlose Lizenz, die keinen Anspruch auf Support für das Produkt bietet.  Sie können auf eine Lizenz aktualisieren, die nach der Installation Support bietet.
+
++
+image::../media/2_gmi_installer_license_page.png[Lizenzseite des StorageGRID -Installationsprogramms]
+
+. Wählen Sie *Weiter*.
+

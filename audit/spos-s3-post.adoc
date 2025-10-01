@@ -1,0 +1,218 @@
+---
+permalink: audit/spos-s3-post.html 
+sidebar: sidebar 
+keywords: storagegrid, audit, message, SPOS, S3 POST 
+summary: Wenn ein S3-Client eine POST-Objektanforderung ausgibt, wird diese Nachricht vom Server ausgegeben, wenn die Transaktion erfolgreich ist. 
+---
+= SPOS: S3 POST
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Wenn ein S3-Client eine POST-Objektanforderung ausgibt, wird diese Nachricht vom Server ausgegeben, wenn die Transaktion erfolgreich ist.
+
+[cols="1a,1a,4a"]
+|===
+| Code | Feld | Beschreibung 
+
+
+ a| 
+CBID
+ a| 
+Inhaltsblockkennung
+ a| 
+Die eindeutige Kennung des angeforderten Inhaltsblocks.  Wenn die CBID unbekannt ist, wird dieses Feld auf 0 gesetzt.
+
+
+
+ a| 
+CNCH
+ a| 
+Konsistenzkontrollkopf
+ a| 
+Der Wert des HTTP-Anforderungsheaders „Consistency-Control“, sofern in der Anforderung vorhanden.
+
+
+
+ a| 
+CNID
+ a| 
+Verbindungskennung
+ a| 
+Die eindeutige Systemkennung für die TCP/IP-Verbindung.
+
+
+
+ a| 
+CSIZ
+ a| 
+Inhaltsgröße
+ a| 
+Die Größe des abgerufenen Objekts in Bytes.
+
+
+
+ a| 
+HTRH
+ a| 
+HTTP-Anforderungsheader
+ a| 
+Liste der protokollierten HTTP-Anforderungsheadernamen und -werte, wie während der Konfiguration ausgewählt.
+
+ `X-Forwarded-For`wird automatisch eingefügt, wenn es in der Anfrage vorhanden ist und wenn die `X-Forwarded-For` Der Wert unterscheidet sich von der IP-Adresse des Anforderungsabsenders (SAIP-Auditfeld).
+
+(Für SPOS nicht zu erwarten).
+
+
+
+ a| 
+RSLT
+ a| 
+Ergebniscode
+ a| 
+Ergebnis der RestoreObject-Anforderung.  Ergebnis ist immer:
+
+SUCS: Erfolgreich
+
+
+
+ a| 
+S3AI
+ a| 
+S3-Mandantenkonto-ID (Absender der Anfrage)
+ a| 
+Die Mandantenkonto-ID des Benutzers, der die Anfrage gesendet hat.  Ein leerer Wert zeigt einen anonymen Zugriff an.
+
+
+
+ a| 
+S3AK
+ a| 
+S3-Zugriffsschlüssel-ID (Absender der Anfrage)
+ a| 
+Die gehashte S3-Zugriffsschlüssel-ID für den Benutzer, der die Anfrage gesendet hat.  Ein leerer Wert zeigt einen anonymen Zugriff an.
+
+
+
+ a| 
+S3BK
+ a| 
+S3-Bucket
+ a| 
+Der Name des S3-Buckets.
+
+
+
+ a| 
+S3KY
+ a| 
+S3-Schlüssel
+ a| 
+Der S3-Schlüsselname, ohne den Bucket-Namen.  Operationen an Buckets schließen dieses Feld nicht ein.
+
+
+
+ a| 
+S3SR
+ a| 
+S3-Unterressource
+ a| 
+Der Bucket oder die Objekt-Subressource, an der gearbeitet wird, falls zutreffend.
+
+Für einen S3-Auswahlvorgang auf „Auswählen“ einstellen.
+
+
+
+ a| 
+SACC
+ a| 
+S3-Mandantenkontoname (Absender der Anfrage)
+ a| 
+Der Name des Mandantenkontos des Benutzers, der die Anfrage gesendet hat.  Leer für anonyme Anfragen.
+
+
+
+ a| 
+SAIP
+ a| 
+IP-Adresse (Absender der Anfrage)
+ a| 
+Die IP-Adresse der Clientanwendung, die die Anfrage gestellt hat.
+
+
+
+ a| 
+SBAC
+ a| 
+S3-Mandantenkontoname (Bucket-Eigentümer)
+ a| 
+Der Mandantenkontoname für den Bucket-Eigentümer.  Wird verwendet, um kontoübergreifenden oder anonymen Zugriff zu identifizieren.
+
+
+
+ a| 
+SBAI
+ a| 
+S3-Mandantenkonto-ID (Bucket-Eigentümer)
+ a| 
+Die Mandantenkonto-ID des Eigentümers des Ziel-Buckets.  Wird verwendet, um kontoübergreifenden oder anonymen Zugriff zu identifizieren.
+
+
+
+ a| 
+SRCF
+ a| 
+Unterressourcenkonfiguration
+ a| 
+Informationen wiederherstellen.
+
+
+
+ a| 
+SUSR
+ a| 
+S3-Benutzer-URN (Absender der Anfrage)
+ a| 
+Die Mandantenkonto-ID und der Benutzername des Benutzers, der die Anfrage stellt.  Der Benutzer kann entweder ein lokaler Benutzer oder ein LDAP-Benutzer sein. Beispiel:  `urn:sgws:identity::03393893651506583485:root`
+
+Leer für anonyme Anfragen.
+
+
+
+ a| 
+ZEIT
+ a| 
+Zeit
+ a| 
+Gesamtverarbeitungszeit für die Anfrage in Mikrosekunden.
+
+
+
+ a| 
+TLIP
+ a| 
+Vertrauenswürdige IP-Adresse des Load Balancers
+ a| 
+Wenn die Anfrage von einem vertrauenswürdigen Layer 7-Load Balancer weitergeleitet wurde, die IP-Adresse des Load Balancers.
+
+
+
+ a| 
+UUID
+ a| 
+Universell eindeutige Kennung
+ a| 
+Die Kennung des Objekts innerhalb des StorageGRID -Systems.
+
+
+
+ a| 
+VSID
+ a| 
+Versions-ID
+ a| 
+Die Versions-ID der spezifischen Version eines angeforderten Objekts.  Vorgänge an Buckets und Objekten in Buckets ohne Versionierung schließen dieses Feld nicht ein.
+
+|===

@@ -1,0 +1,53 @@
+---
+permalink: maintain/storagegrid-hotfix-procedure.html 
+sidebar: sidebar 
+keywords: apply hotfix, install hotfix, replace primary admin node 
+summary: Möglicherweise müssen Sie einen Hotfix auf Ihr StorageGRID -System anwenden, wenn zwischen den Funktionsversionen Probleme mit der Software erkannt und behoben werden. 
+---
+= StorageGRID Hotfix-Verfahren
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Möglicherweise müssen Sie einen Hotfix auf Ihr StorageGRID -System anwenden, wenn zwischen den Funktionsversionen Probleme mit der Software erkannt und behoben werden.
+
+StorageGRID -Hotfixes enthalten Softwareänderungen, die außerhalb einer Funktions- oder Patch-Version verfügbar gemacht werden.  Dieselben Änderungen sind in einer zukünftigen Version enthalten.  Darüber hinaus enthält jede Hotfix-Version eine Zusammenfassung aller vorherigen Hotfixes innerhalb der Funktions- oder Patch-Version.
+
+
+
+== Überlegungen zum Anwenden eines Hotfixes
+
+Sie können keinen StorageGRID Hotfix anwenden, wenn ein anderer Wartungsvorgang ausgeführt wird.  Beispielsweise können Sie keinen Hotfix anwenden, während ein Außerbetriebnahme-, Erweiterungs- oder Wiederherstellungsverfahren ausgeführt wird.
+
+
+NOTE: Wenn die Außerbetriebnahme eines Knotens oder einer Site angehalten wird, können Sie problemlos einen Hotfix anwenden.  Darüber hinaus können Sie möglicherweise in den letzten Phasen eines StorageGRID Upgradevorgangs einen Hotfix anwenden.  Weitere Informationen finden Sie in den Anweisungen zum Upgrade der StorageGRID -Software.
+
+Nachdem Sie den Hotfix im Grid Manager hochgeladen haben, wird der Hotfix automatisch auf den primären Admin-Knoten angewendet.  Anschließend können Sie die Anwendung des Hotfixes auf die restlichen Knoten in Ihrem StorageGRID -System genehmigen.
+
+Wenn die Anwendung eines Hotfixes auf einen oder mehrere Knoten fehlschlägt, wird der Grund für den Fehler in der Spalte „Details“ der Hotfix-Fortschrittstabelle angezeigt.  Sie müssen alle Probleme beheben, die die Fehler verursacht haben, und dann den gesamten Vorgang wiederholen.  Knoten, bei denen der Hotfix zuvor erfolgreich angewendet wurde, werden bei nachfolgenden Anwendungen übersprungen.  Sie können den Hotfix-Vorgang beliebig oft wiederholen, bis alle Knoten aktualisiert wurden.  Damit die Anwendung vollständig ist, muss der Hotfix auf allen Grid-Knoten erfolgreich installiert werden.
+
+Während Grid-Knoten mit der neuen Hotfix-Version aktualisiert werden, wirken sich die tatsächlichen Änderungen in einem Hotfix möglicherweise nur auf bestimmte Dienste auf bestimmten Knotentypen aus.  Beispielsweise könnte ein Hotfix nur den LDR-Dienst auf Speicherknoten betreffen.
+
+
+
+== So werden Hotfixes zur Wiederherstellung und Erweiterung angewendet
+
+Nachdem ein Hotfix auf Ihr Grid angewendet wurde, installiert der primäre Admin-Knoten automatisch dieselbe Hotfix-Version auf allen Knoten, die durch Wiederherstellungsvorgänge wiederhergestellt oder in einer Erweiterung hinzugefügt wurden.
+
+Wenn Sie jedoch den primären Admin-Knoten wiederherstellen müssen, müssen Sie die richtige StorageGRID Version manuell installieren und dann den Hotfix anwenden.  Die endgültige StorageGRID -Version des primären Admin-Knotens muss mit der Version der anderen Knoten im Grid übereinstimmen.
+
+Das folgende Beispiel veranschaulicht, wie beim Wiederherstellen des primären Admin-Knotens ein Hotfix angewendet wird:
+
+. Angenommen, das Grid führt eine StorageGRID 11._A.B_-Version mit dem neuesten Hotfix aus.  Die „Gitterversion“ ist 11._A.B.y_.
+. Der primäre Admin-Knoten fällt aus.
+. Sie stellen den primären Admin-Knoten mit StorageGRID 11._A.B_ erneut bereit und führen das Wiederherstellungsverfahren durch.
++
+
+NOTE: Um die Übereinstimmung mit der Grid-Version zu gewährleisten, können Sie beim Bereitstellen des Knotens eine Nebenversion verwenden. Sie müssen nicht zuerst die Hauptversion bereitstellen.
+
+. Anschließend wenden Sie Hotfix 11._A.B.y_ auf den primären Admin-Knoten an.
+
+
+Weitere Informationen finden Sie unter link:configuring-replacement-primary-admin-node.html["Konfigurieren Sie den Ersatz-Primäradministratorknoten"] .

@@ -1,0 +1,37 @@
+---
+section: upgrade
+title: Aktualisieren Sie die StorageGRID -Software
+entries:
+- title: Bevor Sie beginnen
+  pdf-filename: Aktualisieren Sie die StorageGRID -Software
+  url: "/upgrade/index.html"
+- title: Was ist neu in StorageGRID 11.9
+  url: "/upgrade/whats-new.html"
+- title: Entfernte oder veraltete Funktionen
+  url: "/upgrade/removed-or-deprecated-features.html"
+- title: Änderungen an der Grid Management API
+  url: "/upgrade/changes-to-grid-management-api.html"
+- title: Änderungen an der Tenant Management API
+  url: "/upgrade/changes-to-tenant-management-api.html"
+- title: Planen und Vorbereiten des Upgrades
+  entries:
+  - title: Geschätzte Zeit bis zum Abschluss des Upgrades
+    url: "/upgrade/estimating-time-to-complete-upgrade.html"
+  - title: Auswirkungen des Upgrades auf Ihr System
+    url: "/upgrade/how-your-system-is-affected-during-upgrade.html"
+  - title: Überprüfen Sie die installierte StorageGRID -Version
+    url: "/upgrade/verifying-installed-version-of-storagegrid.html"
+  - title: Benötigte Materialien besorgen
+    url: "/upgrade/obtaining-required-materials-for-software-upgrade.html"
+  - title: System prüfen
+    url: "/upgrade/checking-systems-condition-before-upgrading-software.html"
+- title: Software-Upgrade
+  entries:
+  - title: Upgrade-Schnellstart
+    url: "/upgrade/upgrade-workflow.html"
+  - title: 'Linux: RPM- oder DEB-Paket herunterladen und installieren'
+    url: "/upgrade/linux-installing-rpm-or-deb-package-on-all-hosts.html"
+  - title: Upgrade durchführen
+    url: "/upgrade/performing-upgrade.html"
+- title: Beheben von Upgradeproblemen
+  url: "/upgrade/troubleshooting-upgrade-issues.html"

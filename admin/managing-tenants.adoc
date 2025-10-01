@@ -1,0 +1,65 @@
+---
+permalink: admin/managing-tenants.html 
+sidebar: sidebar 
+keywords: manage tenants, tenant account, what is a tenant 
+summary: 'Mit einem Mandantenkonto können Sie die REST-API des Simple Storage Service (S3) verwenden, um Objekte in einem StorageGRID System zu speichern und abzurufen.' 
+---
+= Was sind Mieterkonten?
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Mit einem Mandantenkonto können Sie die REST-API des Simple Storage Service (S3) verwenden, um Objekte in einem StorageGRID -System zu speichern und abzurufen.
+
+
+TIP: Swift-Details wurden aus dieser Version der Dokumentationssite entfernt. Sehen https://docs.netapp.com/us-en/storagegrid-118/admin/managing-tenants.html["StorageGRID 11.8: Mandanten verwalten"^] .
+
+Als Grid-Administrator erstellen und verwalten Sie die Mandantenkonten, die S3-Clients zum Speichern und Abrufen von Objekten verwenden.
+
+Jedes Mandantenkonto verfügt über föderierte oder lokale Gruppen, Benutzer, S3-Buckets und Objekte.
+
+Mandantenkonten können verwendet werden, um gespeicherte Objekte nach verschiedenen Entitäten zu trennen.  Beispielsweise können mehrere Mandantenkonten für einen der folgenden Anwendungsfälle verwendet werden:
+
+* *Anwendungsfall für Unternehmen:* Wenn Sie ein StorageGRID -System in einer Unternehmensanwendung verwalten, möchten Sie den Objektspeicher des Grids möglicherweise nach den verschiedenen Abteilungen in Ihrer Organisation trennen.  In diesem Fall könnten Sie Mandantenkonten für die Marketingabteilung, die Kundensupportabteilung, die Personalabteilung usw. erstellen.
++
+
+NOTE: Wenn Sie das S3-Clientprotokoll verwenden, können Sie S3-Buckets und Bucket-Richtlinien verwenden, um Objekte zwischen den Abteilungen in einem Unternehmen zu trennen. Sie müssen keine Mieterkonten verwenden. Siehe Anweisungen zur Implementierunglink:../s3/bucket-and-group-access-policies.html["S3-Buckets und Bucket-Richtlinien"] für weitere Informationen.
+
+* *Anwendungsfall für Dienstanbieter:* Wenn Sie ein StorageGRID -System als Dienstanbieter verwalten, können Sie den Objektspeicher des Grids nach den verschiedenen Entitäten trennen, die den Speicher in Ihrem Grid mieten.  In diesem Fall würden Sie Mandantenkonten für Unternehmen A, Unternehmen B, Unternehmen C usw. erstellen.
+
+
+Weitere Informationen finden Sie unter link:../tenant/index.html["Verwenden eines Mandantenkontos"] .
+
+
+
+== Wie erstelle ich ein Mieterkonto?
+
+Verwenden Sie den Grid-Manager, um ein Mandantenkonto zu erstellen.  Wenn Sie ein Mandantenkonto erstellen, geben Sie die folgenden Informationen an:
+
+* Grundlegende Informationen, einschließlich Mandantenname, Clienttyp (S3) und optionalem Speicherkontingent.
+* Berechtigungen für das Mandantenkonto, z. B. ob das Mandantenkonto S3-Plattformdienste verwenden, seine eigene Identitätsquelle konfigurieren, S3 Select verwenden oder eine Grid-Föderationsverbindung verwenden kann.
+* Der anfängliche Root-Zugriff für den Mandanten, basierend darauf, ob das StorageGRID -System lokale Gruppen und Benutzer, Identitätsföderation oder Single Sign-On (SSO) verwendet.
+
+
+Darüber hinaus können Sie die S3-Objektsperreinstellung für das StorageGRID -System aktivieren, wenn S3-Mandantenkonten gesetzliche Anforderungen erfüllen müssen.  Wenn S3 Object Lock aktiviert ist, können alle S3-Mandantenkonten konforme Buckets erstellen und verwalten.
+
+
+
+== Wofür wird Tenant Manager verwendet?
+
+Nachdem Sie das Mandantenkonto erstellt haben, können sich Mandantenbenutzer beim Mandantenmanager anmelden, um beispielsweise die folgenden Aufgaben auszuführen:
+
+* Identitätsföderation einrichten (es sei denn, die Identitätsquelle wird mit dem Grid geteilt)
+* Verwalten von Gruppen und Benutzern
+* Verwenden Sie die Grid-Föderation für Kontoklone und Cross-Grid-Replikation
+* S3-Zugriffsschlüssel verwalten
+* Erstellen und Verwalten von S3-Buckets
+* Verwenden Sie S3-Plattformdienste
+* Verwenden Sie S3 Select
+* Überwachen der Speichernutzung
+
+
+
+TIP: Während S3-Tenant-Benutzer mit dem Tenant Manager S3-Zugriffsschlüssel und Buckets erstellen und verwalten können, müssen sie zum Aufnehmen und Verwalten von Objekten eine S3-Clientanwendung verwenden. Sehenlink:../s3/index.html["Verwenden Sie die S3 REST-API"] für Details.

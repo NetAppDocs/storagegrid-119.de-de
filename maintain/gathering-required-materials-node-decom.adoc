@@ -1,0 +1,49 @@
+---
+permalink: maintain/gathering-required-materials-node-decom.html 
+sidebar: sidebar 
+keywords: storagegrid, node decommission, decommission 
+summary: Bevor Sie die Außerbetriebnahme eines Netzknotens durchführen, müssen Sie die folgenden Informationen einholen. 
+---
+= Benötigte Materialien zusammenstellen
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Bevor Sie die Außerbetriebnahme eines Netzknotens durchführen, müssen Sie die folgenden Informationen einholen.
+
+[cols="1a,2a"]
+|===
+| Artikel | Hinweise 
+
+
+ a| 
+Wiederherstellungspaket `.zip` Datei
+ a| 
+Sie müssenlink:downloading-recovery-package.html["Laden Sie das neueste Wiederherstellungspaket herunter"] `.zip` Datei(`sgws-recovery-package-_id-revision_.zip` ). Mit der Wiederherstellungspaketdatei können Sie das System im Falle eines Fehlers wiederherstellen.
+
+
+
+ a| 
+`Passwords.txt`Datei
+ a| 
+Diese Datei enthält die für den Zugriff auf Grid-Knoten über die Befehlszeile erforderlichen Passwörter und ist im Wiederherstellungspaket enthalten.
+
+
+
+ a| 
+Bereitstellungspassphrase
+ a| 
+Die Passphrase wird bei der Erstinstallation des StorageGRID -Systems erstellt und dokumentiert.  Die Bereitstellungspassphrase ist nicht in der `Passwords.txt` Datei.
+
+
+
+ a| 
+Beschreibung der Topologie des StorageGRID -Systems vor der Außerbetriebnahme
+ a| 
+Besorgen Sie sich, sofern verfügbar, alle Unterlagen, die die aktuelle Topologie des Systems beschreiben.
+
+|===
+.Ähnliche Informationen
+link:../admin/web-browser-requirements.html["Anforderungen an den Webbrowser"]

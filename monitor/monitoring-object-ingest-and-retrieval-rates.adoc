@@ -1,0 +1,35 @@
+---
+permalink: monitor/monitoring-object-ingest-and-retrieval-rates.html 
+sidebar: sidebar 
+keywords: object ingest rates, object retrieval rates, monitor s3, client operations 
+summary: Sie können die Aufnahme- und Abrufraten von Objekten sowie Metriken für Objektanzahl, Abfragen und Überprüfung überwachen.  Sie können die Anzahl der erfolgreichen und fehlgeschlagenen Versuche von Clientanwendungen anzeigen, Objekte im StorageGRID -System zu lesen, zu schreiben und zu ändern. 
+---
+= Überwachen Sie S3-Clientvorgänge
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Sie können die Aufnahme- und Abrufraten von Objekten sowie Metriken für Objektanzahl, Abfragen und Überprüfung überwachen.  Sie können die Anzahl der erfolgreichen und fehlgeschlagenen Versuche von Clientanwendungen anzeigen, Objekte im StorageGRID -System zu lesen, zu schreiben und zu ändern.
+
+.Bevor Sie beginnen
+* Sie sind beim Grid Manager angemeldet mit einemlink:../admin/web-browser-requirements.html["unterstützter Webbrowser"] .
+
+
+.Schritte
+. Wählen Sie im Dashboard die Registerkarte *Leistung* aus.
+. Sehen Sie sich die S3-Diagramme an, die die Anzahl der von Speicherknoten ausgeführten Clientvorgänge und die Anzahl der von Speicherknoten empfangenen API-Anfragen während des ausgewählten Zeitraums zusammenfassen.
+. Wählen Sie *NODES*, um auf die Knotenseite zuzugreifen.
+. Wählen Sie auf der Nodes-Startseite (Rasterebene) die Registerkarte *Objekte* aus.
++
+Das Diagramm zeigt die S3-Aufnahme- und Abrufraten für Ihr gesamtes StorageGRID System in Bytes pro Sekunde und die Menge der aufgenommenen oder abgerufenen Daten.  Sie können ein Zeitintervall auswählen oder ein benutzerdefiniertes Intervall anwenden.
+
+. Um Informationen zu einem bestimmten Speicherknoten anzuzeigen, wählen Sie den Knoten aus der Liste links aus und wählen Sie die Registerkarte *Objekte*.
++
+Das Diagramm zeigt die Aufnahme- und Abrufraten für den Knoten.  Die Registerkarte enthält auch Metriken für Objektzählungen, Metadatenabfragen und Überprüfungsvorgänge.
+
++
+image::../media/nodes_storage_node_objects_help.png[Screenshot von Knoten > _Speicherknoten_ > Objekte > Attributhilfe]
+
+

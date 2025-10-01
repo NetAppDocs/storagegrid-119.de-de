@@ -1,0 +1,48 @@
+---
+permalink: maintain/monitoring-storagegrid-appliance-installation-sn.html 
+sidebar: sidebar 
+keywords: storagegrid, recover, appliance 
+summary: Der StorageGRID Appliance Installer zeigt den Status an, bis die Installation abgeschlossen ist.  Wenn die Softwareinstallation abgeschlossen ist, wird das Gerät neu gestartet. 
+---
+= Überwachen Sie die Installation der StorageGRID -Appliance
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Der StorageGRID Appliance Installer zeigt den Status an, bis die Installation abgeschlossen ist.  Wenn die Softwareinstallation abgeschlossen ist, wird das Gerät neu gestartet.
+
+.Schritte
+. Um den Installationsfortschritt zu überwachen, klicken Sie in der Menüleiste auf *Installation überwachen*.
++
+Auf der Seite „Installation überwachen“ wird der Installationsfortschritt angezeigt.
+
++
+image::../media/monitor_installation_configure_storage.gif[Dieses Bild wird durch den umgebenden Text erklärt.]
+
++
+Die blaue Statusleiste zeigt an, welche Aufgabe gerade ausgeführt wird.  Grüne Statusbalken zeigen Aufgaben an, die erfolgreich abgeschlossen wurden.
+
++
+
+NOTE: Das Installationsprogramm stellt sicher, dass Aufgaben, die bei einer vorherigen Installation abgeschlossen wurden, nicht erneut ausgeführt werden.  Wenn Sie eine Installation erneut ausführen, werden alle Aufgaben, die nicht erneut ausgeführt werden müssen, mit einer grünen Statusleiste und dem Status „Übersprungen“ angezeigt.
+
+. Überprüfen Sie den Fortschritt der ersten beiden Installationsphasen.
++
+** *1.  Speicher konfigurieren*
++
+Während dieser Phase stellt das Installationsprogramm eine Verbindung zum Speichercontroller her, löscht alle vorhandenen Konfigurationen, kommuniziert mit SANtricity OS, um Volumes zu konfigurieren, und konfiguriert die Hosteinstellungen.
+
+** *2.  Betriebssystem installieren*
++
+Während dieser Phase kopiert das Installationsprogramm das Basis-Betriebssystem-Image für StorageGRID auf das Gerät.
+
+
+
+. Überwachen Sie den Installationsfortschritt weiter, bis die Phase * StorageGRID installieren* angehalten wird und auf der eingebetteten Konsole eine Meldung angezeigt wird, in der Sie aufgefordert werden, diesen Knoten mithilfe des Grid Managers auf dem Admin-Knoten zu genehmigen.
++
+image::../media/monitor_installation_install_sgws.gif[Dieses Bild wird durch den umgebenden Text erklärt.]
+
+. Gehe zulink:selecting-start-recovery-to-configure-appliance-storage-node.html["Wählen Sie „Wiederherstellung starten“, um den Speicherknoten des Geräts zu konfigurieren."] .
+

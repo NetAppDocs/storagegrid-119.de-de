@@ -1,0 +1,99 @@
+---
+permalink: admin/benefits-of-active-idle-and-concurrent-http-connections.html 
+sidebar: sidebar 
+keywords: active http connection benefits, idle http connection benefits, concurrent http connection benefits 
+summary: Die Konfiguration von HTTP-Verbindungen kann sich auf die Leistung des StorageGRID Systems auswirken.  Die Konfigurationen unterscheiden sich je nachdem, ob die HTTP-Verbindung aktiv oder inaktiv ist oder ob Sie mehrere Verbindungen gleichzeitig haben. 
+---
+= Vorteile aktiver, inaktiver und gleichzeitiger HTTP-Verbindungen
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Die Konfiguration von HTTP-Verbindungen kann sich auf die Leistung des StorageGRID Systems auswirken.  Die Konfigurationen unterscheiden sich je nachdem, ob die HTTP-Verbindung aktiv oder inaktiv ist oder ob Sie mehrere Verbindungen gleichzeitig haben.
+
+Sie können die Leistungsvorteile für die folgenden Arten von HTTP-Verbindungen ermitteln:
+
+* Inaktive HTTP-Verbindungen
+* Aktive HTTP-Verbindungen
+* Gleichzeitige HTTP-Verbindungen
+
+
+
+
+== Vorteile des Offenhaltens inaktiver HTTP-Verbindungen
+
+Sie sollten HTTP-Verbindungen auch dann offen halten, wenn Clientanwendungen inaktiv sind, damit Clientanwendungen nachfolgende Transaktionen über die offene Verbindung durchführen können.  Basierend auf Systemmessungen und Integrationserfahrungen sollten Sie eine inaktive HTTP-Verbindung maximal 10 Minuten lang offen halten.  StorageGRID schließt möglicherweise automatisch eine HTTP-Verbindung, die länger als 10 Minuten offen und inaktiv bleibt.
+
+Offene und inaktive HTTP-Verbindungen bieten die folgenden Vorteile:
+
+* Reduzierte Latenzzeit von dem Zeitpunkt, an dem das StorageGRID -System feststellt, dass es eine HTTP-Transaktion durchführen muss, bis zu dem Zeitpunkt, an dem das StorageGRID System die Transaktion durchführen kann
++
+Der Hauptvorteil ist die geringere Latenz, insbesondere im Hinblick auf die zum Herstellen von TCP/IP- und TLS-Verbindungen erforderliche Zeit.
+
+* Erhöhte Datenübertragungsrate durch Vorbereitung des TCP/IP-Slow-Start-Algorithmus mit zuvor durchgeführten Übertragungen
+* Sofortige Benachrichtigung über verschiedene Klassen von Fehlerzuständen, die die Konnektivität zwischen der Clientanwendung und dem StorageGRID -System unterbrechen
+
+
+Die Entscheidung, wie lange eine inaktive Verbindung offen gehalten werden soll, ist ein Kompromiss zwischen den Vorteilen eines langsamen Starts, der mit der bestehenden Verbindung verbunden ist, und der idealen Zuweisung der Verbindung zu internen Systemressourcen.
+
+
+
+== Vorteile aktiver HTTP-Verbindungen
+
+Bei Verbindungen direkt zu Storage Nodes sollten Sie die Dauer einer aktiven HTTP-Verbindung auf maximal 10 Minuten begrenzen, auch wenn die HTTP-Verbindung kontinuierlich Transaktionen durchführt.
+
+Bei der Festlegung der maximalen Dauer, die eine Verbindung offen gehalten werden sollte, handelt es sich um einen Kompromiss zwischen den Vorteilen der Verbindungspersistenz und der idealen Zuweisung der Verbindung zu internen Systemressourcen.
+
+Für Clientverbindungen zu Speicherknoten bietet die Begrenzung aktiver HTTP-Verbindungen die folgenden Vorteile:
+
+* Ermöglicht eine optimale Lastverteilung im gesamten StorageGRID -System.
++
+Mit der Zeit ist eine HTTP-Verbindung möglicherweise nicht mehr optimal, da sich die Anforderungen an den Lastenausgleich ändern. Das System erzielt die beste Lastverteilung, wenn Clientanwendungen für jede Transaktion eine separate HTTP-Verbindung herstellen. Dies macht jedoch die wesentlich wertvolleren Vorteile dauerhafter Verbindungen zunichte.
+
+* Ermöglicht Clientanwendungen, HTTP-Transaktionen an LDR-Dienste weiterzuleiten, die über verfügbaren Speicherplatz verfügen.
+* Ermöglicht den Start von Wartungsverfahren.
++
+Einige Wartungsverfahren beginnen erst, nachdem alle laufenden HTTP-Verbindungen abgeschlossen sind.
+
+
+
+Bei Clientverbindungen zum Load Balancer-Dienst kann die Begrenzung der Dauer offener Verbindungen hilfreich sein, um den sofortigen Start einiger Wartungsvorgänge zu ermöglichen.  Wenn die Dauer der Clientverbindungen nicht begrenzt ist, kann es mehrere Minuten dauern, bis aktive Verbindungen automatisch beendet werden.
+
+
+
+== Vorteile gleichzeitiger HTTP-Verbindungen
+
+Sie sollten mehrere TCP/IP-Verbindungen zum StorageGRID -System offen halten, um Parallelität zu ermöglichen und so die Leistung zu steigern.  Die optimale Anzahl paralleler Verbindungen hängt von verschiedenen Faktoren ab.
+
+Gleichzeitige HTTP-Verbindungen bieten die folgenden Vorteile:
+
+* Reduzierte Latenz
++
+Transaktionen können sofort gestartet werden, anstatt auf den Abschluss anderer Transaktionen zu warten.
+
+* Erhöhter Durchsatz
++
+Das StorageGRID -System kann parallele Transaktionen durchführen und den gesamten Transaktionsdurchsatz erhöhen.
+
+
+
+Clientanwendungen sollten mehrere HTTP-Verbindungen herstellen.  Wenn eine Clientanwendung eine Transaktion durchführen muss, kann sie jede bestehende Verbindung auswählen und sofort verwenden, die derzeit keine Transaktion verarbeitet.
+
+Die Topologie jedes StorageGRID -Systems weist einen unterschiedlichen Spitzendurchsatz für gleichzeitige Transaktionen und Verbindungen auf, bevor die Leistung nachlässt.  Der Spitzendurchsatz hängt von Faktoren wie Rechenressourcen, Netzwerkressourcen, Speicherressourcen und WAN-Verbindungen ab.  Auch die Anzahl der Server und Dienste sowie die Anzahl der Anwendungen, die das StorageGRID -System unterstützt, spielen eine Rolle.
+
+StorageGRID -Systeme unterstützen häufig mehrere Clientanwendungen. Sie sollten dies berücksichtigen, wenn Sie die maximale Anzahl gleichzeitiger Verbindungen bestimmen, die von einer Clientanwendung verwendet werden.  Wenn die Client-Anwendung aus mehreren Software-Entitäten besteht, die jeweils Verbindungen zum StorageGRID -System herstellen, sollten Sie alle Verbindungen zwischen den Entitäten addieren. In den folgenden Situationen müssen Sie möglicherweise die maximale Anzahl gleichzeitiger Verbindungen anpassen:
+
+* Die Topologie des StorageGRID -Systems beeinflusst die maximale Anzahl gleichzeitiger Transaktionen und Verbindungen, die das System unterstützen kann.
+* Clientanwendungen, die über ein Netzwerk mit begrenzter Bandbreite mit dem StorageGRID -System interagieren, müssen möglicherweise den Grad der Parallelität reduzieren, um sicherzustellen, dass einzelne Transaktionen in angemessener Zeit abgeschlossen werden.
+* Wenn viele Clientanwendungen das StorageGRID -System gemeinsam nutzen, müssen Sie möglicherweise den Grad der Parallelität reduzieren, um ein Überschreiten der Systemgrenzen zu vermeiden.
+
+
+
+
+== Trennung von HTTP-Verbindungspools für Lese- und Schreibvorgänge
+
+Sie können separate Pools von HTTP-Verbindungen für Lese- und Schreibvorgänge verwenden und steuern, wie viel Pool Sie jeweils verwenden möchten.  Separate Pools von HTTP-Verbindungen ermöglichen Ihnen eine bessere Kontrolle der Transaktionen und einen Lastausgleich.
+
+Clientanwendungen können Ladevorgänge erstellen, die beim Abrufen (Lesen) oder Speichern (Schreiben) dominant sind.  Mit separaten Pools von HTTP-Verbindungen für Lese- und Schreibtransaktionen können Sie anpassen, wie viel von jedem Pool für Lese- oder Schreibtransaktionen reserviert werden soll.

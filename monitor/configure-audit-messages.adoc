@@ -1,0 +1,652 @@
+---
+permalink: monitor/configure-audit-messages.html 
+sidebar: sidebar 
+keywords: audit messages, audit level, external syslog server, log destinations 
+summary: Sie können eine Reihe von Einstellungen im Zusammenhang mit Prüfmeldungen konfigurieren.  Sie können die Anzahl der aufgezeichneten Prüfmeldungen anpassen, alle HTTP-Anforderungsheader definieren, die Sie in die Prüfmeldungen zum Lesen und Schreiben des Clients aufnehmen möchten, einen externen Syslog-Server konfigurieren und angeben, wohin Prüfprotokolle, Sicherheitsereignisprotokolle und StorageGRID Softwareprotokolle gesendet werden. 
+---
+= Konfigurieren Sie Audit-Meldungen und einen externen Syslog-Server
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Sie können eine Reihe von Einstellungen im Zusammenhang mit Prüfmeldungen konfigurieren.  Sie können die Anzahl der aufgezeichneten Prüfmeldungen anpassen, alle HTTP-Anforderungsheader definieren, die Sie in die Prüfmeldungen zum Lesen und Schreiben des Clients aufnehmen möchten, einen externen Syslog-Server konfigurieren und angeben, wohin Prüfprotokolle, Sicherheitsereignisprotokolle und StorageGRID Softwareprotokolle gesendet werden.
+
+Prüfmeldungen und -protokolle zeichnen Systemaktivitäten und Sicherheitsereignisse auf und sind wichtige Tools zur Überwachung und Fehlerbehebung. Alle StorageGRID -Knoten generieren Prüfmeldungen und Protokolle, um Systemaktivitäten und Ereignisse zu verfolgen.
+
+Optional können Sie einen externen Syslog-Server konfigurieren, um Audit-Informationen remote zu speichern. Durch die Verwendung eines externen Servers werden die Auswirkungen der Protokollierung von Prüfnachrichten auf die Leistung minimiert, ohne die Vollständigkeit der Prüfdaten zu verringern. Ein externer Syslog-Server ist besonders nützlich, wenn Sie über ein großes Grid verfügen, mehrere Arten von S3-Anwendungen verwenden oder alle Auditdaten behalten möchten. Sehenlink:../monitor/considerations-for-external-syslog-server.html["Konfigurieren Sie Audit-Meldungen und einen externen Syslog-Server"] für Details.
+
+.Bevor Sie beginnen
+* Sie sind beim Grid Manager angemeldet mit einemlink:../admin/web-browser-requirements.html["unterstützter Webbrowser"] .
+* Sie haben dielink:../admin/admin-group-permissions.html["Wartungs- oder Root-Zugriffsberechtigung"] .
+* Wenn Sie planen, einen externen Syslog-Server zu konfigurieren, haben Sie dielink:../monitor/considerations-for-external-syslog-server.html["Überlegungen zur Verwendung eines externen Syslog-Servers"] und sichergestellt, dass der Server über genügend Kapazität zum Empfangen und Speichern der Protokolldateien verfügt.
+* Wenn Sie einen externen Syslog-Server mit dem TLS- oder RELP/TLS-Protokoll konfigurieren möchten, verfügen Sie über die erforderlichen Server-CA- und Client-Zertifikate sowie den privaten Client-Schlüssel.
+
+
+
+
+== Ändern der Überwachungsmeldungsebenen
+
+Sie können für jede der folgenden Nachrichtenkategorien im Überwachungsprotokoll eine andere Überwachungsebene festlegen:
+
+[cols="1a,1a,1a"]
+|===
+| Prüfungskategorie | Standardeinstellung | Weitere Informationen 
+
+
+ a| 
+System
+ a| 
+Normal
+ a| 
+link:../audit/system-audit-messages.html["System-Audit-Meldungen"]
+
+
+
+ a| 
+Storage
+ a| 
+Fehler
+ a| 
+link:../audit/object-storage-audit-messages.html["Objektspeicher-Auditmeldungen"]
+
+
+
+ a| 
+Management
+ a| 
+Normal
+ a| 
+link:../audit/management-audit-message.html["Management-Audit-Nachricht"]
+
+
+
+ a| 
+Client liest
+ a| 
+Normal
+ a| 
+link:../audit/client-read-audit-messages.html["Client liest Audit-Nachrichten"]
+
+
+
+ a| 
+Kunde schreibt
+ a| 
+Normal
+ a| 
+link:../audit/client-write-audit-messages.html["Client schreibt Prüfmeldungen"]
+
+
+
+ a| 
+ILM
+ a| 
+Normal
+ a| 
+link:../audit/ilm-audit-messages.html["ILM-Audit-Meldungen"]
+
+
+
+ a| 
+Cross-Grid-Replikation
+ a| 
+Fehler
+ a| 
+link:../audit/cgrr-cross-grid-replication-request.html["CGRR: Cross-Grid-Replikationsanforderung"]
+
+|===
+
+NOTE: Diese Standardeinstellungen gelten, wenn Sie StorageGRID ursprünglich mit Version 10.3 oder höher installiert haben.  Wenn Sie ursprünglich eine frühere Version von StorageGRID verwendet haben, ist die Standardeinstellung für alle Kategorien auf „Normal“ eingestellt.
+
+
+NOTE: Bei Upgrades werden Konfigurationen auf Audit-Ebene nicht sofort wirksam.
+
+.Schritte
+. Wählen Sie *KONFIGURATION* > *Überwachung* > *Audit- und Syslog-Server*.
+. Wählen Sie für jede Kategorie von Prüfmeldungen eine Prüfebene aus der Dropdown-Liste aus:
++
+[cols="1a,3a"]
+|===
+| Prüfebene | Beschreibung 
+
+
+ a| 
+Aus
+ a| 
+Es werden keine Auditmeldungen aus dieser Kategorie protokolliert.
+
+
+
+ a| 
+Fehler
+ a| 
+Es werden nur Fehlermeldungen protokolliert – Prüfmeldungen, deren Ergebniscode nicht „erfolgreich“ (SUCS) war.
+
+
+
+ a| 
+Normal
+ a| 
+Es werden standardmäßige Transaktionsnachrichten protokolliert – die Nachrichten, die in diesen Anweisungen für die Kategorie aufgeführt sind.
+
+
+
+ a| 
+Debuggen
+ a| 
+Veraltet.  Diese Ebene verhält sich genauso wie die normale Überwachungsebene.
+
+|===
++
+Zu den für eine bestimmte Ebene enthaltenen Nachrichten gehören auch diejenigen, die auf den höheren Ebenen protokolliert würden.  Beispielsweise umfasst die Ebene „Normal“ alle Fehlermeldungen.
+
++
+
+NOTE: Wenn Sie keine detaillierte Aufzeichnung der Client-Lesevorgänge für Ihre S3-Anwendungen benötigen, ändern Sie optional die Einstellung *Client Reads* in *Error*, um die Anzahl der im Audit-Protokoll aufgezeichneten Audit-Meldungen zu verringern.
+
+. Wählen Sie *Speichern*.
++
+Ein grünes Banner zeigt an, dass Ihre Konfiguration gespeichert wurde.
+
+
+
+
+
+== Definieren von HTTP-Anforderungsheadern
+
+Sie können optional alle HTTP-Anforderungsheader definieren, die Sie in die Prüfnachrichten zum Lesen und Schreiben des Clients aufnehmen möchten. Diese Protokollheader gelten nur für S3-Anfragen.
+
+.Schritte
+. Definieren Sie im Abschnitt *Audit-Protokollheader* die HTTP-Anforderungsheader, die Sie in die Lese- und Schreib-Auditnachrichten des Clients aufnehmen möchten.
++
+Verwenden Sie ein Sternchen (\*) als Platzhalter, um null oder mehr Zeichen abzugleichen.  Verwenden Sie die Escape-Sequenz (\*), um ein wörtliches Sternchen zu finden.
+
+. Wählen Sie *Weitere Kopfzeile hinzufügen*, um bei Bedarf zusätzliche Kopfzeilen zu erstellen.
++
+Wenn in einer Anfrage HTTP-Header gefunden werden, werden diese in die Prüfnachricht unter dem Feld HTRH aufgenommen.
+
++
+
+NOTE: Anforderungsheader des Prüfprotokolls werden nur protokolliert, wenn die Prüfstufe für *Client-Lesevorgänge* oder *Client-Schreibvorgänge* nicht *Aus* ist.
+
+. Wählen Sie *Speichern*
++
+Ein grünes Banner zeigt an, dass Ihre Konfiguration gespeichert wurde.
+
+
+
+
+
+== [[use-external-syslog-server]]Verwenden Sie einen externen Syslog-Server
+
+Sie können optional einen externen Syslog-Server konfigurieren, um Prüfprotokolle, Anwendungsprotokolle und Sicherheitsereignisprotokolle an einem Ort außerhalb Ihres Grids zu speichern.
+
+
+NOTE: Wenn Sie keinen externen Syslog-Server verwenden möchten, überspringen Sie diesen Schritt und gehen Sie zu<<select-audit-information-destinations,Auswählen von Zielen für Auditinformationen>> .
+
+
+TIP: Wenn die in diesem Verfahren verfügbaren Konfigurationsoptionen nicht flexibel genug sind, um Ihren Anforderungen gerecht zu werden, können zusätzliche Konfigurationsoptionen angewendet werden, indem Sie `audit-destinations` Endpunkte, die sich im privaten API-Bereich deslink:../admin/using-grid-management-api.html["Grid-Management-API"] .  Sie können die API beispielsweise verwenden, wenn Sie für unterschiedliche Knotengruppen unterschiedliche Syslog-Server verwenden möchten.
+
+
+
+=== Syslog-Informationen eingeben
+
+Greifen Sie auf den Assistenten „Externen Syslog-Server konfigurieren“ zu und geben Sie die Informationen ein, die StorageGRID für den Zugriff auf den externen Syslog-Server benötigt.
+
+.Schritte
+. Wählen Sie auf der Seite „Audit- und Syslog-Server“ die Option „Externen Syslog-Server konfigurieren“ aus. Oder wählen Sie *Externen Syslog-Server bearbeiten*, wenn Sie zuvor einen externen Syslog-Server konfiguriert haben.
++
+Der Assistent „Externen Syslog-Server konfigurieren“ wird angezeigt.
+
+. Geben Sie im Schritt *Syslog-Informationen eingeben* des Assistenten im Feld *Host* einen gültigen vollqualifizierten Domänennamen oder eine IPv4- oder IPv6-Adresse für den externen Syslog-Server ein.
+. Geben Sie den Zielport auf dem externen Syslog-Server ein (muss eine Ganzzahl zwischen 1 und 65535 sein). Der Standardport ist 514.
+. Wählen Sie das Protokoll aus, das zum Senden von Audit-Informationen an den externen Syslog-Server verwendet wird.
++
+Die Verwendung von *TLS* oder *RELP/TLS* wird empfohlen.  Sie müssen ein Serverzertifikat hochladen, um eine dieser Optionen zu verwenden.  Durch die Verwendung von Zertifikaten können Sie die Verbindungen zwischen Ihrem Grid und dem externen Syslog-Server sichern. Weitere Informationen finden Sie unter link:../admin/using-storagegrid-security-certificates.html["Sicherheitszertifikate verwalten"] .
+
++
+Alle Protokolloptionen erfordern die Unterstützung und Konfiguration des externen Syslog-Servers.  Sie müssen eine Option wählen, die mit dem externen Syslog-Server kompatibel ist.
+
++
+
+NOTE: Das Reliable Event Logging Protocol (RELP) erweitert die Funktionalität des Syslog-Protokolls, um eine zuverlässige Übermittlung von Ereignismeldungen zu ermöglichen.  Durch die Verwendung von RELP können Sie den Verlust von Prüfinformationen verhindern, wenn Ihr externer Syslog-Server neu gestartet werden muss.
+
+. Wählen Sie *Weiter*.
+. [[attach-certificate]]Wenn Sie *TLS* oder *RELP/TLS* ausgewählt haben, laden Sie die Server-CA-Zertifikate, das Client-Zertifikat und den privaten Client-Schlüssel hoch.
++
+.. Wählen Sie *Durchsuchen* für das Zertifikat oder den Schlüssel, das/den Sie verwenden möchten.
+.. Wählen Sie das Zertifikat oder die Schlüsseldatei aus.
+.. Wählen Sie *Öffnen*, um die Datei hochzuladen.
++
+Neben dem Zertifikats- oder Schlüsseldateinamen wird ein grünes Häkchen angezeigt, das Sie darüber informiert, dass das Hochladen erfolgreich war.
+
+
+
+. Wählen Sie *Weiter*.
+
+
+
+
+=== Syslog-Inhalte verwalten
+
+Sie können auswählen, welche Informationen an den externen Syslog-Server gesendet werden sollen.
+
+.Schritte
+. Wählen Sie im Schritt *Syslog-Inhalt verwalten* des Assistenten alle Arten von Audit-Informationen aus, die Sie an den externen Syslog-Server senden möchten.
++
+** *Sende Audit-Protokolle*: Sendet StorageGRID -Ereignisse und Systemaktivitäten
+** *Sicherheitsereignisse senden*: Sendet Sicherheitsereignisse, beispielsweise wenn ein nicht autorisierter Benutzer versucht, sich anzumelden, oder wenn sich ein Benutzer als Root anmeldet
+** *Anwendungsprotokolle senden*: Sendetlink:../monitor/storagegrid-software-logs.html["Protokolldateien der StorageGRID -Software"] nützlich für die Fehlerbehebung, einschließlich:
++
+*** `bycast-err.log`
+*** `bycast.log`
+*** `jaeger.log`
+*** `nms.log`(Nur Admin-Knoten)
+*** `prometheus.log`
+*** `raft.log`
+*** `hagroups.log`
+
+
+** *Zugriffsprotokolle senden*: Sendet HTTP-Zugriffsprotokolle für externe Anfragen an Grid Manager, Tenant Manager, konfigurierte Load Balancer-Endpunkte und Grid-Föderationsanfragen von Remote-Systemen.
+
+
+. Wählen Sie mithilfe der Dropdown-Menüs den Schweregrad und die Einrichtung (Nachrichtentyp) für jede Kategorie von Prüfinformationen aus, die Sie senden möchten.
++
+Durch Festlegen von Schweregrad- und Einrichtungswerten können Sie die Protokolle auf anpassbare Weise aggregieren, um die Analyse zu vereinfachen.
+
++
+.. Wählen Sie für *Schweregrad* *Passthrough* oder einen Schweregradwert zwischen 0 und 7 aus.
++
+Wenn Sie einen Wert auswählen, wird der ausgewählte Wert auf alle Nachrichten dieses Typs angewendet.  Informationen zu unterschiedlichen Schweregraden gehen verloren, wenn Sie den Schweregrad mit einem festen Wert überschreiben.
+
++
+[cols="1a,3a"]
+|===
+| Schwere | Beschreibung 
+
+
+ a| 
+Durchreichen
+ a| 
+Jede an das externe Syslog gesendete Nachricht muss denselben Schweregrad haben wie bei der lokalen Protokollierung auf dem Knoten:
+
+*** Bei Prüfprotokollen ist der Schweregrad „Info“.
+*** Bei Sicherheitsereignissen werden die Schweregrade von der Linux-Distribution auf den Knoten generiert.
+*** Bei Anwendungsprotokollen variieren die Schweregrade je nach Problem zwischen „Info“ und „Hinweis“.  Beispielsweise ergibt das Hinzufügen eines NTP-Servers und das Konfigurieren einer HA-Gruppe den Wert „Info“, während das absichtliche Stoppen des SSM- oder RSM-Dienstes den Wert „Notice“ ergibt.
+*** Bei Zugriffsprotokollen ist der Schweregrad „Info“.
+
+
+
+
+ a| 
+0
+ a| 
+Notfall: System ist nicht nutzbar
+
+
+
+ a| 
+1
+ a| 
+Warnung: Sofortige Maßnahmen erforderlich
+
+
+
+ a| 
+2
+ a| 
+Kritisch: Kritische Bedingungen
+
+
+
+ a| 
+3
+ a| 
+Fehler: Fehlerbedingungen
+
+
+
+ a| 
+4
+ a| 
+Warnung: Warnbedingungen
+
+
+
+ a| 
+5
+ a| 
+Hinweis: Normaler, aber signifikanter Zustand
+
+
+
+ a| 
+6
+ a| 
+Informativ: Informationsnachrichten
+
+
+
+ a| 
+7
+ a| 
+Debug: Meldungen auf Debug-Ebene
+
+|===
+.. Wählen Sie für *Einrichtung* *Passthrough* oder einen Einrichtungswert zwischen 0 und 23.
++
+Wenn Sie einen Wert auswählen, wird dieser auf alle Nachrichten dieses Typs angewendet.  Informationen zu verschiedenen Einrichtungen gehen verloren, wenn Sie die Einrichtung mit einem festen Wert überschreiben.
+
++
+[cols="1a,3a"]
+|===
+| Einrichtung | Beschreibung 
+
+
+ a| 
+Durchreichen
+ a| 
+Jede an das externe Syslog gesendete Nachricht muss denselben Einrichtungswert haben wie bei der lokalen Protokollierung auf dem Knoten:
+
+*** Bei Prüfprotokollen lautet die an den externen Syslog-Server gesendete Einrichtung „local7“.
+*** Bei Sicherheitsereignissen werden die Einrichtungswerte von der Linux-Distribution auf den Knoten generiert.
+*** Bei Anwendungsprotokollen weisen die an den externen Syslog-Server gesendeten Anwendungsprotokolle die folgenden Einrichtungswerte auf:
++
+**** `bycast.log`: Benutzer oder Daemon
+**** `bycast-err.log`: Benutzer, Daemon, local3 oder local4
+**** `jaeger.log`: local2
+**** `nms.log`: local3
+**** `prometheus.log`: local4
+**** `raft.log`: local5
+**** `hagroups.log`: local6
+
+
+*** Bei Zugriffsprotokollen lautet die an den externen Syslog-Server gesendete Einrichtung „local0“.
+
+
+
+
+ a| 
+0
+ a| 
+kern (Kernel-Nachrichten)
+
+
+
+ a| 
+1
+ a| 
+Benutzer (Nachrichten auf Benutzerebene)
+
+
+
+ a| 
+2
+ a| 
+mail
+
+
+
+ a| 
+3
+ a| 
+Daemon (Systemdaemons)
+
+
+
+ a| 
+4
+ a| 
+Auth (Sicherheits-/Autorisierungsnachrichten)
+
+
+
+ a| 
+5
+ a| 
+Syslog (intern von syslogd generierte Nachrichten)
+
+
+
+ a| 
+6
+ a| 
+lpr (Zeilendrucker-Subsystem)
+
+
+
+ a| 
+7
+ a| 
+Nachrichten (Netzwerk-Nachrichten-Subsystem)
+
+
+
+ a| 
+8
+ a| 
+UUCP
+
+
+
+ a| 
+9
+ a| 
+Cron (Uhr-Daemon)
+
+
+
+ a| 
+10
+ a| 
+Sicherheit (Sicherheits-/Autorisierungsnachrichten)
+
+
+
+ a| 
+11
+ a| 
+FTP
+
+
+
+ a| 
+12
+ a| 
+NTP
+
+
+
+ a| 
+13
+ a| 
+logaudit (Protokollprüfung)
+
+
+
+ a| 
+14
+ a| 
+logalert (Protokollalarm)
+
+
+
+ a| 
+15
+ a| 
+Uhr (Uhr-Daemon)
+
+
+
+ a| 
+16
+ a| 
+local0
+
+
+
+ a| 
+17
+ a| 
+local1
+
+
+
+ a| 
+18
+ a| 
+local2
+
+
+
+ a| 
+19
+ a| 
+local3
+
+
+
+ a| 
+20
+ a| 
+local4
+
+
+
+ a| 
+21
+ a| 
+local5
+
+
+
+ a| 
+22
+ a| 
+local6
+
+
+
+ a| 
+23
+ a| 
+local7
+
+|===
+
+
+. Wählen Sie *Weiter*.
+
+
+
+
+=== Testnachrichten senden
+
+Bevor Sie mit der Verwendung eines externen Syslog-Servers beginnen, sollten Sie alle Knoten in Ihrem Grid auffordern, Testnachrichten an den externen Syslog-Server zu senden.  Sie sollten diese Testnachrichten verwenden, um Ihre gesamte Infrastruktur zur Protokollsammlung zu validieren, bevor Sie Daten an den externen Syslog-Server senden.
+
+
+CAUTION: Verwenden Sie die Konfiguration des externen Syslog-Servers erst, wenn Sie bestätigt haben, dass der externe Syslog-Server von jedem Knoten in Ihrem Grid eine Testnachricht empfangen hat und die Nachricht wie erwartet verarbeitet wurde.
+
+.Schritte
+. Wenn Sie keine Testnachrichten senden möchten, weil Sie sicher sind, dass Ihr externer Syslog-Server richtig konfiguriert ist und Prüfinformationen von allen Knoten in Ihrem Grid empfangen kann, wählen Sie *Überspringen und beenden*.
++
+Ein grünes Banner zeigt an, dass die Konfiguration gespeichert wurde.
+
+. Andernfalls wählen Sie *Testnachrichten senden* (empfohlen).
++
+Die Testergebnisse werden kontinuierlich auf der Seite angezeigt, bis Sie den Test beenden.  Während der Test läuft, werden Ihre Prüfnachrichten weiterhin an Ihre zuvor konfigurierten Ziele gesendet.
+
+. Sollten Sie Fehler erhalten, korrigieren Sie diese und wählen Sie erneut *Testnachrichten senden*.
++
+Sehenlink:../troubleshoot/troubleshooting-syslog-server.html["Fehlerbehebung bei einem externen Syslog-Server"] um Ihnen bei der Behebung etwaiger Fehler zu helfen.
+
+. Warten Sie, bis ein grünes Banner angezeigt wird, das anzeigt, dass alle Knoten den Test bestanden haben.
+. Überprüfen Sie Ihren Syslog-Server, um festzustellen, ob Testnachrichten wie erwartet empfangen und verarbeitet werden.
++
+
+NOTE: Wenn Sie UDP verwenden, überprüfen Sie Ihre gesamte Infrastruktur zur Protokollsammlung. Das UDP-Protokoll ermöglicht keine so strenge Fehlererkennung wie die anderen Protokolle.
+
+. Wählen Sie *Stoppen und beenden*.
++
+Sie werden zur Seite *Audit- und Syslog-Server* zurückgeleitet.  Ein grünes Banner zeigt an, dass die Syslog-Serverkonfiguration gespeichert wurde.
+
++
+
+NOTE: StorageGRID Auditinformationen werden erst an den externen Syslog-Server gesendet, wenn Sie ein Ziel auswählen, das den externen Syslog-Server enthält.
+
+
+
+
+
+== Auswählen von Zielen für Auditinformationen
+
+Sie können angeben, wo Überwachungsprotokolle, Sicherheitsereignisprotokolle undlink:../monitor/storagegrid-software-logs.html["StorageGRID -Softwareprotokolle"] gesendet werden.
+
+[NOTE]
+====
+StorageGRID verwendet standardmäßig lokale Knoten-Audit-Ziele und speichert die Audit-Informationen in `/var/local/log/localaudit.log` .
+
+Bei der Verwendung `/var/local/log/localaudit.log` , die Audit-Protokolleinträge des Grid Managers und des Tenant Managers können an einen Speicherknoten gesendet werden.  Welcher Knoten die aktuellsten Einträge hat, können Sie mithilfe der `run-each-node --parallel "zgrep MGAU /var/local/log/localaudit.log | tail"` Befehl.
+
+Einige Ziele sind nur verfügbar, wenn Sie einen externen Syslog-Server konfiguriert haben.
+
+====
+.Schritte
+. Wählen Sie auf der Seite „Audit- und Syslog-Server“ das Ziel für die Audit-Informationen aus.
++
+
+TIP: *Nur lokale Knoten* und *Externer Syslog-Server* bieten normalerweise eine bessere Leistung.
+
++
+[cols="1a,2a"]
+|===
+| Option | Beschreibung 
+
+
+ a| 
+Nur lokale Knoten (Standard)
+ a| 
+Prüfmeldungen, Sicherheitsereignisprotokolle und Anwendungsprotokolle werden nicht an Admin-Knoten gesendet. Stattdessen werden sie nur auf den Knoten gespeichert, die sie generiert haben („der lokale Knoten“). Die auf jedem lokalen Knoten generierten Prüfinformationen werden gespeichert in `/var/local/log/localaudit.log` .
+
+*Hinweis*: StorageGRID entfernt regelmäßig lokale Protokolle in einer Rotation, um Speicherplatz freizugeben. Wenn die Protokolldatei für einen Knoten 1 GB erreicht, wird die vorhandene Datei gespeichert und eine neue Protokolldatei gestartet. Die Rotationsgrenze für das Protokoll liegt bei 21 Dateien. Wenn die 22. Version der Protokolldatei erstellt wird, wird die älteste Protokolldatei gelöscht. Durchschnittlich werden auf jedem Knoten etwa 20 GB Protokolldaten gespeichert.
+
+
+
+ a| 
+Admin-Knoten/lokale Knoten
+ a| 
+Audit-Meldungen werden an das Audit-Protokoll auf den Admin-Knoten gesendet und Sicherheitsereignisprotokolle sowie Anwendungsprotokolle werden auf den Knoten gespeichert, die sie generiert haben.  Die Auditinformationen werden in den folgenden Dateien gespeichert:
+
+** Admin-Knoten (primär und nicht primär): `/var/local/audit/export/audit.log`
+** Alle Knoten: Die `/var/local/log/localaudit.log` Die Datei ist normalerweise leer oder fehlt.  Es kann sekundäre Informationen enthalten, beispielsweise eine zusätzliche Kopie einiger Nachrichten.
+
+
+
+
+ a| 
+Externer Syslog-Server
+ a| 
+Audit-Informationen werden an einen externen Syslog-Server gesendet und auf den lokalen Knoten gespeichert(`/var/local/log/localaudit.log` ). Die Art der gesendeten Informationen hängt davon ab, wie Sie den externen Syslog-Server konfiguriert haben. Diese Option wird erst aktiviert, nachdem Sie einen externen Syslog-Server konfiguriert haben.
+
+
+
+ a| 
+Admin-Knoten und externer Syslog-Server
+ a| 
+Audit-Meldungen werden an das Audit-Protokoll gesendet(`/var/local/audit/export/audit.log` ) auf Admin-Knoten, und Audit-Informationen werden an den externen Syslog-Server gesendet und auf dem lokalen Knoten gespeichert(`/var/local/log/localaudit.log` ). Die Art der gesendeten Informationen hängt davon ab, wie Sie den externen Syslog-Server konfiguriert haben. Diese Option wird erst aktiviert, nachdem Sie einen externen Syslog-Server konfiguriert haben.
+
+|===
+. Wählen Sie *Speichern*.
++
+Es wird eine Warnmeldung angezeigt.
+
+. Wählen Sie *OK*, um zu bestätigen, dass Sie das Ziel für Auditinformationen ändern möchten.
++
+Ein grünes Banner zeigt an, dass die Audit-Konfiguration gespeichert wurde.
+
++
+Neue Protokolle werden an die von Ihnen ausgewählten Ziele gesendet.  Vorhandene Protokolle verbleiben an ihrem aktuellen Speicherort.
+
+

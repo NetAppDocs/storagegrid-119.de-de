@@ -1,0 +1,41 @@
+---
+permalink: maintain/preparing-appliance-for-reinstallation-platform-replacement-only.html 
+sidebar: sidebar 
+keywords: storagegrid, recover, appliance, reinstallation appliance, reinstall appliance 
+summary: Wenn Sie einen Grid-Knoten wiederherstellen, der auf einer Service-Appliance gehostet wurde, müssen Sie die Appliance zunächst für die Neuinstallation der StorageGRID -Software vorbereiten. 
+---
+= Gerät für Neuinstallation vorbereiten (nur Plattformaustausch)
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Wenn Sie einen Grid-Knoten wiederherstellen, der auf einer Service-Appliance gehostet wurde, müssen Sie die Appliance zunächst für die Neuinstallation der StorageGRID -Software vorbereiten.
+
+Führen Sie dieses Verfahren nur aus, wenn Sie einen ausgefallenen Knoten ersetzen, der auf einer Service-Appliance gehostet wurde.  Führen Sie diese Schritte nicht aus, wenn der ausgefallene Knoten ursprünglich auf VMware oder einem Linux-Host gehostet wurde.
+
+.Schritte
+. Melden Sie sich beim ausgefallenen Grid-Knoten an:
++
+.. Geben Sie den folgenden Befehl ein: `ssh admin@_grid_node_IP_`
+.. Geben Sie das Passwort ein, das in der `Passwords.txt` Datei.
+.. Geben Sie den folgenden Befehl ein, um zum Root zu wechseln: `su -`
+.. Geben Sie das Passwort ein, das in der `Passwords.txt` Datei.
+
+
++
+Wenn Sie als Root angemeldet sind, ändert sich die Eingabeaufforderung von `$` Zu `#` .
+
+. Bereiten Sie das Gerät für die Installation der StorageGRID -Software vor.  Eingeben: `sgareinstall`
+. Wenn Sie aufgefordert werden, fortzufahren, geben Sie Folgendes ein: `y`
++
+Das Gerät wird neu gestartet und Ihre SSH-Sitzung wird beendet.  Normalerweise dauert es etwa 5 Minuten, bis das StorageGRID Appliance Installer verfügbar ist. In einigen Fällen kann es jedoch bis zu 30 Minuten dauern.
+
++
+Die Service-Appliance wird zurückgesetzt und auf die Daten auf dem Grid-Knoten kann nicht mehr zugegriffen werden.  Während des ursprünglichen Installationsvorgangs konfigurierte IP-Adressen sollten erhalten bleiben. Es wird jedoch empfohlen, dies nach Abschluss des Vorgangs zu bestätigen.
+
++
+Nach der Ausführung des `sgareinstall` Befehl werden alle von StorageGRID bereitgestellten Konten, Kennwörter und SSH-Schlüssel entfernt und neue Hostschlüssel generiert.
+
+

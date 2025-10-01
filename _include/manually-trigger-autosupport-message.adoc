@@ -1,0 +1,20 @@
+= 
+:allow-uri-read: 
+
+
+.Bevor Sie beginnen
+* Sie müssen beim Grid Manager mit einemlink:../admin/web-browser-requirements.html["unterstützter Webbrowser"] .
+* Sie müssen über Root-Zugriff oder die Berechtigung „Andere Rasterkonfiguration“ verfügen.
+
+
+.Schritte
+. Wählen Sie *SUPPORT* > *Tools* > * AutoSupport*.
+. Wählen Sie auf der Registerkarte *Aktionen* die Option *Benutzergesteuerten AutoSupport senden*.
++
+StorageGRID versucht, ein AutoSupport Paket an die NetApp Support-Site zu senden. Wenn der Versuch erfolgreich ist, werden die Werte *Neuestes Ergebnis* und *Letzter erfolgreicher Zeitpunkt* auf der Registerkarte *Ergebnisse* aktualisiert. Wenn ein Problem auftritt, wird der Wert *Neuestes Ergebnis* auf „Fehlgeschlagen“ aktualisiert und StorageGRID versucht nicht, das AutoSupport Paket erneut zu senden.
+
++
+
+TIP: Aktualisieren Sie nach dem Senden eines vom Benutzer ausgelösten AutoSupport Pakets die AutoSupport -Seite in Ihrem Browser nach 1 Minute, um auf die aktuellsten Ergebnisse zuzugreifen.
+
+

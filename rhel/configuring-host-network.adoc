@@ -1,0 +1,145 @@
+---
+permalink: rhel/configuring-host-network.html 
+sidebar: sidebar 
+keywords: how to configure host network 
+summary: Nachdem Sie die Linux-Installation auf Ihren Hosts abgeschlossen haben, müssen Sie möglicherweise einige zusätzliche Konfigurationen durchführen, um auf jedem Host eine Reihe von Netzwerkschnittstellen vorzubereiten, die für die Zuordnung zu den StorageGRID -Knoten geeignet sind, die Sie später bereitstellen. 
+---
+= Konfigurieren des Hostnetzwerks (Red Hat Enterprise Linux)
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Nachdem Sie die Linux-Installation auf Ihren Hosts abgeschlossen haben, müssen Sie möglicherweise einige zusätzliche Konfigurationen durchführen, um auf jedem Host eine Reihe von Netzwerkschnittstellen vorzubereiten, die für die Zuordnung zu den StorageGRID -Knoten geeignet sind, die Sie später bereitstellen.
+
+.Bevor Sie beginnen
+* Sie haben dielink:../network/index.html["StorageGRID Netzwerkrichtlinien"] .
+* Sie haben die Informationen zulink:node-container-migration-requirements.html["Anforderungen für die Migration von Knotencontainern"] .
+* Wenn Sie virtuelle Hosts verwenden, haben Sie die<<mac_address_cloning_rhel,Überlegungen und Empfehlungen zum Klonen von MAC-Adressen>> bevor Sie das Hostnetzwerk konfigurieren.
+
+
+
+NOTE: Wenn Sie VMs als Hosts verwenden, sollten Sie VMXNET 3 als virtuellen Netzwerkadapter auswählen.  Der VMware E1000-Netzwerkadapter hat Verbindungsprobleme mit StorageGRID -Containern verursacht, die auf bestimmten Linux-Distributionen bereitgestellt wurden.
+
+.Informationen zu diesem Vorgang
+Grid-Knoten müssen auf das Grid-Netzwerk und optional auf die Admin- und Client-Netzwerke zugreifen können.  Sie stellen diesen Zugriff bereit, indem Sie Zuordnungen erstellen, die die physische Schnittstelle des Hosts mit den virtuellen Schnittstellen für jeden Grid-Knoten verknüpfen.  Verwenden Sie beim Erstellen von Hostschnittstellen benutzerfreundliche Namen, um die Bereitstellung auf allen Hosts zu erleichtern und die Migration zu ermöglichen.
+
+Dieselbe Schnittstelle kann zwischen dem Host und einem oder mehreren Knoten gemeinsam genutzt werden.  Sie können beispielsweise dieselbe Schnittstelle für den Hostzugriff und den Knotenadministrator-Netzwerkzugriff verwenden, um die Host- und Knotenwartung zu vereinfachen.  Obwohl die gleiche Schnittstelle zwischen dem Host und einzelnen Knoten gemeinsam genutzt werden kann, müssen alle unterschiedliche IP-Adressen haben.  IP-Adressen können nicht zwischen Knoten oder zwischen dem Host und einem Knoten geteilt werden.
+
+Sie können dieselbe Host-Netzwerkschnittstelle verwenden, um die Grid-Netzwerkschnittstelle für alle StorageGRID -Knoten auf dem Host bereitzustellen. Sie können für jeden Knoten eine andere Host-Netzwerkschnittstelle verwenden oder einen Mittelweg wählen.  Normalerweise würden Sie jedoch nicht dieselbe Host-Netzwerkschnittstelle sowohl als Grid- als auch als Admin-Netzwerkschnittstelle für einen einzelnen Knoten oder als Grid-Netzwerkschnittstelle für einen Knoten und als Client-Netzwerkschnittstelle für einen anderen bereitstellen.
+
+Sie können diese Aufgabe auf viele Arten erledigen.  Wenn es sich bei Ihren Hosts beispielsweise um virtuelle Maschinen handelt und Sie für jeden Host einen oder zwei StorageGRID Knoten bereitstellen, können Sie die richtige Anzahl von Netzwerkschnittstellen im Hypervisor erstellen und eine 1:1-Zuordnung verwenden.  Wenn Sie für den Produktionseinsatz mehrere Knoten auf Bare-Metal-Hosts bereitstellen, können Sie die Unterstützung des Linux-Netzwerk-Stacks für VLAN und LACP zur Fehlertoleranz und Bandbreitenfreigabe nutzen.  Die folgenden Abschnitte bieten detaillierte Ansätze für beide Beispiele.  Sie müssen keines dieser Beispiele verwenden; Sie können jeden Ansatz verwenden, der Ihren Anforderungen entspricht.
+
+
+NOTE: Verwenden Sie Bond- oder Bridge-Geräte nicht direkt als Container-Netzwerkschnittstelle.  Dies könnte den Start des Knotens verhindern, der durch ein Kernelproblem bei der Verwendung von MACVLAN mit Bond- und Bridge-Geräten im Container-Namespace verursacht wird.  Verwenden Sie stattdessen ein nicht gebundenes Gerät, beispielsweise ein VLAN oder ein virtuelles Ethernet-Paar (veth).  Geben Sie dieses Gerät als Netzwerkschnittstelle in der Knotenkonfigurationsdatei an.
+
+.Ähnliche Informationen
+link:creating-node-configuration-files.html["Erstellen von Knotenkonfigurationsdateien"]
+
+
+
+== Überlegungen und Empfehlungen zum Klonen von MAC-Adressen
+
+.[[mac_address_cloning_rhel]]
+Durch das Klonen von MAC-Adressen verwendet der Container die MAC-Adresse des Hosts und der Host die MAC-Adresse einer von Ihnen angegebenen oder einer zufällig generierten Adresse.  Sie sollten das Klonen von MAC-Adressen verwenden, um die Verwendung von Netzwerkkonfigurationen im Promiscuous-Modus zu vermeiden.
+
+
+
+=== Aktivieren des MAC-Klonens
+
+In bestimmten Umgebungen kann die Sicherheit durch das Klonen von MAC-Adressen verbessert werden, da Sie dadurch eine dedizierte virtuelle Netzwerkkarte für das Admin-Netzwerk, das Grid-Netzwerk und das Client-Netzwerk verwenden können.  Wenn der Container die MAC-Adresse der dedizierten Netzwerkkarte auf dem Host verwendet, können Sie die Verwendung von Netzwerkkonfigurationen im Promiscuous-Modus vermeiden.
+
+
+NOTE: Das Klonen von MAC-Adressen ist für die Verwendung mit virtuellen Serverinstallationen vorgesehen und funktioniert möglicherweise nicht bei allen physischen Gerätekonfigurationen ordnungsgemäß.
+
+
+NOTE: Wenn der Start eines Knotens fehlschlägt, weil eine auf MAC-Klonen ausgerichtete Schnittstelle belegt ist, müssen Sie die Verbindung möglicherweise auf „inaktiv“ setzen, bevor Sie den Knoten starten.  Darüber hinaus ist es möglich, dass die virtuelle Umgebung das MAC-Klonen auf einer Netzwerkschnittstelle verhindert, während die Verbindung aktiv ist.  Wenn ein Knoten die MAC-Adresse nicht festlegen und nicht starten kann, weil eine Schnittstelle belegt ist, kann das Problem möglicherweise behoben werden, indem die Verbindung vor dem Starten des Knotens auf „inaktiv“ gesetzt wird.
+
+Das Klonen von MAC-Adressen ist standardmäßig deaktiviert und muss über Knotenkonfigurationsschlüssel festgelegt werden.  Sie sollten es aktivieren, wenn Sie StorageGRID installieren.
+
+Für jedes Netzwerk gibt es einen Schlüssel:
+
+* `ADMIN_NETWORK_TARGET_TYPE_INTERFACE_CLONE_MAC`
+* `GRID_NETWORK_TARGET_TYPE_INTERFACE_CLONE_MAC`
+* `CLIENT_NETWORK_TARGET_TYPE_INTERFACE_CLONE_MAC`
+
+
+Wenn Sie den Schlüssel auf „true“ setzen, verwendet der Container die MAC-Adresse der Netzwerkkarte des Hosts.  Zusätzlich verwendet der Host dann die MAC-Adresse des angegebenen Containernetzwerks.  Standardmäßig ist die Containeradresse eine zufällig generierte Adresse. Wenn Sie jedoch eine Adresse mit dem `_NETWORK_MAC` Knotenkonfigurationsschlüssel, wird stattdessen diese Adresse verwendet.  Host und Container haben immer unterschiedliche MAC-Adressen.
+
+
+NOTE: Wenn Sie das MAC-Klonen auf einem virtuellen Host aktivieren, ohne gleichzeitig den Promiscuous-Modus auf dem Hypervisor zu aktivieren, kann dies dazu führen, dass die Linux-Host-Vernetzung über die Schnittstelle des Hosts nicht mehr funktioniert.
+
+
+
+=== Anwendungsfälle für das MAC-Klonen
+
+Beim MAC-Klonen sind zwei Anwendungsfälle zu berücksichtigen:
+
+* MAC-Klonen nicht aktiviert: Wenn die `_CLONE_MAC` Schlüssel in der Knotenkonfigurationsdatei nicht festgelegt oder auf „false“ gesetzt ist, verwendet der Host die Host-NIC-MAC und der Container verfügt über eine von StorageGRID generierte MAC, sofern in der `_NETWORK_MAC` Schlüssel.  Wenn eine Adresse im `_NETWORK_MAC` Schlüssel erhält der Container die Adresse, die im `_NETWORK_MAC` Schlüssel.  Diese Tastenkonfiguration erfordert die Verwendung des Promiscuous-Modus.
+* MAC-Klonen aktiviert: Wenn die `_CLONE_MAC` Schlüssel in der Knotenkonfigurationsdatei auf „true“ gesetzt ist, verwendet der Container die Host-NIC-MAC und der Host verwendet eine von StorageGRID generierte MAC, sofern in der `_NETWORK_MAC` Schlüssel.  Wenn eine Adresse im `_NETWORK_MAC` Schlüssel verwendet der Host die angegebene Adresse anstelle einer generierten.  Bei dieser Tastenkonfiguration sollten Sie den Promiscuous-Modus nicht verwenden.
+
+
+
+NOTE: Wenn Sie das Klonen von MAC-Adressen nicht verwenden möchten und lieber allen Schnittstellen das Empfangen und Senden von Daten für andere MAC-Adressen als die vom Hypervisor zugewiesenen erlauben möchten, stellen Sie sicher, dass die Sicherheitseigenschaften auf der Ebene des virtuellen Switches und der Portgruppe für den Promiscuous-Modus, MAC-Adressänderungen und gefälschte Übertragungen auf *Akzeptieren* eingestellt sind.  Die auf dem virtuellen Switch festgelegten Werte können durch die Werte auf Portgruppenebene überschrieben werden. Stellen Sie daher sicher, dass die Einstellungen an beiden Stellen identisch sind.
+
+Informationen zum Aktivieren des MAC-Klonens finden Sie imlink:creating-node-configuration-files.html["Anweisungen zum Erstellen von Knotenkonfigurationsdateien"] .
+
+
+
+=== Beispiel für MAC-Klonen
+
+Beispiel für aktiviertes MAC-Klonen mit einem Host mit der MAC-Adresse 11:22:33:44:55:66 für die Schnittstelle ens256 und den folgenden Schlüsseln in der Knotenkonfigurationsdatei:
+
+* `ADMIN_NETWORK_TARGET = ens256`
+* `ADMIN_NETWORK_MAC = b2:9c:02:c2:27:10`
+* `ADMIN_NETWORK_TARGET_TYPE_INTERFACE_CLONE_MAC = true`
+
+
+*Ergebnis*: Die Host-MAC für ens256 ist b2:9c:02:c2:27:10 und die Admin-Netzwerk-MAC ist 11:22:33:44:55:66
+
+
+
+== Beispiel 1: 1-zu-1-Zuordnung zu physischen oder virtuellen NICs
+
+Beispiel 1 beschreibt eine einfache physische Schnittstellenzuordnung, die wenig oder keine Konfiguration auf der Hostseite erfordert.
+
+image::../media/rhel_install_vlan_diag_1.gif[Red Hat-Installations-VLAN-Diagramm]
+
+Das Linux-Betriebssystem erstellt die `ensXYZ` Schnittstellen automatisch während der Installation oder beim Booten oder wenn die Schnittstellen im laufenden Betrieb hinzugefügt werden. Es ist keine Konfiguration erforderlich, außer sicherzustellen, dass die Schnittstellen so eingestellt sind, dass sie nach dem Booten automatisch hochgefahren werden. Sie müssen feststellen, welche `ensXYZ` entspricht welchem ​​StorageGRID Netzwerk (Grid, Admin oder Client), sodass Sie später im Konfigurationsprozess die richtigen Zuordnungen angeben können.
+
+Beachten Sie, dass in der Abbildung mehrere StorageGRID -Knoten dargestellt sind. Normalerweise würden Sie diese Konfiguration jedoch für VMs mit einem einzelnen Knoten verwenden.
+
+Wenn Switch 1 ein physischer Switch ist, sollten Sie die mit den Schnittstellen 10G1 bis 10G3 verbundenen Ports für den Zugriffsmodus konfigurieren und sie in den entsprechenden VLANs platzieren.
+
+
+
+== Beispiel 2: LACP-Bindung mit VLANs
+
+.Informationen zu diesem Vorgang
+Beispiel 2 setzt voraus, dass Sie mit der Bündelung von Netzwerkschnittstellen und der Erstellung von VLAN-Schnittstellen auf der von Ihnen verwendeten Linux-Distribution vertraut sind.
+
+Beispiel 2 beschreibt ein generisches, flexibles, VLAN-basiertes Schema, das die gemeinsame Nutzung der gesamten verfügbaren Netzwerkbandbreite zwischen allen Knoten auf einem einzelnen Host ermöglicht.  Dieses Beispiel ist insbesondere auf Bare-Metal-Hosts anwendbar.
+
+Um dieses Beispiel zu verstehen, nehmen Sie an, dass Sie in jedem Rechenzentrum drei separate Subnetze für die Grid-, Admin- und Client-Netzwerke haben.  Die Subnetze befinden sich auf separaten VLANs (1001, 1002 und 1003) und werden dem Host auf einem LACP-gebundenen Trunk-Port (bond0) präsentiert.  Sie würden drei VLAN-Schnittstellen auf der Bindung konfigurieren: bond0.1001, bond0.1002 und bond0.1003.
+
+Wenn Sie separate VLANs und Subnetze für Knotennetzwerke auf demselben Host benötigen, können Sie VLAN-Schnittstellen auf der Bindung hinzufügen und sie dem Host zuordnen (in der Abbildung als bond0.1004 angezeigt).
+
+image::../media/rhel_install_vlan_diag_2.gif[Dieses Bild wird durch den umgebenden Text erklärt.]
+
+.Schritte
+. Fassen Sie alle physischen Netzwerkschnittstellen, die für die StorageGRID -Netzwerkkonnektivität verwendet werden, in einer einzigen LACP-Verbindung zusammen.
++
+Verwenden Sie für die Bindung auf jedem Host denselben Namen. Beispiel:  `bond0` .
+
+. Erstellen Sie VLAN-Schnittstellen, die diese Verbindung als ihr zugehöriges „physisches Gerät“ verwenden, und verwenden Sie dabei die Standard-Namenskonvention für VLAN-Schnittstellen. `physdev-name.VLAN ID` .
++
+Beachten Sie, dass für die Schritte 1 und 2 eine entsprechende Konfiguration der Edge-Switches erforderlich ist, die die anderen Enden der Netzwerkverbindungen abschließen.  Die Edge-Switch-Ports müssen außerdem in einem LACP-Port-Kanal zusammengefasst, als Trunk konfiguriert und für die Weitergabe aller erforderlichen VLANs zugelassen werden.
+
++
+Es werden Beispiel-Schnittstellenkonfigurationsdateien für dieses Netzwerkkonfigurationsschema pro Host bereitgestellt.
+
+
+
+.Ähnliche Informationen
+link:example-etc-sysconfig-network-scripts.html["Beispiel /etc/sysconfig/network-scripts"]

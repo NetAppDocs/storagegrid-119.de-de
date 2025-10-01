@@ -1,0 +1,33 @@
+---
+permalink: rhel/specifying-domain-name-system-server-information.html 
+sidebar: sidebar 
+keywords: how to specify domain name system, dns 
+summary: Sie müssen DNS-Informationen für Ihr StorageGRID -System angeben, damit Sie auf externe Server über Hostnamen statt über IP-Adressen zugreifen können. 
+---
+= DNS-Serverinformationen angeben
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Sie müssen DNS-Informationen für Ihr StorageGRID -System angeben, damit Sie auf externe Server über Hostnamen statt über IP-Adressen zugreifen können.
+
+.Informationen zu diesem Vorgang
+Festlegen https://docs.netapp.com/us-en/storagegrid-appliances/commonhardware/checking-dns-server-configuration.html["DNS-Serverinformationen"^] ermöglicht Ihnen die Verwendung von Fully Qualified Domain Name (FQDN)-Hostnamen anstelle von IP-Adressen für E-Mail-Benachrichtigungen und AutoSupport.
+
+Um einen ordnungsgemäßen Betrieb sicherzustellen, geben Sie zwei oder drei DNS-Server an.  Wenn Sie mehr als drei angeben, ist es möglich, dass aufgrund bekannter Betriebssystembeschränkungen auf einigen Plattformen nur drei verwendet werden.  Wenn in Ihrer Umgebung Routing-Einschränkungen bestehen, können Sielink:../maintain/modifying-dns-configuration-for-single-grid-node.html["Passen Sie die DNS-Serverliste an"] für einzelne Knoten (normalerweise alle Knoten an einem Standort), einen anderen Satz von bis zu drei DNS-Servern zu verwenden.
+
+Verwenden Sie nach Möglichkeit DNS-Server, auf die jeder Standort lokal zugreifen kann, um sicherzustellen, dass ein isolierter Standort die FQDNs für externe Ziele auflösen kann.
+
+.Schritte
+. Geben Sie im Textfeld *Server 1* die IPv4-Adresse für mindestens einen DNS-Server an.
+. Wählen Sie bei Bedarf das Pluszeichen neben dem letzten Eintrag aus, um weitere Servereinträge hinzuzufügen.
++
+image::../media/9_gmi_installer_dns_page.gif[Dieses Bild wird durch den umgebenden Text erklärt.]
+
++
+Die beste Vorgehensweise besteht darin, mindestens zwei DNS-Server anzugeben.  Sie können bis zu sechs DNS-Server angeben.
+
+. Wählen Sie *Weiter*.
+

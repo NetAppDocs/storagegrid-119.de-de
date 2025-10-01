@@ -1,0 +1,47 @@
+---
+permalink: audit/sade-security-audit-enable.html 
+sidebar: sidebar 
+keywords: storagegrid, audit, message, SADE, Security Audit Enable 
+summary: 'Diese Nachricht zeigt an, dass der ursprüngliche Dienst \(Knoten-ID\) die Protokollierung von Prüfnachrichten wiederhergestellt hat. Prüfnachrichten werden wieder erfasst und übermittelt.' 
+---
+= SADE: Sicherheitsaudit aktivieren
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Diese Nachricht zeigt an, dass der ursprüngliche Dienst (Knoten-ID) die Protokollierung von Prüfnachrichten wiederhergestellt hat. Prüfnachrichten werden wieder erfasst und übermittelt.
+
+[cols="1a,1a,4a"]
+|===
+| Code | Feld | Beschreibung 
+
+
+ a| 
+AETM
+ a| 
+Enable-Methode
+ a| 
+Die Methode, die zum Aktivieren der Prüfung verwendet wird.
+
+
+
+ a| 
+AEUN
+ a| 
+Benutzername
+ a| 
+Der Benutzername, der den Befehl zum Aktivieren der Überwachungsprotokollierung ausgeführt hat.
+
+
+
+ a| 
+RSLT
+ a| 
+Ergebnis
+ a| 
+Dieses Feld hat den Wert NONE.  RSLT ist ein obligatorisches Nachrichtenfeld, für diese Nachricht jedoch nicht relevant.  Damit diese Nachricht nicht gefiltert wird, wird NONE anstelle von SUCS verwendet.
+
+|===
+Die Meldung impliziert, dass die Protokollierung zuvor deaktiviert war (SADD), jetzt aber wiederhergestellt wurde.  Dies wird normalerweise nur während der Massenaufnahme verwendet, um die Systemleistung zu verbessern.  Nach der Massenaktivität wird die Überwachung wiederhergestellt und die Möglichkeit zum Deaktivieren der Überwachung dauerhaft blockiert.

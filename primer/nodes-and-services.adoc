@@ -1,0 +1,302 @@
+---
+permalink: primer/nodes-and-services.html 
+sidebar: sidebar 
+keywords: services, grid nodes, primary admin, storage, gateway 
+summary: Der grundlegende Baustein eines StorageGRID -Systems ist der Grid-Knoten.  Knoten enthalten Dienste, bei denen es sich um Softwaremodule handelt, die einem Grid-Knoten eine Reihe von Funktionen bereitstellen. 
+---
+= Netzknoten und Dienste
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Der grundlegende Baustein eines StorageGRID -Systems ist der Grid-Knoten.  Knoten enthalten Dienste, bei denen es sich um Softwaremodule handelt, die einem Grid-Knoten eine Reihe von Funktionen bereitstellen.
+
+
+
+== Arten von Gitterknoten
+
+Das StorageGRID -System verwendet vier Arten von Grid-Knoten:
+
+Admin-Knoten:: Bereitstellung von Verwaltungsdiensten wie Systemkonfiguration, Überwachung und Protokollierung.  Wenn Sie sich beim Grid Manager anmelden, stellen Sie eine Verbindung zu einem Admin-Knoten her.  Jedes Grid muss über einen primären Admin-Knoten verfügen und kann zur Redundanz über zusätzliche nicht-primäre Admin-Knoten verfügen. Sie können eine Verbindung zu jedem Admin-Knoten herstellen und jeder Admin-Knoten zeigt eine ähnliche Ansicht des StorageGRID Systems an.  Wartungsverfahren müssen jedoch mithilfe des primären Admin-Knotens durchgeführt werden.
++
+--
+Admin-Knoten können auch zum Lastenausgleich des S3-Client-Verkehrs verwendet werden.
+
+Sehenlink:what-admin-node-is.html["Was ist ein Admin-Knoten?"]
+
+--
+Speicherknoten:: Verwalten und speichern Sie Objektdaten und Metadaten.  Jeder Standort in Ihrem StorageGRID -System muss über mindestens drei Speicherknoten verfügen.
++
+--
+Sehenlink:what-storage-node-is.html["Was ist ein Speicherknoten?"]
+
+--
+Gateway-Knoten (optional):: Stellen Sie eine Lastausgleichsschnittstelle bereit, die Clientanwendungen zum Herstellen einer Verbindung mit StorageGRID verwenden können.  Ein Load Balancer leitet Clients nahtlos zu einem optimalen Speicherknoten weiter, sodass der Ausfall von Knoten oder sogar einer ganzen Site transparent ist.
++
+--
+Sehenlink:what-gateway-node-is.html["Was ist ein Gateway-Knoten?"]
+
+--
+
+
+
+
+== Hardware- und Softwareknoten
+
+StorageGRID Knoten können als StorageGRID Appliance-Knoten oder als softwarebasierte Knoten bereitgestellt werden.
+
+
+
+=== StorageGRID -Geräteknoten
+
+StorageGRID Hardwaregeräte sind speziell für die Verwendung in einem StorageGRID -System konzipiert.  Einige Geräte können als Speicherknoten verwendet werden.  Andere Appliances können als Admin-Knoten oder Gateway-Knoten verwendet werden.  Sie können Appliance-Knoten mit softwarebasierten Knoten kombinieren oder vollständig entwickelte Grids mit ausschließlich Appliances bereitstellen, die nicht von externen Hypervisoren, Speichern oder Computerhardware abhängig sind.
+
+Im Folgenden finden Sie Informationen zu den verfügbaren Geräten:
+
+* https://docs.netapp.com/us-en/storagegrid-appliances/["StorageGRID Appliance-Dokumentation"^]
+* https://hwu.netapp.com["NetApp Hardware Universe"^]
+
+
+
+
+=== Softwarebasierte Knoten
+
+Softwarebasierte Grid-Knoten können als virtuelle VMware-Maschinen oder innerhalb von Container-Engines auf einem Linux-Host bereitgestellt werden.
+
+* Virtuelle Maschine (VM) in VMware vSphere: Siehelink:../vmware/index.html["Installieren Sie StorageGRID auf VMware"] .
+* Innerhalb einer Container-Engine auf Red Hat Enterprise Linux: Siehelink:../rhel/index.html["Installieren Sie StorageGRID unter Red Hat Enterprise Linux"] .
+* Innerhalb einer Container-Engine auf Ubuntu oder Debian: Siehelink:../ubuntu/index.html["Installieren Sie StorageGRID unter Ubuntu oder Debian"] .
+
+
+Verwenden Sie die https://imt.netapp.com/matrix/#welcome["NetApp Interoperability Matrix Tool (IMT)"^] um die unterstützten Versionen zu ermitteln.
+
+Bei der Erstinstallation eines neuen softwarebasierten Storage Node können Sie festlegen, dass dieser nur fürlink:../primer/what-storage-node-is.html#types-of-storage-nodes["Metadaten speichern"] .
+
+
+
+== StorageGRID Dienste
+
+Nachfolgend finden Sie eine vollständige Liste der StorageGRID -Dienste.
+
+[cols="2a,3a,2a"]
+|===
+| Service | Beschreibung | Standort 
+
+
+ a| 
+Kontodienst-Weiterleitung
+ a| 
+Stellt eine Schnittstelle für den Load Balancer-Dienst bereit, um den Account-Dienst auf Remote-Hosts abzufragen, und sendet Benachrichtigungen über Konfigurationsänderungen des Load Balancer-Endpunkts an den Load Balancer-Dienst.
+ a| 
+Load Balancer-Dienst auf Admin-Knoten und Gateway-Knoten
+
+
+
+ a| 
+ADC (Administrativer Domänencontroller)
+ a| 
+Verwaltet Topologieinformationen, stellt Authentifizierungsdienste bereit und antwortet auf Anfragen der LDR- und CMN-Dienste.
+ a| 
+Mindestens drei Speicherknoten, die den ADC-Dienst an jedem Standort enthalten
+
+
+
+ a| 
+AMS (Audit-Management-System)
+ a| 
+Überwacht und protokolliert alle geprüften Systemereignisse und Transaktionen in einer Textprotokolldatei.
+ a| 
+Admin-Knoten
+
+
+
+ a| 
+Cassandra Reaper
+ a| 
+Führt automatische Reparaturen von Objektmetadaten durch.
+ a| 
+Speicherknoten
+
+
+
+ a| 
+Chunk-Dienst
+ a| 
+Verwaltet erasure-coded Daten und Paritätsfragmente.
+ a| 
+Speicherknoten
+
+
+
+ a| 
+CMN (Konfigurationsverwaltungsknoten)
+ a| 
+Verwaltet systemweite Konfigurationen und Grid-Aufgaben.  Jedes Grid verfügt über einen CMN-Dienst.
+ a| 
+Primärer Admin-Knoten
+
+
+
+ a| 
+DDS (Verteilter Datenspeicher)
+ a| 
+Schnittstellen mit der Cassandra-Datenbank zur Verwaltung von Objektmetadaten.
+ a| 
+Speicherknoten
+
+
+
+ a| 
+DMV (Datenverschieber)
+ a| 
+Verschiebt Daten zu Cloud-Endpunkten.
+ a| 
+Speicherknoten
+
+
+
+ a| 
+Dynamische IP (dynip)
+ a| 
+Überwacht das Grid auf dynamische IP-Änderungen und aktualisiert lokale Konfigurationen.
+ a| 
+Alle Knoten
+
+
+
+ a| 
+Grafana
+ a| 
+Wird zur Visualisierung von Metriken im Grid Manager verwendet.
+ a| 
+Admin-Knoten
+
+
+
+ a| 
+Hohe Verfügbarkeit
+ a| 
+Verwaltet hochverfügbare virtuelle IPs auf Knoten, die auf der Seite „Hochverfügbarkeitsgruppen“ konfiguriert sind.  Dieser Dienst wird auch als Keepalived-Dienst bezeichnet.
+ a| 
+Admin- und Gateway-Knoten
+
+
+
+ a| 
+Identität (idnt)
+ a| 
+Föderiert Benutzeridentitäten aus LDAP und Active Directory.
+ a| 
+Speicherknoten, die den ADC-Dienst verwenden
+
+
+
+ a| 
+Lambda-Schiedsrichter
+ a| 
+Verwaltet S3 Select SelectObjectContent-Anfragen.
+ a| 
+Alle Knoten
+
+
+
+ a| 
+Lastenausgleich (nginx-gw)
+ a| 
+Bietet Lastausgleich des S3-Verkehrs von Clients zu Speicherknoten.  Der Load Balancer-Dienst kann über die Konfigurationsseite „Load Balancer-Endpunkte“ konfiguriert werden.  Dieser Dienst ist auch als nginx-gw-Dienst bekannt.
+ a| 
+Admin- und Gateway-Knoten
+
+
+
+ a| 
+LDR (Lokaler Verteilungsrouter)
+ a| 
+Verwaltet die Speicherung und Übertragung von Inhalten innerhalb des Grids.
+ a| 
+Speicherknoten
+
+
+
+ a| 
+MISCd Information Service Control Daemon
+ a| 
+Bietet eine Schnittstelle zum Abfragen und Verwalten von Diensten auf anderen Knoten und zum Verwalten von Umgebungskonfigurationen auf dem Knoten, z. B. zum Abfragen des Status von Diensten, die auf anderen Knoten ausgeführt werden.
+ a| 
+Alle Knoten
+
+
+
+ a| 
+nginx
+ a| 
+Fungiert als Authentifizierungs- und sicherer Kommunikationsmechanismus für verschiedene Grid-Dienste (wie Prometheus und Dynamic IP), um über HTTPS-APIs mit Diensten auf anderen Knoten kommunizieren zu können.
+ a| 
+Alle Knoten
+
+
+
+ a| 
+nginx-gw
+ a| 
+Unterstützt den Load Balancer-Dienst.
+ a| 
+Admin- und Gateway-Knoten
+
+
+
+ a| 
+NMS (Netzwerkmanagementsystem)
+ a| 
+Unterstützt die Überwachungs-, Berichts- und Konfigurationsoptionen, die über den Grid Manager angezeigt werden.
+ a| 
+Admin-Knoten
+
+
+
+ a| 
+Persistenz
+ a| 
+Verwaltet Dateien auf der Root-Festplatte, die nach einem Neustart erhalten bleiben müssen.
+ a| 
+Alle Knoten
+
+
+
+ a| 
+Prometheus
+ a| 
+Sammelt Zeitreihenmetriken von Diensten auf allen Knoten.
+ a| 
+Admin-Knoten
+
+
+
+ a| 
+RSM (Replizierte Zustandsmaschine)
+ a| 
+Stellt sicher, dass Plattformdienstanfragen an die jeweiligen Endpunkte gesendet werden.
+ a| 
+Speicherknoten, die den ADC-Dienst verwenden
+
+
+
+ a| 
+SSM (Server Status Monitor)
+ a| 
+Überwacht den Zustand der Hardware und meldet ihn an den NMS-Dienst.
+ a| 
+Auf jedem Grid-Knoten ist eine Instanz vorhanden
+
+
+
+ a| 
+Spurensammler
+ a| 
+Führt eine Ablaufverfolgung durch, um Informationen für den technischen Support zu sammeln.  Der Trace-Collector-Dienst verwendet die Open-Source-Software von Jaeger.
+ a| 
+Admin-Knoten
+
+|===

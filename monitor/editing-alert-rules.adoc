@@ -1,0 +1,121 @@
+---
+permalink: monitor/editing-alert-rules.html 
+sidebar: sidebar 
+keywords: how to edit alert rules 
+summary: Sie können eine Warnregel bearbeiten, um die Auslösebedingungen zu ändern. Bei einer benutzerdefinierten Warnregel können Sie auch den Regelnamen, die Beschreibung und die empfohlenen Aktionen aktualisieren. 
+---
+= Alarmregeln bearbeiten
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Sie können eine Warnregel bearbeiten, um die Auslösebedingungen zu ändern. Bei einer benutzerdefinierten Warnregel können Sie auch den Regelnamen, die Beschreibung und die empfohlenen Aktionen aktualisieren.
+
+.Bevor Sie beginnen
+* Sie sind beim Grid Manager angemeldet mit einemlink:../admin/web-browser-requirements.html["unterstützter Webbrowser"] .
+* Sie haben dielink:../admin/admin-group-permissions.html["Verwalten von Warnungen oder Root-Zugriffsberechtigungen"] .
+
+
+.Informationen zu diesem Vorgang
+Wenn Sie eine Standardwarnregel bearbeiten, können Sie die Bedingungen für geringfügige, schwerwiegende und kritische Warnungen sowie die Dauer ändern.  Wenn Sie eine benutzerdefinierte Warnregel bearbeiten, können Sie auch den Namen, die Beschreibung und die empfohlenen Aktionen der Regel bearbeiten.
+
+
+CAUTION: Seien Sie vorsichtig, wenn Sie sich entscheiden, eine Warnregel zu bearbeiten.  Wenn Sie Triggerwerte ändern, erkennen Sie ein zugrunde liegendes Problem möglicherweise erst, wenn es die Ausführung eines kritischen Vorgangs verhindert.
+
+.Schritte
+. Wählen Sie *WARNUNGEN* > *Regeln*.
++
+Die Seite „Warnregeln“ wird angezeigt.
+
+. Wählen Sie das Optionsfeld für die Warnregel aus, die Sie bearbeiten möchten.
+. Wählen Sie *Regel bearbeiten*.
++
+Das Dialogfeld „Regel bearbeiten“ wird angezeigt.  Dieses Beispiel zeigt eine Standardwarnregel – die Felder „Eindeutiger Name“, „Beschreibung“ und „Empfohlene Aktionen“ sind deaktiviert und können nicht bearbeitet werden.
+
++
+image::../media/alert_rules_edit_rule.png[Warnungen > Regel bearbeiten]
+
+. Aktivieren oder deaktivieren Sie das Kontrollkästchen *Aktiviert*, um festzustellen, ob diese Warnregel derzeit aktiviert ist.
++
+Wenn eine Warnregel deaktiviert ist, werden ihre Ausdrücke nicht ausgewertet und es werden keine Warnmeldungen ausgelöst.
+
++
+
+NOTE: Wenn Sie die Warnregel für eine aktuelle Warnmeldung deaktivieren, müssen Sie einige Minuten warten, bis die Warnmeldung nicht mehr als aktive Warnmeldung angezeigt wird.
+
++
+
+CAUTION: Im Allgemeinen wird das Deaktivieren einer Standardwarnregel nicht empfohlen.  Wenn eine Warnregel deaktiviert ist, erkennen Sie ein zugrunde liegendes Problem möglicherweise erst, wenn es die Ausführung eines kritischen Vorgangs verhindert.
+
+. Aktualisieren Sie für benutzerdefinierte Warnregeln die folgenden Informationen nach Bedarf.
++
+
+NOTE: Sie können diese Informationen für Standardwarnregeln nicht bearbeiten.
+
++
+[cols="1a,2a"]
+|===
+| Feld | Beschreibung 
+
+
+ a| 
+Eindeutiger Name
+ a| 
+Ein eindeutiger Name für diese Regel.  Der Name der Warnregel wird auf der Seite „Warnungen“ angezeigt und ist auch der Betreff für E-Mail-Benachrichtigungen.  Namen für Warnregeln können zwischen 1 und 64 Zeichen lang sein.
+
+
+
+ a| 
+Beschreibung
+ a| 
+Eine Beschreibung des auftretenden Problems.  Die Beschreibung ist die Warnmeldung, die auf der Warnseite und in E-Mail-Benachrichtigungen angezeigt wird.  Beschreibungen für Warnregeln können zwischen 1 und 128 Zeichen lang sein.
+
+
+
+ a| 
+Empfohlene Maßnahmen
+ a| 
+Optional die empfohlenen Maßnahmen, die ergriffen werden sollen, wenn diese Warnung ausgelöst wird.  Geben Sie empfohlene Aktionen als einfachen Text ein (keine Formatierungscodes).  Empfohlene Aktionen für Warnregeln können zwischen 0 und 1.024 Zeichen lang sein.
+
+|===
+. Geben Sie im Abschnitt „Bedingungen“ den Prometheus-Ausdruck für einen oder mehrere Schweregrade der Warnung ein oder aktualisieren Sie ihn.
++
+
+NOTE: Wenn Sie eine Bedingung für eine bearbeitete Standardwarnregel auf ihren ursprünglichen Wert zurücksetzen möchten, wählen Sie die drei Punkte rechts neben der geänderten Bedingung aus.
+
++
+image::../media/alert_rules_edit_revert_to_default.png[Warnregeln: Zurücksetzen einer bearbeiteten Bedingung auf den Standardwert]
+
++
+
+NOTE: Wenn Sie die Bedingungen für eine aktuelle Warnung aktualisieren, werden Ihre Änderungen möglicherweise erst implementiert, wenn die vorherige Bedingung behoben ist.  Wenn das nächste Mal eine der Bedingungen für die Regel erfüllt ist, spiegelt die Warnung die aktualisierten Werte wider.
+
++
+Ein einfacher Ausdruck hat normalerweise die Form:
+
++
+`[metric] [operator] [value]`
+
++
+Ausdrücke können beliebig lang sein, werden in der Benutzeroberfläche jedoch in einer einzigen Zeile angezeigt.  Mindestens ein Ausdruck ist erforderlich.
+
++
+Dieser Ausdruck bewirkt, dass eine Warnung ausgelöst wird, wenn die Menge des installierten RAM für einen Knoten weniger als 24.000.000.000 Byte (24 GB) beträgt.
+
++
+`node_memory_MemTotal_bytes < 24000000000`
+
+. Geben Sie im Feld *Dauer* die Zeitspanne ein, die eine Bedingung kontinuierlich wirksam bleiben muss, bevor der Alarm ausgelöst wird, und wählen Sie die Zeiteinheit aus.
++
+Um sofort einen Alarm auszulösen, wenn eine Bedingung erfüllt wird, geben Sie *0* ein.  Erhöhen Sie diesen Wert, um zu verhindern, dass vorübergehende Bedingungen Warnungen auslösen.
+
++
+Der Standardwert beträgt 5 Minuten.
+
+. Wählen Sie *Speichern*.
++
+Wenn Sie eine Standardwarnregel bearbeitet haben, wird *Standard** in der Spalte Typ angezeigt.  Wenn Sie eine standardmäßige oder benutzerdefinierte Warnregel deaktiviert haben, wird in der Spalte *Status* *Deaktiviert* angezeigt.
+
+

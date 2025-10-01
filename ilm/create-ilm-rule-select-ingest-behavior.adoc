@@ -1,0 +1,43 @@
+---
+permalink: ilm/create-ilm-rule-select-ingest-behavior.html 
+sidebar: sidebar 
+keywords: ilm rule step 3, define ingest behavior 
+summary: 'In Schritt 3 (Aufnahmeverhalten auswählen) des Assistenten „ILM-Regel erstellen“ können Sie auswählen, wie die durch diese Regel gefilterten Objekte bei der Aufnahme geschützt werden.' 
+---
+= Schritt 3 von 3: Aufnahmeverhalten auswählen
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Im Schritt *Aufnahmeverhalten auswählen* des Assistenten „ILM-Regel erstellen“ können Sie auswählen, wie die durch diese Regel gefilterten Objekte bei der Aufnahme geschützt werden.
+
+.Informationen zu diesem Vorgang
+StorageGRID kann Zwischenkopien erstellen und die Objekte für eine spätere ILM-Auswertung in die Warteschlange stellen oder Kopien erstellen, um die Platzierungsanweisungen der Regel sofort zu erfüllen.
+
+.Schritte
+. Wählen Sie dielink:data-protection-options-for-ingest.html["Aufnahmeverhalten"] zu verwenden.
++
+Weitere Informationen finden Sie unter link:advantages-disadvantages-of-ingest-options.html["Vorteile, Nachteile und Einschränkungen der Aufnahmeoptionen"] .
+
++
+[NOTE]
+====
+Sie können die Option „Ausgewogen“ oder „Streng“ nicht verwenden, wenn die Regel eine dieser Platzierungen verwendet:
+
+** Ein Cloud-Speicherpool am Tag 0
+** Ein Cloud-Speicherpool, wenn die Regel eine benutzerdefinierte Erstellungszeit als Referenzzeit verwendet
+
+
+Sehen link:example-5-ilm-rules-and-policy-for-strict-ingest-behavior.html["Beispiel 5: ILM-Regeln und -Richtlinien für striktes Aufnahmeverhalten"] .
+
+====
+. Wählen Sie *Erstellen*.
++
+Die ILM-Regel wird erstellt.  Die Regel wird erst aktiv, wenn sie zu einemlink:creating-ilm-policy.html["ILM-Richtlinie"] und diese Richtlinie ist aktiviert.
+
++
+Um die Details der Regel anzuzeigen, wählen Sie den Namen der Regel auf der ILM-Regelseite aus.
+
+

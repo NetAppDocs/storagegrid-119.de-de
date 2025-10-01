@@ -1,0 +1,25 @@
+---
+permalink: upgrade/changes-to-tenant-management-api.html 
+sidebar: sidebar 
+keywords: tenant management api, api, api version, swagger, rest api 
+summary: StorageGRID 11.9 verwendet Version 4 der Tenant Management API. Version 4 macht Version 3 veraltet; die Versionen 1, 2 und 3 werden jedoch weiterhin unterstützt. 
+---
+= Änderungen an der Tenant Management API
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+StorageGRID 11.9 verwendet Version 4 der Tenant Management API. Version 4 macht Version 3 veraltet; die Versionen 1, 2 und 3 werden jedoch weiterhin unterstützt.
+
+
+NOTE: Sie können veraltete Versionen der Tenant Management API weiterhin mit StorageGRID 11.9 verwenden. Die Unterstützung für diese Versionen der API wird jedoch in einer zukünftigen Version von StorageGRID entfernt. Nach dem Upgrade auf StorageGRID 11.9 können Sie die veralteten APIs deaktivieren, indem Sie die `PUT /grid/config/management` API.
+
+Weitere Informationen finden Sie unterlink:../tenant/understanding-tenant-management-api.html["Die Tenant Management API verstehen"] .
+
+
+
+== Neue API für Bucket-Kapazitätslimit
+
+Sie können die `/org/containers/{bucketName}/quota-object-bytes` API mit GET/PUT-Operationen zum Abrufen und Festlegen des Speicherkapazitätslimits für einen Bucket.

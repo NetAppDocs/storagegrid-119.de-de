@@ -1,0 +1,22 @@
+---
+permalink: admin/managing-storage-nodes.html 
+sidebar: sidebar 
+keywords: storage nodes, what is a storage node 
+summary: Speicherknoten stellen Festplattenspeicherkapazität und -dienste bereit.  Die Verwaltung von Speicherknoten umfasst die Überwachung der Menge des nutzbaren Speicherplatzes auf jedem Knoten, die Verwendung von Wasserzeicheneinstellungen und die Anwendung von Speicherknoten-Konfigurationseinstellungen. 
+---
+= Speicherknoten verwalten
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Speicherknoten stellen Festplattenspeicherkapazität und -dienste bereit.  Die Verwaltung von Speicherknoten umfasst Folgendes:
+
+* Verwalten von Speicheroptionen
+* Verstehen, was Speichervolumen-Wasserzeichen sind und wie Sie mithilfe von Wasserzeichen-Überschreibungen steuern können, wann Speicherknoten schreibgeschützt werden.
+* Überwachung und Verwaltung des für Objektmetadaten verwendeten Speicherplatzes
+* Konfigurieren globaler Einstellungen für gespeicherte Objekte
+* Anwenden der Storage Node-Konfigurationseinstellungen
+* Verwalten vollständiger Speicherknoten
+

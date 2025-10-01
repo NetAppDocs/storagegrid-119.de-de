@@ -1,0 +1,197 @@
+---
+permalink: admin/configure-autosupport-grid-manager.html 
+sidebar: sidebar 
+keywords: how to configure autosupport, what is autosupport-on-demand 
+summary: Standardmäßig ist die StorageGRID AutoSupport Funktion aktiviert, wenn Sie StorageGRID zum ersten Mal installieren.  Sie müssen jedoch die Hardware AutoSupport auf jedem Gerät konfigurieren.  Bei Bedarf können Sie die AutoSupport Konfiguration ändern. 
+---
+= Konfigurieren Sie AutoSupport
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Standardmäßig ist die StorageGRID AutoSupport Funktion aktiviert, wenn Sie StorageGRID zum ersten Mal installieren.  Sie müssen jedoch die Hardware AutoSupport auf jedem Gerät konfigurieren.  Bei Bedarf können Sie die AutoSupport Konfiguration ändern.
+
+Wenn Sie die Konfiguration von StorageGRID AutoSupport ändern möchten, nehmen Sie Ihre Änderungen nur am primären Admin-Knoten vor.  Sie müssen<<autosupport-for-appliances,Konfigurieren Sie die AutoSupport Hardware>> auf jedem Gerät.
+
+.Bevor Sie beginnen
+* Sie sind beim Grid Manager angemeldet mit einemlink:../admin/web-browser-requirements.html["unterstützter Webbrowser"] .
+* Sie haben dielink:admin-group-permissions.html["Root-Zugriffsberechtigung"] .
+* Wenn Sie HTTPS zum Senden von AutoSupport Paketen verwenden, haben Sie ausgehenden Internetzugriff auf den primären Admin-Knoten bereitgestellt, entweder direkt oderlink:configuring-admin-proxy-settings.html["Verwendung eines Proxyservers"] (eingehende Verbindungen nicht erforderlich).
+* Wenn HTTP auf der StorageGRID AutoSupport Seite ausgewählt ist, haben Sielink:configuring-admin-proxy-settings.html["einen Proxy-Server konfiguriert"] um AutoSupport -Pakete als HTTPS weiterzuleiten.  Die AutoSupport -Server von NetApp lehnen per HTTP gesendete Pakete ab.
+* Wenn Sie SMTP als Protokoll für AutoSupport Pakete verwenden, haben Sie einen SMTP-Mailserver konfiguriert.
+
+
+.Informationen zu diesem Vorgang
+Sie können eine beliebige Kombination der folgenden Optionen verwenden, um AutoSupport -Pakete an den technischen Support zu senden:
+
+* *Wöchentlich*: Senden Sie automatisch einmal pro Woche AutoSupport -Pakete.  Standardeinstellung: Aktiviert.
+* *Ereignisgesteuert*: Senden Sie AutoSupport Pakete automatisch jede Stunde oder wenn wichtige Systemereignisse auftreten.  Standardeinstellung: Aktiviert.
+* *Auf Anfrage*: Erlauben Sie dem technischen Support, Ihr StorageGRID -System aufzufordern, automatisch AutoSupport Pakete zu senden. Dies ist nützlich, wenn aktiv an einem Problem gearbeitet wird (erfordert das HTTPS- AutoSupport Übertragungsprotokoll).  Standardeinstellung: Deaktiviert.
+* *Vom Benutzer ausgelöst*: Senden Sie AutoSupport Pakete jederzeit manuell.
+
+
+
+
+== [[specify-protocol-for-autosupport-packages]]Geben Sie das Protokoll für AutoSupport Pakete an
+
+Sie können zum Senden von AutoSupport -Paketen eines der folgenden Protokolle verwenden:
+
+* *HTTPS*: Dies ist die Standardeinstellung und wird für Neuinstallationen empfohlen.  Dieses Protokoll verwendet Port 443.  Wenn Sie wollen<<Aktivieren Sie AutoSupport on Demand,Aktivieren Sie die AutoSupport on Demand-Funktion>> , müssen Sie HTTPS verwenden.
+* *HTTP*: Wenn Sie HTTP auswählen, müssen Sie einen Proxyserver konfigurieren, um AutoSupport Pakete als HTTPS weiterzuleiten.  Die AutoSupport -Server von NetApp lehnen per HTTP gesendete Pakete ab.  Dieses Protokoll verwendet Port 80.
+* *SMTP*: Verwenden Sie diese Option, wenn Sie AutoSupport Pakete per E-Mail versenden möchten.
+
+
+Das von Ihnen festgelegte Protokoll wird zum Senden aller Arten von AutoSupport Paketen verwendet.
+
+.Schritte
+. Wählen Sie *SUPPORT* > *Tools* > * AutoSupport* > *Einstellungen*.
+. Wählen Sie das Protokoll aus, das Sie zum Senden von AutoSupport -Paketen verwenden möchten.
+. Wenn Sie *HTTPS* ausgewählt haben, wählen Sie aus, ob ein NetApp -Supportzertifikat (TLS-Zertifikat) verwendet werden soll, um die Verbindung zum technischen Supportserver zu sichern.
++
+** *Zertifikat überprüfen* (Standard): Stellt sicher, dass die Übertragung von AutoSupport -Paketen sicher ist.  Das NetApp -Support-Zertifikat ist bereits mit der StorageGRID -Software installiert.
+** *Zertifikat nicht überprüfen*: Wählen Sie diese Option nur aus, wenn Sie einen guten Grund haben, die Zertifikatsüberprüfung nicht zu verwenden, beispielsweise wenn ein vorübergehendes Problem mit einem Zertifikat vorliegt.
+
+
+. Wählen Sie *Speichern*. Alle wöchentlichen, benutzer- und ereignisgesteuerten Pakete werden mit dem ausgewählten Protokoll gesendet.
+
+
+
+
+== Wöchentlichen AutoSupport deaktivieren
+
+Standardmäßig ist das StorageGRID -System so konfiguriert, dass einmal pro Woche ein AutoSupport Paket an den technischen Support gesendet wird.
+
+Um zu bestimmen, wann das wöchentliche AutoSupport Paket gesendet wird, gehen Sie zur Registerkarte * AutoSupport* > *Ergebnisse*.  Sehen Sie sich im Abschnitt *Wöchentlicher AutoSupport* den Wert für *Nächster geplanter Zeitpunkt* an.
+
+Sie können das automatische Senden wöchentlicher AutoSupport Pakete jederzeit deaktivieren.
+
+.Schritte
+. Wählen Sie *SUPPORT* > *Tools* > * AutoSupport* > *Einstellungen*.
+. Deaktivieren Sie das Kontrollkästchen *Wöchentlichen AutoSupport aktivieren*.
+. Wählen Sie *Speichern*.
+
+
+
+
+== Deaktivieren Sie ereignisgesteuerten AutoSupport
+
+Standardmäßig ist das StorageGRID -System so konfiguriert, dass stündlich ein AutoSupport -Paket an den technischen Support gesendet wird.
+
+Sie können den ereignisgesteuerten AutoSupport jederzeit deaktivieren.
+
+.Schritte
+. Wählen Sie *SUPPORT* > *Tools* > * AutoSupport* > *Einstellungen*.
+. Deaktivieren Sie das Kontrollkästchen *Ereignisgesteuerten AutoSupport aktivieren*.
+. Wählen Sie *Speichern*.
+
+
+
+
+== Aktivieren Sie AutoSupport on Demand
+
+AutoSupport on Demand kann bei der Lösung von Problemen helfen, an denen der technische Support aktiv arbeitet.
+
+Standardmäßig ist AutoSupport on Demand deaktiviert.  Durch Aktivieren dieser Funktion kann der technische Support anfordern, dass Ihr StorageGRID -System automatisch AutoSupport Pakete sendet.  Der technische Support kann auch das Abfragezeitintervall für AutoSupport on Demand-Abfragen festlegen.
+
+Der technische Support kann AutoSupport on Demand nicht aktivieren oder deaktivieren.
+
+.Schritte
+. Wählen Sie *SUPPORT* > *Tools* > * AutoSupport* > *Einstellungen*.
+. Wählen Sie *HTTPS* als Protokoll aus.
+. Aktivieren Sie das Kontrollkästchen *Wöchentlichen AutoSupport aktivieren*.
+. Aktivieren Sie das Kontrollkästchen * AutoSupport on Demand aktivieren*.
+. Wählen Sie *Speichern*.
++
+AutoSupport on Demand ist aktiviert und der technische Support kann AutoSupport on Demand-Anfragen an StorageGRID senden.
+
+
+
+
+
+== Deaktivieren Sie die Suche nach Softwareupdates
+
+Standardmäßig kontaktiert StorageGRID NetApp , um festzustellen, ob Software-Updates für Ihr System verfügbar sind.  Wenn ein StorageGRID Hotfix oder eine neue Version verfügbar ist, wird die neue Version auf der StorageGRID Upgradeseite angezeigt.
+
+Bei Bedarf können Sie die Suche nach Software-Updates optional deaktivieren.  Wenn Ihr System beispielsweise keinen WAN-Zugriff hat, sollten Sie die Prüfung deaktivieren, um Downloadfehler zu vermeiden.
+
+.Schritte
+. Wählen Sie *SUPPORT* > *Tools* > * AutoSupport* > *Einstellungen*.
+. Deaktivieren Sie das Kontrollkästchen *Nach Software-Updates suchen*.
+. Wählen Sie *Speichern*.
+
+
+
+
+== Fügen Sie ein zusätzliches AutoSupport Ziel hinzu
+
+Wenn Sie AutoSupport aktivieren, werden Gesundheits- und Statuspakete an den technischen Support gesendet.  Sie können ein zusätzliches Ziel für alle AutoSupport Pakete angeben.
+
+Um das zum Senden von AutoSupport Paketen verwendete Protokoll zu überprüfen oder zu ändern, lesen Sie die Anweisungen zu<<specify-protocol-for-autosupport-packages,Geben Sie das Protokoll für AutoSupport -Pakete an>> .
+
+
+NOTE: Sie können das SMTP-Protokoll nicht verwenden, um AutoSupport Pakete an ein zusätzliches Ziel zu senden.
+
+.Schritte
+. Wählen Sie *SUPPORT* > *Tools* > * AutoSupport* > *Einstellungen*.
+. Wählen Sie *Zusätzliches AutoSupport Ziel aktivieren*.
+. Geben Sie Folgendes an:
++
+Hostname:: Der Server-Hostname oder die IP-Adresse eines zusätzlichen AutoSupport Zielservers.
++
+--
+
+NOTE: Sie können nur ein weiteres Ziel eingeben.
+
+--
+Hafen:: Der Port, der für die Verbindung mit einem zusätzlichen AutoSupport Zielserver verwendet wird.  Der Standard ist Port 80 für HTTP oder Port 443 für HTTPS.
+Zertifikatsvalidierung:: Ob ein TLS-Zertifikat verwendet wird, um die Verbindung zum zusätzlichen Ziel zu sichern.
++
+--
+** Wählen Sie *Zertifikat überprüfen*, um die Zertifikatsvalidierung zu verwenden.
+** Wählen Sie *Zertifikat nicht überprüfen*, um Ihre AutoSupport -Pakete ohne Zertifikatsvalidierung zu senden.
++
+Wählen Sie diese Option nur aus, wenn Sie einen guten Grund haben, die Zertifikatsvalidierung nicht zu verwenden, beispielsweise wenn ein vorübergehendes Problem mit einem Zertifikat vorliegt.
+
+
+
+--
+
+
+. Wenn Sie *Zertifikat überprüfen* ausgewählt haben, gehen Sie wie folgt vor:
++
+.. Navigieren Sie zum Speicherort des CA-Zertifikats.
+.. Laden Sie die CA-Zertifikatsdatei hoch.
++
+Die Metadaten des CA-Zertifikats werden angezeigt.
+
+
+
+. Wählen Sie *Speichern*.
++
+Alle zukünftigen wöchentlichen, ereignis- und benutzergesteuerten AutoSupport Pakete werden an das zusätzliche Ziel gesendet.
+
+
+
+
+
+== [[autosupport-for-appliances]] AutoSupport für Appliances konfigurieren
+
+AutoSupport für Appliances meldet StorageGRID Hardwareprobleme und StorageGRID AutoSupport meldet StorageGRID -Softwareprobleme, mit einer Ausnahme: Für SGF6112 meldet StorageGRID AutoSupport sowohl Hardware- als auch Softwareprobleme.  Sie müssen AutoSupport auf jedem Gerät konfigurieren, mit Ausnahme des SGF6112, für das keine zusätzliche Konfiguration erforderlich ist.  AutoSupport wird für Service-Appliances und Speicher-Appliances unterschiedlich implementiert.
+
+Sie verwenden SANtricity , um AutoSupport für jedes Speichergerät zu aktivieren.  Sie können SANtricity AutoSupport während der Ersteinrichtung der Appliance oder nach der Installation einer Appliance konfigurieren:
+
+* Für SG6000- und SG5700-Geräte, https://docs.netapp.com/us-en/storagegrid-appliances/installconfig/accessing-and-configuring-santricity-system-manager.html["AutoSupport im SANtricity System Manager konfigurieren"^]
+
+
+AutoSupport -Pakete von E-Series-Geräten können in StorageGRID AutoSupport aufgenommen werden, wenn Sie die AutoSupport -Bereitstellung per Proxy in konfigurierenlink:../admin/sending-eseries-autosupport-messages-through-storagegrid.html["SANtricity Systemmanager"] .
+
+StorageGRID AutoSupport meldet keine Hardwareprobleme wie DIMM- oder Host Interface Card (HIC)-Fehler.  Allerdings können einige Komponentenfehlerlink:../monitor/alerts-reference.html["Hardwarewarnungen"] .  Für StorageGRID -Geräte mit einem Baseboard Management Controller (BMC) können Sie E-Mail- und SNMP-Traps konfigurieren, um Hardwarefehler zu melden:
+
+* https://docs.netapp.com/us-en/storagegrid-appliances/installconfig/setting-up-email-notifications-for-alerts.html["E-Mail-Benachrichtigungen für BMC -Warnmeldungen einrichten"^]
+* https://docs.netapp.com/us-en/storagegrid-appliances/installconfig/configuring-snmp-settings-for-bmc.html["Konfigurieren Sie die SNMP-Einstellungen für BMC"^]
+
+
+.Ähnliche Informationen
+https://mysupport.netapp.com/site/global/dashboard["NetApp Support"^]

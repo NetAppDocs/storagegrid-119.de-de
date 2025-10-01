@@ -1,0 +1,378 @@
+---
+permalink: s3/error-responses.html 
+sidebar: sidebar 
+keywords: error, error responses 
+summary: Das StorageGRID -System unterstützt alle zutreffenden Standardfehlerantworten der S3 REST-API.  Darüber hinaus fügt die StorageGRID -Implementierung mehrere benutzerdefinierte Antworten hinzu. 
+---
+= Fehlerantworten
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Das StorageGRID -System unterstützt alle zutreffenden Standardfehlerantworten der S3 REST-API.  Darüber hinaus fügt die StorageGRID -Implementierung mehrere benutzerdefinierte Antworten hinzu.
+
+
+
+== Unterstützte S3-API-Fehlercodes
+
+[cols="1a,1a"]
+|===
+| Name | HTTP-Status 
+
+
+ a| 
+Zugriff verweigert
+ a| 
+403 Verboten
+
+
+
+ a| 
+BadDigest
+ a| 
+400 Ungültige Anfrage
+
+
+
+ a| 
+BucketExistsAlready
+ a| 
+409 Konflikt
+
+
+
+ a| 
+EimerNichtLeer
+ a| 
+409 Konflikt
+
+
+
+ a| 
+Unvollständiger Körper
+ a| 
+400 Ungültige Anfrage
+
+
+
+ a| 
+Interner Fehler
+ a| 
+500 Interner Serverfehler
+
+
+
+ a| 
+Ungültige Zugriffsschlüssel-ID
+ a| 
+403 Verboten
+
+
+
+ a| 
+Ungültiges Argument
+ a| 
+400 Ungültige Anfrage
+
+
+
+ a| 
+Ungültiger BucketName
+ a| 
+400 Ungültige Anfrage
+
+
+
+ a| 
+Ungültiger BucketState
+ a| 
+409 Konflikt
+
+
+
+ a| 
+InvalidDigest
+ a| 
+400 Ungültige Anfrage
+
+
+
+ a| 
+Fehler „Ungültiger Verschlüsselungsalgorithmus“
+ a| 
+400 Ungültige Anfrage
+
+
+
+ a| 
+UngültigesTeil
+ a| 
+400 Ungültige Anfrage
+
+
+
+ a| 
+UngültigeTeilebestellung
+ a| 
+400 Ungültige Anfrage
+
+
+
+ a| 
+Ungültiger Bereich
+ a| 
+416 Angeforderter Bereich nicht erfüllbar
+
+
+
+ a| 
+Ungültige Anfrage
+ a| 
+400 Ungültige Anfrage
+
+
+
+ a| 
+Ungültige Speicherklasse
+ a| 
+400 Ungültige Anfrage
+
+
+
+ a| 
+Ungültiges Tag
+ a| 
+400 Ungültige Anfrage
+
+
+
+ a| 
+Ungültige URI
+ a| 
+400 Ungültige Anfrage
+
+
+
+ a| 
+Schlüssel zu lang
+ a| 
+400 Ungültige Anfrage
+
+
+
+ a| 
+MalformedXML
+ a| 
+400 Ungültige Anfrage
+
+
+
+ a| 
+Metadaten zu groß
+ a| 
+400 Ungültige Anfrage
+
+
+
+ a| 
+MethodeNichtZulässig
+ a| 
+405 Methode nicht zulässig
+
+
+
+ a| 
+MissingContentLength
+ a| 
+411 Erforderliche Länge
+
+
+
+ a| 
+MissingRequestBodyError
+ a| 
+400 Ungültige Anfrage
+
+
+
+ a| 
+MissingSecurityHeader
+ a| 
+400 Ungültige Anfrage
+
+
+
+ a| 
+KeinSuchBucket
+ a| 
+404 Nicht gefunden
+
+
+
+ a| 
+NoSuchKey
+ a| 
+404 Nicht gefunden
+
+
+
+ a| 
+NoSuchUpload
+ a| 
+404 Nicht gefunden
+
+
+
+ a| 
+Nicht implementiert
+ a| 
+501 Nicht implementiert
+
+
+
+ a| 
+NoSuchBucketPolicy
+ a| 
+404 Nicht gefunden
+
+
+
+ a| 
+ObjectLockConfigurationNotFoundError
+ a| 
+404 Nicht gefunden
+
+
+
+ a| 
+Vorbedingung fehlgeschlagen
+ a| 
+412 Vorbedingung fehlgeschlagen
+
+
+
+ a| 
+RequestTimeTooSkewed
+ a| 
+403 Verboten
+
+
+
+ a| 
+Dienst nicht verfügbar
+ a| 
+503 Dienst nicht verfügbar
+
+
+
+ a| 
+Signatur stimmt nicht überein
+ a| 
+403 Verboten
+
+
+
+ a| 
+Zu viele Eimer
+ a| 
+400 Ungültige Anfrage
+
+
+
+ a| 
+Benutzerschlüssel muss angegeben werden
+ a| 
+400 Ungültige Anfrage
+
+|===
+
+
+== Benutzerdefinierte StorageGRID -Fehlercodes
+
+[cols="2a,2a,1a"]
+|===
+| Name | Beschreibung | HTTP-Status 
+
+
+ a| 
+XBucketLifecycleNotAllowed
+ a| 
+Die Bucket-Lebenszykluskonfiguration ist in einem älteren konformen Bucket nicht zulässig
+ a| 
+400 Ungültige Anfrage
+
+
+
+ a| 
+XBucketPolicyParseException
+ a| 
+Das Parsen der empfangenen Bucket-Richtlinien-JSON ist fehlgeschlagen.
+ a| 
+400 Ungültige Anfrage
+
+
+
+ a| 
+XComplianceConflict
+ a| 
+Vorgang aufgrund veralteter Compliance-Einstellungen abgelehnt.
+ a| 
+403 Verboten
+
+
+
+ a| 
+XComplianceReduzierteRedundanzVerboten
+ a| 
+Reduzierte Redundanz ist im Legacy-Compliant-Bucket nicht zulässig
+ a| 
+400 Ungültige Anfrage
+
+
+
+ a| 
+XMaxBucketPolicyLengthExceeded
+ a| 
+Ihre Richtlinie überschreitet die maximal zulässige Bucket-Richtlinienlänge.
+ a| 
+400 Ungültige Anfrage
+
+
+
+ a| 
+XMissingInternalRequestHeader
+ a| 
+Es fehlt ein Header einer internen Anfrage.
+ a| 
+400 Ungültige Anfrage
+
+
+
+ a| 
+XNoSuchBucketCompliance
+ a| 
+Für den angegebenen Bucket ist die Legacy-Compliance nicht aktiviert.
+ a| 
+404 Nicht gefunden
+
+
+
+ a| 
+XNichtAkzeptabel
+ a| 
+Die Anfrage enthält einen oder mehrere Accept-Header, die nicht erfüllt werden konnten.
+ a| 
+406 Nicht akzeptabel
+
+
+
+ a| 
+XNotImplemented
+ a| 
+Die von Ihnen angegebene Anfrage impliziert eine Funktionalität, die nicht implementiert ist.
+ a| 
+501 Nicht implementiert
+
+|===

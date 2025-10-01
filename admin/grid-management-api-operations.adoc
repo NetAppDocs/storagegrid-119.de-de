@@ -1,0 +1,75 @@
+---
+permalink: admin/grid-management-api-operations.html 
+sidebar: sidebar 
+keywords: Grid Management API,  API operations 
+summary: Die Grid Management API organisiert die verfügbaren API-Operationen in den folgenden Abschnitten. 
+---
+= Grid Management-API-Operationen
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Die Grid Management API organisiert die verfügbaren Vorgänge in den folgenden Abschnitten.
+
+
+NOTE: Diese Liste enthält nur Vorgänge, die in der öffentlichen API verfügbar sind.
+
+* *Konten*: Vorgänge zum Verwalten von Speichermandantenkonten, einschließlich Erstellen neuer Konten und Abrufen der Speichernutzung für ein bestimmtes Konto.
+* *Alarmverlauf*: Vorgänge für gelöste Alarme.
+* *Alarmempfänger*: Vorgänge für Empfänger von Alarmbenachrichtigungen (E-Mail).
+* *alert-rules*: Vorgänge für Alarmregeln.
+* *alert-silences*: Vorgänge zum Stummschalten von Alarmen.
+* *Alarme*: Vorgänge für Alarme.
+* *Audit*: Vorgänge zum Auflisten und Aktualisieren der Audit-Konfiguration.
+* *auth*: Vorgänge zum Durchführen der Benutzersitzungsauthentifizierung.
++
+Die Grid Management API unterstützt das Bearer Token Authentication Scheme.  Um sich anzumelden, geben Sie im JSON-Text der Authentifizierungsanfrage einen Benutzernamen und ein Kennwort ein (das heißt, `POST /api/v3/authorize` ).  Wenn der Benutzer erfolgreich authentifiziert wurde, wird ein Sicherheitstoken zurückgegeben.  Dieses Token muss im Header nachfolgender API-Anfragen bereitgestellt werden („Authorization: Bearer _token_“).  Das Token verfällt nach 16 Stunden.
+
++
+
+NOTE: Wenn Single Sign-On für das StorageGRID System aktiviert ist, müssen Sie zur Authentifizierung verschiedene Schritte ausführen.  Siehe „Authentifizierung bei der API, wenn Single Sign-On aktiviert ist.“
+
++
+Informationen zur Verbesserung der Authentifizierungssicherheit finden Sie unter „Schutz vor Cross-Site Request Forgery“.
+
+* *Client-Zertifikate*: Vorgänge zum Konfigurieren von Client-Zertifikaten, sodass mithilfe externer Überwachungstools sicher auf StorageGRID zugegriffen werden kann.
+* *config*: Vorgänge im Zusammenhang mit der Produktversion und den Versionen der Grid Management API.  Sie können die Produktversion und die Hauptversionen der Grid Management-API auflisten, die von dieser Version unterstützt werden, und Sie können veraltete Versionen der API deaktivieren.
+* *deaktivierte Funktionen*: Vorgänge zum Anzeigen von Funktionen, die möglicherweise deaktiviert wurden.
+* *DNS-Server*: Vorgänge zum Auflisten und Ändern konfigurierter externer DNS-Server.
+* *Laufwerksdetails*: Vorgänge auf Laufwerken für bestimmte Speichergerätemodelle.
+* *Endpunktdomänennamen*: Vorgänge zum Auflisten und Ändern von S3-Endpunktdomänennamen.
+* *Erasure-Coding*: Operationen an Erasure-Coding-Profilen.
+* *Erweiterung*: Operationen zur Erweiterung (Prozedurebene).
+* *Expansion-Nodes*: Operationen auf Expansionsebene (Knotenebene).
+* *expansion-sites*: Operationen zur Erweiterung (Site-Ebene).
+* *grid-networks*: Vorgänge zum Auflisten und Ändern der Grid-Netzwerkliste.
+* *grid-passwords*: Vorgänge für die Grid-Passwortverwaltung.
+* *Gruppen*: Vorgänge zum Verwalten lokaler Grid-Administratorgruppen und zum Abrufen föderierter Grid-Administratorgruppen von einem externen LDAP-Server.
+* *Identitätsquelle*: Vorgänge zum Konfigurieren einer externen Identitätsquelle und zum manuellen Synchronisieren von föderierten Gruppen- und Benutzerinformationen.
+* *ilm*: Vorgänge im Bereich Information Lifecycle Management (ILM).
+* *in-progress-procedures*: Ruft die Wartungsvorgänge ab, die derzeit ausgeführt werden.
+* *Lizenz*: Vorgänge zum Abrufen und Aktualisieren der StorageGRID -Lizenz.
+* *logs*: Vorgänge zum Sammeln und Herunterladen von Protokolldateien.v
+* *Metriken*: Vorgänge an StorageGRID -Metriken, einschließlich sofortiger Metrikabfragen zu einem bestimmten Zeitpunkt und Bereichsmetrikabfragen über einen bestimmten Zeitraum.  Die Grid Management API verwendet das Systemüberwachungstool Prometheus als Backend-Datenquelle.  Informationen zum Erstellen von Prometheus-Abfragen finden Sie auf der Prometheus-Website.
++
+
+NOTE: Metriken, die Folgendes umfassen:``_private_`` in ihren Namen sind nur für den internen Gebrauch bestimmt.  Diese Kennzahlen können sich zwischen den StorageGRID Versionen ohne Vorankündigung ändern.
+
+* *Knotendetails*: Operationen an Knotendetails.
+* *Knotengesundheit*: Vorgänge zum Knotengesundheitsstatus.
+* *node-storage-state*: Vorgänge zum Knotenspeicherstatus.
+* *ntp-servers*: Vorgänge zum Auflisten oder Aktualisieren externer Network Time Protocol (NTP)-Server.
+* *Objekte*: Operationen an Objekten und Objektmetadaten.
+* *Wiederherstellung*: Vorgänge für das Wiederherstellungsverfahren.
+* *recovery-package*: Vorgänge zum Herunterladen des Wiederherstellungspakets.
+* *Regionen*: Vorgänge zum Anzeigen und Erstellen von Regionen.
+* *s3-object-lock*: Vorgänge an globalen S3-Objektsperreinstellungen.
+* *Serverzertifikat*: Vorgänge zum Anzeigen und Aktualisieren von Grid Manager-Serverzertifikaten.
+* *snmp*: Vorgänge an der aktuellen SNMP-Konfiguration.
+* *storage-watermarks*: Wasserzeichen des Speicherknotens.
+* *Verkehrsklassen*: Vorgänge für Verkehrsklassifizierungsrichtlinien.
+* *untrusted-client-network*: Vorgänge an der nicht vertrauenswürdigen Client-Netzwerkkonfiguration.
+* *Benutzer*: Vorgänge zum Anzeigen und Verwalten von Grid Manager-Benutzern.
+

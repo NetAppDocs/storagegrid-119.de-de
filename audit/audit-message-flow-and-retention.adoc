@@ -1,0 +1,74 @@
+---
+permalink: audit/audit-message-flow-and-retention.html 
+sidebar: sidebar 
+keywords: storagegrid, audit, message, flow, retention 
+summary: Alle StorageGRID -Dienste generieren während des normalen Systembetriebs Prüfmeldungen.  Sie sollten verstehen, wie diese Audit-Meldungen durch das StorageGRID -System in die Datei audit.log gelangen. 
+---
+= Nachrichtenfluss und -aufbewahrung prüfen
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Alle StorageGRID -Dienste generieren während des normalen Systembetriebs Prüfmeldungen.  Sie sollten verstehen, wie diese Prüfmeldungen durch das StorageGRID -System zum `audit.log` Datei.
+
+
+
+== Nachrichtenfluss prüfen
+
+Audit-Nachrichten werden von Admin-Knoten und von den Speicherknoten verarbeitet, die über einen Administrative Domain Controller (ADC)-Dienst verfügen.
+
+Wie im Flussdiagramm der Audit-Nachrichten dargestellt, sendet jeder StorageGRID Knoten seine Audit-Nachrichten an einen der ADC-Dienste am Rechenzentrumsstandort.  Der ADC-Dienst wird für die ersten drei an jedem Standort installierten Speicherknoten automatisch aktiviert.
+
+Jeder ADC-Dienst fungiert wiederum als Relay und sendet seine Sammlung von Audit-Nachrichten an jeden Admin-Knoten im StorageGRID -System, wodurch jeder Admin-Knoten eine vollständige Aufzeichnung der Systemaktivität erhält.
+
+Jeder Admin-Knoten speichert Audit-Meldungen in Text-Logdateien; die aktive Logdatei trägt den Namen `audit.log` .
+
+image::../media/audit_message_flow.gif[Diagramm, das den Überwachungsnachrichtenfluss durch Relais zusammenfasst]
+
+
+
+=== Aufbewahrung von Überwachungsnachrichten
+
+StorageGRID verwendet einen Kopier- und Löschvorgang, um sicherzustellen, dass keine Prüfmeldungen verloren gehen, bevor sie in das Prüfprotokoll geschrieben werden können.
+
+Wenn ein Knoten eine Prüfnachricht generiert oder weiterleitet, wird die Nachricht in einer Prüfnachrichtenwarteschlange auf der Systemfestplatte des Grid-Knotens gespeichert. Eine Kopie der Nachricht wird immer in einer Audit-Nachrichtenwarteschlange aufbewahrt, bis die Nachricht in die Audit-Protokolldatei im Admin-Knoten geschrieben wird. `/var/local/log` Verzeichnis. Dadurch wird verhindert, dass während des Transports eine Prüfnachricht verloren geht.
+
+image::../media/audit_message_retention.gif[Diagramm, das den Empfang von Prüfnachrichten beim AMS zusammenfasst]
+
+Die Warteschlange der Prüfnachrichten kann aufgrund von Netzwerkverbindungsproblemen oder unzureichender Prüfkapazität vorübergehend größer werden. Wenn die Warteschlangen größer werden, verbrauchen sie mehr verfügbaren Speicherplatz in den einzelnen Knoten. `/var/local/` Verzeichnis. Wenn das Problem weiterhin besteht und das Prüfnachrichtenverzeichnis eines Knotens zu voll wird, priorisieren die einzelnen Knoten die Verarbeitung ihres Rückstands und sind vorübergehend für neue Nachrichten nicht verfügbar.
+
+Insbesondere können die folgenden Verhaltensweisen auftreten:
+
+* Wenn die `/var/local/log` Wenn das von einem Admin-Knoten verwendete Verzeichnis voll ist, wird der Admin-Knoten als für neue Prüfmeldungen nicht verfügbar gekennzeichnet, bis das Verzeichnis nicht mehr voll ist. S3-Client-Anfragen sind nicht betroffen. Der XAMS-Alarm (Unreachable Audit Repositories) wird ausgelöst, wenn ein Audit-Repository nicht erreichbar ist.
+* Wenn die `/var/local/` Wenn das von einem Speicherknoten mit dem ADC-Dienst verwendete Verzeichnis zu 92 % gefüllt ist, wird der Knoten als für Prüfmeldungen nicht verfügbar gekennzeichnet, bis das Verzeichnis nur noch zu 87 % gefüllt ist. S3-Client-Anfragen an andere Knoten sind nicht betroffen. Der NRLY-Alarm (Available Audit Relays) wird ausgelöst, wenn Audit-Relays nicht erreichbar sind.
++
+
+NOTE: Wenn keine Storage Nodes mit dem ADC-Dienst verfügbar sind, speichern die Storage Nodes die Audit-Nachrichten lokal im `/var/local/log/localaudit.log` Datei.
+
+* Wenn die `/var/local/` Das von einem Speicherknoten verwendete Verzeichnis ist zu 85 % gefüllt. Der Knoten lehnt S3-Client-Anfragen mit `503 Service Unavailable` .
+
+
+Die folgenden Arten von Problemen können dazu führen, dass die Warteschlangen für Überwachungsnachrichten sehr groß werden:
+
+* Der Ausfall eines Admin-Knotens oder eines Speicherknotens mit dem ADC-Dienst.  Wenn einer der Systemknoten ausfällt, kann es bei den übrigen Knoten zu einem Rückstau kommen.
+* Eine anhaltende Aktivitätsrate, die die Prüfkapazität des Systems übersteigt.
+* Der `/var/local/` Der Speicherplatz auf einem ADC-Speicherknoten wird aus Gründen voll, die nichts mit Prüfmeldungen zu tun haben.  In diesem Fall akzeptiert der Knoten keine neuen Prüfnachrichten mehr und priorisiert seinen aktuellen Rückstand, was zu Rückständen auf anderen Knoten führen kann.
+
+
+
+
+=== Alarm bei großer Audit-Warteschlange und Alarm bei in die Warteschlange gestellten Audit-Nachrichten (AMQS)
+
+Damit Sie die Größe der Warteschlangen für Prüfnachrichten im Laufe der Zeit überwachen können, werden die Warnung „Große Prüfwarteschlange“ und der alte AMQS-Alarm ausgelöst, wenn die Anzahl der Nachrichten in einer Speicherknotenwarteschlange oder einer Admin-Knotenwarteschlange bestimmte Schwellenwerte erreicht.
+
+Wenn die Warnung *Große Prüfwarteschlange* oder der alte AMQS-Alarm ausgelöst wird, überprüfen Sie zunächst die Systemlast. Wenn in letzter Zeit eine erhebliche Anzahl von Transaktionen stattgefunden hat, sollten sich die Warnung und der Alarm mit der Zeit auflösen und können ignoriert werden.
+
+Wenn die Warnung oder der Alarm weiterhin besteht und an Schwere zunimmt, sehen Sie sich ein Diagramm der Warteschlangengröße an. Wenn die Zahl über Stunden oder Tage hinweg stetig ansteigt, hat die Prüflast wahrscheinlich die Prüfkapazität des Systems überschritten. Reduzieren Sie die Client-Betriebsrate oder verringern Sie die Anzahl der protokollierten Prüfmeldungen, indem Sie die Prüfstufe für Client-Schreibvorgänge und Client-Lesevorgänge auf „Fehler“ oder „Aus“ ändern. Sehen link:../monitor/configure-audit-messages.html["Konfigurieren von Überwachungsmeldungen und Protokollzielen"] .
+
+
+
+=== Doppelte Nachrichten
+
+Das StorageGRID -System verfolgt einen konservativen Ansatz, wenn ein Netzwerk- oder Knotenausfall auftritt.  Aus diesem Grund können im Überwachungsprotokoll doppelte Nachrichten vorhanden sein.

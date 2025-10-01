@@ -1,0 +1,127 @@
+---
+permalink: rhel/configuring-docker-storage-volume.html 
+sidebar: sidebar 
+keywords: how to configure container engine storage volume, Docker, Podman 
+summary: 'Bevor Sie die Container-Engine (Docker oder Podman) installieren, müssen Sie möglicherweise das Speichervolume formatieren und mounten.' 
+---
+= Konfigurieren des Speichervolumens der Container-Engine
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Bevor Sie die Container-Engine (Docker oder Podman) installieren, müssen Sie möglicherweise das Speichervolume formatieren und mounten.
+
+
+NOTE: Die Unterstützung für Docker als Container-Engine für reine Softwarebereitstellungen ist veraltet. Docker wird in einer zukünftigen Version durch eine andere Container-Engine ersetzt.
+
+.Informationen zu diesem Vorgang
+Sie können diese Schritte überspringen, wenn Sie lokalen Speicher für das Docker- oder Podman-Speichervolume verwenden möchten und auf der Hostpartition ausreichend Speicherplatz verfügbar ist, der Folgendes enthält: `/var/lib/docker` für Docker und `/var/lib/containers` für Podman.
+
+
+NOTE: Podman wird nur unter Red Hat Enterprise Linux (RHEL) unterstützt.
+
+.Schritte
+. Erstellen Sie ein Dateisystem auf dem Speichervolume der Container-Engine:
++
+[listing]
+----
+sudo mkfs.ext4 container-engine-storage-volume-device
+----
+. Hängen Sie das Speichervolume der Container-Engine ein:
++
+** Für Docker:
++
+[listing]
+----
+sudo mkdir -p /var/lib/docker
+sudo mount container-storage-volume-device /var/lib/docker
+----
+** Für Podman:
++
+[listing]
+----
+sudo mkdir -p /var/lib/containers
+sudo mount container-storage-volume-device /var/lib/containers
+----
+
+
+. Fügen Sie einen Eintrag für Container-Storage-Volume-Device zu /etc/fstab hinzu.
++
+Dieser Schritt stellt sicher, dass das Speichervolume nach dem Neustart des Hosts automatisch erneut bereitgestellt wird.
+
+
+
+
+
+== Docker installieren
+
+Das StorageGRID -System läuft auf Red Hat Enterprise Linux als Sammlung von Containern. Wenn Sie sich für die Verwendung der Docker-Container-Engine entschieden haben, befolgen Sie diese Schritte, um Docker zu installieren. Ansonsten,<<Podman installieren,Podman installieren>> .
+
+.Schritte
+. Installieren Sie Docker, indem Sie den Anweisungen für Ihre Linux-Distribution folgen.
++
+
+NOTE: Wenn Docker nicht in Ihrer Linux-Distribution enthalten ist, können Sie es von der Docker-Website herunterladen.
+
+. Stellen Sie sicher, dass Docker aktiviert und gestartet wurde, indem Sie die folgenden beiden Befehle ausführen:
++
+[listing]
+----
+sudo systemctl enable docker
+----
++
+[listing]
+----
+sudo systemctl start docker
+----
+. Bestätigen Sie, dass Sie die erwartete Version von Docker installiert haben, indem Sie Folgendes eingeben:
++
+[listing]
+----
+sudo docker version
+----
++
+Die Client- und Serverversionen müssen 1.11.0 oder höher sein.
+
+
+
+
+
+== Podman installieren
+
+Das StorageGRID -System läuft auf Red Hat Enterprise Linux als Sammlung von Containern. Wenn Sie sich für die Verwendung der Podman-Container-Engine entschieden haben, befolgen Sie diese Schritte, um Podman zu installieren. Ansonsten,<<Docker installieren,Docker installieren>> .
+
+
+NOTE: Podman wird nur unter Red Hat Enterprise Linux (RHEL) unterstützt.
+
+.Schritte
+. Installieren Sie Podman und Podman-Docker, indem Sie den Anweisungen für Ihre Linux-Distribution folgen.
++
+
+NOTE: Sie müssen bei der Installation von Podman auch das Podman-Docker-Paket installieren.
+
+. Bestätigen Sie, dass Sie die erwartete Version von Podman und Podman-Docker installiert haben, indem Sie Folgendes eingeben:
++
+[listing]
+----
+sudo docker version
+----
++
+
+NOTE: Mit dem Podman-Docker-Paket können Sie Docker-Befehle verwenden.
+
++
+Die Client- und Serverversionen müssen 3.2.3 oder höher sein.
+
++
+[listing]
+----
+Version: 3.2.3
+API Version: 3.2.3
+Go Version: go1.15.7
+Built: Tue Jul 27 03:29:39 2021
+OS/Arch: linux/amd64
+----
+

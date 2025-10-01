@@ -1,0 +1,140 @@
+---
+permalink: audit/wput-swift-put.html 
+sidebar: sidebar 
+keywords: storagegrid, audit, message, WPUT, Swift PUT 
+summary: Wenn ein Swift-Client eine PUT-Transaktion ausgibt, wird eine Anforderung zum Erstellen eines neuen Objekts oder Containers gestellt.  Diese Nachricht wird vom Server ausgegeben, wenn die Transaktion erfolgreich war. 
+---
+= WPUT: Schnelles PUT
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Wenn ein Swift-Client eine PUT-Transaktion ausgibt, wird eine Anforderung zum Erstellen eines neuen Objekts oder Containers gestellt.  Diese Nachricht wird vom Server ausgegeben, wenn die Transaktion erfolgreich war.
+
+[cols="1a,1a,4a"]
+|===
+| Code | Feld | Beschreibung 
+
+
+ a| 
+CBID
+ a| 
+Inhaltsblockkennung
+ a| 
+Die eindeutige Kennung des angeforderten Inhaltsblocks.  Wenn die CBID unbekannt ist, wird dieses Feld auf 0 gesetzt.  Vorgänge an Containern umfassen dieses Feld nicht.
+
+
+
+ a| 
+CSIZ
+ a| 
+Inhaltsgröße
+ a| 
+Die Größe des abgerufenen Objekts in Bytes.  Vorgänge an Containern umfassen dieses Feld nicht.
+
+
+
+ a| 
+HTRH
+ a| 
+HTTP-Anforderungsheader
+ a| 
+Liste der protokollierten HTTP-Anforderungsheadernamen und -werte, wie während der Konfiguration ausgewählt.
+
+ `X-Forwarded-For`wird automatisch eingefügt, wenn es in der Anfrage vorhanden ist und wenn die `X-Forwarded-For` Der Wert unterscheidet sich von der IP-Adresse des Anforderungsabsenders (SAIP-Auditfeld).
+
+
+
+ a| 
+MTME
+ a| 
+Letzte Änderung
+ a| 
+Der Unix-Zeitstempel in Mikrosekunden, der angibt, wann das Objekt zuletzt geändert wurde.
+
+
+
+ a| 
+RSLT
+ a| 
+Ergebniscode
+ a| 
+Ergebnis der PUT-Transaktion.  Ergebnis ist immer:
+
+SUCS: erfolgreich
+
+
+
+ a| 
+SAIP
+ a| 
+IP-Adresse des anfragenden Clients
+ a| 
+Die IP-Adresse der Clientanwendung, die die Anfrage gestellt hat.
+
+
+
+ a| 
+ZEIT
+ a| 
+Zeit
+ a| 
+Gesamtverarbeitungszeit für die Anfrage in Mikrosekunden.
+
+
+
+ a| 
+TLIP
+ a| 
+Vertrauenswürdige IP-Adresse des Load Balancers
+ a| 
+Wenn die Anfrage von einem vertrauenswürdigen Layer 7-Load Balancer weitergeleitet wurde, die IP-Adresse des Load Balancers.
+
+
+
+ a| 
+UUID
+ a| 
+Universell eindeutige Kennung
+ a| 
+Die Kennung des Objekts innerhalb des StorageGRID -Systems.
+
+
+
+ a| 
+WACC
+ a| 
+Swift-Konto-ID
+ a| 
+Die eindeutige Konto-ID, wie sie vom StorageGRID -System angegeben wird.
+
+
+
+ a| 
+WCON
+ a| 
+Schneller Container
+ a| 
+Der Name des Swift-Containers.
+
+
+
+ a| 
+WOBJ
+ a| 
+Swift-Objekt
+ a| 
+Die Swift-Objektkennung.  Vorgänge an Containern umfassen dieses Feld nicht.
+
+
+
+ a| 
+WUSR
+ a| 
+Swift-Kontobenutzer
+ a| 
+Der Benutzername des Swift-Kontos, der den Kunden, der die Transaktion durchführt, eindeutig identifiziert.
+
+|===

@@ -1,0 +1,146 @@
+---
+permalink: admin/reviewing-storagegrid-encryption-methods.html 
+sidebar: sidebar 
+keywords: encryption, encrypting data, best practices 
+summary: StorageGRID bietet mehrere Optionen zum Verschlüsseln von Daten.  Sie sollten die verfügbaren Methoden überprüfen, um festzustellen, welche Methoden Ihren Datenschutzanforderungen entsprechen. 
+---
+= Überprüfen Sie die Verschlüsselungsmethoden von StorageGRID
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+StorageGRID bietet mehrere Optionen zum Verschlüsseln von Daten.  Sie sollten die verfügbaren Methoden überprüfen, um festzustellen, welche Methoden Ihren Datenschutzanforderungen entsprechen.
+
+Die Tabelle bietet eine allgemeine Zusammenfassung der in StorageGRID verfügbaren Verschlüsselungsmethoden.
+
+[cols="1a,1a,1a"]
+|===
+| Verschlüsselungsoption | So funktioniert es | Gilt für: 
+
+
+ a| 
+Schlüsselverwaltungsserver (KMS) im Grid Manager
+ a| 
+Dulink:kms-configuring.html["Konfigurieren eines Schlüsselverwaltungsservers"] für die StorageGRID -Site und https://docs.netapp.com/us-en/storagegrid-appliances/installconfig/optional-enabling-node-encryption.html["Aktivieren Sie die Knotenverschlüsselung für die Appliance"^] .  Anschließend stellt ein Appliance-Knoten eine Verbindung zum KMS her, um einen Schlüsselverschlüsselungsschlüssel (KEK) anzufordern.  Dieser Schlüssel verschlüsselt und entschlüsselt den Datenverschlüsselungsschlüssel (DEK) auf jedem Volume.
+ a| 
+Appliance-Knoten, bei denen während der Installation die *Knotenverschlüsselung* aktiviert wurde.  Alle Daten auf dem Gerät sind vor physischem Verlust oder Entfernung aus dem Rechenzentrum geschützt.
+
+*Hinweis*: Die Verwaltung von Verschlüsselungsschlüsseln mit einem KMS wird nur für Speicherknoten und Service-Appliances unterstützt.
+
+
+
+ a| 
+Seite „Laufwerkverschlüsselung“ im StorageGRID Appliance Installer
+ a| 
+Wenn die Appliance Laufwerke enthält, die Hardwareverschlüsselung unterstützen, können Sie während der Installation eine Laufwerkspassphrase festlegen.  Wenn Sie eine Laufwerkspassphrase festlegen, ist es für niemanden möglich, gültige Daten von Laufwerken wiederherzustellen, die aus dem System entfernt wurden, es sei denn, er kennt die Passphrase.  Gehen Sie vor Beginn der Installation zu *Hardware konfigurieren* > *Laufwerkverschlüsselung*, um eine Laufwerkspassphrase festzulegen, die für alle von StorageGRID verwalteten, selbstverschlüsselnden Laufwerke in einem Knoten gilt.
+ a| 
+Geräte, die selbstverschlüsselnde Laufwerke enthalten.  Alle Daten auf den gesicherten Laufwerken sind vor physischem Verlust oder Entfernung aus dem Rechenzentrum geschützt.
+
+Die Laufwerkverschlüsselung gilt nicht für von SANtricity verwaltete Laufwerke.  Wenn Sie über ein Speichergerät mit selbstverschlüsselnden Laufwerken und SANtricity Controllern verfügen, können Sie die Laufwerkssicherheit in SANtricity aktivieren.
+
+
+
+ a| 
+Laufwerkssicherheit im SANtricity System Manager
+ a| 
+Wenn die Funktion „Laufwerksicherheit“ für Ihr StorageGRID Gerät aktiviert ist, können Sie https://docs.netapp.com/us-en/storagegrid-appliances/installconfig/accessing-and-configuring-santricity-system-manager.html["SANtricity Systemmanager"^] um den Sicherheitsschlüssel zu erstellen und zu verwalten.  Der Schlüssel wird benötigt, um auf die Daten auf den gesicherten Laufwerken zuzugreifen.
+ a| 
+Speichergeräte mit Laufwerken mit vollständiger Festplattenverschlüsselung (FDE) oder selbstverschlüsselnden Laufwerken.  Alle Daten auf den gesicherten Laufwerken sind vor physischem Verlust oder Entfernung aus dem Rechenzentrum geschützt.  Kann nicht mit einigen Speichergeräten oder Servicegeräten verwendet werden.
+
+
+
+ a| 
+Gespeicherte Objektverschlüsselung
+ a| 
+Sie aktivieren dielink:changing-network-options-object-encryption.html["Gespeicherte Objektverschlüsselung"] Option im Grid Manager.  Wenn diese Option aktiviert ist, werden alle neuen Objekte, die nicht auf Bucket- oder Objektebene verschlüsselt sind, während der Aufnahme verschlüsselt.
+ a| 
+Neu aufgenommene S3-Objektdaten.
+
+Vorhandene gespeicherte Objekte werden nicht verschlüsselt.  Objektmetadaten und andere sensible Daten werden nicht verschlüsselt.
+
+
+
+ a| 
+S3-Bucket-Verschlüsselung
+ a| 
+Sie stellen eine PutBucketEncryption-Anforderung, um die Verschlüsselung für den Bucket zu aktivieren.  Alle neuen Objekte, die nicht auf Objektebene verschlüsselt sind, werden während der Aufnahme verschlüsselt.
+ a| 
+Nur neu aufgenommene S3-Objektdaten.
+
+Für den Bucket muss eine Verschlüsselung angegeben werden.  Vorhandene Bucket-Objekte werden nicht verschlüsselt.  Objektmetadaten und andere sensible Daten werden nicht verschlüsselt.
+
+link:../s3/operations-on-buckets.html["Operationen an Buckets"]
+
+
+
+ a| 
+Serverseitige Verschlüsselung (SSE) für S3-Objekte
+ a| 
+Sie stellen eine S3-Anforderung zum Speichern eines Objekts und schließen die `x-amz-server-side-encryption` Anforderungsheader.
+ a| 
+Nur neu aufgenommene S3-Objektdaten.
+
+Für das Objekt muss eine Verschlüsselung angegeben werden.  Objektmetadaten und andere sensible Daten werden nicht verschlüsselt.
+
+StorageGRID verwaltet die Schlüssel.
+
+link:../s3/using-server-side-encryption.html["Verwenden Sie serverseitige Verschlüsselung"]
+
+
+
+ a| 
+Serverseitige Verschlüsselung von S3-Objekten mit vom Kunden bereitgestellten Schlüsseln (SSE-C)
+ a| 
+Sie stellen eine S3-Anforderung zum Speichern eines Objekts und fügen drei Anforderungsheader ein.
+
+* `x-amz-server-side-encryption-customer-algorithm`
+* `x-amz-server-side-encryption-customer-key`
+* `x-amz-server-side-encryption-customer-key-MD5`
+
+ a| 
+Nur neu aufgenommene S3-Objektdaten.
+
+Für das Objekt muss eine Verschlüsselung angegeben werden.  Objektmetadaten und andere sensible Daten werden nicht verschlüsselt.
+
+Schlüssel werden außerhalb von StorageGRID verwaltet.
+
+link:../s3/using-server-side-encryption.html["Verwenden Sie serverseitige Verschlüsselung"]
+
+
+
+ a| 
+Externe Volume- oder Datenspeicherverschlüsselung
+ a| 
+Sie verwenden eine Verschlüsselungsmethode außerhalb von StorageGRID , um ein ganzes Volume oder einen ganzen Datenspeicher zu verschlüsseln, sofern Ihre Bereitstellungsplattform dies unterstützt.
+ a| 
+Alle Objektdaten, Metadaten und Systemkonfigurationsdaten, vorausgesetzt, jedes Volume oder jeder Datenspeicher ist verschlüsselt.
+
+Eine externe Verschlüsselungsmethode bietet eine strengere Kontrolle über Verschlüsselungsalgorithmen und Schlüssel.  Kann mit den anderen aufgeführten Methoden kombiniert werden.
+
+
+
+ a| 
+Objektverschlüsselung außerhalb von StorageGRID
+ a| 
+Sie verwenden eine Verschlüsselungsmethode außerhalb von StorageGRID , um Objektdaten und Metadaten zu verschlüsseln, bevor sie in StorageGRID aufgenommen werden.
+ a| 
+Nur Objektdaten und Metadaten (Systemkonfigurationsdaten werden nicht verschlüsselt).
+
+Eine externe Verschlüsselungsmethode bietet eine strengere Kontrolle über Verschlüsselungsalgorithmen und Schlüssel.  Kann mit den anderen aufgeführten Methoden kombiniert werden.
+
+https://docs.aws.amazon.com/AmazonS3/latest/dev/UsingClientSideEncryption.html["Amazon Simple Storage Service – Benutzerhandbuch: Schützen von Daten durch clientseitige Verschlüsselung"^]
+
+|===
+
+
+== Verwenden Sie mehrere Verschlüsselungsmethoden
+
+Je nach Bedarf können Sie mehrere Verschlüsselungsmethoden gleichzeitig verwenden. Beispiel:
+
+* Sie können ein KMS zum Schutz von Appliance-Knoten verwenden und außerdem die Laufwerkssicherheitsfunktion im SANtricity System Manager nutzen, um Daten auf den selbstverschlüsselnden Laufwerken in denselben Appliances „doppelt zu verschlüsseln“.
+* Sie können ein KMS verwenden, um Daten auf Appliance-Knoten zu sichern, und außerdem die Option „Gespeicherte Objektverschlüsselung“ verwenden, um alle Objekte bei der Aufnahme zu verschlüsseln.
+
+
+Wenn nur ein kleiner Teil Ihrer Objekte verschlüsselt werden muss, sollten Sie stattdessen die Steuerung der Verschlüsselung auf Bucket- oder Einzelobjektebene in Betracht ziehen.  Das Aktivieren mehrerer Verschlüsselungsebenen geht mit zusätzlichen Leistungseinbußen einher.

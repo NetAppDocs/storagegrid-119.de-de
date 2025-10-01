@@ -1,0 +1,196 @@
+---
+permalink: audit/supd-s3-metadata-updated.html 
+sidebar: sidebar 
+keywords: storagegrid, audit, message, SUPD, S3 Metadata Updated 
+summary: Diese Nachricht wird von der S3-API generiert, wenn ein S3-Client die Metadaten für ein aufgenommenes Objekt aktualisiert.  Die Meldung wird vom Server ausgegeben, wenn die Aktualisierung der Metadaten erfolgreich war. 
+---
+= SUPD: S3-Metadaten aktualisiert
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Diese Nachricht wird von der S3-API generiert, wenn ein S3-Client die Metadaten für ein aufgenommenes Objekt aktualisiert.  Die Meldung wird vom Server ausgegeben, wenn die Aktualisierung der Metadaten erfolgreich war.
+
+[cols="1a,1a,4a"]
+|===
+| Code | Feld | Beschreibung 
+
+
+ a| 
+CBID
+ a| 
+Inhaltsblockkennung
+ a| 
+Die eindeutige Kennung des angeforderten Inhaltsblocks.  Wenn die CBID unbekannt ist, wird dieses Feld auf 0 gesetzt.  Operationen an Buckets schließen dieses Feld nicht ein.
+
+
+
+ a| 
+CNCH
+ a| 
+Konsistenzkontrollkopf
+ a| 
+Der Wert des HTTP-Anforderungsheaders „Consistency-Control“, sofern in der Anforderung vorhanden, beim Aktualisieren der Compliance-Einstellungen eines Buckets.
+
+
+
+ a| 
+CNID
+ a| 
+Verbindungskennung
+ a| 
+Die eindeutige Systemkennung für die TCP/IP-Verbindung.
+
+
+
+ a| 
+CSIZ
+ a| 
+Inhaltsgröße
+ a| 
+Die Größe des abgerufenen Objekts in Bytes.  Operationen an Buckets schließen dieses Feld nicht ein.
+
+
+
+ a| 
+HTRH
+ a| 
+HTTP-Anforderungsheader
+ a| 
+Liste der protokollierten HTTP-Anforderungsheadernamen und -werte, wie während der Konfiguration ausgewählt.
+
+ `X-Forwarded-For`wird automatisch eingefügt, wenn es in der Anfrage vorhanden ist und wenn die `X-Forwarded-For` Der Wert unterscheidet sich von der IP-Adresse des Anforderungsabsenders (SAIP-Auditfeld).
+
+
+
+ a| 
+RSLT
+ a| 
+Ergebniscode
+ a| 
+Ergebnis der GET-Transaktion.  Ergebnis ist immer:
+
+SUCS: erfolgreich
+
+
+
+ a| 
+S3AI
+ a| 
+S3-Mandantenkonto-ID (Absender der Anfrage)
+ a| 
+Die Mandantenkonto-ID des Benutzers, der die Anfrage gesendet hat.  Ein leerer Wert zeigt einen anonymen Zugriff an.
+
+
+
+ a| 
+S3AK
+ a| 
+S3-Zugriffsschlüssel-ID (Absender der Anfrage)
+ a| 
+Die gehashte S3-Zugriffsschlüssel-ID für den Benutzer, der die Anfrage gesendet hat.  Ein leerer Wert zeigt einen anonymen Zugriff an.
+
+
+
+ a| 
+S3BK
+ a| 
+S3-Bucket
+ a| 
+Der Name des S3-Buckets.
+
+
+
+ a| 
+S3KY
+ a| 
+S3-Schlüssel
+ a| 
+Der S3-Schlüsselname, ohne den Bucket-Namen.  Operationen an Buckets schließen dieses Feld nicht ein.
+
+
+
+ a| 
+SACC
+ a| 
+S3-Mandantenkontoname (Absender der Anfrage)
+ a| 
+Der Name des Mandantenkontos des Benutzers, der die Anfrage gesendet hat.  Leer für anonyme Anfragen.
+
+
+
+ a| 
+SAIP
+ a| 
+IP-Adresse (Absender der Anfrage)
+ a| 
+Die IP-Adresse der Clientanwendung, die die Anfrage gestellt hat.
+
+
+
+ a| 
+SBAC
+ a| 
+S3-Mandantenkontoname (Bucket-Eigentümer)
+ a| 
+Der Mandantenkontoname für den Bucket-Eigentümer.  Wird verwendet, um kontoübergreifenden oder anonymen Zugriff zu identifizieren.
+
+
+
+ a| 
+SBAI
+ a| 
+S3-Mandantenkonto-ID (Bucket-Eigentümer)
+ a| 
+Die Mandantenkonto-ID des Eigentümers des Ziel-Buckets.  Wird verwendet, um kontoübergreifenden oder anonymen Zugriff zu identifizieren.
+
+
+
+ a| 
+SUSR
+ a| 
+S3-Benutzer-URN (Absender der Anfrage)
+ a| 
+Die Mandantenkonto-ID und der Benutzername des Benutzers, der die Anfrage stellt.  Der Benutzer kann entweder ein lokaler Benutzer oder ein LDAP-Benutzer sein. Beispiel:  `urn:sgws:identity::03393893651506583485:root`
+
+Leer für anonyme Anfragen.
+
+
+
+ a| 
+ZEIT
+ a| 
+Zeit
+ a| 
+Gesamtverarbeitungszeit für die Anfrage in Mikrosekunden.
+
+
+
+ a| 
+TLIP
+ a| 
+Vertrauenswürdige IP-Adresse des Load Balancers
+ a| 
+Wenn die Anfrage von einem vertrauenswürdigen Layer 7-Load Balancer weitergeleitet wurde, die IP-Adresse des Load Balancers.
+
+
+
+ a| 
+UUID
+ a| 
+Universell eindeutige Kennung
+ a| 
+Die Kennung des Objekts innerhalb des StorageGRID -Systems.
+
+
+
+ a| 
+VSID
+ a| 
+Versions-ID
+ a| 
+Die Versions-ID der spezifischen Version eines Objekts, dessen Metadaten aktualisiert wurden.  Vorgänge an Buckets und Objekten in Buckets ohne Versionierung schließen dieses Feld nicht ein.
+
+|===

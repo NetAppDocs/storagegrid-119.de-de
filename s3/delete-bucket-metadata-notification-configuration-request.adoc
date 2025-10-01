@@ -1,0 +1,30 @@
+---
+permalink: s3/delete-bucket-metadata-notification-configuration-request.html 
+sidebar: sidebar 
+keywords: S3 REST API, S3 operations, DELETE Bucket metadata notification configuration request 
+summary: Mit der Konfigurationsanforderung „DELETE Bucket-Metadaten-Benachrichtigung“ können Sie den Suchintegrationsdienst für einzelne Buckets deaktivieren, indem Sie die Konfigurations-XML löschen. 
+---
+= Konfiguration der Benachrichtigung über DELETE-Bucket-Metadaten
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Mit der Konfigurationsanforderung „DELETE Bucket-Metadaten-Benachrichtigung“ können Sie den Suchintegrationsdienst für einzelne Buckets deaktivieren, indem Sie die Konfigurations-XML löschen.
+
+Sie müssen über die Berechtigung s3:DeleteBucketMetadataNotification für einen Bucket verfügen oder Konto-Root sein, um diesen Vorgang abzuschließen.
+
+
+
+== Anforderungsbeispiel
+
+Dieses Beispiel zeigt das Deaktivieren des Suchintegrationsdienstes für einen Bucket.
+
+[listing, subs="specialcharacters,quotes"]
+----
+DELETE /test1?x-ntap-sg-metadata-notification HTTP/1.1
+Date: _date_
+Authorization: _authorization string_
+Host: _host_
+----

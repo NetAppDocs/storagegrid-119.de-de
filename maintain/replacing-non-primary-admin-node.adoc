@@ -1,0 +1,51 @@
+---
+permalink: maintain/replacing-non-primary-admin-node.html 
+sidebar: sidebar 
+keywords: storagegrid, recover, replace non-primary admin node, replacing non-primary admin node, non-primary admin node 
+summary: Um einen nicht primären Admin-Knoten wiederherzustellen, müssen Sie zuerst die physische oder virtuelle Hardware ersetzen. 
+---
+= Nicht-primären Admin-Knoten ersetzen
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Um einen nicht primären Admin-Knoten wiederherzustellen, müssen Sie zuerst die physische oder virtuelle Hardware ersetzen.
+
+Sie können einen ausgefallenen nicht primären Admin-Knoten durch einen nicht primären Admin-Knoten ersetzen, der auf derselben Plattform ausgeführt wird, oder Sie können einen nicht primären Admin-Knoten, der auf VMware oder einem Linux-Host ausgeführt wird, durch einen nicht primären Admin-Knoten ersetzen, der auf einer Service-Appliance gehostet wird.
+
+Verwenden Sie das Verfahren, das der von Ihnen für den Knoten ausgewählten Ersatzplattform entspricht.  Nachdem Sie das Verfahren zum Ersetzen des Knotens abgeschlossen haben (das für alle Knotentypen geeignet ist), werden Sie durch dieses Verfahren zum nächsten Schritt für die Wiederherstellung nicht primärer Admin-Knoten weitergeleitet.
+
+[cols="1a,2a"]
+|===
+| Ersatzplattform | Verfahren 
+
+
+ a| 
+VMware
+ a| 
+link:all-node-types-replacing-vmware-node.html["Ersetzen eines VMware-Knotens"]
+
+
+
+ a| 
+Linux
+ a| 
+link:all-node-types-replacing-linux-node.html["Ersetzen eines Linux-Knotens"]
+
+
+
+ a| 
+Servicegeräte
+ a| 
+link:replacing-failed-node-with-services-appliance.html["Ersetzen einer Service-Appliance"]
+
+
+
+ a| 
+OpenStack
+ a| 
+Von NetApp bereitgestellte Festplattendateien und Skripts für virtuelle Maschinen für OpenStack werden für Wiederherstellungsvorgänge nicht mehr unterstützt.  Wenn Sie einen Knoten wiederherstellen müssen, der in einer OpenStack-Bereitstellung ausgeführt wird, laden Sie die Dateien für Ihr Linux-Betriebssystem herunter.  Befolgen Sie dann die Anweisungen fürlink:all-node-types-replacing-linux-node.html["Ersetzen eines Linux-Knotens"] .
+
+|===

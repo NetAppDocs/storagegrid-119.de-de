@@ -1,0 +1,145 @@
+---
+permalink: maintain/accessing-decommission-nodes-page.html 
+sidebar: sidebar 
+keywords: storagegrid, decommission nodes, decommissioning nodes, maintenance task 
+summary: Wenn Sie im Grid Manager auf die Seite „Knoten außer Betrieb nehmen“ zugreifen, können Sie auf einen Blick sehen, welche Knoten außer Betrieb genommen werden können. 
+---
+= Zugriff auf die Seite „Knoten außer Betrieb nehmen“
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Wenn Sie im Grid Manager auf die Seite „Knoten außer Betrieb nehmen“ zugreifen, können Sie auf einen Blick sehen, welche Knoten außer Betrieb genommen werden können.
+
+.Bevor Sie beginnen
+* Sie sind beim Grid Manager angemeldet mit einemlink:../admin/web-browser-requirements.html["unterstützter Webbrowser"] .
+* Sie haben dielink:../admin/admin-group-permissions.html["Wartungs- oder Root-Zugriffsberechtigung"] .
+
+
+
+CAUTION: Seien Sie vorsichtig, wenn Sie Speicherknoten in einem Grid außer Betrieb nehmen, das softwarebasierte Knoten enthält, die nur Metadaten enthalten.  Wenn Sie alle Knoten außer Betrieb nehmen, die zum Speichern von _sowohl_ Objekten als auch Metadaten konfiguriert sind, wird die Möglichkeit zum Speichern von Objekten aus dem Raster entfernt.  Sehenlink:../primer/what-storage-node-is.html#types-of-storage-nodes["Arten von Speicherknoten"] Weitere Informationen zu reinen Metadaten-Speicherknoten.
+
+.Schritte
+. Wählen Sie *WARTUNG* > *Aufgaben* > *Außerbetriebnahme*.
+. Wählen Sie *Knoten außer Betrieb nehmen*.
++
+Die Seite „Knoten außer Betrieb nehmen“ wird angezeigt.  Auf dieser Seite können Sie:
+
++
+** Ermitteln Sie, welche Netzknoten aktuell stillgelegt werden können.
+** Sehen Sie den Zustand aller Grid-Knoten
+** Sortieren Sie die Liste in aufsteigender oder absteigender Reihenfolge nach *Name*, *Site*, *Typ* oder *Hat ADC*.
+** Geben Sie Suchbegriffe ein, um bestimmte Knoten schnell zu finden.
++
+In diesem Beispiel gibt die Spalte „Außerbetriebnahme möglich“ an, dass Sie den Gateway-Knoten und einen der vier Speicherknoten außer Betrieb nehmen können.
+
++
+image::../media/decommission_nodes_page_all_connected.png[Seite „Knoten außer Betrieb nehmen“]
+
+
+
+. Überprüfen Sie die Spalte *Außerbetriebnahme möglich* für jeden Knoten, den Sie außer Betrieb nehmen möchten.
++
+Wenn ein Netzknoten außer Betrieb genommen werden kann, enthält diese Spalte ein grünes Häkchen und die linke Spalte ein Kontrollkästchen.  Wenn ein Knoten nicht außer Betrieb genommen werden kann, wird das Problem in dieser Spalte beschrieben.  Wenn es mehr als einen Grund gibt, warum ein Knoten nicht außer Betrieb genommen werden kann, wird der schwerwiegendste Grund angezeigt.
+
++
+[cols="1a,1a,1a"]
+|===
+| Außerbetriebnahme Möglicher Grund | Beschreibung | Schritte zur Lösung 
+
+
+ a| 
+Nein, die Außerbetriebnahme des Knotentyps wird nicht unterstützt.
+ a| 
+Sie können den primären Admin-Knoten nicht außer Betrieb nehmen.
+ a| 
+Keiner.
+
+
+
+ a| 
+Nein, mindestens ein Netzknoten ist getrennt.
+
+*Hinweis:* Diese Nachricht wird nur für verbundene Grid-Knoten angezeigt.
+ a| 
+Sie können einen verbundenen Grid-Knoten nicht außer Betrieb nehmen, wenn ein beliebiger Grid-Knoten getrennt ist.
+
+Die Spalte *Health* enthält eines dieser Symbole für getrennte Grid-Knoten:
+
+** image:../media/icon_alarm_gray_administratively_down.png["graues Fragezeichensymbol"](grau): Administrativ ausgefallen
+** image:../media/icon_alarm_blue_unknown.png["blaues Fragezeichen-Symbol"](blau): Unbekannt
+
+ a| 
+Sie müssen alle getrennten Knoten wieder online bringen oderlink:decommissioning-disconnected-grid-nodes.html["alle getrennten Knoten außer Betrieb nehmen"] bevor Sie einen verbundenen Knoten entfernen können.
+
+*Hinweis*: Wenn Ihr Netz mehrere getrennte Knoten enthält, müssen Sie diese gemäß der Software alle gleichzeitig außer Betrieb nehmen, wodurch das Risiko unerwarteter Ergebnisse steigt.
+
+
+
+ a| 
+Nein, ein oder mehrere erforderliche Knoten sind derzeit getrennt und müssen wiederhergestellt werden.
+
+*Hinweis:* Diese Meldung wird nur für getrennte Grid-Knoten angezeigt.
+ a| 
+Sie können einen getrennten Grid-Knoten nicht außer Betrieb nehmen, wenn ein oder mehrere erforderliche Knoten ebenfalls getrennt sind (z. B. ein Speicherknoten, der für das ADC-Quorum erforderlich ist).
+ a| 
+.. Überprüfen Sie die Meldungen zur möglichen Außerbetriebnahme für alle getrennten Knoten.
+.. Bestimmen Sie, welche Knoten nicht außer Betrieb genommen werden können, weil sie benötigt werden.
++
+*** Wenn der Zustand eines erforderlichen Knotens „Administrativ ausgefallen“ lautet, bringen Sie den Knoten wieder online.
+*** Wenn der Zustand eines erforderlichen Knotens unbekannt ist, führen Sie ein Knotenwiederherstellungsverfahren durch, um den erforderlichen Knoten wiederherzustellen.
+
+
+
+
+
+
+ a| 
+Nein, Mitglied der HA-Gruppe(n): _Gruppenname_. Bevor Sie diesen Knoten außer Betrieb nehmen können, müssen Sie ihn aus allen HA-Gruppen entfernen.
+ a| 
+Sie können einen Admin-Knoten oder Gateway-Knoten nicht außer Betrieb nehmen, wenn eine Knotenschnittstelle zu einer Hochverfügbarkeitsgruppe (HA) gehört.
+ a| 
+Bearbeiten Sie die HA-Gruppe, um die Schnittstelle des Knotens zu entfernen, oder entfernen Sie die gesamte HA-Gruppe. Sehen link:../admin/configure-high-availability-group.html["Konfigurieren von Hochverfügbarkeitsgruppen"] .
+
+
+
+ a| 
+Nein, Site _x_ erfordert mindestens _n_ Speicherknoten mit ADC-Diensten.
+ a| 
+*Nur Speicherknoten.* Sie können einen Speicherknoten nicht außer Betrieb nehmen, wenn am Standort nicht genügend Knoten verbleiben, um die ADC-Quorumanforderungen zu erfüllen.
+ a| 
+Führen Sie eine Erweiterung durch.  Fügen Sie der Site einen neuen Speicherknoten hinzu und geben Sie an, dass dieser über einen ADC-Dienst verfügen soll.  Informationen zu denlink:understanding-adc-service-quorum.html["ADC-Quorum"] .
+
+
+
+ a| 
+Nein, ein oder mehrere Erasure-Coding-Profile benötigen mindestens _n_ Speicherknoten.  Wenn das Profil nicht in einer ILM-Regel verwendet wird, können Sie es deaktivieren.
+ a| 
+*Nur Speicherknoten.* Sie können einen Speicherknoten nicht außer Betrieb nehmen, es sei denn, es bleiben genügend Knoten für die vorhandenen Erasure-Coding-Profile übrig.
+
+Wenn beispielsweise ein Erasure-Coding-Profil für 4+2 Erasure Coding vorhanden ist, müssen mindestens 6 Storage Nodes verbleiben.
+ a| 
+Führen Sie für jedes betroffene Erasure-Coding-Profil einen der folgenden Schritte aus, je nachdem, wie das Profil verwendet wird:
+
+** *Wird in aktiven ILM-Richtlinien verwendet*: Führen Sie eine Erweiterung durch.  Fügen Sie genügend neue Speicherknoten hinzu, um die Erasure Coding-Funktion fortsetzen zu können. Siehe die Anweisungen fürlink:../expand/index.html["Erweitern Sie Ihr Netz"] .
+** *Wird in einer ILM-Regel verwendet, aber nicht in aktiven ILM-Richtlinien*: Bearbeiten oder löschen Sie die Regel und deaktivieren Sie dann das Erasure-Coding-Profil.
+** *Wird in keiner ILM-Regel verwendet*: Deaktivieren Sie das Erasure-Coding-Profil.
+
+
+*Hinweis:* Wenn Sie versuchen, ein Erasure-Coding-Profil zu deaktivieren und dem Profil noch Objektdaten zugeordnet sind, wird eine Fehlermeldung angezeigt.  Möglicherweise müssen Sie mehrere Wochen warten, bevor Sie den Deaktivierungsvorgang erneut versuchen.
+
+Erfahren Sie mehr überlink:../ilm/manage-erasure-coding-profiles.html["Deaktivieren eines Erasure-Coding-Profils"] .
+
+
+
+ a| 
+Nein, Sie können einen Archivknoten nicht außer Betrieb nehmen, es sei denn, die Verbindung zum Knoten wird getrennt.
+ a| 
+Wenn ein Archivknoten noch verbunden ist, können Sie ihn nicht entfernen.
+ a| 
+*Hinweis*: Die Unterstützung für Archivknoten wurde entfernt.  Wenn Sie einen Archivknoten außer Betrieb nehmen müssen, lesen Sie https://docs.netapp.com/us-en/storagegrid-118/maintain/grid-node-decommissioning.html["Außerbetriebnahme von Grid-Knoten (StorageGRID 11.8-Dokumentationsseite)"^]
+
+|===
+

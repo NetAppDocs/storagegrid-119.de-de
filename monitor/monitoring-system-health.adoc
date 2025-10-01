@@ -1,0 +1,259 @@
+---
+permalink: monitor/monitoring-system-health.html 
+sidebar: sidebar 
+keywords: how to monitor system health, how to view system health 
+summary: Überwachen Sie täglich den Gesamtzustand Ihres StorageGRID -Systems. 
+---
+= Überwachen Sie den Systemzustand
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Überwachen Sie täglich den Gesamtzustand Ihres StorageGRID -Systems.
+
+.Informationen zu diesem Vorgang
+Das StorageGRID -System kann weiterbetrieben werden, wenn Teile des Netzes nicht verfügbar sind.  Bei den durch Warnungen angezeigten potenziellen Problemen handelt es sich nicht unbedingt um Probleme mit dem Systembetrieb.  Untersuchen Sie die auf der Integritätsstatuskarte des Grid Manager-Dashboards zusammengefassten Probleme.
+
+Um über Alarme informiert zu werden, sobald diese ausgelöst werden, können Sie https://docs.netapp.com/us-en/storagegrid-appliances/installconfig/setting-up-email-notifications-for-alerts.html["E-Mail-Benachrichtigungen für Warnungen einrichten"^] oderlink:using-snmp-monitoring.html["SNMP-Traps konfigurieren"] .
+
+image::../media/health_status_card.png[Gesundheitsstatuskarte – Dashboard]
+
+Wenn Probleme vorliegen, werden Links angezeigt, über die Sie weitere Details anzeigen können:
+
+[cols="1a,2a"]
+|===
+| Link | Erscheint, wenn... 
+
+
+ a| 
+Rasterdetails
+ a| 
+Alle Knoten sind getrennt (Verbindungsstatus „Unbekannt“ oder „Administrativ deaktiviert“).
+
+
+
+ a| 
+Aktuelle Warnungen (Kritisch, Schwerwiegend, Geringfügig)
+ a| 
+Warnungen sind<<Aktuelle und gelöste Warnmeldungen anzeigen,derzeit aktiv>> .
+
+
+
+ a| 
+Kürzlich gelöste Warnungen
+ a| 
+In der letzten Woche ausgelöste Warnungen<<Aktuelle und gelöste Warnmeldungen anzeigen,sind nun gelöst>> .
+
+
+
+ a| 
+Lizenz
+ a| 
+Es gibt ein Problem mit der Softwarelizenz für dieses StorageGRID -System. Sie können link:../admin/updating-storagegrid-license-information.html["Aktualisieren Sie die Lizenzinformationen nach Bedarf"] .
+
+|===
+
+
+== Überwachen Sie den Verbindungsstatus des Knotens
+
+Wenn ein oder mehrere Knoten vom Netz getrennt werden, können kritische StorageGRID Vorgänge beeinträchtigt werden.  Überwachen Sie den Verbindungsstatus der Knoten und beheben Sie etwaige Probleme umgehend.
+
+[cols="1a,3a,3a"]
+|===
+| Symbol | Beschreibung | Handlungsbedarf 
+
+
+ a| 
+image:../media/icon_alarm_blue_unknown.png["blaues Fragezeichen-Symbol"]
+ a| 
+*Nicht verbunden – Unbekannt*
+
+Aus einem unbekannten Grund wird die Verbindung zu einem Knoten getrennt oder die Dienste auf dem Knoten fallen unerwartet aus.  Beispielsweise könnte ein Dienst auf dem Knoten gestoppt worden sein oder der Knoten könnte aufgrund eines Stromausfalls oder einer unerwarteten Störung seine Netzwerkverbindung verloren haben.
+
+Möglicherweise wird auch die Warnung *Kommunikation mit Knoten nicht möglich* ausgelöst.  Möglicherweise sind auch andere Warnungen aktiv.
+ a| 
+Erfordert sofortige Aufmerksamkeit. <<Aktuelle und gelöste Warnmeldungen anzeigen,Wählen Sie jede Warnung aus>> und befolgen Sie die empfohlenen Maßnahmen.
+
+Beispielsweise müssen Sie möglicherweise einen angehaltenen Dienst neu starten oder den Host für den Knoten neu starten.
+
+*Hinweis*: Während verwalteter Herunterfahrvorgänge kann ein Knoten als „Unbekannt“ angezeigt werden.  In diesen Fällen können Sie den Status „Unbekannt“ ignorieren.
+
+
+
+ a| 
+image:../media/icon_alarm_gray_administratively_down.png["graues Fragezeichensymbol"]
+ a| 
+*Nicht verbunden – Administrator-Ausfall*
+
+Aus einem erwarteten Grund ist der Knoten nicht mit dem Netz verbunden.
+
+Beispielsweise wurde der Knoten oder die Dienste auf dem Knoten ordnungsgemäß heruntergefahren, der Knoten wird neu gestartet oder die Software wird aktualisiert.  Möglicherweise sind auch eine oder mehrere Warnungen aktiv.
+
+Je nach zugrunde liegendem Problem gehen diese Knoten häufig ohne Eingriff wieder online.
+ a| 
+Stellen Sie fest, ob dieser Knoten von Warnungen betroffen ist.
+
+Wenn eine oder mehrere Warnungen aktiv sind,<<Aktuelle und gelöste Warnmeldungen anzeigen,Wählen Sie jeden Alarm aus>> und befolgen Sie die empfohlenen Maßnahmen.
+
+
+
+ a| 
+image:../media/icon_alert_green_checkmark.png["Symbol Alarm grünes Häkchen"]
+ a| 
+*Verbunden*
+
+Der Knoten ist mit dem Netz verbunden.
+ a| 
+Keine Aktion erforderlich.
+
+|===
+
+
+== Aktuelle und gelöste Warnmeldungen anzeigen
+
+*Aktuelle Warnungen*: Wenn eine Warnung ausgelöst wird, wird auf dem Dashboard ein Warnsymbol angezeigt.  Auf der Seite „Knoten“ wird für den Knoten außerdem ein Warnsymbol angezeigt.  Wennlink:email-alert-notifications.html["E-Mail-Benachrichtigungen sind konfiguriert"] , wird auch eine E-Mail-Benachrichtigung gesendet, sofern der Alarm nicht stummgeschaltet wurde.
+
+*Behobene Warnungen*: Sie können einen Verlauf der behobenen Warnungen suchen und anzeigen.
+
+Optional haben Sie das Video angesehen: https://netapp.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=2eea81c5-8323-417f-b0a0-b1ff008506c1["Video: Übersicht über Warnungen"^]
+
+[link=https://netapp.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=2eea81c5-8323-417f-b0a0-b1ff008506c1]
+image::../media/video-screenshot-alert-overview-118.png[Video: Übersicht über Warnungen]
+
+Die folgende Tabelle beschreibt die im Grid Manager angezeigten Informationen für aktuelle und gelöste Warnungen.
+
+[cols="1a,3a"]
+|===
+| Spaltenüberschrift | Beschreibung 
+
+
+ a| 
+Name oder Titel
+ a| 
+Der Name der Warnung und ihre Beschreibung.
+
+
+
+ a| 
+Schwere
+ a| 
+Der Schweregrad der Warnung.  Bei aktuellen Warnungen zeigt die Titelzeile, wenn mehrere Warnungen gruppiert sind, wie viele Instanzen dieser Warnung bei jedem Schweregrad auftreten.
+
+image:../media/icon_alert_red_critical.png["Symbol Alarm Rot Kritisch"]*Kritisch*: Es liegt ein anormaler Zustand vor, der den normalen Betrieb eines StorageGRID Knotens oder -Dienstes gestoppt hat.  Sie müssen das zugrunde liegende Problem sofort angehen.  Wenn das Problem nicht behoben wird, kann es zu Dienstunterbrechungen und Datenverlust kommen.
+
+image:../media/icon_alert_orange_major.png["Symbol Alarm Orange Major"]*Schwerwiegend*: Es liegt ein anormaler Zustand vor, der entweder den aktuellen Betrieb beeinträchtigt oder sich dem Schwellenwert für eine kritische Warnung nähert.  Sie sollten wichtige Warnungen untersuchen und alle zugrunde liegenden Probleme beheben, um sicherzustellen, dass der anormale Zustand den normalen Betrieb eines StorageGRID Knotens oder -Dienstes nicht stoppt.
+
+image:../media/icon_alert_yellow_minor.png["Symbol Warnung Gelb Geringfügig"]*Geringfügig*: Das System funktioniert normal, es liegt jedoch ein anormaler Zustand vor, der die Funktionsfähigkeit des Systems beeinträchtigen könnte, wenn er anhält.  Sie sollten kleinere Warnungen, die nicht von selbst verschwinden, überwachen und beheben, um sicherzustellen, dass sie nicht zu einem ernsteren Problem führen.
+
+
+
+ a| 
+Zeitgesteuert
+ a| 
+*Aktuelle Warnungen*: Datum und Uhrzeit der Auslösung der Warnung in Ihrer Ortszeit und in UTC.  Wenn mehrere Warnungen gruppiert sind, zeigt die Titelzeile die Zeiten für die jüngste Instanz der Warnung (_neueste_) und die älteste Instanz der Warnung (_älteste_) an.
+
+*Behobene Warnungen*: Wie lange es her ist, dass die Warnung ausgelöst wurde.
+
+
+
+ a| 
+Site/Knoten
+ a| 
+Der Name der Site und des Knotens, an dem der Alarm auftritt oder aufgetreten ist.
+
+
+
+ a| 
+Status
+ a| 
+Ob der Alarm aktiv, stummgeschaltet oder behoben ist.  Wenn mehrere Warnungen gruppiert sind und im Dropdown-Menü „Alle Warnungen“ ausgewählt ist, zeigt die Titelzeile an, wie viele Instanzen dieser Warnung aktiv sind und wie viele Instanzen stummgeschaltet wurden.
+
+
+
+ a| 
+Zeit bis zur Lösung (nur gelöste Warnungen)
+ a| 
+Wie lange es her ist, dass die Warnung behoben wurde.
+
+
+
+ a| 
+Aktuelle Werte oder _Datenwerte_
+ a| 
+Der Wert der Metrik, die zur Auslösung der Warnung geführt hat.  Bei einigen Warnungen werden zusätzliche Werte angezeigt, die Ihnen helfen, die Warnung zu verstehen und zu untersuchen.  Die für die Warnung *Geringer Objektdatenspeicher* angezeigten Werte umfassen beispielsweise den Prozentsatz des verwendeten Speicherplatzes, die Gesamtmenge des Speicherplatzes und die Menge des verwendeten Speicherplatzes.
+
+*Hinweis:* Wenn mehrere aktuelle Warnungen gruppiert sind, werden die aktuellen Werte nicht in der Titelzeile angezeigt.
+
+
+
+ a| 
+Ausgelöste Werte (nur gelöste Warnungen)
+ a| 
+Der Wert der Metrik, die zur Auslösung der Warnung geführt hat.  Bei einigen Warnungen werden zusätzliche Werte angezeigt, die Ihnen helfen, die Warnung zu verstehen und zu untersuchen.  Die für die Warnung *Geringer Objektdatenspeicher* angezeigten Werte umfassen beispielsweise den Prozentsatz des verwendeten Speicherplatzes, die Gesamtmenge des Speicherplatzes und die Menge des verwendeten Speicherplatzes.
+
+|===
+.Schritte
+. Wählen Sie den Link *Aktuelle Warnungen* oder *Behobene Warnungen* aus, um eine Liste der Warnungen in diesen Kategorien anzuzeigen.  Sie können die Details einer Warnung auch anzeigen, indem Sie *Knoten* > *_Knoten_* > *Übersicht* auswählen und dann die Warnung aus der Tabelle „Warnungen“ auswählen.
++
+Aktuelle Warnungen werden standardmäßig wie folgt angezeigt:
+
++
+** Die zuletzt ausgelösten Warnungen werden zuerst angezeigt.
+** Mehrere Warnungen desselben Typs werden als Gruppe angezeigt.
+** Stummgeschaltete Warnungen werden nicht angezeigt.
+** Wenn für eine bestimmte Warnung auf einem bestimmten Knoten die Schwellenwerte für mehr als einen Schweregrad erreicht werden, wird nur die Warnung mit dem höchsten Schweregrad angezeigt.  Das heißt, wenn Warnschwellenwerte für die Schweregrade „geringfügig“, „schwerwiegend“ und „kritisch“ erreicht werden, wird nur die kritische Warnung angezeigt.
++
+Die Seite „Aktuelle Warnungen“ wird alle zwei Minuten aktualisiert.
+
+
+
+. Um Gruppen von Warnungen zu erweitern, wählen Sie das Abwärtspfeilzeichenimage:../media/icon_alert_caret_down.png["Pfeilsymbol nach unten"] .  Um einzelne Warnungen in einer Gruppe auszublenden, wählen Sie das Aufwärts-Caretimage:../media/icon_alert_caret_up.png["Pfeilsymbol nach oben"] , oder wählen Sie den Namen der Gruppe aus.
+. Um einzelne Warnungen statt Warnungsgruppen anzuzeigen, deaktivieren Sie das Kontrollkästchen *Warnungen gruppieren*.
+. Um aktuelle Warnungen oder Warnungsgruppen zu sortieren, wählen Sie die Aufwärts-/Abwärtspfeileimage:../media/icon_alert_sort_column.png["Symbol „Sortierpfeile“"] in jeder Spaltenüberschrift.
++
+** Wenn *Gruppenwarnungen* ausgewählt ist, werden sowohl die Warnungsgruppen als auch die einzelnen Warnungen innerhalb jeder Gruppe sortiert.  Beispielsweise möchten Sie möglicherweise die Warnungen in einer Gruppe nach *Auslösezeit* sortieren, um die aktuellste Instanz einer bestimmten Warnung zu finden.
+** Wenn *Gruppenwarnungen* gelöscht wird, wird die gesamte Liste der Warnungen sortiert.  Sie möchten beispielsweise möglicherweise alle Warnungen nach *Knoten/Site* sortieren, um alle Warnungen anzuzeigen, die einen bestimmten Knoten betreffen.
+
+
+. Um aktuelle Warnungen nach Status (*Alle Warnungen*, *Aktiv* oder *Stummgeschaltet*) zu filtern, verwenden Sie das Dropdown-Menü oben in der Tabelle.
++
+Sehen link:silencing-alert-notifications.html["Warnmeldungen stummschalten"] .
+
+. So sortieren Sie gelöste Warnungen:
++
+** Wählen Sie einen Zeitraum aus dem Dropdown-Menü *Bei Auslösung* aus.
+** Wählen Sie einen oder mehrere Schweregrade aus dem Dropdown-Menü *Schweregrad* aus.
+** Wählen Sie aus dem Dropdown-Menü *Alarmregel* eine oder mehrere standardmäßige oder benutzerdefinierte Alarmregeln aus, um nach gelösten Alarmen zu filtern, die sich auf eine bestimmte Alarmregel beziehen.
+** Wählen Sie einen oder mehrere Knoten aus dem Dropdown-Menü *Knoten* aus, um nach gelösten Warnungen zu filtern, die sich auf einen bestimmten Knoten beziehen.
+
+
+. Um Details zu einer bestimmten Warnung anzuzeigen, wählen Sie die Warnung aus.  Ein Dialogfeld enthält Details und empfohlene Maßnahmen für die von Ihnen ausgewählte Warnung.
+. (Optional) Wählen Sie für eine bestimmte Warnung „Diese Warnung stummschalten“ aus, um die Warnungsregel stummzuschalten, die die Auslösung dieser Warnung verursacht hat.
++
+Sie müssen über dielink:../admin/admin-group-permissions.html["Verwalten von Warnungen oder Root-Zugriffsberechtigungen"] um eine Warnregel stummzuschalten.
+
++
+
+CAUTION: Seien Sie vorsichtig, wenn Sie sich entscheiden, eine Warnregel stummzuschalten.  Wenn eine Warnregel stummgeschaltet wird, erkennen Sie ein zugrunde liegendes Problem möglicherweise erst, wenn es die Ausführung eines kritischen Vorgangs verhindert.
+
+. So zeigen Sie die aktuellen Bedingungen für die Warnregel an:
++
+.. Wählen Sie in den Alarmdetails *Bedingungen anzeigen* aus.
++
+Es wird ein Popup-Fenster angezeigt, in dem der Prometheus-Ausdruck für jeden definierten Schweregrad aufgelistet ist.
+
+.. Um das Popup zu schließen, klicken Sie irgendwo außerhalb des Popups.
+
+
+. Wählen Sie optional *Regel bearbeiten* aus, um die Warnregel zu bearbeiten, die zur Auslösung dieser Warnung geführt hat.
++
+Sie müssen über dielink:../admin/admin-group-permissions.html["Verwalten von Warnungen oder Root-Zugriffsberechtigungen"] , um eine Warnregel zu bearbeiten.
+
++
+
+CAUTION: Seien Sie vorsichtig, wenn Sie sich entscheiden, eine Warnregel zu bearbeiten.  Wenn Sie Triggerwerte ändern, erkennen Sie ein zugrunde liegendes Problem möglicherweise erst, wenn es die Ausführung eines kritischen Vorgangs verhindert.
+
+. Um die Alarmdetails zu schließen, wählen Sie *Schließen*.
+

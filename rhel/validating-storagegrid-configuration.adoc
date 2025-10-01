@@ -1,0 +1,34 @@
+---
+permalink: rhel/validating-storagegrid-configuration.html 
+sidebar: sidebar 
+keywords: how to validate red hat linux configuration 
+summary: Nachdem Sie für jeden Ihrer StorageGRID Knoten Konfigurationsdateien in /etc/storagegrid/nodes erstellt haben, müssen Sie den Inhalt dieser Dateien validieren. 
+---
+= Validieren der StorageGRID -Konfiguration
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Nach dem Erstellen von Konfigurationsdateien in `/etc/storagegrid/nodes` Für jeden Ihrer StorageGRID Knoten müssen Sie den Inhalt dieser Dateien validieren.
+
+Um den Inhalt der Konfigurationsdateien zu validieren, führen Sie auf jedem Host den folgenden Befehl aus:
+
+[listing]
+----
+sudo storagegrid node validate all
+----
+Wenn die Dateien korrekt sind, zeigt die Ausgabe für jede Konfigurationsdatei *PASSED* an, wie im Beispiel gezeigt.
+
+
+NOTE: Wenn Sie auf Nur-Metadaten-Knoten nur eine LUN verwenden, erhalten Sie möglicherweise eine Warnmeldung, die ignoriert werden kann.
+
+image::../media/rhel_node_configuration_file_output.gif[Dieses Bild wird durch den umgebenden Text erklärt.]
+
+
+TIP: Bei einer automatisierten Installation können Sie diese Ausgabe unterdrücken, indem Sie den `-q` oder `--quiet` Optionen in der `storagegrid` Befehl (zum Beispiel `storagegrid --quiet...` ).  Wenn Sie die Ausgabe unterdrücken, hat der Befehl einen Exit-Wert ungleich Null, wenn Konfigurationswarnungen oder -fehler erkannt wurden.
+
+Wenn die Konfigurationsdateien fehlerhaft sind, werden die Probleme wie im Beispiel gezeigt als *WARNUNG* und *FEHLER* angezeigt.  Wenn Konfigurationsfehler gefunden werden, müssen Sie diese beheben, bevor Sie mit der Installation fortfahren.
+
+image::../media/rhel_node_configuration_file_output_with_errors.gif[Dieses Bild wird durch den umgebenden Text erklärt.]

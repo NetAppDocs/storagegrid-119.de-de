@@ -1,0 +1,36 @@
+---
+permalink: network/network-installation-and-provisioning.html 
+sidebar: sidebar 
+keywords: network install, network provisioning 
+summary: Sie müssen verstehen, wie das Grid-Netzwerk und die optionalen Admin- und Client-Netzwerke während der Knotenbereitstellung und Grid-Konfiguration verwendet werden. 
+---
+= Netzwerkinstallation und -bereitstellung
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Sie müssen verstehen, wie das Grid-Netzwerk und die optionalen Admin- und Client-Netzwerke während der Knotenbereitstellung und Grid-Konfiguration verwendet werden.
+
+
+
+== Erstmalige Bereitstellung eines Knotens
+
+Wenn Sie einen Knoten zum ersten Mal bereitstellen, müssen Sie den Knoten an das Grid-Netzwerk anschließen und sicherstellen, dass er Zugriff auf den primären Admin-Knoten hat.  Wenn das Grid-Netzwerk isoliert ist, können Sie das Admin-Netzwerk auf dem primären Admin-Knoten für den Konfigurations- und Installationszugriff von außerhalb des Grid-Netzwerks konfigurieren.
+
+Ein Grid-Netzwerk mit konfiguriertem Gateway wird während der Bereitstellung zum Standard-Gateway für einen Knoten.  Das Standard-Gateway ermöglicht Grid-Knoten in separaten Subnetzen die Kommunikation mit dem primären Admin-Knoten, bevor das Grid konfiguriert wurde.
+
+Bei Bedarf können auch Subnetze, die NTP-Server enthalten oder Zugriff auf den Grid Manager oder die API benötigen, als Grid-Subnetze konfiguriert werden.
+
+
+
+== Automatische Knotenregistrierung mit primärem Admin-Knoten
+
+Nachdem die Knoten bereitgestellt wurden, registrieren sie sich über das Grid-Netzwerk beim primären Admin-Knoten.  Anschließend können Sie den Grid Manager, den `configure-storagegrid.py` Python-Skript oder die Installations-API zum Konfigurieren des Rasters und Genehmigen der registrierten Knoten.  Während der Grid-Konfiguration können Sie mehrere Grid-Subnetze konfigurieren.  Wenn Sie die Grid-Konfiguration abschließen, werden auf jedem Knoten statische Routen zu diesen Subnetzen über das Grid-Netzwerk-Gateway erstellt.
+
+
+
+== Deaktivieren des Admin-Netzwerks oder Client-Netzwerks
+
+Wenn Sie das Admin-Netzwerk oder das Client-Netzwerk deaktivieren möchten, können Sie die Konfiguration während des Knotengenehmigungsprozesses entfernen oder nach Abschluss der Installation das Tool „IP ändern“ verwenden (siehelink:../maintain/configuring-ip-addresses.html["Konfigurieren von IP-Adressen"] ).

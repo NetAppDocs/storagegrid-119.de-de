@@ -1,0 +1,20 @@
+---
+permalink: monitor/viewing-platform-services-tab.html 
+sidebar: sidebar 
+keywords: platform services tab 
+summary: Die Registerkarte „Plattformdienste“ bietet Informationen zu allen S3-Plattformdienstvorgängen an einem Standort. 
+---
+= Registerkarte „Plattformdienste“ anzeigen
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Die Registerkarte „Plattformdienste“ bietet Informationen zu allen S3-Plattformdienstvorgängen an einem Standort.
+
+Die Registerkarte „Plattformdienste“ wird für jede Site angezeigt.  Diese Registerkarte bietet Informationen zu S3-Plattformdiensten, wie z. B. CloudMirror-Replikation und Suchintegrationsdienst.  Die Diagramme auf dieser Registerkarte zeigen Kennzahlen wie die Anzahl ausstehender Anfragen, die Anfrageabschlussrate und die Anfragefehlerrate an.
+
+image::../media/nodes_page_site_level_platform_services.gif[Plattformdienste auf Site-Ebene der Knotenseite]
+
+Weitere Informationen zu den S3-Plattformdiensten, einschließlich Details zur Fehlerbehebung, finden Sie imlink:../admin/index.html["Anweisungen zur Administration von StorageGRID"] .

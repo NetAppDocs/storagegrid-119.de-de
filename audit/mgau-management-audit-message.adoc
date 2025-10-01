@@ -1,0 +1,134 @@
+---
+permalink: audit/mgau-management-audit-message.html 
+sidebar: sidebar 
+keywords: storagegrid, audit, message, MGAU, Management audit message 
+summary: Die Kategorie „Verwaltung“ protokolliert Benutzeranforderungen an die Verwaltungs-API.  Jede Anfrage, die keine GET- oder HEAD-Anfrage an die API ist, protokolliert eine Antwort mit dem Benutzernamen, der IP und dem Anfragetyp an die API. 
+---
+= MGAU: Management-Audit-Nachricht
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Die Kategorie „Verwaltung“ protokolliert Benutzeranforderungen an die Verwaltungs-API.  Jede HTTP-Anforderung, die keine GET- oder HEAD-Anforderung an eine gültige API-URI ist, protokolliert eine Antwort, die den Benutzernamen, die IP und den Anforderungstyp an die API enthält.  Ungültige API-URIs (wie z. B. /api/v3-authorize) und ungültige Anfragen an gültige API-URIs werden nicht protokolliert.
+
+[cols="1a,1a,4a"]
+|===
+| Code | Feld | Beschreibung 
+
+
+ a| 
+MDIP
+ a| 
+Ziel-IP-Adresse
+ a| 
+Die IP-Adresse des Servers (Ziel).
+
+
+
+ a| 
+MDNA
+ a| 
+Domänenname
+ a| 
+Der Hostdomänenname.
+
+
+
+ a| 
+MPAT
+ a| 
+PATH anfordern
+ a| 
+Der Anforderungspfad.
+
+
+
+ a| 
+MPQP
+ a| 
+Abfrageparameter anfordern
+ a| 
+Die Abfrageparameter für die Anfrage.
+
+
+
+ a| 
+MRBD
+ a| 
+Anforderungstext
+ a| 
+Der Inhalt des Anforderungstexts.  Während der Antworttext standardmäßig protokolliert wird, wird der Anforderungstext in bestimmten Fällen protokolliert, wenn der Antworttext leer ist.  Da die folgenden Informationen im Antworttext nicht verfügbar sind, werden sie für die folgenden POST-Methoden aus dem Anforderungstext übernommen:
+
+* Benutzername und Konto-ID in *POST-Autorisierung*
+* Neue Subnetzkonfiguration in *POST /grid/grid-networks/update*
+* Neue NTP-Server in *POST /grid/ntp-servers/update*
+* Außer Betrieb genommene Server-IDs in *POST /grid/servers/decommission*
+
+
+*Hinweis:* Vertrauliche Informationen werden entweder gelöscht (z. B. ein S3-Zugriffsschlüssel) oder mit Sternchen maskiert (z. B. ein Passwort).
+
+
+
+ a| 
+MRMD
+ a| 
+Anforderungsmethode
+ a| 
+Die HTTP-Anforderungsmethode:
+
+* POST
+* SETZEN
+* LÖSCHEN
+* PATCH
+
+
+
+
+ a| 
+MRSC
+ a| 
+Antwortcode
+ a| 
+Der Antwortcode.
+
+
+
+ a| 
+UVP
+ a| 
+Antworttext
+ a| 
+Der Inhalt der Antwort (der Antworttext) wird standardmäßig protokolliert.
+
+*Hinweis:* Vertrauliche Informationen werden entweder gelöscht (z. B. ein S3-Zugriffsschlüssel) oder mit Sternchen maskiert (z. B. ein Passwort).
+
+
+
+ a| 
+MSIP
+ a| 
+Quell-IP-Adresse
+ a| 
+Die IP-Adresse des Clients (Quelle).
+
+
+
+ a| 
+MUUN
+ a| 
+Benutzer-URN
+ a| 
+Der URN (Uniform Resource Name) des Benutzers, der die Anfrage gesendet hat.
+
+
+
+ a| 
+RSLT
+ a| 
+Ergebnis
+ a| 
+Gibt „Erfolgreich“ (SUCS) oder den vom Backend gemeldeten Fehler zurück.
+
+|===

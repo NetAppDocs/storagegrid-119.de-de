@@ -1,0 +1,247 @@
+---
+permalink: s3/put-object.html 
+sidebar: sidebar 
+keywords: object, add object, put, PutObject request 
+summary: Sie können die S3 PutObject-Anforderung verwenden, um einem Bucket ein Objekt hinzuzufügen. 
+---
+= PutObject
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Sie können die S3 PutObject-Anforderung verwenden, um einem Bucket ein Objekt hinzuzufügen.
+
+
+
+== Konflikte lösen
+
+Widersprüchliche Clientanforderungen, beispielsweise wenn zwei Clients auf denselben Schlüssel schreiben, werden nach dem Prinzip „Latest Wins“ gelöst.  Der Zeitpunkt für die Auswertung der „Latest Wins“ basiert darauf, wann das StorageGRID -System eine bestimmte Anfrage abschließt, und nicht darauf, wann S3-Clients einen Vorgang beginnen.
+
+
+
+== Objektgröße
+
+Die maximal _empfohlene_ Größe für einen einzelnen PutObject-Vorgang beträgt 5 GiB (5.368.709.120 Bytes).  Wenn Sie Objekte haben, die größer als 5 GiB sind, verwenden Sielink:operations-for-multipart-uploads.html["mehrteiliger Upload"] stattdessen.
+
+Die maximal _unterstützte_ Größe für einen einzelnen PutObject-Vorgang beträgt 5 TiB (5.497.558.138.880 Bytes).
+
+
+NOTE: Wenn Sie ein Upgrade von StorageGRID 11.6 oder früher durchgeführt haben, wird die Warnung „S3 PUT-Objektgröße zu groß“ ausgelöst, wenn Sie versuchen, ein Objekt hochzuladen, das 5 GiB überschreitet.  Wenn Sie eine Neuinstallation von StorageGRID 11.7 oder 11.8 haben, wird der Alarm in diesem Fall nicht ausgelöst.  Um jedoch dem AWS S3-Standard zu entsprechen, werden zukünftige Versionen von StorageGRID keine Uploads von Objekten unterstützen, die größer als 5 GiB sind.
+
+
+
+== Größe der Benutzermetadaten
+
+Amazon S3 begrenzt die Größe benutzerdefinierter Metadaten innerhalb jedes PUT-Anforderungsheaders auf 2 KB.  StorageGRID begrenzt Benutzermetadaten auf 24 KiB.  Die Größe benutzerdefinierter Metadaten wird gemessen, indem die Summe der Anzahl der Bytes in der UTF-8-Kodierung jedes Schlüssels und Werts berechnet wird.
+
+
+
+== UTF-8-Zeichen in Benutzermetadaten
+
+Wenn eine Anfrage (nicht maskierte) UTF-8-Werte im Schlüsselnamen oder Wert benutzerdefinierter Metadaten enthält, ist das StorageGRID Verhalten undefiniert.
+
+StorageGRID analysiert oder interpretiert keine Escape-UTF-8-Zeichen, die im Schlüsselnamen oder -wert benutzerdefinierter Metadaten enthalten sind.  Escape-UTF-8-Zeichen werden als ASCII-Zeichen behandelt:
+
+* PutObject-, CopyObject-, GetObject- und HeadObject-Anfragen sind erfolgreich, wenn benutzerdefinierte Metadaten Escape-UTF-8-Zeichen enthalten.
+* StorageGRID gibt nicht zurück `x-amz-missing-meta` Header, wenn der interpretierte Wert des Schlüsselnamens oder -werts nicht druckbare Zeichen enthält.
+
+
+
+
+== Objekt-Tag-Grenzwerte
+
+Sie können neuen Objekten beim Hochladen Tags hinzufügen oder Sie können sie vorhandenen Objekten hinzufügen.  Sowohl StorageGRID als auch Amazon S3 unterstützen bis zu 10 Tags für jedes Objekt.  Mit einem Objekt verknüpfte Tags müssen eindeutige Tag-Schlüssel haben.  Ein Tag-Schlüssel kann bis zu 128 Unicode-Zeichen lang sein und Tag-Werte können bis zu 256 Unicode-Zeichen lang sein.  Bei Schlüsseln und Werten wird zwischen Groß- und Kleinschreibung unterschieden.
+
+
+
+== Objektbesitz
+
+In StorageGRID sind alle Objekte Eigentum des Bucket-Eigentümerkontos, einschließlich der Objekte, die von einem Nicht-Eigentümerkonto oder einem anonymen Benutzer erstellt wurden.
+
+
+
+== Unterstützte Anforderungsheader
+
+Die folgenden Anforderungsheader werden unterstützt:
+
+* `Cache-Control`
+* `Content-Disposition`
+* `Content-Encoding`
++
+Wenn Sie angeben `aws-chunked` für``Content-Encoding`` StorageGRID überprüft die folgenden Punkte nicht:
+
++
+** StorageGRID überprüft nicht die `chunk-signature` gegen die Chunk-Daten.
+** StorageGRID überprüft den Wert, den Sie angeben, nicht für `x-amz-decoded-content-length` gegen das Objekt.
+
+
+* `Content-Language`
+* `Content-Length`
+* `Content-MD5`
+* `Content-Type`
+* `Expires`
+* `Transfer-Encoding`
++
+Chunked Transfer Encoding wird unterstützt, wenn `aws-chunked` Außerdem wird eine Nutzlastsignatur verwendet.
+
+* `x-amz-checksum-sha256`
+* `x-amz-meta-`, gefolgt von einem Name-Wert-Paar mit benutzerdefinierten Metadaten.
++
+Verwenden Sie beim Angeben des Name-Wert-Paares für benutzerdefinierte Metadaten dieses allgemeine Format:
+
++
+[listing, subs="specialcharacters,quotes"]
+----
+x-amz-meta-_name_: _value_
+----
++
+Wenn Sie die Option *Benutzerdefinierte Erstellungszeit* als Referenzzeit für eine ILM-Regel verwenden möchten, müssen Sie `creation-time` als Name der Metadaten, die aufzeichnen, wann das Objekt erstellt wurde. Beispiel:
+
++
+[listing]
+----
+x-amz-meta-creation-time: 1443399726
+----
++
+Der Wert für `creation-time` wird seit dem 1. Januar 1970 in Sekunden ausgewertet.
+
++
+
+NOTE: Eine ILM-Regel kann nicht sowohl eine *benutzerdefinierte Erstellungszeit* für die Referenzzeit als auch die Aufnahmeoption „Ausgewogen“ oder „Streng“ verwenden.  Beim Erstellen der ILM-Regel wird ein Fehler zurückgegeben.
+
+* `x-amz-tagging`
+* S3 Object Lock-Anforderungsheader
++
+** `x-amz-object-lock-mode`
+** `x-amz-object-lock-retain-until-date`
+** `x-amz-object-lock-legal-hold`
++
+Wenn eine Anfrage ohne diese Header gestellt wird, werden die Bucket-Standardaufbewahrungseinstellungen verwendet, um den Objektversionsmodus und das Aufbewahrungsdatum zu berechnen. Sehen link:../s3/use-s3-api-for-s3-object-lock.html["Verwenden Sie die S3 REST API, um S3 Object Lock zu konfigurieren"] .
+
+
+
+* SSE-Anforderungsheader:
++
+** `x-amz-server-side-encryption`
+** `x-amz-server-side-encryption-customer-key-MD5`
+** `x-amz-server-side-encryption-customer-key`
+** `x-amz-server-side-encryption-customer-algorithm`
++
+Sehen<<Anforderungsheader für serverseitige Verschlüsselung>>
+
+
+
+
+
+
+
+== Nicht unterstützte Anforderungsheader
+
+Die folgenden Anforderungsheader werden nicht unterstützt:
+
+* `x-amz-acl`
+* `x-amz-sdk-checksum-algorithm`
+* `x-amz-trailer`
+* `x-amz-website-redirect-location`
++
+Der `x-amz-website-redirect-location` Header-Returns `XNotImplemented` .
+
+
+
+
+
+== Speicherklassenoptionen
+
+Der `x-amz-storage-class` Anforderungsheader wird unterstützt.  Der übermittelte Wert für `x-amz-storage-class` beeinflusst, wie StorageGRID Objektdaten während der Aufnahme schützt, und nicht, wie viele persistente Kopien des Objekts im StorageGRID -System gespeichert werden (was durch ILM bestimmt wird).
+
+Wenn die ILM-Regel, die einem aufgenommenen Objekt entspricht, die Option „Strenge Aufnahme“ verwendet, `x-amz-storage-class` Header hat keine Wirkung.
+
+Folgende Werte können verwendet werden für `x-amz-storage-class` :
+
+* `STANDARD`(Standard)
++
+** *Dual Commit*: Wenn die ILM-Regel die Option „Dual Commit“ für das Aufnahmeverhalten angibt, wird, sobald ein Objekt aufgenommen wird, eine zweite Kopie dieses Objekts erstellt und an einen anderen Speicherknoten verteilt (Dual Commit).  Bei der Auswertung des ILM ermittelt StorageGRID , ob diese ersten Zwischenkopien die Platzierungsanweisungen in der Regel erfüllen.  Ist dies nicht der Fall, müssen möglicherweise neue Objektkopien an anderen Orten erstellt und die ersten Zwischenkopien gelöscht werden.
+** *Ausgeglichen*: Wenn die ILM-Regel die Option „Ausgeglichen“ angibt und StorageGRID nicht sofort alle in der Regel angegebenen Kopien erstellen kann, erstellt StorageGRID zwei Zwischenkopien auf verschiedenen Speicherknoten.
++
+Wenn StorageGRID alle in der ILM-Regel angegebenen Objektkopien sofort erstellen kann (synchrone Platzierung), `x-amz-storage-class` Header hat keine Wirkung.
+
+
+
+* `REDUCED_REDUNDANCY`
++
+** *Dual Commit*: Wenn die ILM-Regel die Option „Dual Commit“ für das Aufnahmeverhalten angibt, erstellt StorageGRID beim Aufnehmen des Objekts eine einzelne Zwischenkopie (Single Commit).
+** *Ausgeglichen*: Wenn die ILM-Regel die Option „Ausgeglichen“ angibt, erstellt StorageGRID nur dann eine einzelne Zwischenkopie, wenn das System nicht sofort alle in der Regel angegebenen Kopien erstellen kann.  Wenn StorageGRID eine synchrone Platzierung durchführen kann, hat dieser Header keine Wirkung.  Der `REDUCED_REDUNDANCY` Die Option wird am besten verwendet, wenn die ILM-Regel, die dem Objekt entspricht, eine einzelne replizierte Kopie erstellt.  In diesem Fall mit `REDUCED_REDUNDANCY` vermeidet das unnötige Erstellen und Löschen einer zusätzlichen Objektkopie für jeden Aufnahmevorgang.
+
+
++
+Verwenden des `REDUCED_REDUNDANCY` Unter anderen Umständen wird diese Option nicht empfohlen. `REDUCED_REDUNDANCY` erhöht das Risiko eines Objektdatenverlusts während der Aufnahme.  Beispielsweise können Daten verloren gehen, wenn die einzelne Kopie zunächst auf einem Speicherknoten gespeichert wird, der ausfällt, bevor die ILM-Auswertung erfolgen kann.
+
+
+
+
+CAUTION: Wenn für einen bestimmten Zeitraum nur eine Kopie vorhanden ist, besteht die Gefahr eines dauerhaften Datenverlusts.  Wenn nur eine replizierte Kopie eines Objekts vorhanden ist, geht dieses Objekt verloren, wenn ein Speicherknoten ausfällt oder einen schwerwiegenden Fehler aufweist.  Auch während Wartungsvorgängen wie Upgrades verlieren Sie vorübergehend den Zugriff auf das Objekt.
+
+Festlegen `REDUCED_REDUNDANCY` wirkt sich nur darauf aus, wie viele Kopien erstellt werden, wenn ein Objekt zum ersten Mal aufgenommen wird.  Es hat keinen Einfluss darauf, wie viele Kopien des Objekts erstellt werden, wenn das Objekt von den aktiven ILM-Richtlinien ausgewertet wird, und führt nicht dazu, dass Daten im StorageGRID System auf niedrigeren Redundanzebenen gespeichert werden.
+
+
+NOTE: Wenn Sie ein Objekt in einen Bucket mit aktivierter S3-Objektsperre aufnehmen, wird die `REDUCED_REDUNDANCY` Option wird ignoriert.  Wenn Sie ein Objekt in einen Legacy-Compliant-Bucket aufnehmen, `REDUCED_REDUNDANCY` Option gibt einen Fehler zurück.  StorageGRID führt immer eine Dual-Commit-Aufnahme durch, um sicherzustellen, dass die Compliance-Anforderungen erfüllt werden.
+
+
+
+== Anforderungsheader für serverseitige Verschlüsselung
+
+Sie können die folgenden Anforderungsheader verwenden, um ein Objekt mit serverseitiger Verschlüsselung zu verschlüsseln.  Die Optionen SSE und SSE-C schließen sich gegenseitig aus.
+
+* *SSE*: Verwenden Sie den folgenden Header, wenn Sie das Objekt mit einem eindeutigen, von StorageGRID verwalteten Schlüssel verschlüsseln möchten.
++
+** `x-amz-server-side-encryption`
++
+Wenn die `x-amz-server-side-encryption` Header ist nicht in der PutObject-Anforderung enthalten, der rasterweitelink:../admin/changing-network-options-object-encryption.html["Einstellung für die Verschlüsselung gespeicherter Objekte"] wird aus der PutObject-Antwort weggelassen.
+
+
+
+* *SSE-C*: Verwenden Sie alle drei Header, wenn Sie das Objekt mit einem eindeutigen Schlüssel verschlüsseln möchten, den Sie bereitstellen und verwalten.
++
+** `x-amz-server-side-encryption-customer-algorithm`: Angeben `AES256` .
+** `x-amz-server-side-encryption-customer-key`: Geben Sie Ihren Verschlüsselungsschlüssel für das neue Objekt an.
+** `x-amz-server-side-encryption-customer-key-MD5`: Geben Sie den MD5-Digest des Verschlüsselungsschlüssels des neuen Objekts an.
+
+
+
+
+
+CAUTION: Die von Ihnen bereitgestellten Verschlüsselungsschlüssel werden niemals gespeichert.  Wenn Sie einen Verschlüsselungsschlüssel verlieren, verlieren Sie das entsprechende Objekt.  Bevor Sie vom Kunden bereitgestellte Schlüssel zum Sichern von Objektdaten verwenden, lesen Sie die Überlegungen fürlink:using-server-side-encryption.html["Verwendung serverseitiger Verschlüsselung"] .
+
+
+NOTE: Wenn ein Objekt mit SSE oder SSE-C verschlüsselt ist, werden alle Verschlüsselungseinstellungen auf Bucket- oder Grid-Ebene ignoriert.
+
+
+
+== Versionierung
+
+Wenn die Versionierung für einen Bucket aktiviert ist, `versionId` wird automatisch für die Version des gespeicherten Objekts generiert.  Das `versionId` wird auch in der Antwort zurückgegeben, indem der `x-amz-version-id` Antwortheader.
+
+Wenn die Versionierung ausgesetzt ist, wird die Objektversion mit einem Nullwert gespeichert. `versionId` und wenn bereits eine Nullversion vorhanden ist, wird diese überschrieben.
+
+
+
+== Signaturberechnungen für den Autorisierungsheader
+
+Bei Verwendung der `Authorization` Header zur Authentifizierung von Anfragen. StorageGRID unterscheidet sich in folgenden Punkten von AWS:
+
+* StorageGRID erfordert nicht `host` Header, die in `CanonicalHeaders` .
+* StorageGRID erfordert nicht `Content-Type` eingeschlossen sein in `CanonicalHeaders` .
+* StorageGRID erfordert nicht `x-amz-*` Header, die in `CanonicalHeaders` .
+
+
+
+NOTE: Als allgemeine Best Practice sollten Sie diese Header immer in `CanonicalHeaders` um sicherzustellen, dass sie überprüft werden. Wenn Sie diese Header jedoch ausschließen, gibt StorageGRID keinen Fehler zurück.
+
+Weitere Einzelheiten finden Sie unter https://docs.aws.amazon.com/AmazonS3/latest/API/sig-v4-header-based-auth.html["Signaturberechnungen für den Autorisierungsheader: Übertragen der Nutzlast in einem einzigen Block (AWS-Signaturversion 4)"^] .
+
+.Ähnliche Informationen
+* link:../ilm/index.html["Objekte mit ILM verwalten"]
+* link:https://docs.aws.amazon.com/AmazonS3/latest/API/API_PutObject.html["Amazon Simple Storage Service API-Referenz: PutObject"^]
+

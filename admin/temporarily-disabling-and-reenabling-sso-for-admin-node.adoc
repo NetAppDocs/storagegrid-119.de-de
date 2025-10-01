@@ -1,0 +1,86 @@
+---
+permalink: admin/temporarily-disabling-and-reenabling-sso-for-admin-node.html 
+sidebar: sidebar 
+keywords: signing in when sso is down, single sign on failure 
+summary: 'Wenn das Single Sign-On-System (SSO) ausfällt, können Sie sich möglicherweise nicht beim Grid Manager anmelden.  In diesem Fall können Sie SSO für einen Admin-Knoten vorübergehend deaktivieren und wieder aktivieren.  Um SSO zu deaktivieren und anschließend wieder zu aktivieren, müssen Sie auf die Befehlsshell des Knotens zugreifen.' 
+---
+= Deaktivieren und aktivieren Sie Single Sign-On für einen Admin-Knoten vorübergehend.
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Wenn das Single Sign-On-System (SSO) ausfällt, können Sie sich möglicherweise nicht beim Grid Manager anmelden.  In diesem Fall können Sie SSO für einen Admin-Knoten vorübergehend deaktivieren und wieder aktivieren.  Um SSO zu deaktivieren und anschließend wieder zu aktivieren, müssen Sie auf die Befehlsshell des Knotens zugreifen.
+
+.Bevor Sie beginnen
+* Du hastlink:admin-group-permissions.html["spezifische Zugriffsberechtigungen"] .
+* Sie haben die `Passwords.txt` Datei.
+* Sie kennen das Passwort für den lokalen Root-Benutzer.
+
+
+.Informationen zu diesem Vorgang
+Nachdem Sie SSO für einen Admin-Knoten deaktiviert haben, können Sie sich als lokaler Root-Benutzer beim Grid Manager anmelden.  Um Ihr StorageGRID -System zu sichern, müssen Sie die Befehlsshell des Knotens verwenden, um SSO auf dem Admin-Knoten wieder zu aktivieren, sobald Sie sich abmelden.
+
+
+TIP: Das Deaktivieren von SSO für einen Admin-Knoten hat keine Auswirkungen auf die SSO-Einstellungen für andere Admin-Knoten im Raster.  Das Kontrollkästchen *SSO aktivieren* auf der Single Sign-On-Seite im Grid Manager bleibt aktiviert und alle vorhandenen SSO-Einstellungen bleiben erhalten, sofern Sie sie nicht aktualisieren.
+
+.Schritte
+. Melden Sie sich bei einem Admin-Knoten an:
++
+.. Geben Sie den folgenden Befehl ein: `ssh admin@Admin_Node_IP`
+.. Geben Sie das Passwort ein, das in der `Passwords.txt` Datei.
+.. Geben Sie den folgenden Befehl ein, um zum Root zu wechseln: `su -`
+.. Geben Sie das Passwort ein, das in der `Passwords.txt` Datei.
++
+Wenn Sie als Root angemeldet sind, ändert sich die Eingabeaufforderung von `$` Zu `#` .
+
+
+
+. Führen Sie den folgenden Befehl aus:``disable-saml``
++
+Eine Meldung weist darauf hin, dass der Befehl nur für diesen Admin-Knoten gilt.
+
+. Bestätigen Sie, dass Sie SSO deaktivieren möchten.
++
+Eine Meldung weist darauf hin, dass die einmalige Anmeldung auf dem Knoten deaktiviert ist.
+
+. Greifen Sie über einen Webbrowser auf den Grid Manager auf demselben Admin-Knoten zu.
++
+Die Anmeldeseite des Grid Managers wird jetzt angezeigt, da SSO deaktiviert wurde.
+
+. Sign in .
+. Wenn Sie SSO vorübergehend deaktiviert haben, weil Sie die SSO-Konfiguration korrigieren mussten:
++
+.. Wählen Sie *KONFIGURATION* > *Zugriffskontrolle* > *Einmaliges Anmelden*.
+.. Ändern Sie die falschen oder veralteten SSO-Einstellungen.
+.. Wählen Sie *Speichern*.
++
+Wenn Sie auf der Single Sign-On-Seite „Speichern“ auswählen, wird SSO für das gesamte Raster automatisch wieder aktiviert.
+
+
+
+. Wenn Sie SSO vorübergehend deaktiviert haben, weil Sie aus einem anderen Grund auf den Grid Manager zugreifen mussten:
++
+.. Führen Sie alle Aufgaben aus, die Sie ausführen müssen.
+.. Wählen Sie *Abmelden* und schließen Sie den Grid Manager.
+.. Aktivieren Sie SSO auf dem Admin-Knoten erneut.  Sie können einen der folgenden Schritte ausführen:
++
+*** Führen Sie den folgenden Befehl aus: `enable-saml`
++
+Eine Meldung weist darauf hin, dass der Befehl nur für diesen Admin-Knoten gilt.
+
++
+Bestätigen Sie, dass Sie SSO aktivieren möchten.
+
++
+Eine Meldung zeigt an, dass Single Sign-On auf dem Knoten aktiviert ist.
+
+*** Starten Sie den Grid-Knoten neu: `reboot`
+
+
+
+
+. Greifen Sie über einen Webbrowser vom selben Admin-Knoten aus auf den Grid Manager zu.
+. Vergewissern Sie sich, dass die StorageGRID Sign in angezeigt wird und dass Sie Ihre SSO-Anmeldeinformationen eingeben müssen, um auf den Grid Manager zuzugreifen.
+

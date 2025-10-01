@@ -1,0 +1,20 @@
+---
+permalink: admin/viewing-notification-status-and-queues.html 
+sidebar: sidebar 
+keywords: NMS service, network management system, interface engine 
+summary: 'Der Network Management System (NMS)-Dienst auf Admin-Knoten sendet Benachrichtigungen an den Mailserver.  Sie können den aktuellen Status des NMS-Dienstes und die Größe seiner Benachrichtigungswarteschlange auf der Seite „Interface Engine“ anzeigen.' 
+---
+= Benachrichtigungsstatus und Warteschlangen anzeigen
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Der Network Management System (NMS)-Dienst auf Admin-Knoten sendet Benachrichtigungen an den Mailserver.  Sie können den aktuellen Status des NMS-Dienstes und die Größe seiner Benachrichtigungswarteschlange auf der Seite „Interface Engine“ anzeigen.
+
+Um auf die Seite „Interface Engine“ zuzugreifen, wählen Sie *SUPPORT* > *Tools* > *Grid-Topologie*.  Wählen Sie dann *_site_* > *_Admin Node_* > *NMS* > *Interface Engine*.
+
+image::../media/email_notification_status_and_queues.gif[Interface Engine-Seite]
+
+Benachrichtigungen werden über die E-Mail-Benachrichtigungswarteschlange verarbeitet und in der Reihenfolge, in der sie ausgelöst werden, nacheinander an den Mailserver gesendet.  Wenn ein Problem auftritt (beispielsweise ein Netzwerkverbindungsfehler) und der Mailserver beim Versuch, die Benachrichtigung zu senden, nicht verfügbar ist, wird für einen Zeitraum von 60 Sekunden ein Best-Effort-Versuch unternommen, die Benachrichtigung erneut an den Mailserver zu senden.  Wenn die Benachrichtigung nach 60 Sekunden nicht an den Mailserver gesendet wird, wird die Benachrichtigung aus der Benachrichtigungswarteschlange gelöscht und es wird versucht, die nächste Benachrichtigung in der Warteschlange zu senden.

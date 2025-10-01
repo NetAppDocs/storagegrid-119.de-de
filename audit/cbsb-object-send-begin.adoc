@@ -1,0 +1,98 @@
+---
+permalink: audit/cbsb-object-send-begin.html 
+sidebar: sidebar 
+keywords: storagegrid, audit, message, CBSB, Object Send Begin 
+summary: Während des normalen Systembetriebs werden Inhaltsblöcke kontinuierlich zwischen verschiedenen Knoten übertragen, während auf Daten zugegriffen, diese repliziert und gespeichert werden.  Wenn die Übertragung eines Inhaltsblocks von einem Knoten zu einem anderen initiiert wird, wird diese Nachricht von der Quellentität ausgegeben. 
+---
+= CBSB: Objekt senden beginnen
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Während des normalen Systembetriebs werden Inhaltsblöcke kontinuierlich zwischen verschiedenen Knoten übertragen, während auf Daten zugegriffen, diese repliziert und gespeichert werden.  Wenn die Übertragung eines Inhaltsblocks von einem Knoten zu einem anderen initiiert wird, wird diese Nachricht von der Quellentität ausgegeben.
+
+[cols="1a,1a,4a"]
+|===
+| Code | Feld | Beschreibung 
+
+
+ a| 
+CNID
+ a| 
+Verbindungskennung
+ a| 
+Die eindeutige Kennung der Knoten-zu-Knoten-Sitzung/Verbindung.
+
+
+
+ a| 
+CBID
+ a| 
+Inhaltsblockkennung
+ a| 
+Die eindeutige Kennung des übertragenen Inhaltsblocks.
+
+
+
+ a| 
+CTDR
+ a| 
+Übertragungsrichtung
+ a| 
+Gibt an, ob die CBID-Übertragung per Push oder Pull initiiert wurde:
+
+PUSH: Der Übertragungsvorgang wurde von der sendenden Entität angefordert.
+
+PULL: Der Übertragungsvorgang wurde von der empfangenden Entität angefordert.
+
+
+
+ a| 
+CTSR
+ a| 
+Quell-Entität
+ a| 
+Die Knoten-ID der Quelle (Absender) der CBID-Übertragung.
+
+
+
+ a| 
+CTDS
+ a| 
+Zielentität
+ a| 
+Die Knoten-ID des Ziels (Empfängers) der CBID-Übertragung.
+
+
+
+ a| 
+CTSS
+ a| 
+Sequenzzählung starten
+ a| 
+Gibt die erste angeforderte Sequenzanzahl an.  Bei Erfolg beginnt die Übertragung ab dieser Sequenzzählung.
+
+
+
+ a| 
+CTES
+ a| 
+Erwartete Endsequenzanzahl
+ a| 
+Gibt die zuletzt angeforderte Sequenzzählung an.  Bei Erfolg gilt die Übertragung als abgeschlossen, wenn diese Sequenzanzahl empfangen wurde.
+
+
+
+ a| 
+RSLT
+ a| 
+Übertragungsstartstatus
+ a| 
+Status zum Zeitpunkt des Überweisungsbeginns:
+
+SUCS: Übertragung erfolgreich gestartet.
+
+|===
+Diese Prüfmeldung bedeutet, dass ein Knoten-zu-Knoten-Datenübertragungsvorgang für ein einzelnes Inhaltselement initiiert wurde, das durch seine Inhaltsblockkennung identifiziert wird.  Der Vorgang fordert Daten von „Start Sequence Count“ bis „Expected End Sequence Count“ an.  Sende- und Empfangsknoten werden durch ihre Knoten-IDs identifiziert.  Diese Informationen können verwendet werden, um den Systemdatenfluss zu verfolgen und in Kombination mit Speicherüberwachungsmeldungen die Anzahl der Replikate zu überprüfen.

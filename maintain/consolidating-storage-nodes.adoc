@@ -1,0 +1,23 @@
+---
+permalink: maintain/consolidating-storage-nodes.html 
+sidebar: sidebar 
+keywords: storagegrid, storage node, consolidate storage node, consolidating storage node 
+summary: Sie können Speicherknoten konsolidieren, um die Anzahl der Speicherknoten für eine Site oder Bereitstellung zu reduzieren und gleichzeitig die Speicherkapazität zu erhöhen. 
+---
+= Konsolidieren Sie Speicherknoten
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Sie können Speicherknoten konsolidieren, um die Anzahl der Speicherknoten für eine Site oder Bereitstellung zu reduzieren und gleichzeitig die Speicherkapazität zu erhöhen.
+
+Wenn Sie Storage Nodes konsolidieren,link:../expand/index.html["Erweitern Sie das StorageGRID -System"] durch Hinzufügen neuer Speicherknoten mit größerer Kapazität und anschließende Außerbetriebnahme der alten Speicherknoten mit geringerer Kapazität.  Während des Außerbetriebnahmeverfahrens werden Objekte von den alten Speicherknoten auf die neuen Speicherknoten migriert.
+
+
+NOTE: Wenn Sie ältere und kleinere Geräte mit neuen Modellen oder Geräten mit größerer Kapazität konsolidieren, sollten Sie Folgendes bedenken: https://docs.netapp.com/us-en/storagegrid-appliances/commonhardware/how-appliance-node-cloning-works.html["Klonen des Appliance-Knotens"^] (oder verwenden Sie das Klonen von Appliance-Knoten und das Außerbetriebnahmeverfahren, wenn Sie keinen Eins-zu-eins-Ersatz durchführen).
+
+Sie könnten beispielsweise zwei neue Speicherknoten mit größerer Kapazität hinzufügen, um drei ältere Speicherknoten zu ersetzen.  Sie würden zunächst das Erweiterungsverfahren verwenden, um die beiden neuen, größeren Speicherknoten hinzuzufügen, und dann das Außerbetriebnahmeverfahren verwenden, um die drei alten Speicherknoten mit geringerer Kapazität zu entfernen.
+
+Indem Sie neue Kapazität hinzufügen, bevor Sie vorhandene Speicherknoten entfernen, stellen Sie eine ausgewogenere Verteilung der Daten im StorageGRID -System sicher.  Sie verringern außerdem die Möglichkeit, dass ein vorhandener Speicherknoten über die Speicher-Wasserzeichenebene hinaus geschoben wird.

@@ -1,0 +1,154 @@
+---
+permalink: tenant/manage-groups.html 
+sidebar: sidebar 
+keywords: how to view and edit tenant groups, manage groups, duplicate group, remove group, edit group 
+summary: Verwalten Sie Ihre Mandantengruppen nach Bedarf, um eine Gruppe anzuzeigen, zu bearbeiten oder zu duplizieren und mehr. 
+---
+= Verwalten von Gruppen
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Verwalten Sie Ihre Mandantengruppen nach Bedarf, um eine Gruppe anzuzeigen, zu bearbeiten oder zu duplizieren und mehr.
+
+.Bevor Sie beginnen
+* Sie sind beim Tenant Manager angemeldet mit einemlink:../admin/web-browser-requirements.html["unterstützter Webbrowser"] .
+* Sie gehören einer Benutzergruppe an, die über dielink:tenant-management-permissions.html["Root-Zugriffsberechtigung"] .
+
+
+
+
+== Gruppe anzeigen oder bearbeiten
+
+Sie können die grundlegenden Informationen und Details für jede Gruppe anzeigen und bearbeiten.
+
+.Schritte
+. Wählen Sie *ZUGRIFFSVERWALTUNG* > *Gruppen*.
+. Überprüfen Sie die Informationen auf der Seite „Gruppen“, auf der grundlegende Informationen zu allen lokalen und föderierten Gruppen für dieses Mandantenkonto aufgeführt sind.
++
+Wenn das Mandantenkonto über die Berechtigung *Grid-Föderationsverbindung verwenden* verfügt und Sie Gruppen im Quell-Grid des Mandanten anzeigen:
+
++
+** Eine Bannermeldung weist darauf hin, dass Ihre Änderungen nicht mit dem anderen Raster synchronisiert werden, wenn Sie eine Gruppe bearbeiten oder entfernen.
+** Bei Bedarf zeigt eine Bannermeldung an, ob Gruppen nicht auf den Mandanten im Zielraster geklont wurden.  Du kannst<<clone-groups,Erneuter Versuch eines Gruppenklons>> das ist fehlgeschlagen.
+
+
+. Wenn Sie den Namen der Gruppe ändern möchten:
++
+.. Aktivieren Sie das Kontrollkästchen für die Gruppe.
+.. Wählen Sie *Aktionen* > *Gruppennamen bearbeiten*.
+.. Geben Sie den neuen Namen ein.
+.. Wählen Sie *Änderungen speichern*.
+
+
+. Wenn Sie weitere Details anzeigen oder zusätzliche Änderungen vornehmen möchten, führen Sie einen der folgenden Schritte aus:
++
+** Wählen Sie den Gruppennamen aus.
+** Aktivieren Sie das Kontrollkästchen für die Gruppe und wählen Sie *Aktionen* > *Gruppendetails anzeigen*.
+
+
+. Sehen Sie sich den Abschnitt „Übersicht“ an, der für jede Gruppe die folgenden Informationen enthält:
++
+** Anzeigename
+** Eindeutiger Name
+** Typ
+** Zugriffsmodus
+** Berechtigungen
+** S3-Richtlinie
+** Anzahl der Benutzer in dieser Gruppe
+** Zusätzliche Felder, wenn das Mandantenkonto über die Berechtigung *Grid-Föderationsverbindung verwenden* verfügt und Sie die Gruppe im Quell-Grid des Mandanten anzeigen:
++
+*** Klonstatus, entweder *Erfolg* oder *Fehler*
+*** Ein blaues Banner zeigt an, dass Ihre Änderungen nicht mit dem anderen Raster synchronisiert werden, wenn Sie diese Gruppe bearbeiten oder löschen.
+
+
+
+
+. Bearbeiten Sie die Gruppeneinstellungen nach Bedarf. Sehenlink:creating-groups-for-s3-tenant.html["Erstellen von Gruppen für einen S3-Mandanten"] Undlink:creating-groups-for-swift-tenant.html["Erstellen Sie Gruppen für einen Swift-Mandanten"] für Details zu den einzugebenden Informationen.
++
+.. Ändern Sie im Abschnitt „Übersicht“ den Anzeigenamen, indem Sie den Namen oder das Bearbeitungssymbol auswählenimage:../media/icon_edit_tm.png["Symbol „Bearbeiten“"] .
+.. Aktualisieren Sie auf der Registerkarte *Gruppenberechtigungen* die Berechtigungen und wählen Sie *Änderungen speichern*.
+.. Nehmen Sie auf der Registerkarte *Gruppenrichtlinie* die gewünschten Änderungen vor und wählen Sie *Änderungen speichern*.
++
+*** Wenn Sie eine S3-Gruppe bearbeiten, wählen Sie optional eine andere S3-Gruppenrichtlinie aus oder geben Sie bei Bedarf die JSON-Zeichenfolge für eine benutzerdefinierte Richtlinie ein.
+*** Wenn Sie eine Swift-Gruppe bearbeiten, aktivieren oder deaktivieren Sie optional das Kontrollkästchen *Swift-Administrator*.
+
+
+
+
+. So fügen Sie der Gruppe einen oder mehrere vorhandene lokale Benutzer hinzu:
++
+.. Wählen Sie die Registerkarte „Benutzer“ aus.
++
+image::../media/manage_users.png[Benutzer verwalten]
+
+.. Wählen Sie *Benutzer hinzufügen*.
+.. Wählen Sie die vorhandenen Benutzer aus, die Sie hinzufügen möchten, und wählen Sie *Benutzer hinzufügen*.
++
+Oben rechts erscheint eine Erfolgsmeldung.
+
+
+
+. So entfernen Sie lokale Benutzer aus der Gruppe:
++
+.. Wählen Sie die Registerkarte „Benutzer“ aus.
+.. Wählen Sie *Benutzer entfernen*.
+.. Wählen Sie die Benutzer aus, die Sie entfernen möchten, und wählen Sie *Benutzer entfernen*.
++
+Oben rechts erscheint eine Erfolgsmeldung.
+
+
+
+. Bestätigen Sie, dass Sie für jeden geänderten Abschnitt die Option *Änderungen speichern* ausgewählt haben.
+
+
+
+
+== Gruppe duplizieren
+
+Sie können eine vorhandene Gruppe duplizieren, um schneller neue Gruppen zu erstellen.
+
+
+NOTE: Wenn Ihr Mandantenkonto über die Berechtigung *Grid-Föderationsverbindung verwenden* verfügt und Sie eine Gruppe aus dem Quell-Grid des Mandanten duplizieren, wird die duplizierte Gruppe in das Ziel-Grid des Mandanten geklont.
+
+.Schritte
+. Wählen Sie *ZUGRIFFSVERWALTUNG* > *Gruppen*.
+. Aktivieren Sie das Kontrollkästchen für die Gruppe, die Sie duplizieren möchten.
+. Wählen Sie *Aktionen* > *Gruppe duplizieren*.
+. Sehenlink:creating-groups-for-s3-tenant.html["Erstellen von Gruppen für einen S3-Mandanten"] oderlink:creating-groups-for-swift-tenant.html["Erstellen Sie Gruppen für einen Swift-Mandanten"] für Details zu den einzugebenden Informationen.
+. Wählen Sie *Gruppe erstellen*.
+
+
+
+
+== [[clone-groups]]Gruppenklon erneut versuchen
+
+So wiederholen Sie einen fehlgeschlagenen Klonvorgang:
+
+. Wählen Sie jede Gruppe aus, bei der unter dem Gruppennamen _(Klonen fehlgeschlagen)_ angezeigt wird.
+. Wählen Sie *Aktionen* > *Gruppen klonen*.
+. Zeigen Sie den Status des Klonvorgangs auf der Detailseite jeder Gruppe an, die Sie klonen.
+
+
+Weitere Informationen finden Sie unterlink:grid-federation-account-clone.html["Mandantengruppen und Benutzer klonen"] .
+
+
+
+== Löschen einer oder mehrerer Gruppen
+
+Sie können eine oder mehrere Gruppen löschen.  Alle Benutzer, die nur zu einer gelöschten Gruppe gehören, können sich nicht mehr beim Mandanten-Manager anmelden oder das Mandantenkonto verwenden.
+
+
+NOTE: Wenn Ihr Mandantenkonto über die Berechtigung *Grid-Föderationsverbindung verwenden* verfügt und Sie eine Gruppe löschen, löscht StorageGRID die entsprechende Gruppe im anderen Grid nicht.  Wenn Sie diese Informationen synchron halten müssen, müssen Sie dieselbe Gruppe aus beiden Rastern löschen.
+
+.Schritte
+. Wählen Sie *ZUGRIFFSVERWALTUNG* > *Gruppen*.
+. Aktivieren Sie das Kontrollkästchen für jede Gruppe, die Sie löschen möchten.
+. Wählen Sie *Aktionen* > *Gruppe löschen* oder *Aktionen* > *Gruppen löschen*.
++
+Ein Bestätigungsdialogfeld wird angezeigt.
+
+. Wählen Sie *Gruppe löschen* oder *Gruppen löschen*.
+

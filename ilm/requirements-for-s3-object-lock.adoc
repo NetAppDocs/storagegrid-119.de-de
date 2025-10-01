@@ -1,0 +1,107 @@
+---
+permalink: ilm/requirements-for-s3-object-lock.html 
+sidebar: sidebar 
+keywords: requirements, s3 object lock, compliant ilm rule, compliant ilm policy 
+summary: Sie müssen die Anforderungen zum Aktivieren der globalen S3 Object Lock-Einstellung, die Anforderungen zum Erstellen konformer ILM-Regeln und ILM-Richtlinien sowie die Einschränkungen überprüfen, die StorageGRID für Buckets und Objekte auferlegt, die S3 Object Lock verwenden. 
+---
+= Anforderungen für S3 Object Lock
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Sie müssen die Anforderungen zum Aktivieren der globalen S3 Object Lock-Einstellung, die Anforderungen zum Erstellen konformer ILM-Regeln und ILM-Richtlinien sowie die Einschränkungen überprüfen, die StorageGRID für Buckets und Objekte auferlegt, die S3 Object Lock verwenden.
+
+
+
+== Voraussetzungen für die Verwendung der globalen S3 Object Lock-Einstellung
+
+* Sie müssen die globale S3-Objektsperreinstellung mithilfe des Grid Managers oder der Grid Management API aktivieren, bevor ein S3-Mandant einen Bucket mit aktivierter S3-Objektsperre erstellen kann.
+* Durch Aktivieren der globalen S3-Objektsperre können alle S3-Mandantenkonten Buckets mit aktivierter S3-Objektsperre erstellen.
+* Nachdem Sie die globale S3-Objektsperreinstellung aktiviert haben, können Sie die Einstellung nicht mehr deaktivieren.
+* Sie können die globale S3-Objektsperre nur aktivieren, wenn die Standardregel in allen aktiven ILM-Richtlinien _konform_ ist (d. h., die Standardregel muss den Anforderungen von Buckets mit aktivierter S3-Objektsperre entsprechen).
+* Wenn die globale Einstellung „S3-Objektsperre“ aktiviert ist, können Sie keine neue ILM-Richtlinie erstellen oder eine vorhandene ILM-Richtlinie aktivieren, es sei denn, die Standardregel in der Richtlinie ist konform.  Nachdem die globale S3-Objektsperreinstellung aktiviert wurde, zeigen die Seiten mit den ILM-Regeln und ILM-Richtlinien an, welche ILM-Regeln konform sind.
+
+
+
+
+== Anforderungen an konforme ILM-Regeln
+
+Wenn Sie die globale S3-Objektsperreinstellung aktivieren möchten, müssen Sie sicherstellen, dass die Standardregel in allen aktiven ILM-Richtlinien konform ist.  Eine konforme Regel erfüllt die Anforderungen sowohl von Buckets mit aktivierter S3-Objektsperre als auch von allen vorhandenen Buckets mit aktivierter Legacy-Compliance:
+
+* Es müssen mindestens zwei replizierte Objektkopien oder eine Erasure-Coded-Kopie erstellt werden.
+* Diese Kopien müssen für die gesamte Dauer jeder Zeile in den Platzierungsanweisungen auf den Speicherknoten vorhanden sein.
+* Objektkopien können nicht in einem Cloud-Speicherpool gespeichert werden.
+* Mindestens eine Zeile der Platzierungsanweisungen muss am Tag 0 beginnen, wobei *Aufnahmezeit* als Referenzzeit verwendet wird.
+* Mindestens eine Zeile der Platzierungsanweisungen muss „für immer“ lauten.
+
+
+
+
+== Anforderungen für ILM-Richtlinien
+
+Wenn die globale S3-Objektsperreinstellung aktiviert ist, können aktive und inaktive ILM-Richtlinien sowohl konforme als auch nicht konforme Regeln enthalten.
+
+* Die Standardregel in einer aktiven oder inaktiven ILM-Richtlinie muss konform sein.
+* Nicht konforme Regeln gelten nur für Objekte in Buckets, für die S3 Object Lock oder die alte Compliance-Funktion nicht aktiviert ist.
+* Konforme Regeln können auf Objekte in jedem Bucket angewendet werden; S3 Object Lock oder Legacy Compliance müssen für den Bucket nicht aktiviert werden.
+
+
+link:example-7-compliant-ilm-policy-for-s3-object-lock.html["Beispiel einer konformen ILM-Richtlinie für S3 Object Lock"]
+
+
+
+== Anforderungen für Buckets mit aktivierter S3-Objektsperre
+
+* Wenn die globale S3-Objektsperre-Einstellung für das StorageGRID -System aktiviert ist, können Sie den Tenant Manager, die Tenant Management API oder die S3 REST API verwenden, um Buckets mit aktivierter S3-Objektsperre zu erstellen.
+* Wenn Sie S3 Object Lock verwenden möchten, müssen Sie S3 Object Lock beim Erstellen des Buckets aktivieren.  Sie können S3 Object Lock nicht für einen vorhandenen Bucket aktivieren.
+* Wenn S3 Object Lock für einen Bucket aktiviert ist, aktiviert StorageGRID automatisch die Versionierung für diesen Bucket.  Sie können die S3-Objektsperre nicht deaktivieren oder die Versionsverwaltung für den Bucket aussetzen.
+* Optional können Sie mithilfe des Tenant Managers, der Tenant Management API oder der S3 REST API einen Standardaufbewahrungsmodus und eine Standardaufbewahrungsdauer für jeden Bucket angeben.  Die Standardaufbewahrungseinstellungen des Buckets gelten nur für neue Objekte, die dem Bucket hinzugefügt werden und keine eigenen Aufbewahrungseinstellungen haben.  Sie können diese Standardeinstellungen überschreiben, indem Sie beim Hochladen für jede Objektversion einen Aufbewahrungsmodus und ein Aufbewahrungsdatum angeben.
+* Die Bucket-Lebenszykluskonfiguration wird für Buckets mit aktivierter S3-Objektsperre unterstützt.
+* Die CloudMirror-Replikation wird für Buckets mit aktivierter S3-Objektsperre nicht unterstützt.
+
+
+
+
+== Anforderungen für Objekte in Buckets mit aktivierter S3-Objektsperre
+
+* Um eine Objektversion zu schützen, können Sie Standardaufbewahrungseinstellungen für den Bucket oder Aufbewahrungseinstellungen für jede Objektversion angeben.  Aufbewahrungseinstellungen auf Objektebene können mithilfe der S3-Clientanwendung oder der S3-REST-API angegeben werden.
+* Aufbewahrungseinstellungen gelten für einzelne Objektversionen.  Eine Objektversion kann sowohl über eine Aufbewahrungsfrist als auch über eine gesetzliche Aufbewahrungsfrist verfügen, über eine der beiden Einstellungen, aber nicht über die andere, oder über keine von beiden.  Durch die Angabe eines Aufbewahrungsdatums oder einer Einstellung für die rechtliche Aufbewahrung eines Objekts wird nur die in der Anforderung angegebene Version geschützt.  Sie können neue Versionen des Objekts erstellen, während die vorherige Version des Objekts gesperrt bleibt.
+
+
+
+
+== Lebenszyklus von Objekten in Buckets mit aktivierter S3-Objektsperre
+
+Jedes Objekt, das in einem Bucket mit aktivierter S3-Objektsperre gespeichert wird, durchläuft die folgenden Phasen:
+
+. *Objektaufnahme*
++
+Wenn eine Objektversion zu einem Bucket hinzugefügt wird, für den die S3-Objektsperre aktiviert ist, werden die Aufbewahrungseinstellungen wie folgt angewendet:
+
++
+** Wenn für das Objekt Aufbewahrungseinstellungen angegeben sind, werden die Einstellungen auf Objektebene angewendet.  Alle Standard-Bucket-Einstellungen werden ignoriert.
+** Wenn für das Objekt keine Aufbewahrungseinstellungen angegeben sind, werden die Standard-Bucket-Einstellungen angewendet, sofern diese vorhanden sind.
+** Wenn für das Objekt oder den Bucket keine Aufbewahrungseinstellungen angegeben sind, ist das Objekt nicht durch S3 Object Lock geschützt.
+
+
++
+Wenn Aufbewahrungseinstellungen angewendet werden, sind sowohl das Objekt als auch alle benutzerdefinierten S3-Metadaten geschützt.
+
+. *Objektaufbewahrung und -löschung*
++
+Von jedem geschützten Objekt werden von StorageGRID mehrere Kopien für den angegebenen Aufbewahrungszeitraum gespeichert.  Die genaue Anzahl und Art der Objektkopien sowie die Speicherorte werden durch die konformen Regeln in den aktiven ILM-Richtlinien bestimmt.  Ob ein geschütztes Objekt vor Erreichen seines Aufbewahrungsdatums gelöscht werden kann, hängt von seinem Aufbewahrungsmodus ab.
+
++
+** Wenn ein Objekt einer rechtlichen Sperre unterliegt, kann niemand das Objekt löschen, unabhängig von seinem Aufbewahrungsmodus.
+
+
+
+
+.Ähnliche Informationen
+* link:../tenant/creating-s3-bucket.html["Erstellen eines S3-Buckets"]
+* link:../tenant/update-default-retention-settings.html["Standardaufbewahrung für S3 Object Lock aktualisieren"]
+* link:../s3/use-s3-api-for-s3-object-lock.html["Verwenden Sie die S3 REST API, um S3 Object Lock zu konfigurieren"]
+* link:example-7-compliant-ilm-policy-for-s3-object-lock.html["Beispiel 7: Konforme ILM-Richtlinie für S3 Object Lock"]
+

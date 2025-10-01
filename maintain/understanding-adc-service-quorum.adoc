@@ -1,0 +1,29 @@
+---
+permalink: maintain/understanding-adc-service-quorum.html 
+sidebar: sidebar 
+keywords: storagegrid, recover, adc, adc quorum 
+summary: 'Möglicherweise können Sie bestimmte Speicherknoten an einem Standort nicht außer Betrieb nehmen, wenn nach der Außerbetriebnahme zu wenige Administrative Domain Controller \(ADC\)-Dienste übrig bleiben.' 
+---
+= Was ist das ADC-Quorum?
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Möglicherweise können Sie bestimmte Speicherknoten an einem Standort nicht außer Betrieb nehmen, wenn nach der Außerbetriebnahme zu wenige Administrative Domain Controller (ADC)-Dienste übrig bleiben.
+
+Der ADC-Dienst, der auf einigen Speicherknoten zu finden ist, verwaltet Informationen zur Netztopologie und stellt Konfigurationsdienste für das Netz bereit.  Das StorageGRID -System erfordert, dass an jedem Standort und jederzeit ein Quorum an ADC-Diensten verfügbar ist.
+
+Sie können einen Speicherknoten nicht außer Betrieb nehmen, wenn das Entfernen des Knotens dazu führen würde, dass das ADC-Quorum nicht mehr erfüllt wird.  Um das ADC-Quorum während einer Außerbetriebnahme zu erfüllen, müssen mindestens drei Speicherknoten an jedem Standort über den ADC-Dienst verfügen.  Wenn ein Standort über mehr als drei Speicherknoten mit dem ADC-Dienst verfügt, muss nach der Außerbetriebnahme eine einfache Mehrheit dieser Knoten verfügbar bleiben: `((0.5 * _Storage Nodes with ADC_) + 1)`
+
+
+CAUTION: Seien Sie vorsichtig, wenn Sie Speicherknoten in einem Grid außer Betrieb nehmen, das softwarebasierte Knoten enthält, die nur Metadaten enthalten.  Wenn Sie alle Knoten außer Betrieb nehmen, die zum Speichern von _sowohl_ Objekten als auch Metadaten konfiguriert sind, wird die Möglichkeit zum Speichern von Objekten aus dem Raster entfernt.  Sehenlink:../primer/what-storage-node-is.html#types-of-storage-nodes["Arten von Speicherknoten"] Weitere Informationen zu reinen Metadaten-Speicherknoten.
+
+Angenommen, eine Site umfasst derzeit sechs Speicherknoten mit ADC-Diensten und Sie möchten drei Speicherknoten außer Betrieb nehmen.  Aufgrund der ADC-Quorumsanforderung müssen Sie die folgenden zwei Außerbetriebnahmeverfahren durchführen:
+
+* Beim ersten Außerbetriebnahmevorgang müssen Sie sicherstellen, dass vier Speicherknoten mit ADC-Diensten verfügbar bleiben: `((0.5 * 6) + 1)` .  Dies bedeutet, dass Sie zunächst nur zwei Speicherknoten außer Betrieb nehmen können.
+* Im zweiten Außerbetriebnahmeverfahren können Sie den dritten Speicherknoten entfernen, da das ADC-Quorum jetzt nur noch erfordert, dass drei ADC-Dienste verfügbar bleiben: `((0.5 * 4) + 1)` .
+
+
+Wenn Sie einen Speicherknoten außer Betrieb nehmen müssen, dies aber aufgrund der ADC-Quorum-Anforderung nicht möglich ist, fügen Sie einen neuen Speicherknoten in einemlink:../expand/index.html["Erweiterung"] und geben Sie an, dass es einen ADC-Dienst haben soll.  Nehmen Sie dann den vorhandenen Speicherknoten außer Betrieb.

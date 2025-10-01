@@ -1,0 +1,60 @@
+---
+permalink: expand/contacting-technical-support.html 
+sidebar: sidebar 
+keywords: troubleshoot expansion, contact technical support 
+summary: Wenn während des Grid-Erweiterungsprozesses Fehler auftreten, die Sie nicht beheben können, oder wenn eine Grid-Aufgabe fehlschlägt, sammeln Sie die Protokolldateien und wenden Sie sich an den technischen Support. 
+---
+= Fehlerbehebung bei der Erweiterung
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Wenn während des Grid-Erweiterungsprozesses Fehler auftreten, die Sie nicht beheben können, oder wenn eine Grid-Aufgabe fehlschlägt, sammeln Sie die Protokolldateien und wenden Sie sich an den technischen Support.
+
+Bevor Sie sich an den technischen Support wenden, sammeln Sie die erforderlichen Protokolldateien, um die Fehlerbehebung zu unterstützen.
+
+.Schritte
+. Stellen Sie eine Verbindung zum Erweiterungsknoten her, bei dem Fehler aufgetreten sind:
++
+.. Geben Sie den folgenden Befehl ein:``ssh -p 8022 admin@_grid_node_IP_``
++
+
+NOTE: Port 8022 ist der SSH-Port des Basisbetriebssystems, während Port 22 der SSH-Port der Container-Engine ist, auf der StorageGRID ausgeführt wird.
+
+.. Geben Sie das Passwort ein, das in der `Passwords.txt` Datei.
+.. Geben Sie den folgenden Befehl ein, um zum Root zu wechseln: `su -`
+.. Geben Sie das Passwort ein, das in der `Passwords.txt` Datei.
+
+
++
+Nachdem Sie sich als Root angemeldet haben, ändert sich die Eingabeaufforderung von `$` Zu `#` .
+
+. Rufen Sie je nach dem Stadium, in dem sich die Installation befindet, eines der folgenden Protokolle ab, die auf dem Grid-Knoten verfügbar sind:
++
+[cols="1a,2a"]
+|===
+| Plattform | Protokolle 
+
+
+ a| 
+VMware
+ a| 
+** `/var/log/daemon.log`
+** `/var/log/storagegrid/daemon.log`
+** `/var/log/storagegrid/nodes/<node-name>.log`
+
+
+
+
+ a| 
+Linux
+ a| 
+** `/var/log/storagegrid/daemon.log`
+** `/etc/storagegrid/nodes/<node-name>.conf`(für jeden ausgefallenen Knoten)
+** `/var/log/storagegrid/nodes/<node-name>.log`(für jeden ausgefallenen Knoten; existiert möglicherweise nicht)
+
+
+|===
+

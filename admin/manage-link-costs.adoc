@@ -1,0 +1,87 @@
+---
+permalink: admin/manage-link-costs.html 
+sidebar: sidebar 
+keywords: link cost, site latency, manage link costs, prioritize sites 
+summary: Mithilfe der Verbindungskosten können Sie priorisieren, welcher Rechenzentrumsstandort einen angeforderten Dienst bereitstellt, wenn zwei oder mehr Rechenzentrumsstandorte vorhanden sind.  Sie können die Verbindungskosten anpassen, um die Latenz zwischen Sites widerzuspiegeln. 
+---
+= Linkkosten verwalten
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Mithilfe der Verbindungskosten können Sie priorisieren, welcher Rechenzentrumsstandort einen angeforderten Dienst bereitstellt, wenn zwei oder mehr Rechenzentrumsstandorte vorhanden sind.  Sie können die Verbindungskosten anpassen, um die Latenz zwischen Sites widerzuspiegeln.
+
+
+
+== Was sind Linkkosten?
+
+* Mithilfe von Verknüpfungskosten wird priorisiert, welche Objektkopie zum Abrufen von Objekten verwendet wird.
+* Die Verbindungskosten werden von der Grid Management API und der Tenant Management API verwendet, um zu bestimmen, welche internen StorageGRID -Dienste verwendet werden sollen.
+* Verbindungskosten werden vom Load Balancer-Dienst auf Admin-Knoten und Gateway-Knoten verwendet, um Clientverbindungen zu leiten. Sehen link:../admin/managing-load-balancing.html["Überlegungen zum Lastenausgleich"] .
+
+
+Das Diagramm zeigt ein Raster mit drei Standorten, bei dem die Verbindungskosten zwischen den Standorten konfiguriert sind:
+
+image::../media/link_costs.gif[Konzeptdiagramm für Verbindungskosten zwischen Rechenzentren]
+
+* Der Load Balancer-Dienst auf Admin-Knoten und Gateway-Knoten verteilt Clientverbindungen gleichmäßig auf alle Speicherknoten am selben Rechenzentrumsstandort und auf alle Rechenzentrumsstandorte mit Verbindungskosten von 0.
++
+Im Beispiel verteilt ein Gateway-Knoten am Rechenzentrumsstandort 1 (DC1) die Clientverbindungen gleichmäßig auf die Speicherknoten bei DC1 und die Speicherknoten bei DC2.  Ein Gateway-Knoten bei DC3 sendet Client-Verbindungen nur an Speicherknoten bei DC3.
+
+* Beim Abrufen eines Objekts, das in mehreren replizierten Kopien vorliegt, ruft StorageGRID die Kopie im Rechenzentrum ab, das die niedrigsten Verbindungskosten aufweist.
++
+Wenn im Beispiel eine Clientanwendung bei DC2 ein Objekt abruft, das sowohl bei DC1 als auch bei DC3 gespeichert ist, wird das Objekt von DC1 abgerufen, da die Verbindungskosten von DC1 zu DC2 0 betragen und damit niedriger sind als die Verbindungskosten von DC3 zu DC2 (25).
+
+
+
+Bei den Linkkosten handelt es sich um beliebige relative Zahlen ohne spezifische Maßeinheit.  Beispielsweise werden Verbindungskosten von 50 weniger bevorzugt verwendet als Verbindungskosten von 25.  Die Tabelle zeigt häufig verwendete Verbindungskosten.
+
+[cols="1a,1a,2a"]
+|===
+| Link | Linkkosten | Hinweise 
+
+
+ a| 
+Zwischen physischen Rechenzentrumsstandorten
+ a| 
+25 (Standard)
+ a| 
+Rechenzentren, die über eine WAN-Verbindung verbunden sind.
+
+
+
+ a| 
+Zwischen logischen Rechenzentrumsstandorten am gleichen physischen Standort
+ a| 
+0
+ a| 
+Logische Rechenzentren im selben physischen Gebäude oder Campus, die über ein LAN verbunden sind.
+
+|===
+
+
+== Linkkosten aktualisieren
+
+Sie können die Verbindungskosten zwischen Rechenzentrumsstandorten aktualisieren, um die Latenz zwischen den Standorten widerzuspiegeln.
+
+.Bevor Sie beginnen
+* Sie sind beim Grid Manager angemeldet mit einemlink:../admin/web-browser-requirements.html["unterstützter Webbrowser"] .
+* Sie haben dielink:admin-group-permissions.html["Berechtigung zur Konfiguration der Grid-Topologieseite"] .
+
+
+.Schritte
+. Wählen Sie *SUPPORT* > *Sonstiges* > *Linkkosten*.
++
+image::../media/configuring_link_costs.png[Linkkosten]
+
+. Wählen Sie unter *Linkquelle* eine Site aus und geben Sie unter *Linkziel* einen Kostenwert zwischen 0 und 100 ein.
++
+Sie können die Linkkosten nicht ändern, wenn die Quelle mit dem Ziel identisch ist.
+
++
+Um die Änderungen abzubrechen, wählen Sieimage:../media/nms_revert.gif["Rückgängig-Symbol"] *Zurücksetzen*.
+
+. Wählen Sie *Änderungen übernehmen*.
+

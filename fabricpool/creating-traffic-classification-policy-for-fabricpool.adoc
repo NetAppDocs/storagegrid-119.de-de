@@ -1,0 +1,67 @@
+---
+permalink: fabricpool/creating-traffic-classification-policy-for-fabricpool.html 
+sidebar: sidebar 
+keywords: fabricPool, traffic classification, traffic policy, QoS, quality of service 
+summary: Sie können optional eine StorageGRID -Verkehrsklassifizierungsrichtlinie entwerfen, um die Servicequalität für die FabricPool -Arbeitslast zu optimieren. 
+---
+= Erstellen einer Datenverkehrsklassifizierungsrichtlinie für FabricPool
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Sie können optional eine StorageGRID -Verkehrsklassifizierungsrichtlinie entwerfen, um die Servicequalität für die FabricPool -Arbeitslast zu optimieren.
+
+Einzelheiten zu dieser Aufgabe finden Sie unterlink:../admin/managing-traffic-classification-policies.html["Verwalten von Richtlinien zur Datenverkehrsklassifizierung"] .  Um diese Aufgabe mit dem FabricPool -Setup-Assistenten abzuschließen, gehen Sie zulink:use-fabricpool-setup-wizard-steps.html["Greifen Sie auf den FabricPool -Setup-Assistenten zu und schließen Sie ihn ab"] .
+
+.Bevor Sie beginnen
+* Sie sind beim Grid Manager angemeldet mit einemlink:../admin/web-browser-requirements.html["unterstützter Webbrowser"] .
+* Sie haben dielink:../admin/admin-group-permissions.html["Root-Zugriffsberechtigung"] .
+
+
+.Informationen zu diesem Vorgang
+Die Best Practices zum Erstellen einer Datenverkehrsklassifizierungsrichtlinie für FabricPool hängen wie folgt von der Arbeitslast ab:
+
+* Wenn Sie planen, die primären Workload-Daten von FabricPool auf StorageGRID zu verschieben, sollten Sie sicherstellen, dass der FabricPool Workload die meiste Bandbreite zur Verfügung steht.  Sie können eine Richtlinie zur Verkehrsklassifizierung erstellen, um alle anderen Arbeitslasten zu begrenzen.
++
+
+NOTE: Im Allgemeinen ist es wichtiger, FabricPool Lesevorgängen Priorität einzuräumen als Schreibvorgängen.
+
++
+Wenn beispielsweise andere S3-Clients dieses StorageGRID -System verwenden, sollten Sie eine Richtlinie zur Verkehrsklassifizierung erstellen.  Sie können den Netzwerkverkehr für die anderen Buckets, Mandanten, IP-Subnetze oder Load Balancer-Endpunkte begrenzen.
+
+* Im Allgemeinen sollten Sie keiner FabricPool -Arbeitslast Beschränkungen hinsichtlich der Dienstqualität auferlegen. Sie sollten nur die anderen Arbeitslasten beschränken.
+* Die für andere Workloads festgelegten Beschränkungen sollten das Verhalten dieser Workloads berücksichtigen.  Die auferlegten Beschränkungen variieren auch je nach Größe und Leistungsfähigkeit Ihres Netzes und der erwarteten Auslastung.
+
+
+.Schritte
+. Wählen Sie *KONFIGURATION* > *Netzwerk* > *Verkehrsklassifizierung*.
+. Wählen Sie *Erstellen*.
+. Geben Sie einen Namen und eine Beschreibung (optional) für die Richtlinie ein und wählen Sie *Weiter*.
+. Fügen Sie im Schritt „Übereinstimmungsregeln hinzufügen“ mindestens eine Regel hinzu.
++
+.. Wählen Sie *Regel hinzufügen*
+.. Wählen Sie unter „Typ“ *Load Balancer-Endpunkt* und dann den Load Balancer-Endpunkt aus, den Sie für FabricPool erstellt haben.
++
+Sie können auch das FabricPool -Mandantenkonto oder den Bucket auswählen.
+
+.. Wenn diese Verkehrsrichtlinie den Verkehr für die anderen Endpunkte begrenzen soll, wählen Sie *Inverse Übereinstimmung*.
+
+
+. Fügen Sie optional ein oder mehrere Limits hinzu, um den Netzwerkverkehr zu steuern, der der Regel entspricht.
++
+
+NOTE: StorageGRID sammelt Metriken, auch wenn Sie keine Limits hinzufügen, sodass Sie Verkehrstrends verstehen können.
+
++
+.. Wählen Sie *Limit hinzufügen*.
+.. Wählen Sie die Art des Datenverkehrs aus, den Sie begrenzen möchten, und die anzuwendende Begrenzung.
+
+
+. Wählen Sie *Weiter*.
+. Lesen und überprüfen Sie die Richtlinie zur Verkehrsklassifizierung.  Verwenden Sie die Schaltfläche *Zurück*, um zurückzugehen und die gewünschten Änderungen vorzunehmen.  Wenn Sie mit der Richtlinie zufrieden sind, wählen Sie *Speichern und fortfahren*.
+
+
+.Nach Ihrem Ziel
+link:../admin/viewing-network-traffic-metrics.html["Anzeigen von Netzwerkverkehrsmetriken"]um zu überprüfen, ob die Polizei die von Ihnen erwarteten Verkehrsbeschränkungen durchsetzt.

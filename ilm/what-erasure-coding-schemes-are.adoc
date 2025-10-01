@@ -1,0 +1,349 @@
+---
+permalink: ilm/what-erasure-coding-schemes-are.html 
+sidebar: sidebar 
+keywords: erasure-coding scheme 
+summary: Erasure-Coding-Schemata steuern, wie viele Datenfragmente und wie viele Paritätsfragmente für jedes Objekt erstellt werden. 
+---
+= Was sind Erasure-Coding-Schemata?
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Erasure-Coding-Schemata steuern, wie viele Datenfragmente und wie viele Paritätsfragmente für jedes Objekt erstellt werden.
+
+Wenn Sie eine ILM-Regel erstellen oder bearbeiten, wählen Sie ein verfügbares Erasure-Coding-Schema aus.  StorageGRID erstellt automatisch Erasure-Coding-Schemata basierend auf der Anzahl der Speicherknoten und Sites, aus denen der Speicherpool besteht, den Sie verwenden möchten.
+
+
+
+== Datenschutz
+
+Das StorageGRID -System verwendet den Reed-Solomon-Erasure-Coding-Algorithmus.  Der Algorithmus zerlegt ein Objekt in `k` Datenfragmente und Berechnungen `m` Paritätsfragmente.
+
+Der `k + m = n` Fragmente sind verteilt über `n` Speicherknoten bieten Datenschutz wie folgt:
+
+* Um ein Objekt abzurufen oder zu reparieren, `k` Fragmente werden benötigt.
+* Ein Objekt kann bis zu `m` verlorene oder beschädigte Fragmente.  Je höher der Wert von `m` , desto höher ist die Fehlertoleranz.
+
+
+Den besten Datenschutz bietet das Erasure-Coding-Schema mit der höchsten Knoten- oder Volume-Ausfalltoleranz innerhalb eines Speicherpools.
+
+
+
+== Speicheraufwand
+
+Der Speicheraufwand eines Erasure-Coding-Schemas wird berechnet, indem die Anzahl der Paritätsfragmente geteilt wird(`m` ) durch die Anzahl der Datenfragmente(`k` ).  Mithilfe des Speicher-Overheads können Sie berechnen, wie viel Speicherplatz jedes Erasure-Codierte Objekt benötigt:
+
+`_disk space_ = _object size_ + (_object size_ * _storage overhead_)`
+
+Wenn Sie beispielsweise ein 10 MB großes Objekt mit dem 4+2-Schema speichern (das einen Speicher-Overhead von 50 % hat), verbraucht das Objekt 15 MB Grid-Speicher.  Wenn Sie dasselbe 10 MB große Objekt mit dem 6+2-Schema speichern (das einen Speicher-Overhead von 33 % hat), verbraucht das Objekt ungefähr 13,3 MB.
+
+Wählen Sie das Erasure-Coding-Schema mit dem niedrigsten Gesamtwert von `k+m` das Ihren Bedürfnissen entspricht.  Erasure-Coding-Verfahren mit einer geringeren Anzahl von Fragmenten sind rechnerisch effizienter, weil:
+
+* Pro Objekt werden weniger Fragmente erstellt und verteilt (oder abgerufen)
+* Sie weisen eine bessere Leistung auf, da die Fragmentgröße größer ist
+* Sie können erfordern, dass weniger Knoten in einemlink:../expand/index.html["Erweiterung, wenn mehr Speicherplatz benötigt wird"]
+
+
+
+
+== Richtlinien für Speicherpools
+
+Beachten Sie bei der Auswahl des Speicherpools für eine Regel zum Erstellen einer Löschcodierten Kopie die folgenden Richtlinien für Speicherpools:
+
+* Der Speicherpool muss drei oder mehr Standorte oder genau einen Standort umfassen.
++
+
+NOTE: Sie können Erasure Coding nicht verwenden, wenn der Speicherpool zwei Standorte umfasst.
+
++
+** <<Erasure-Coding-Schemata für Speicherpools mit drei oder mehr Standorten,Erasure-Coding-Schemata für Speicherpools mit drei oder mehr Standorten>>
+** <<Erasure-Coding-Schemata für Speicherpools an einem Standort,Erasure-Coding-Schemata für Speicherpools an einem Standort>>
+
+
+* Verwenden Sie keinen Speicherpool, der die Site „Alle Sites“ enthält.
+* Der Speicherpool sollte mindestens `_k+m_ +1` Speicherknoten, die Objektdaten speichern können.
++
+
+NOTE: Speicherknoten können während der Installation so konfiguriert werden, dass sie nur Objektmetadaten und keine Objektdaten enthalten. Weitere Informationen finden Sie unter link:../primer/what-storage-node-is.html#types-of-storage-nodes["Arten von Speicherknoten"] .
+
++
+Die Mindestanzahl der erforderlichen Speicherknoten beträgt `k+m` .  Wenn jedoch mindestens ein zusätzlicher Speicherknoten vorhanden ist, können Aufnahmefehler oder ILM-Rückstände vermieden werden, wenn ein erforderlicher Speicherknoten vorübergehend nicht verfügbar ist.
+
+
+
+
+
+== Erasure-Coding-Schemata für Speicherpools mit drei oder mehr Standorten
+
+Die folgende Tabelle beschreibt die Erasure-Coding-Schemata, die derzeit von StorageGRID für Speicherpools mit drei oder mehr Standorten unterstützt werden.  Alle diese Systeme bieten Schutz vor Standortverlust.  Eine Site kann verloren gehen, und das Objekt ist weiterhin zugänglich.
+
+Für Erasure-Coding-Schemata, die Site-Loss-Schutz bieten, übersteigt die empfohlene Anzahl von Storage Nodes im Speicherpool `_k+m_ +1` da für jeden Standort mindestens drei Speicherknoten erforderlich sind.
+
+[cols="1a,1a,1a,1a,1a,1a"]
+|===
+| Erasure-Coding-Schema (_k+m_) | Mindestanzahl bereitgestellter Sites | Empfohlene Anzahl von Speicherknoten an jedem Standort | Empfohlene Gesamtzahl an Speicherknoten | Schutz vor Site-Verlust? | Speicheraufwand 
+
+
+ a| 
+4+2
+ a| 
+3
+ a| 
+3
+ a| 
+9
+ a| 
+Ja
+ a| 
+50 %
+
+
+
+ a| 
+6+2
+ a| 
+4
+ a| 
+3
+ a| 
+12
+ a| 
+Ja
+ a| 
+33 %
+
+
+
+ a| 
+8+2
+ a| 
+5
+ a| 
+3
+ a| 
+15
+ a| 
+Ja
+ a| 
+25 %
+
+
+
+ a| 
+6+3
+ a| 
+3
+ a| 
+4
+ a| 
+12
+ a| 
+Ja
+ a| 
+50 %
+
+
+
+ a| 
+9+3
+ a| 
+4
+ a| 
+4
+ a| 
+16
+ a| 
+Ja
+ a| 
+33 %
+
+
+
+ a| 
+2+1
+ a| 
+3
+ a| 
+3
+ a| 
+9
+ a| 
+Ja
+ a| 
+50 %
+
+
+
+ a| 
+4+1
+ a| 
+5
+ a| 
+3
+ a| 
+15
+ a| 
+Ja
+ a| 
+25 %
+
+
+
+ a| 
+6+1
+ a| 
+7
+ a| 
+3
+ a| 
+21
+ a| 
+Ja
+ a| 
+17 %
+
+
+
+ a| 
+7+5
+ a| 
+3
+ a| 
+5
+ a| 
+15
+ a| 
+Ja
+ a| 
+71 %
+
+|===
+
+NOTE: StorageGRID erfordert mindestens drei Speicherknoten pro Site.  Um das 7+5-Schema zu verwenden, benötigt jeder Standort mindestens vier Speicherknoten.  Es wird empfohlen, fünf Speicherknoten pro Site zu verwenden.
+
+Wägen Sie bei der Auswahl eines Löschcodierungsschemas, das Site-Schutz bietet, die relative Bedeutung der folgenden Faktoren ab:
+
+* *Anzahl der Fragmente*: Leistung und Erweiterungsflexibilität sind im Allgemeinen besser, wenn die Gesamtzahl der Fragmente geringer ist.
+* *Fehlertoleranz*: Die Fehlertoleranz wird durch mehr Paritätssegmente erhöht (d. h. wenn `m` hat einen höheren Wert.)
+* *Netzwerkverkehr*: Bei der Wiederherstellung nach Fehlern wird ein Schema mit mehr Fragmenten verwendet (d. h. eine höhere Gesamtzahl für `k+m` ) erzeugt mehr Netzwerkverkehr.
+* *Speicher-Overhead*: Schemata mit höherem Overhead erfordern mehr Speicherplatz pro Objekt.
+
+
+Wenn Sie sich beispielsweise zwischen einem 4+2-Schema und einem 6+3-Schema entscheiden (die beide einen Speicher-Overhead von 50 % haben), wählen Sie das 6+3-Schema, wenn zusätzliche Fehlertoleranz erforderlich ist.  Wählen Sie das 4+2-Schema, wenn die Netzwerkressourcen eingeschränkt sind.  Wenn alle anderen Faktoren gleich sind, wählen Sie 4+2, da dies eine geringere Gesamtzahl an Fragmenten ergibt.
+
+
+NOTE: Wenn Sie sich nicht sicher sind, welches Schema Sie verwenden sollen, wählen Sie 4+2 oder 6+3 oder wenden Sie sich an den technischen Support.
+
+
+
+== Erasure-Coding-Schemata für Speicherpools an einem Standort
+
+Ein Speicherpool für einen Standort unterstützt alle für drei oder mehr Standorte definierten Erasure-Coding-Schemata, vorausgesetzt, der Standort verfügt über genügend Speicherknoten.
+
+Die Mindestanzahl der erforderlichen Speicherknoten beträgt `k+m` , sondern ein Speicherpool mit `k+m +1` Speicherknoten werden empfohlen.  Beispielsweise erfordert das 2+1-Erasure-Coding-Schema einen Speicherpool mit mindestens drei Speicherknoten, empfohlen werden jedoch vier Speicherknoten.
+
+[cols="1a,1a,1a,1a"]
+|===
+| Erasure-Coding-Schema (_k+m_) | Mindestanzahl an Speicherknoten | Empfohlene Anzahl von Speicherknoten | Speicheraufwand 
+
+
+ a| 
+4+2
+ a| 
+6
+ a| 
+7
+ a| 
+50 %
+
+
+
+ a| 
+6+2
+ a| 
+8
+ a| 
+9
+ a| 
+33 %
+
+
+
+ a| 
+8+2
+ a| 
+10
+ a| 
+11
+ a| 
+25 %
+
+
+
+ a| 
+6+3
+ a| 
+9
+ a| 
+10
+ a| 
+50 %
+
+
+
+ a| 
+9+3
+ a| 
+12
+ a| 
+13
+ a| 
+33 %
+
+
+
+ a| 
+2+1
+ a| 
+3
+ a| 
+4
+ a| 
+50 %
+
+
+
+ a| 
+4+1
+ a| 
+5
+ a| 
+6
+ a| 
+25 %
+
+
+
+ a| 
+6+1
+ a| 
+7
+ a| 
+8
+ a| 
+17 %
+
+
+
+ a| 
+7+5
+ a| 
+12
+ a| 
+13
+ a| 
+71 %
+
+|===

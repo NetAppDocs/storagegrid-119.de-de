@@ -1,0 +1,47 @@
+---
+permalink: audit/sadd-security-audit-disable.html 
+sidebar: sidebar 
+keywords: storagegrid, audit, message, SADD, Security Audit Disable 
+summary: 'Diese Nachricht zeigt an, dass der ursprüngliche Dienst \(Knoten-ID\) die Protokollierung von Prüfnachrichten deaktiviert hat. Prüfnachrichten werden nicht mehr erfasst oder übermittelt.' 
+---
+= SADD: Sicherheitsüberprüfung deaktivieren
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Diese Nachricht zeigt an, dass der ursprüngliche Dienst (Knoten-ID) die Protokollierung von Prüfnachrichten deaktiviert hat. Prüfnachrichten werden nicht mehr erfasst oder übermittelt.
+
+[cols="1a,1a,4a"]
+|===
+| Code | Feld | Beschreibung 
+
+
+ a| 
+AETM
+ a| 
+Enable-Methode
+ a| 
+Die zum Deaktivieren der Überwachung verwendete Methode.
+
+
+
+ a| 
+AEUN
+ a| 
+Benutzername
+ a| 
+Der Benutzername, der den Befehl zum Deaktivieren der Überwachungsprotokollierung ausgeführt hat.
+
+
+
+ a| 
+RSLT
+ a| 
+Ergebnis
+ a| 
+Dieses Feld hat den Wert NONE.  RSLT ist ein obligatorisches Nachrichtenfeld, für diese Nachricht jedoch nicht relevant.  Damit diese Nachricht nicht gefiltert wird, wird NONE anstelle von SUCS verwendet.
+
+|===
+Die Meldung impliziert, dass die Protokollierung zuvor aktiviert war, jetzt aber deaktiviert wurde.  Dies wird normalerweise nur während der Massenaufnahme verwendet, um die Systemleistung zu verbessern.  Nach der Massenaktivität wird die Überwachung wiederhergestellt (SADE) und die Möglichkeit, die Überwachung zu deaktivieren, wird dann dauerhaft blockiert.

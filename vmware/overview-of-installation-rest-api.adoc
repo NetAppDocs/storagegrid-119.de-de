@@ -1,0 +1,41 @@
+---
+permalink: vmware/overview-of-installation-rest-api.html 
+sidebar: sidebar 
+keywords: installation REST API 
+summary: StorageGRID bietet die StorageGRID -Installations-API zum Ausführen von Installationsaufgaben. 
+---
+= Installation der REST-API
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+StorageGRID bietet die StorageGRID -Installations-API zum Ausführen von Installationsaufgaben.
+
+Die API verwendet die Open-Source-API-Plattform Swagger, um die API-Dokumentation bereitzustellen.  Swagger ermöglicht sowohl Entwicklern als auch Nicht-Entwicklern die Interaktion mit der API in einer Benutzeroberfläche, die veranschaulicht, wie die API auf Parameter und Optionen reagiert.  Diese Dokumentation setzt voraus, dass Sie mit Standard-Webtechnologien und dem JSON-Datenformat vertraut sind.
+
+
+CAUTION: Alle API-Operationen, die Sie über die API-Dokumentationswebseite durchführen, sind Live-Operationen.  Achten Sie darauf, dass Sie nicht versehentlich Konfigurationsdaten oder andere Daten erstellen, aktualisieren oder löschen.
+
+Jeder REST-API-Befehl enthält die URL der API, eine HTTP-Aktion, alle erforderlichen oder optionalen URL-Parameter und eine erwartete API-Antwort.
+
+
+
+== StorageGRID Installations-API
+
+Die StorageGRID Installations-API ist nur verfügbar, wenn Sie Ihr StorageGRID -System zum ersten Mal konfigurieren und eine Wiederherstellung des primären Admin-Knotens durchführen müssen.  Auf die Installations-API kann über HTTPS vom Grid Manager aus zugegriffen werden.
+
+Um auf die API-Dokumentation zuzugreifen, gehen Sie zur Installationswebseite auf dem primären Admin-Knoten und wählen Sie in der Menüleiste *Hilfe* > *API-Dokumentation*.
+
+Die StorageGRID -Installations-API umfasst die folgenden Abschnitte:
+
+* *config* – Vorgänge im Zusammenhang mit der Produktversion und den Versionen der API.  Sie können die Produktversion und die Hauptversionen der von dieser Version unterstützten API auflisten.
+* *grid* – Konfigurationsvorgänge auf Grid-Ebene.  Sie können Grid-Einstellungen abrufen und aktualisieren, einschließlich Grid-Details, Grid-Netzwerk-Subnetze, Grid-Passwörter sowie NTP- und DNS-Server-IP-Adressen.
+* *Knoten* – Konfigurationsvorgänge auf Knotenebene.  Sie können eine Liste von Grid-Knoten abrufen, einen Grid-Knoten löschen, einen Grid-Knoten konfigurieren, einen Grid-Knoten anzeigen und die Konfiguration eines Grid-Knotens zurücksetzen.
+* *Bereitstellung* – Bereitstellungsvorgänge.  Sie können den Bereitstellungsvorgang starten und den Status des Bereitstellungsvorgangs anzeigen.
+* *Wiederherstellung* – Wiederherstellungsvorgänge für den primären Admin-Knoten.  Sie können Informationen zurücksetzen, das Wiederherstellungspaket hochladen, die Wiederherstellung starten und den Status des Wiederherstellungsvorgangs anzeigen.
+* *recovery-package* – Vorgänge zum Herunterladen des Wiederherstellungspakets.
+* *Sites* – Konfigurationsvorgänge auf Site-Ebene.  Sie können eine Site erstellen, anzeigen, löschen und ändern.
+* *temporäres Passwort* – Vorgänge für das temporäre Passwort, um die Mgmt-API während der Installation zu sichern.
+

@@ -1,0 +1,182 @@
+---
+permalink: ilm/working-with-ilm-rules-and-ilm-policies.html 
+sidebar: sidebar 
+keywords: remove ilm rule, edit ilm rule, clone ilm rule, ilm queue 
+summary: Wenn sich Ihre Speicheranforderungen ändern, müssen Sie möglicherweise eine andere Richtlinie implementieren oder die mit der Richtlinie verknüpften ILM-Regeln ändern.  Sie können ILM-Metriken anzeigen, um die Systemleistung zu bestimmen. 
+---
+= Arbeiten mit ILM-Richtlinien und ILM-Regeln
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Wenn sich Ihre Speicheranforderungen ändern, müssen Sie möglicherweise zusätzliche Richtlinien implementieren oder die mit einer Richtlinie verknüpften ILM-Regeln ändern.  Sie können ILM-Metriken anzeigen, um die Systemleistung zu bestimmen.
+
+.Bevor Sie beginnen
+* Sie sind beim Grid Manager angemeldet mit einemlink:../admin/web-browser-requirements.html["unterstützter Webbrowser"] .
+* Du hastlink:../admin/admin-group-permissions.html["spezifische Zugriffsberechtigungen"] .
+
+
+
+
+== ILM-Richtlinien anzeigen
+
+So zeigen Sie aktive und inaktive ILM-Richtlinien und den Richtlinienaktivierungsverlauf an:
+
+. Wählen Sie *ILM* > *Richtlinien*.
+. Wählen Sie *Richtlinien* aus, um eine Liste der aktiven und inaktiven Richtlinien anzuzeigen.  In der Tabelle sind der Name jeder Richtlinie, die Tags, denen die Richtlinie zugewiesen ist, und die Angabe aufgeführt, ob die Richtlinie aktiv oder inaktiv ist.
+. Wählen Sie *Aktivierungsverlauf* aus, um eine Liste mit den Start- und Enddaten der Aktivierung für Richtlinien anzuzeigen.
+. Wählen Sie einen Richtliniennamen aus, um die Details der Richtlinie anzuzeigen.
++
+
+NOTE: Wenn Sie die Details einer Richtlinie mit dem Status „Bearbeitet“ oder „Gelöscht“ anzeigen, wird eine Meldung angezeigt, die darauf hinweist, dass Sie die Version der Richtlinie anzeigen, die für den angegebenen Zeitraum aktiv war und seitdem bearbeitet oder gelöscht wurde.
+
+
+
+
+
+== Bearbeiten einer ILM-Richtlinie
+
+Sie können nur eine inaktive Richtlinie bearbeiten.  Wenn Sie eine aktive Richtlinie bearbeiten möchten, deaktivieren Sie sie oder erstellen Sie einen Klon und bearbeiten Sie den Klon.
+
+So bearbeiten Sie eine Richtlinie:
+
+. Wählen Sie *ILM* > *Richtlinien*.
+. Aktivieren Sie das Kontrollkästchen für die Richtlinie, die Sie bearbeiten möchten, und wählen Sie dann *Bearbeiten* aus.
+. Bearbeiten Sie die Richtlinie, indem Sie den Anweisungen inlink:creating-ilm-policy.html["Erstellen von ILM-Richtlinien"] .
+. Simulieren Sie die Richtlinie, bevor Sie sie erneut aktivieren.
+
+
+
+CAUTION: Eine falsch konfigurierte ILM-Richtlinie kann zu einem nicht wiederherstellbaren Datenverlust führen.  Bevor Sie eine ILM-Richtlinie aktivieren, überprüfen Sie die ILM-Richtlinie und ihre ILM-Regeln sorgfältig und simulieren Sie dann die ILM-Richtlinie.  Stellen Sie immer sicher, dass die ILM-Richtlinie wie vorgesehen funktioniert.
+
+
+
+== Klonen einer ILM-Richtlinie
+
+So klonen Sie eine ILM-Richtlinie:
+
+. Wählen Sie *ILM* > *Richtlinien*.
+. Aktivieren Sie das Kontrollkästchen für die Richtlinie, die Sie klonen möchten, und wählen Sie dann *Klonen* aus.
+. Erstellen Sie eine neue Richtlinie, beginnend mit der Richtlinie, die Sie geklont haben, indem Sie den Anweisungen inlink:creating-ilm-policy.html["Erstellen von ILM-Richtlinien"] .
+
+
+
+CAUTION: Eine falsch konfigurierte ILM-Richtlinie kann zu einem nicht wiederherstellbaren Datenverlust führen.  Bevor Sie eine ILM-Richtlinie aktivieren, überprüfen Sie die ILM-Richtlinie und ihre ILM-Regeln sorgfältig und simulieren Sie dann die ILM-Richtlinie.  Stellen Sie immer sicher, dass die ILM-Richtlinie wie vorgesehen funktioniert.
+
+
+
+== Entfernen einer ILM-Richtlinie
+
+Sie können eine ILM-Richtlinie nur entfernen, wenn sie inaktiv ist.  So entfernen Sie eine Richtlinie:
+
+. Wählen Sie *ILM* > *Richtlinien*.
+. Aktivieren Sie das Kontrollkästchen für die inaktive Richtlinie, die Sie entfernen möchten.
+. Wählen Sie *Entfernen*.
+
+
+
+
+== Anzeigen von ILM-Regeldetails
+
+So zeigen Sie die Details einer ILM-Regel an, einschließlich des Aufbewahrungsdiagramms und der Platzierungsanweisungen für die Regel:
+
+. Wählen Sie *ILM* > *Regeln*.
+. Wählen Sie den Namen der Regel aus, deren Details Sie anzeigen möchten. Beispiel:
++
+image::../media/ilm_rule_details_page.png[Detailseite der ILM-Regel]
+
+
+
+Darüber hinaus können Sie auf der Detailseite eine Regel klonen, bearbeiten oder entfernen.  Sie können eine Regel nicht bearbeiten oder entfernen, wenn sie in einer Richtlinie verwendet wird.
+
+
+
+== Klonen einer ILM-Regel
+
+Sie können eine vorhandene Regel klonen, wenn Sie eine neue Regel erstellen möchten, die einige der Einstellungen der vorhandenen Regel verwendet.  Wenn Sie eine Regel bearbeiten müssen, die in einer Richtlinie verwendet wird, klonen Sie stattdessen die Regel und nehmen Änderungen am Klon vor.  Nachdem Sie Änderungen am Klon vorgenommen haben, können Sie die ursprüngliche Regel aus der Richtlinie entfernen und sie nach Bedarf durch die geänderte Version ersetzen.
+
+
+NOTE: Sie können eine ILM-Regel nicht klonen, wenn sie mit StorageGRID Version 10.2 oder früher erstellt wurde.
+
+.Schritte
+. Wählen Sie *ILM* > *Regeln*.
+. Aktivieren Sie das Kontrollkästchen für die Regel, die Sie klonen möchten, und wählen Sie dann *Klonen*.  Alternativ können Sie den Regelnamen auswählen und dann auf der Seite mit den Regeldetails die Option *Klonen* auswählen.
+. Aktualisieren Sie die geklonte Regel, indem Sie die Schritte für<<Bearbeiten einer ILM-Regel,Bearbeiten einer ILM-Regel>> Undlink:create-ilm-rule-enter-details.html#use-advanced-filters-in-ilm-rules["Verwenden erweiterter Filter in ILM-Regeln"] .
++
+Beim Klonen einer ILM-Regel müssen Sie einen neuen Namen eingeben.
+
+
+
+
+
+== Bearbeiten einer ILM-Regel
+
+Möglicherweise müssen Sie eine ILM-Regel bearbeiten, um einen Filter oder eine Platzierungsanweisung zu ändern.
+
+Sie können eine Regel nicht bearbeiten, wenn sie in einer ILM-Richtlinie verwendet wird.  Stattdessen können Sie<<clone-ilm-rule,Klonen Sie die Regel>> und nehmen Sie alle erforderlichen Änderungen an der geklonten Kopie vor.
+
+
+CAUTION: Eine falsch konfigurierte ILM-Richtlinie kann zu einem nicht wiederherstellbaren Datenverlust führen.  Bevor Sie eine ILM-Richtlinie aktivieren, überprüfen Sie die ILM-Richtlinie und ihre ILM-Regeln sorgfältig und simulieren Sie dann die ILM-Richtlinie.  Stellen Sie immer sicher, dass die ILM-Richtlinie wie vorgesehen funktioniert.
+
+.Schritte
+. Wählen Sie *ILM* > *Regeln*.
+. Vergewissern Sie sich, dass die Regel, die Sie bearbeiten möchten, in keiner ILM-Richtlinie verwendet wird.
+. Wenn die Regel, die Sie bearbeiten möchten, nicht verwendet wird, aktivieren Sie das Kontrollkästchen für die Regel und wählen Sie *Aktionen* > *Bearbeiten*.  Alternativ können Sie den Namen der Regel auswählen und dann auf der Seite mit den Regeldetails „Bearbeiten“ wählen.
+. Führen Sie die Schritte des Assistenten „ILM-Regel bearbeiten“ aus.  Befolgen Sie bei Bedarf die Schritte fürlink:create-ilm-rule-enter-details.html["Erstellen einer ILM-Regel"] Undlink:create-ilm-rule-enter-details.html#use-advanced-filters-in-ilm-rules["Verwenden erweiterter Filter in ILM-Regeln"] .
++
+Beim Bearbeiten einer ILM-Regel können Sie ihren Namen nicht ändern.
+
+
+
+
+
+== Entfernen einer ILM-Regel
+
+Um die Liste der aktuellen ILM-Regeln übersichtlich zu halten, entfernen Sie alle ILM-Regeln, die Sie wahrscheinlich nicht verwenden werden.
+
+.Schritte
+So entfernen Sie eine ILM-Regel, die derzeit in einer aktiven Richtlinie verwendet wird:
+
+. Klonen Sie die Richtlinie.
+. Entfernen Sie die ILM-Regel aus dem Richtlinienklon.
+. Speichern, simulieren und aktivieren Sie die neue Richtlinie, um sicherzustellen, dass Objekte wie erwartet geschützt sind.
+. Fahren Sie mit den Schritten zum Entfernen einer ILM-Regel fort, die derzeit in einer inaktiven Richtlinie verwendet wird.
+
+
+So entfernen Sie eine ILM-Regel, die derzeit in einer inaktiven Richtlinie verwendet wird:
+
+. Wählen Sie die inaktive Richtlinie aus.
+. Entfernen Sie die ILM-Regel aus der Richtlinie oder<<remove-ilm-policy,Entfernen Sie die Richtlinie>> .
+. Fahren Sie mit den Schritten zum Entfernen einer ILM-Regel fort, die derzeit nicht verwendet wird.
+
+
+So entfernen Sie eine ILM-Regel, die derzeit nicht verwendet wird:
+
+. Wählen Sie *ILM* > *Regeln*.
+. Bestätigen Sie, dass die Regel, die Sie entfernen möchten, in keiner Richtlinie verwendet wird.
+. Wenn die Regel, die Sie entfernen möchten, nicht verwendet wird, wählen Sie die Regel aus und wählen Sie *Aktionen* > *Entfernen*.  Sie können mehrere Regeln auswählen und alle gleichzeitig entfernen.
+. Wählen Sie *Ja*, um zu bestätigen, dass Sie die ILM-Regel entfernen möchten.
+
+
+
+
+== Anzeigen von ILM-Metriken
+
+Sie können Kennzahlen für ILM anzeigen, beispielsweise die Anzahl der Objekte in der Warteschlange und die Auswertungsrate.  Sie können diese Metriken überwachen, um die Systemleistung zu bestimmen.  Eine große Warteschlange oder Auswertungsrate kann darauf hinweisen, dass das System mit der Aufnahmerate nicht Schritt halten kann, die Belastung durch die Clientanwendungen zu hoch ist oder ein anormaler Zustand vorliegt.
+
+.Schritte
+. Wählen Sie *Dashboard* > *ILM*.
++
+
+NOTE: Da das Dashboard angepasst werden kann, ist die Registerkarte „ILM“ möglicherweise nicht verfügbar.
+
+. Überwachen Sie die Metriken auf der Registerkarte „ILM“.
++
+Sie können das Fragezeichen auswählenimage:../media/icon_nms_question.png["Fragezeichensymbol"] , um eine Beschreibung der Elemente auf der Registerkarte ILM anzuzeigen.
+
++
+image::../media/ilm_metrics_on_dashboard.png[ILM-Metriken auf dem Grid Manager-Dashboard]
+
+

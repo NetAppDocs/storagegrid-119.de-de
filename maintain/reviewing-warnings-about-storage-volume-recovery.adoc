@@ -1,0 +1,39 @@
+---
+permalink: maintain/reviewing-warnings-about-storage-volume-recovery.html 
+sidebar: sidebar 
+keywords: storagegrid, recover, volume warning 
+summary: Bevor Sie ausgefallene Speichervolumes für einen Speicherknoten wiederherstellen, müssen Sie die folgenden Warnungen lesen. 
+---
+= Warnungen zur Wiederherstellung von Speichervolumes
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Lesen Sie die folgenden Warnungen, bevor Sie ausgefallene Speichervolumes für einen Speicherknoten wiederherstellen.
+
+Die Speichervolumes (oder Rangedbs) in einem Speicherknoten werden durch eine Hexadezimalzahl identifiziert, die als Volume-ID bezeichnet wird.  Beispielsweise ist 0000 der erste Band und 000F der sechzehnte Band.  Der erste Objektspeicher (Volume 0) auf jedem Speicherknoten verwendet bis zu 4 TB Speicherplatz für Objektmetadaten und Cassandra-Datenbankvorgänge. Der verbleibende Speicherplatz auf diesem Volume wird für Objektdaten verwendet.  Alle anderen Speichervolumes werden ausschließlich für Objektdaten verwendet.
+
+Wenn Volume 0 ausfällt und wiederhergestellt werden muss, kann die Cassandra-Datenbank im Rahmen des Volume-Wiederherstellungsverfahrens neu erstellt werden.  Cassandra kann auch unter folgenden Umständen neu erstellt werden:
+
+* Ein Speicherknoten wird wieder online gebracht, nachdem er länger als 15 Tage offline war.
+* Das Systemlaufwerk und ein oder mehrere Speichervolumes fallen aus und werden wiederhergestellt.
+
+
+Beim Neuaufbau von Cassandra verwendet das System Informationen von anderen Speicherknoten. Wenn zu viele Speicherknoten offline sind, sind einige Cassandra-Daten möglicherweise nicht verfügbar. Wenn Cassandra vor Kurzem neu erstellt wurde, sind die Cassandra-Daten im gesamten Grid möglicherweise noch nicht konsistent.  Es kann zu Datenverlust kommen, wenn Cassandra neu erstellt wird, während zu viele Speicherknoten offline sind, oder wenn zwei oder mehr Speicherknoten innerhalb von 15 Tagen neu erstellt werden.
+
+
+CAUTION: Wenn mehr als ein Speicherknoten ausgefallen ist (oder offline ist), wenden Sie sich an den technischen Support. Führen Sie das folgende Wiederherstellungsverfahren nicht durch. Es könnte zu Datenverlust kommen.
+
+
+CAUTION: Wenn dies der zweite Speicherknotenausfall innerhalb von weniger als 15 Tagen nach einem Speicherknotenausfall oder einer Wiederherstellung ist, wenden Sie sich an den technischen Support.  Der Wiederaufbau von Cassandra auf zwei oder mehr Speicherknoten innerhalb von 15 Tagen kann zu Datenverlust führen.
+
+
+NOTE: Wenn an einem Standort mehr als ein Speicherknoten ausgefallen ist, ist möglicherweise ein Standortwiederherstellungsverfahren erforderlich. Sehen link:how-site-recovery-is-performed-by-technical-support.html["So stellt der technische Support eine Site wieder her"] .
+
+
+CAUTION: Wenn ILM-Regeln so konfiguriert sind, dass nur eine replizierte Kopie gespeichert wird und die Kopie auf einem ausgefallenen Speichervolume vorhanden ist, können Sie das Objekt nicht wiederherstellen.
+
+.Ähnliche Informationen
+link:warnings-and-considerations-for-grid-node-recovery.html["Warnungen und Hinweise zur Wiederherstellung von Grid-Knoten"]

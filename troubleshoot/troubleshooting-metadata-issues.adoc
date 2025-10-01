@@ -1,0 +1,62 @@
+---
+permalink: troubleshoot/troubleshooting-metadata-issues.html 
+sidebar: sidebar 
+keywords: how to troubleshoot metadata issues 
+summary: Wenn Metadatenprobleme auftreten, werden Sie durch Warnmeldungen über die Ursache der Probleme und empfohlene Maßnahmen informiert.  Insbesondere müssen Sie neue Speicherknoten hinzufügen, wenn die Warnung „Geringer Metadatenspeicher“ ausgelöst wird. 
+---
+= Beheben von Metadatenproblemen
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Wenn Metadatenprobleme auftreten, werden Sie durch Warnmeldungen über die Ursache der Probleme und empfohlene Maßnahmen informiert.  Insbesondere müssen Sie neue Speicherknoten hinzufügen, wenn die Warnung „Geringer Metadatenspeicher“ ausgelöst wird.
+
+.Bevor Sie beginnen
+Sie sind beim Grid Manager angemeldet mit einemlink:../admin/web-browser-requirements.html["unterstützter Webbrowser"] .
+
+.Informationen zu diesem Vorgang
+Befolgen Sie die empfohlenen Maßnahmen für jede ausgelöste Metadatenwarnung.  Wenn die Warnung *Geringer Metadatenspeicher* ausgelöst wird, müssen Sie neue Speicherknoten hinzufügen.
+
+StorageGRID reserviert auf Volume 0 jedes Speicherknotens eine bestimmte Menge Speicherplatz für Objektmetadaten.  Dieser Speicherplatz, der als _tatsächlich reservierter Speicherplatz_ bezeichnet wird, ist unterteilt in den für Objektmetadaten zulässigen Speicherplatz (den zulässigen Metadatenspeicherplatz) und den für wesentliche Datenbankvorgänge wie Komprimierung und Reparatur erforderlichen Speicherplatz.  Der zulässige Metadatenspeicherplatz bestimmt die Gesamtobjektkapazität.
+
+image::../media/metadata_allowed_space_volume_0.png[Metadaten Zulässiger Speicherplatz Volume 0]
+
+Wenn Objektmetadaten mehr als 100 % des für Metadaten zulässigen Speicherplatzes beanspruchen, können Datenbankvorgänge nicht effizient ausgeführt werden und es treten Fehler auf.
+
+Du kannstlink:../monitor/monitoring-storage-capacity.html#monitor-object-metadata-capacity-for-each-storage-node["Überwachen Sie die Objektmetadatenkapazität für jeden Speicherknoten"] um Ihnen zu helfen, Fehler vorherzusehen und zu korrigieren, bevor sie auftreten.
+
+StorageGRID verwendet die folgende Prometheus-Metrik, um zu messen, wie voll der zulässige Metadatenspeicher ist:
+
+[listing]
+----
+storagegrid_storage_utilization_metadata_bytes/storagegrid_storage_utilization_metadata_allowed_bytes
+----
+Wenn dieser Prometheus-Ausdruck bestimmte Schwellenwerte erreicht, wird die Warnung „Geringer Metadatenspeicher“ ausgelöst.
+
+* *Geringfügig*: Objektmetadaten verwenden 70 % oder mehr des zulässigen Metadatenspeicherplatzes.  Sie sollten so schnell wie möglich neue Speicherknoten hinzufügen.
+* *Schwerwiegend*: Objektmetadaten verwenden 90 % oder mehr des zulässigen Metadatenspeichers.  Sie müssen sofort neue Speicherknoten hinzufügen.
++
+
+CAUTION: Wenn Objektmetadaten 90 % oder mehr des zulässigen Metadatenspeicherplatzes belegen, wird auf dem Dashboard eine Warnung angezeigt.  Wenn diese Warnung erscheint, müssen Sie sofort neue Speicherknoten hinzufügen.  Sie dürfen niemals zulassen, dass Objektmetadaten mehr als 100 % des zulässigen Speicherplatzes belegen.
+
+* *Kritisch*: Objektmetadaten verwenden 100 % oder mehr des zulässigen Metadatenspeicherplatzes und beginnen, den für wichtige Datenbankvorgänge erforderlichen Speicherplatz zu verbrauchen.  Sie müssen die Aufnahme neuer Objekte stoppen und sofort neue Speicherknoten hinzufügen.
+
+
+
+CAUTION: Wenn die Größe von Volume 0 kleiner ist als die Speicheroption „Reservierter Speicherplatz für Metadaten“ (z. B. in einer Nicht-Produktionsumgebung), ist die Berechnung für die Warnung „Geringer Metadatenspeicher“ möglicherweise ungenau.
+
+.Schritte
+. Wählen Sie *WARNUNGEN* > *Aktuell*.
+. Erweitern Sie in der Tabelle der Warnungen bei Bedarf die Warnungsgruppe *Geringer Metadatenspeicher* und wählen Sie die Warnung aus, die Sie anzeigen möchten.
+. Überprüfen Sie die Details im Warndialogfeld.
+. Wenn eine schwerwiegende oder kritische Warnung „Geringer Metadatenspeicher“ ausgelöst wurde, führen Sie sofort eine Erweiterung durch, um Speicherknoten hinzuzufügen.
++
+
+NOTE: Da StorageGRID an jedem Standort vollständige Kopien aller Objektmetadaten speichert, ist die Metadatenkapazität des gesamten Grids durch die Metadatenkapazität des kleinsten Standorts begrenzt.  Wenn Sie die Metadatenkapazität einer Site erweitern müssen, sollten Sie auchlink:../expand/adding-grid-nodes-to-existing-site-or-adding-new-site.html["Erweitern Sie alle anderen Sites"] durch die gleiche Anzahl von Speicherknoten.
+
++
+Nachdem Sie die Erweiterung durchgeführt haben, verteilt StorageGRID die vorhandenen Objektmetadaten auf die neuen Knoten, wodurch die Gesamtmetadatenkapazität des Grids erhöht wird.  Es ist keine Benutzeraktion erforderlich.  Die Warnung *Geringer Metadatenspeicher* wird gelöscht.
+
+

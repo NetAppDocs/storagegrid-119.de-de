@@ -1,0 +1,33 @@
+---
+permalink: tenant/deleting-another-users-s3-access-keys.html 
+sidebar: sidebar 
+keywords: how to delete access key for other user 
+summary: Wenn Sie einen S3-Mandanten verwenden und über die entsprechenden Berechtigungen verfügen, können Sie die S3-Zugriffsschlüssel eines anderen Benutzers löschen.  Nachdem ein Zugriffsschlüssel gelöscht wurde, kann er nicht mehr für den Zugriff auf die Objekte und Buckets im Mandantenkonto verwendet werden. 
+---
+= Löschen Sie die S3-Zugriffsschlüssel eines anderen Benutzers
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Wenn Sie einen S3-Mandanten verwenden und über die entsprechenden Berechtigungen verfügen, können Sie die S3-Zugriffsschlüssel eines anderen Benutzers löschen.  Nachdem ein Zugriffsschlüssel gelöscht wurde, kann er nicht mehr für den Zugriff auf die Objekte und Buckets im Mandantenkonto verwendet werden.
+
+.Bevor Sie beginnen
+* Sie sind beim Tenant Manager angemeldet mit einemlink:../admin/web-browser-requirements.html["unterstützter Webbrowser"] .
+* Sie haben dielink:tenant-management-permissions.html["Root-Zugriffsberechtigung"] .
+
+
+
+CAUTION: Auf die S3-Buckets und -Objekte eines Benutzers kann mithilfe der Zugriffsschlüssel-ID und des geheimen Zugriffsschlüssels zugegriffen werden, die für diesen Benutzer im Tenant Manager angezeigt werden.  Schützen Sie daher Zugriffsschlüssel wie ein Passwort.  Wechseln Sie die Zugriffsschlüssel regelmäßig, entfernen Sie alle nicht verwendeten Schlüssel aus dem Konto und geben Sie sie niemals an andere Benutzer weiter.
+
+.Schritte
+. Wählen Sie *ZUGRIFFSVERWALTUNG* > *Benutzer*.
+. Wählen Sie auf der Seite „Benutzer“ den Benutzer aus, dessen S3-Zugriffsschlüssel Sie verwalten möchten.
+. Wählen Sie auf der Seite „Benutzerdetails“ *Zugriffsschlüssel* aus und aktivieren Sie dann das Kontrollkästchen für jeden Zugriffsschlüssel, den Sie löschen möchten.
+. Wählen Sie *Aktionen* > *Ausgewählten Schlüssel löschen*.
+. Wählen Sie im Bestätigungsdialogfeld *Schlüssel löschen* aus.
++
+In der oberen rechten Ecke der Seite wird eine Bestätigungsmeldung angezeigt.
+
+

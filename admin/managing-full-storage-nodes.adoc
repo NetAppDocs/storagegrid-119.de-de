@@ -1,0 +1,32 @@
+---
+permalink: admin/managing-full-storage-nodes.html 
+sidebar: sidebar 
+keywords: storage node is full 
+summary: 'Wenn die Speicherknoten ihre Kapazitätsgrenze erreichen, müssen Sie das StorageGRID -System durch Hinzufügen von neuem Speicher erweitern.  Es stehen drei Optionen zur Verfügung: Hinzufügen von Speichervolumes, Hinzufügen von Speichererweiterungsregalen und Hinzufügen von Speicherknoten.' 
+---
+= Vollständige Speicherknoten verwalten
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Wenn die Speicherknoten ihre Kapazitätsgrenze erreichen, müssen Sie das StorageGRID -System durch Hinzufügen von neuem Speicher erweitern.  Es stehen drei Optionen zur Verfügung: Hinzufügen von Speichervolumes, Hinzufügen von Speichererweiterungsregalen und Hinzufügen von Speicherknoten.
+
+
+
+== Speichervolumes hinzufügen
+
+Jeder Speicherknoten unterstützt eine maximale Anzahl von Speichervolumes.  Das definierte Maximum variiert je nach Plattform.  Wenn ein Speicherknoten weniger als die maximale Anzahl an Speichervolumes enthält, können Sie Volumes hinzufügen, um seine Kapazität zu erhöhen. Siehe die Anweisungen fürlink:../expand/index.html["Erweiterung eines StorageGRID -Systems"] .
+
+
+
+== Fügen Sie Speichererweiterungsregale hinzu
+
+Einige StorageGRID -Geräte-Speicherknoten, wie z. B. SG6060 oder SG6160, können zusätzliche Speicherregale unterstützen.  Wenn Sie über StorageGRID -Geräte mit Erweiterungsmöglichkeiten verfügen, die noch nicht auf die maximale Kapazität erweitert wurden, können Sie Speicherregale hinzufügen, um die Kapazität zu erhöhen. Siehe die Anweisungen fürlink:../expand/index.html["Erweiterung eines StorageGRID -Systems"] .
+
+
+
+== Speicherknoten hinzufügen
+
+Sie können die Speicherkapazität durch Hinzufügen von Speicherknoten erhöhen.  Beim Hinzufügen von Speicher müssen die derzeit aktiven ILM-Regeln und Kapazitätsanforderungen sorgfältig berücksichtigt werden. Siehe die Anweisungen fürlink:../expand/index.html["Erweiterung eines StorageGRID -Systems"] .

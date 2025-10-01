@@ -1,0 +1,101 @@
+---
+permalink: tenant/configuring-cloudmirror-replication.html 
+sidebar: sidebar 
+keywords: how to configure CloudMirror replication, replication xml 
+summary: Sie aktivieren die CloudMirror-Replikation für einen Bucket, indem Sie eine XML-Konfigurationsdatei für die Bucket-Replikation erstellen und den Tenant Manager verwenden, um die XML auf den Bucket anzuwenden. 
+---
+= Konfigurieren der CloudMirror-Replikation
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Um die CloudMirror-Replikation für einen Bucket zu aktivieren, erstellen und wenden Sie eine gültige XML-Konfiguration für die Bucket-Replikation an.
+
+.Bevor Sie beginnen
+* Die Plattformdienste wurden von einem StorageGRID Administrator für Ihr Mandantenkonto aktiviert.
+* Sie haben bereits einen Bucket erstellt, der als Replikationsquelle fungiert.
+* Der Endpunkt, den Sie als Ziel für die CloudMirror-Replikation verwenden möchten, ist bereits vorhanden und Sie verfügen über seine URN.
+* Sie gehören einer Benutzergruppe an, die über dielink:tenant-management-permissions.html["Verwalten Sie alle Buckets oder Root-Zugriffsberechtigungen"] .  Diese Berechtigungen überschreiben die Berechtigungseinstellungen in Gruppen- oder Bucket-Richtlinien, wenn der Bucket mit dem Tenant Manager konfiguriert wird.
+
+
+.Informationen zu diesem Vorgang
+Die CloudMirror-Replikation kopiert Objekte aus einem Quell-Bucket in einen Ziel-Bucket, der in einem Endpunkt angegeben ist.
+
+Allgemeine Informationen zur Bucket-Replikation und ihrer Konfiguration finden Sie unter https://docs.aws.amazon.com/AmazonS3/latest/userguide/replication.html["Amazon Simple Storage Service (S3)-Dokumentation: Objekte replizieren"^] .  Informationen zur Implementierung von GetBucketReplication, DeleteBucketReplication und PutBucketReplication StorageGRID finden Sie imlink:../s3/operations-on-buckets.html["Operationen an Buckets"] .
+
+
+NOTE: Die CloudMirror-Replikation weist wichtige Ähnlichkeiten und Unterschiede zur Cross-Grid-Replikationsfunktion auf.  Weitere Informationen finden Sie unterlink:../admin/grid-federation-compare-cgr-to-cloudmirror.html["Vergleichen Sie Cross-Grid-Replikation und CloudMirror-Replikation"] .
+
+Beachten Sie beim Konfigurieren der CloudMirror-Replikation die folgenden Anforderungen und Merkmale:
+
+* Wenn Sie eine gültige XML-Konfiguration für die Bucket-Replikation erstellen und anwenden, muss diese für jedes Ziel die URN eines S3-Bucket-Endpunkts verwenden.
+* Die Replikation wird für Quell- oder Ziel-Buckets mit aktivierter S3-Objektsperre nicht unterstützt.
+* Wenn Sie die CloudMirror-Replikation für einen Bucket aktivieren, der Objekte enthält, werden dem Bucket neu hinzugefügte Objekte repliziert, die vorhandenen Objekte im Bucket werden jedoch nicht repliziert.  Sie müssen vorhandene Objekte aktualisieren, um die Replikation auszulösen.
+* Wenn Sie in der XML-Replikationskonfiguration eine Speicherklasse angeben, verwendet StorageGRID diese Klasse beim Ausführen von Vorgängen am Ziel-S3-Endpunkt.  Der Zielendpunkt muss auch die angegebene Speicherklasse unterstützen.  Befolgen Sie unbedingt alle Empfehlungen des Zielsystemanbieters.
+
+
+.Schritte
+. Aktivieren Sie die Replikation für Ihren Quell-Bucket:
++
+** Verwenden Sie einen Texteditor, um die zum Aktivieren der Replikation erforderliche XML-Replikationskonfiguration zu erstellen, wie in der S3-Replikations-API angegeben.
+** Beim Konfigurieren des XML:
++
+*** Beachten Sie, dass StorageGRID nur V1 der Replikationskonfiguration unterstützt.  Dies bedeutet, dass StorageGRID die Verwendung des `Filter` Element für Regeln und befolgt V1-Konventionen zum Löschen von Objektversionen.  Weitere Informationen finden Sie in der Amazon-Dokumentation zur Replikationskonfiguration.
+*** Verwenden Sie die URN eines S3-Bucket-Endpunkts als Ziel.
+*** Optional fügen Sie die `<StorageClass>` Element und geben Sie eine der folgenden Optionen an:
++
+****  `STANDARD`: Die Standardspeicherklasse.  Wenn Sie beim Hochladen eines Objekts keine Speicherklasse angeben, `STANDARD` Speicherklasse wird verwendet.
+**** `STANDARD_IA`: (Standard – seltener Zugriff.)  Verwenden Sie diese Speicherklasse für Daten, auf die weniger häufig zugegriffen wird, die aber dennoch bei Bedarf einen schnellen Zugriff erfordern.
+**** `REDUCED_REDUNDANCY`: Verwenden Sie diese Speicherklasse für nicht kritische, reproduzierbare Daten, die mit weniger Redundanz gespeichert werden können als die `STANDARD` Speicherklasse.
+
+
+*** Wenn Sie eine `Role` im Konfigurations-XML wird es ignoriert.  Dieser Wert wird von StorageGRID nicht verwendet.
++
+[listing]
+----
+<ReplicationConfiguration>
+    <Role></Role>
+    <Rule>
+        <Status>Enabled</Status>
+        <Prefix>2020</Prefix>
+        <Destination>
+           <Bucket>urn:sgws:s3:::2017-records</Bucket>
+           <StorageClass>STANDARD</StorageClass>
+         </Destination>
+     </Rule>
+</ReplicationConfiguration>
+----
+
+
+
+
+. Wählen Sie im Dashboard *Buckets anzeigen* oder wählen Sie *STORAGE (S3)* > *Buckets*.
+. Wählen Sie den Namen des Quell-Buckets aus.
++
+Die Bucket-Detailseite wird angezeigt.
+
+. Wählen Sie *Plattformdienste* > *Replikation*.
+. Aktivieren Sie das Kontrollkästchen *Replikation aktivieren*.
+. Fügen Sie die XML-Replikationskonfiguration in das Textfeld ein und wählen Sie *Änderungen speichern*.
++
+
+NOTE: Plattformdienste müssen für jedes Mandantenkonto von einem StorageGRID Administrator mithilfe des Grid Managers oder der Grid Management-API aktiviert werden.  Wenden Sie sich an Ihren StorageGRID -Administrator, wenn beim Speichern der XML-Konfiguration ein Fehler auftritt.
+
+. Überprüfen Sie, ob die Replikation richtig konfiguriert ist:
++
+.. Fügen Sie dem Quell-Bucket ein Objekt hinzu, das die in der Replikationskonfiguration angegebenen Anforderungen für die Replikation erfüllt.
++
+Im zuvor gezeigten Beispiel werden Objekte repliziert, die mit dem Präfix „2020“ übereinstimmen.
+
+.. Bestätigen Sie, dass das Objekt in den Ziel-Bucket repliziert wurde.
++
+Bei kleinen Objekten erfolgt die Replikation schnell.
+
+
+
+
+
+.Ähnliche Informationen
+link:creating-platform-services-endpoint.html["Plattformdienst-Endpunkt erstellen"]

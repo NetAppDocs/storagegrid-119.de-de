@@ -1,0 +1,223 @@
+---
+permalink: primer/what-admin-node-is.html 
+sidebar: sidebar 
+keywords: admin nodes 
+summary: Admin-Knoten bieten Verwaltungsdienste wie Systemkonfiguration, Überwachung und Protokollierung.  Admin-Knoten können auch zum Lastenausgleich des S3-Client-Verkehrs verwendet werden.  Jedes Grid muss über einen primären Admin-Knoten verfügen und kann aus Redundanzgründen eine beliebige Anzahl nicht-primärer Admin-Knoten haben. 
+---
+= Was ist ein Admin-Knoten?
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Admin-Knoten bieten Verwaltungsdienste wie Systemkonfiguration, Überwachung und Protokollierung.  Admin-Knoten können auch zum Lastenausgleich des S3-Client-Verkehrs verwendet werden.  Jedes Grid muss über einen primären Admin-Knoten verfügen und kann aus Redundanzgründen eine beliebige Anzahl nicht-primärer Admin-Knoten haben.
+
+
+
+== Unterschiede zwischen primären und nicht-primären Admin-Knoten
+
+Wenn Sie sich beim Grid Manager oder Tenant Manager anmelden, stellen Sie eine Verbindung zu einem Admin-Knoten her. Sie können eine Verbindung zu jedem Admin-Knoten herstellen und jeder Admin-Knoten zeigt eine ähnliche Ansicht des StorageGRID Systems an. Der primäre Admin-Knoten bietet jedoch mehr Funktionen als nicht-primäre Admin-Knoten. Beispielsweise müssen die meisten Wartungsvorgänge von den primären Admin-Knoten aus durchgeführt werden.
+
+Die Tabelle fasst die Funktionen primärer und nicht primärer Admin-Knoten zusammen.
+
+[cols="2a,1a,1a"]
+|===
+| Funktionen | Primärer Admin-Knoten | Nicht-primärer Admin-Knoten 
+
+
+ a| 
+Beinhaltet die<<ams,AMS>> Service
+ a| 
+Ja
+ a| 
+Ja
+
+
+
+ a| 
+Beinhaltet die<<cmn,CMN>> Service
+ a| 
+Ja
+ a| 
+Nein
+
+
+
+ a| 
+Beinhaltet die<<nms,NMS>> Service
+ a| 
+Ja
+ a| 
+Ja
+
+
+
+ a| 
+Beinhaltet die<<prometheus,Prometheus>> Service
+ a| 
+Ja
+ a| 
+Ja
+
+
+
+ a| 
+Beinhaltet die<<ssm,SSM>> Service
+ a| 
+Ja
+ a| 
+Ja
+
+
+
+ a| 
+Beinhaltet die<<load-balancer,Lastenausgleich>> Und<<high-availability,Hohe Verfügbarkeit>> Dienstleistungen
+ a| 
+Ja
+ a| 
+Ja
+
+
+
+ a| 
+Unterstützt die<<mgmt-api,Management-Anwendungsprogrammschnittstelle>> (MGMT-API)
+ a| 
+Ja
+ a| 
+Ja
+
+
+
+ a| 
+Kann für alle netzwerkbezogenen Wartungsaufgaben verwendet werden, beispielsweise IP-Adressänderung und Aktualisierung von NTP-Servern
+ a| 
+Ja
+ a| 
+Nein
+
+
+
+ a| 
+Kann nach der Erweiterung des Speicherknotens eine EC-Neuverteilung durchführen
+ a| 
+Ja
+ a| 
+Nein
+
+
+
+ a| 
+Kann für die Volumenwiederherstellung verwendet werden
+ a| 
+Ja
+ a| 
+Ja
+
+
+
+ a| 
+Kann Protokolldateien und Systemdaten von einem oder mehreren Knoten sammeln
+ a| 
+Ja
+ a| 
+Nein
+
+
+
+ a| 
+Sendet Warnmeldungen, AutoSupport -Pakete und SNMP-Traps und informiert
+ a| 
+Ja. Fungiert als<<preferred-sender,bevorzugter Absender>> .
+ a| 
+Ja. Fungiert als Standby-Sender.
+
+|===
+
+
+== [[preferred-sender]]Admin-Knoten des bevorzugten Absenders
+
+Wenn Ihre StorageGRID -Bereitstellung mehrere Admin-Knoten umfasst, ist der primäre Admin-Knoten der bevorzugte Absender für Warnbenachrichtigungen, AutoSupport -Pakete sowie SNMP-Traps und -Informationen.
+
+Im normalen Systembetrieb sendet nur der bevorzugte Absender Benachrichtigungen. Alle anderen Admin-Knoten überwachen jedoch den bevorzugten Absender. Wenn ein Problem erkannt wird, fungieren andere Admin-Knoten als _Standby-Sender_.
+
+In diesen Fällen können mehrere Benachrichtigungen gesendet werden:
+
+* Wenn Admin-Knoten voneinander isoliert werden, versuchen sowohl der bevorzugte Absender als auch die Standby-Absender, Benachrichtigungen zu senden, und es können mehrere Kopien der Benachrichtigungen empfangen werden.
+* Wenn der Standby-Absender Probleme mit dem bevorzugten Absender erkennt und mit dem Senden von Benachrichtigungen beginnt, kann der bevorzugte Absender möglicherweise seine Fähigkeit zum Senden von Benachrichtigungen wiedererlangen. In diesem Fall werden möglicherweise doppelte Benachrichtigungen gesendet. Der Standby-Absender stellt das Senden von Benachrichtigungen ein, wenn er beim bevorzugten Absender keine Fehler mehr erkennt.
++
+
+NOTE: Wenn Sie AutoSupport Pakete testen, senden alle Admin-Knoten den Test.  Wenn Sie Warnbenachrichtigungen testen, müssen Sie sich bei jedem Admin-Knoten anmelden, um die Konnektivität zu überprüfen.
+
+
+
+
+
+== Primäre Dienste für Admin-Knoten
+
+Die folgende Tabelle zeigt die primären Dienste für Admin-Knoten. Allerdings sind in dieser Tabelle nicht alle Knotendienste aufgeführt.
+
+[cols="1a,2a"]
+|===
+| Service | Tastenfunktion 
+
+
+ a| 
+[[ams]]Audit Management System (AMS)
+ a| 
+Verfolgt Systemaktivitäten und Ereignisse.
+
+
+
+ a| 
+[[cmn]]Konfigurationsverwaltungsknoten (CMN)
+ a| 
+Verwaltet die systemweite Konfiguration.
+
+
+
+ a| 
+[[Hochverfügbarkeit]]Hohe Verfügbarkeit
+ a| 
+Verwaltet hochverfügbare virtuelle IP-Adressen für Gruppen von Admin-Knoten und Gateway-Knoten.
+
+*Hinweis:* Dieser Dienst ist auch auf Gateway-Knoten verfügbar.
+
+
+
+ a| 
+[[load-balancer]]Lastenausgleich
+ a| 
+Bietet Lastausgleich des S3-Verkehrs von Clients zu Speicherknoten.
+
+*Hinweis:* Dieser Dienst ist auch auf Gateway-Knoten verfügbar.
+
+
+
+ a| 
+[[mgmt-api]]Management-Anwendungsprogrammschnittstelle (mgmt-api)
+ a| 
+Verarbeitet Anfragen von der Grid Management API und der Tenant Management API.
+
+
+
+ a| 
+[[nms]]Netzwerkmanagementsystem (NMS)
+ a| 
+Bietet Funktionen für den Grid Manager.
+
+
+
+ a| 
+[[prometheus]]Prometheus
+ a| 
+Sammelt und speichert Zeitreihenmetriken von den Diensten auf allen Knoten.
+
+
+
+ a| 
+[[ssm]]Server Status Monitor (SSM)
+ a| 
+Überwacht das Betriebssystem und die zugrunde liegende Hardware.
+
+|===

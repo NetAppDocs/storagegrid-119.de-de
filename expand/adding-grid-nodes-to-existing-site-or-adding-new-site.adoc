@@ -1,0 +1,30 @@
+---
+permalink: expand/adding-grid-nodes-to-existing-site-or-adding-new-site.html 
+sidebar: sidebar 
+keywords: grid node, add node, add site, expand, expansion 
+summary: Befolgen Sie diese Vorgehensweise, um Rasterknoten zu vorhandenen Sites hinzuzufügen oder eine neue Site hinzuzufügen.  Sie können jeweils nur eine Art der Erweiterung durchführen. 
+---
+= Fügen Sie Rasterknoten zu einer vorhandenen Site hinzu oder fügen Sie eine neue Site hinzu
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Befolgen Sie diese Vorgehensweise, um Rasterknoten zu vorhandenen Sites hinzuzufügen oder eine neue Site hinzuzufügen.  Sie können jeweils nur eine Art der Erweiterung durchführen.
+
+.Bevor Sie beginnen
+* Sie haben dielink:../admin/admin-group-permissions.html["Root-Zugriff oder Wartungsberechtigung"] .
+* Alle vorhandenen Knoten im Grid sind an allen Standorten aktiv und betriebsbereit.
+* Alle vorherigen Erweiterungs-, Upgrade-, Außerbetriebnahme- oder Wiederherstellungsverfahren sind abgeschlossen.
++
+
+NOTE: Sie können keine Erweiterung starten, während eine andere Erweiterung, ein Upgrade, eine Wiederherstellung oder ein aktives Außerbetriebnahmeverfahren läuft.  Bei Bedarf können Sie jedoch einen Außerbetriebnahmevorgang unterbrechen, um eine Erweiterung zu starten.
+
+
+
+.Schritte
+. link:updating-subnets-for-grid-network.html["Subnetze für Grid-Netzwerke aktualisieren"] .
+. link:deploying-new-grid-nodes.html["Neue Grid-Knoten bereitstellen"] .
+. link:performing-expansion.html["Erweiterung durchführen"] .
+

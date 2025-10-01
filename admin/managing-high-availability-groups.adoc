@@ -1,0 +1,93 @@
+---
+permalink: admin/managing-high-availability-groups.html 
+sidebar: sidebar 
+keywords: manage high availability group, ha groups, admin node, gateway node, active interface, backup interface, priority order 
+summary: 'Hochverfügbarkeitsgruppen (HA) bieten hochverfügbare Datenverbindungen für S3-Clients und hochverfügbare Verbindungen zum Grid Manager und zum Tenant Manager.' 
+---
+= Was sind Hochverfügbarkeitsgruppen (HA)?
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Hochverfügbarkeitsgruppen (HA) bieten hochverfügbare Datenverbindungen für S3-Clients und hochverfügbare Verbindungen zum Grid Manager und zum Tenant Manager.
+
+Sie können die Netzwerkschnittstellen mehrerer Admin- und Gateway-Knoten in einer Hochverfügbarkeitsgruppe (HA) zusammenfassen.  Wenn die aktive Schnittstelle in der HA-Gruppe ausfällt, kann eine Backup-Schnittstelle die Arbeitslast bewältigen.
+
+Jede HA-Gruppe bietet Zugriff auf die gemeinsam genutzten Dienste auf den ausgewählten Knoten.
+
+* HA-Gruppen, die Gateway-Knoten, Admin-Knoten oder beides umfassen, bieten hochverfügbare Datenverbindungen für S3-Clients.
+* HA-Gruppen, die nur Admin-Knoten enthalten, bieten hochverfügbare Verbindungen zum Grid Manager und zum Tenant Manager.
+* Eine HA-Gruppe, die nur Service-Appliances und VMware-basierte Softwareknoten umfasst, kann hochverfügbare Verbindungen bereitstellen fürlink:../admin/manage-s3-select-for-tenant-accounts.html["S3-Mandanten, die S3 Select verwenden"] .  HA-Gruppen werden bei der Verwendung von S3 Select empfohlen, sind aber nicht erforderlich.
+
+
+
+
+== Wie erstellt man eine HA-Gruppe?
+
+. Sie wählen eine Netzwerkschnittstelle für einen oder mehrere Admin-Knoten oder Gateway-Knoten aus.  Sie können eine Grid-Netzwerkschnittstelle (eth0), eine Client-Netzwerkschnittstelle (eth2), eine VLAN-Schnittstelle oder eine Zugriffsschnittstelle verwenden, die Sie dem Knoten hinzugefügt haben.
++
+
+NOTE: Sie können einer HA-Gruppe keine Schnittstelle hinzufügen, wenn diese über eine per DHCP zugewiesene IP-Adresse verfügt.
+
+. Sie geben eine Schnittstelle als primäre Schnittstelle an.  Die primäre Schnittstelle ist die aktive Schnittstelle, sofern kein Fehler auftritt.
+. Sie bestimmen die Prioritätsreihenfolge für alle Backup-Schnittstellen.
+. Sie weisen der Gruppe eine bis zehn virtuelle IP-Adressen (VIP) zu.  Clientanwendungen können jede dieser VIP-Adressen verwenden, um eine Verbindung mit StorageGRID herzustellen.
+
+
+Anweisungen hierzu finden Sie unterlink:configure-high-availability-group.html["Konfigurieren von Hochverfügbarkeitsgruppen"] .
+
+
+
+== Was ist die aktive Schnittstelle?
+
+Während des normalen Betriebs werden alle VIP-Adressen für die HA-Gruppe der primären Schnittstelle hinzugefügt, die die erste Schnittstelle in der Prioritätsreihenfolge ist.  Solange die primäre Schnittstelle verfügbar bleibt, wird sie verwendet, wenn Clients eine Verbindung mit einer beliebigen VIP-Adresse für die Gruppe herstellen.  Das heißt, während des normalen Betriebs ist die primäre Schnittstelle die „aktive“ Schnittstelle für die Gruppe.
+
+Ebenso fungieren während des Normalbetriebs alle Schnittstellen mit niedrigerer Priorität für die HA-Gruppe als „Backup“-Schnittstellen.  Diese Backup-Schnittstellen werden nicht verwendet, es sei denn, die primäre (derzeit aktive) Schnittstelle ist nicht mehr verfügbar.
+
+
+
+== Den aktuellen HA-Gruppenstatus eines Knotens anzeigen
+
+Um zu sehen, ob ein Knoten einer HA-Gruppe zugewiesen ist, und um seinen aktuellen Status zu bestimmen, wählen Sie *NODES* > *_node_*.
+
+Wenn die Registerkarte *Übersicht* einen Eintrag für *HA-Gruppen* enthält, wird der Knoten den aufgeführten HA-Gruppen zugewiesen.  Der Wert nach dem Gruppennamen ist der aktuelle Status des Knotens in der HA-Gruppe:
+
+* *Aktiv*: Die HA-Gruppe wird derzeit auf diesem Knoten gehostet.
+* *Backup*: Die HA-Gruppe verwendet diesen Knoten derzeit nicht. Dies ist eine Backup-Schnittstelle.
+* *Gestoppt*: Die HA-Gruppe kann auf diesem Knoten nicht gehostet werden, da der Dienst „High Availability“ (Keepalived) manuell gestoppt wurde.
+* *Fehler*: Die HA-Gruppe kann aus einem oder mehreren der folgenden Gründe nicht auf diesem Knoten gehostet werden:
++
+** Der Load Balancer-Dienst (nginx-gw) wird auf dem Knoten nicht ausgeführt.
+** Die eth0- oder VIP-Schnittstelle des Knotens ist ausgefallen.
+** Der Knoten ist ausgefallen.
+
+
+
+
+In diesem Beispiel wurde der primäre Admin-Knoten zu zwei HA-Gruppen hinzugefügt.  Dieser Knoten ist derzeit die aktive Schnittstelle für die Gruppe der Admin-Clients und eine Backup-Schnittstelle für die Gruppe der FabricPool -Clients.
+
+image::../media/ha_group_primary_interface.png[Primäre Schnittstelle der HA-Gruppe]
+
+
+
+== Was passiert, wenn die aktive Schnittstelle ausfällt?
+
+Die Schnittstelle, die derzeit die VIP-Adressen hostet, ist die aktive Schnittstelle.  Wenn die HA-Gruppe mehr als eine Schnittstelle umfasst und die aktive Schnittstelle ausfällt, werden die VIP-Adressen in der Prioritätsreihenfolge an die erste verfügbare Backup-Schnittstelle verschoben.  Wenn diese Schnittstelle ausfällt, werden die VIP-Adressen zur nächsten verfügbaren Backup-Schnittstelle verschoben und so weiter.
+
+Ein Failover kann aus folgenden Gründen ausgelöst werden:
+
+* Der Knoten, auf dem die Schnittstelle konfiguriert ist, fällt aus.
+* Der Knoten, auf dem die Schnittstelle konfiguriert ist, verliert für mindestens 2 Minuten die Verbindung zu allen anderen Knoten.
+* Die aktive Schnittstelle fällt aus.
+* Der Load Balancer-Dienst wird gestoppt.
+* Der Hochverfügbarkeitsdienst wird gestoppt.
+
+
+
+NOTE: Das Failover wird möglicherweise nicht durch Netzwerkfehler außerhalb des Knotens ausgelöst, der die aktive Schnittstelle hostet.  Ebenso wird ein Failover nicht durch die Dienste für den Grid Manager oder den Tenant Manager ausgelöst.
+
+Der Failover-Prozess dauert im Allgemeinen nur wenige Sekunden und ist schnell genug, sodass Client-Anwendungen nur geringe Auswirkungen erfahren und sich auf normale Wiederholungsverhalten verlassen können, um den Betrieb fortzusetzen.
+
+Wenn der Fehler behoben ist und eine Schnittstelle mit höherer Priorität wieder verfügbar wird, werden die VIP-Adressen automatisch auf die verfügbare Schnittstelle mit der höchsten Priorität verschoben.

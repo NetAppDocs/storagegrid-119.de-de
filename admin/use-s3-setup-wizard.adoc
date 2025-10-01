@@ -1,0 +1,58 @@
+---
+permalink: admin/use-s3-setup-wizard.html 
+sidebar: sidebar 
+keywords: S3, S3 setup wizard 
+summary: Sie können den S3-Setup-Assistenten verwenden, um StorageGRID als Objektspeichersystem für eine S3-Anwendung zu konfigurieren. 
+---
+= S3-Setup-Assistent verwenden: Überlegungen und Anforderungen
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Sie können den S3-Setup-Assistenten verwenden, um StorageGRID als Objektspeichersystem für eine S3-Anwendung zu konfigurieren.
+
+
+
+== Wann Sie den S3-Setup-Assistenten verwenden sollten
+
+Der S3-Setup-Assistent führt Sie durch jeden Schritt der Konfiguration von StorageGRID für die Verwendung mit einer S3-Anwendung.  Beim Abschließen des Assistenten laden Sie Dateien herunter, mit denen Sie Werte in die S3-Anwendung eingeben können.  Verwenden Sie den Assistenten, um Ihr System schneller zu konfigurieren und sicherzustellen, dass Ihre Einstellungen den Best Practices von StorageGRID entsprechen.
+
+Wenn Sie dielink:admin-group-permissions.html["Root-Zugriffsberechtigung"] : Sie können den S3-Setup-Assistenten abschließen, wenn Sie mit der Verwendung des StorageGRID Grid Managers beginnen, oder Sie können zu einem späteren Zeitpunkt auf den Assistenten zugreifen und ihn abschließen.  Je nach Bedarf können Sie auch einige oder alle benötigten Elemente manuell konfigurieren und anschließend mit dem Assistenten die Werte zusammenstellen, die eine S3-Anwendung benötigt.
+
+
+
+== Vor der Verwendung des Assistenten
+
+Bevor Sie den Assistenten verwenden, vergewissern Sie sich, dass Sie diese Voraussetzungen erfüllt haben.
+
+Beziehen Sie IP-Adressen und richten Sie VLAN-Schnittstellen ein:: Wenn Sie eine Hochverfügbarkeitsgruppe (HA) konfigurieren, wissen Sie, mit welchen Knoten die S3-Anwendung eine Verbindung herstellt und welches StorageGRID Netzwerk verwendet wird.  Sie wissen auch, welche Werte Sie für das Subnetz-CIDR, die Gateway-IP-Adresse und die virtuellen IP-Adressen (VIP) eingeben müssen.
++
+--
+Wenn Sie ein virtuelles LAN verwenden möchten, um den Datenverkehr von der S3-Anwendung zu trennen, haben Sie die VLAN-Schnittstelle bereits konfiguriert. Sehen link:../admin/configure-vlan-interfaces.html["Konfigurieren von VLAN-Schnittstellen"] .
+
+--
+Konfigurieren der Identitätsföderation und SSO:: Wenn Sie Identitätsföderation oder Single Sign-On (SSO) für Ihr StorageGRID System verwenden möchten, haben Sie diese Funktionen aktiviert. Sie wissen auch, welche föderierte Gruppe Root-Zugriff auf das Mandantenkonto haben sollte, das die S3-Anwendung verwenden wird. Sehenlink:../admin/using-identity-federation.html["Verwenden der Identitätsföderation"] Undlink:../admin/configuring-sso.html["Konfigurieren der einmaligen Anmeldung"] .
+Domänennamen abrufen und konfigurieren:: Sie wissen, welchen vollqualifizierten Domänennamen (FQDN) Sie für StorageGRID verwenden müssen.  Einträge des Domänennamenservers (DNS) ordnen diesen FQDN den virtuellen IP-Adressen (VIP) der HA-Gruppe zu, die Sie mit dem Assistenten erstellen.
++
+--
+Wenn Sie virtuelle S3-Hosting-Anfragen verwenden möchten, sollten Sielink:../admin/configuring-s3-api-endpoint-domain-names.html["konfigurierte S3-Endpunktdomänennamen"] .  Es wird empfohlen, Anfragen im virtuellen gehosteten Stil zu verwenden.
+
+--
+Überprüfen Sie die Anforderungen für Load Balancer und Sicherheitszertifikate:: Wenn Sie den StorageGRID Lastenausgleich verwenden möchten, haben Sie die allgemeinen Überlegungen zum Lastenausgleich überprüft.  Sie verfügen über die Zertifikate, die Sie hochladen möchten, oder über die Werte, die Sie zum Generieren eines Zertifikats benötigen.
++
+--
+Wenn Sie einen externen Load Balancer-Endpunkt (eines Drittanbieters) verwenden möchten, verfügen Sie über den vollqualifizierten Domänennamen (FQDN), den Port und das Zertifikat für diesen Load Balancer.
+
+--
+Konfigurieren Sie alle Grid-Föderation-Verbindungen:: Wenn Sie dem S3-Mandanten das Klonen von Kontodaten und das Replizieren von Bucket-Objekten in ein anderes Grid mithilfe einer Grid-Föderationsverbindung erlauben möchten, bestätigen Sie Folgendes, bevor Sie den Assistenten starten:
++
+--
+* Du hastlink:grid-federation-manage-connection.html["die Grid-Föderation-Verbindung konfiguriert"] .
+* Der Status der Verbindung ist *Verbunden*.
+* Sie verfügen über Root-Zugriffsberechtigung.
+
+
+--
+

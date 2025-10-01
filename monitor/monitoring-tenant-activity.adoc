@@ -1,0 +1,175 @@
+---
+permalink: monitor/monitoring-tenant-activity.html 
+sidebar: sidebar 
+keywords: how to monitor tenant activity 
+summary: Alle S3-Client-Aktivitäten sind mit StorageGRID Mandantenkonten verknüpft.  Mit dem Grid Manager können Sie die Speichernutzung oder den Netzwerkverkehr für alle oder einen bestimmten Mandanten überwachen.  Sie können das Prüfprotokoll oder die Grafana-Dashboards verwenden, um detailliertere Informationen darüber zu sammeln, wie Mieter StorageGRID verwenden. 
+---
+= Überwachen Sie die Mieteraktivität
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Alle S3-Client-Aktivitäten sind mit StorageGRID Mandantenkonten verknüpft.  Mit dem Grid Manager können Sie die Speichernutzung oder den Netzwerkverkehr für alle oder einen bestimmten Mandanten überwachen.  Sie können das Prüfprotokoll oder die Grafana-Dashboards verwenden, um detailliertere Informationen darüber zu sammeln, wie Mieter StorageGRID verwenden.
+
+.Bevor Sie beginnen
+* Sie sind beim Grid Manager angemeldet mit einemlink:../admin/web-browser-requirements.html["unterstützter Webbrowser"] .
+* Sie haben dielink:../admin/admin-group-permissions.html["Root-Zugriff oder Mandantenkontenberechtigung"] .
+
+
+
+
+== Alle Mieter anzeigen
+
+Auf der Seite „Mieter“ werden grundlegende Informationen zu allen aktuellen Mieterkonten angezeigt.
+
+.Schritte
+. Wählen Sie *MIETER* aus.
+. Überprüfen Sie die auf den Mieterseiten angezeigten Informationen.
++
+Für jeden Mandanten werden der verwendete logische Speicherplatz, die Kontingentnutzung, das Kontingent und die Objektanzahl aufgelistet.  Wenn für einen Mandanten kein Kontingent festgelegt ist, enthalten die Felder „Kontingentnutzung“ und „Kontingent“ einen Bindestrich (&#8212;).
+
++
+
+NOTE: Bei den Angaben zum belegten Speicherplatz handelt es sich um Schätzwerte. Diese Schätzungen werden durch den Zeitpunkt der Aufnahme, die Netzwerkkonnektivität und den Knotenstatus beeinflusst.
+
++
+image::../media/tenant_accounts_page.png[Seite „Mandantenkonten“]
+
+. Optional können Sie sich bei einem Mandantenkonto anmelden, indem Sie den Anmeldelink auswählen.image:../media/icon_tenant_sign_in.png["Mandanten-Anmeldesymbol"] in der Spalte * Sign in/ URL kopieren *.
+. Kopieren Sie optional die URL für die Anmeldeseite eines Mandanten, indem Sie den Link „URL kopieren“ auswählen.image:../media/icon_tenant_copy_url.png["Symbol „Mandanten-URL kopieren“"] in der Spalte * Sign in/ URL kopieren *.
+. Wählen Sie optional *Exportieren nach CSV*, um eine `.csv` Datei mit den Nutzungswerten für alle Mandanten.
++
+Sie werden aufgefordert, die `.csv` Datei.
+
++
+Der Inhalt der `.csv` Die Datei sieht wie im folgenden Beispiel aus:
+
++
+image::../media/tenant_accounts_example_csv.png[Beispiel für Mandantenkonten (.csv)]
+
++
+Sie können das `.csv` Datei in einer Tabellenkalkulationsanwendung oder verwenden Sie sie in der Automatisierung.
+
+. Wenn keine Objekte aufgelistet sind, wählen Sie optional *Aktionen* > *Löschen* aus, um einen oder mehrere Mandanten zu entfernen. Sehen link:../admin/deleting-tenant-account.html["Mieterkonto löschen"] .
++
+Sie können ein Mandantenkonto nicht entfernen, wenn das Konto Buckets oder Container enthält.
+
+
+
+
+
+== Einen bestimmten Mandanten anzeigen
+
+Sie können Details zu einem bestimmten Mieter anzeigen.
+
+.Schritte
+. Wählen Sie den Mandantennamen auf der Seite „Mandanten“ aus.
++
+Die Seite mit den Mieterdetails wird angezeigt.
+
++
+image::../media/tenant_usage_modal.png[Mieternutzungsmodal]
+
+. Sehen Sie sich die Mieterübersicht oben auf der Seite an.
++
+Dieser Abschnitt der Detailseite enthält zusammenfassende Informationen zum Mandanten, darunter die Objektanzahl des Mandanten, die Kontingentnutzung, den verwendeten logischen Speicherplatz und die Kontingenteinstellung.
+
+. Überprüfen Sie auf der Registerkarte *Speicherplatzaufschlüsselung* das Diagramm *Speicherplatzverbrauch*.
++
+Dieses Diagramm zeigt den gesamten Speicherplatzverbrauch für alle S3-Buckets des Mandanten.
+
++
+Wenn für diesen Mandanten ein Kontingent festgelegt wurde, wird die Menge des verwendeten und verbleibenden Kontingents als Text angezeigt (z. B. `85.00 GB of 100 GB used` ).  Wenn kein Kontingent festgelegt wurde, verfügt der Mandant über ein unbegrenztes Kontingent und der Text enthält nur die Menge des verwendeten Speicherplatzes (z. B. `85.00 GB used` ).  Das Balkendiagramm zeigt den Prozentsatz der Quote in jedem Bucket oder Container.  Wenn der Mandant das Speicherkontingent um mehr als 1 % und mindestens 1 GB überschritten hat, zeigt das Diagramm das Gesamtkontingent und den Überschussbetrag an.
+
++
+Sie können den Cursor über das Balkendiagramm bewegen, um den von jedem Bucket oder Container verwendeten Speicherplatz anzuzeigen.  Sie können den Cursor über das Segment „Freier Speicherplatz“ bewegen, um die verbleibende Speicherquote anzuzeigen.
+
++
+image::../media/tenant_bucket_space_consumption_GM.png[Balkendiagramm zum Mieter-Bucket-Verbrauch]
+
++
+
+CAUTION: Die Kontingentnutzung basiert auf internen Schätzungen und kann in einigen Fällen überschritten werden.  Beispielsweise überprüft StorageGRID das Kontingent, wenn ein Mandant mit dem Hochladen von Objekten beginnt, und lehnt neue Aufnahmen ab, wenn der Mandant das Kontingent überschritten hat.  StorageGRID berücksichtigt jedoch nicht die Größe des aktuellen Uploads, wenn es feststellt, ob das Kontingent überschritten wurde.  Wenn Objekte gelöscht werden, kann es sein, dass ein Mandant vorübergehend daran gehindert wird, neue Objekte hochzuladen, bis die Kontingentnutzung neu berechnet wird.  Die Berechnung der Kontingentnutzung kann 10 Minuten oder länger dauern.
+
++
+
+NOTE: Die Kontingentnutzung eines Mandanten gibt die Gesamtmenge der Objektdaten an, die der Mandant in StorageGRID hochgeladen hat (logische Größe).  Die Kontingentnutzung stellt nicht den Speicherplatz dar, der zum Speichern von Kopien dieser Objekte und ihrer Metadaten (physische Größe) verwendet wird.
+
++
+
+NOTE: Sie können die Warnregel „Hohe Kontingentnutzung des Mandanten“ aktivieren, um festzustellen, ob Mandanten ihre Kontingente verbrauchen.  Wenn diese Option aktiviert ist, wird diese Warnung ausgelöst, wenn ein Mandant 90 % seines Kontingents genutzt hat. Anweisungen hierzu finden Sie unterlink:../monitor/editing-alert-rules.html["Alarmregeln bearbeiten"] .
+
+. Überprüfen Sie auf der Registerkarte *Speicherplatzaufschlüsselung* die *Bucket-Details*.
++
+Diese Tabelle listet die S3-Buckets für den Mandanten auf.  Der verwendete Speicherplatz ist die Gesamtmenge der Objektdaten im Bucket oder Container.  Dieser Wert stellt nicht den für ILM-Kopien und Objektmetadaten erforderlichen Speicherplatz dar.
+
+. Wählen Sie optional *In CSV exportieren* aus, um eine CSV-Datei mit den Nutzungswerten für jeden Bucket oder Container anzuzeigen und zu exportieren.
++
+Der Inhalt eines einzelnen S3-Tenants `.csv` Die Datei sieht wie im folgenden Beispiel aus:
+
++
+image::../media/tenant_bucket_details_csv.png[CSV-Beispiel für Mieter-Bucket-Details]
+
++
+Sie können das `.csv` Datei in einer Tabellenkalkulationsanwendung oder verwenden Sie sie in der Automatisierung.
+
+. Wählen Sie optional die Registerkarte *Zugelassene Funktionen* aus, um eine Liste der Berechtigungen und Funktionen anzuzeigen, die für den Mandanten aktiviert sind.  Sehenlink:../admin/editing-tenant-account.html["Mieterkonto bearbeiten"] wenn Sie eine dieser Einstellungen ändern müssen.
+. Wenn der Mandant über die Berechtigung *Grid-Föderationsverbindung verwenden* verfügt, wählen Sie optional die Registerkarte *Grid-Föderation* aus, um mehr über die Verbindung zu erfahren.
++
+Sehenlink:../admin/grid-federation-overview.html["Was ist Grid-Föderation?"] Undlink:../admin/grid-federation-manage-tenants.html["Verwalten der zulässigen Mandanten für die Grid-Föderation"] .
+
+
+
+
+
+== Netzwerkverkehr anzeigen
+
+Wenn für einen Mandanten Richtlinien zur Verkehrsklassifizierung gelten, überprüfen Sie den Netzwerkverkehr für diesen Mandanten.
+
+.Schritte
+. Wählen Sie *KONFIGURATION* > *Netzwerk* > *Verkehrsklassifizierung*.
++
+Die Seite „Richtlinien zur Verkehrsklassifizierung“ wird angezeigt und die vorhandenen Richtlinien werden in der Tabelle aufgelistet.
+
+. Überprüfen Sie die Liste der Richtlinien, um diejenigen zu ermitteln, die für einen bestimmten Mieter gelten.
+. Um die mit einer Richtlinie verknüpften Metriken anzuzeigen, wählen Sie das Optionsfeld links neben der Richtlinie aus und wählen Sie *Metriken*.
+. Analysieren Sie die Diagramme, um festzustellen, wie oft die Richtlinie den Datenverkehr einschränkt und ob Sie die Richtlinie anpassen müssen.
+
+
+Sehen link:../admin/managing-traffic-classification-policies.html["Verwalten von Richtlinien zur Datenverkehrsklassifizierung"] für weitere Informationen.
+
+
+
+== Verwenden des Überwachungsprotokolls
+
+Optional können Sie das Überwachungsprotokoll für eine detailliertere Überwachung der Aktivitäten eines Mandanten verwenden.
+
+Sie können beispielsweise die folgenden Arten von Informationen überwachen:
+
+* Bestimmte Clientvorgänge, wie z. B. PUT, GET oder DELETE
+* Objektgrößen
+* Die ILM-Regel für Objekte
+* Die Quell-IP der Client-Anfragen
+
+
+Prüfprotokolle werden in Textdateien geschrieben, die Sie mit einem Protokollanalysetool Ihrer Wahl analysieren können.  Dadurch können Sie die Aktivitäten Ihrer Kunden besser nachvollziehen oder ausgefeilte Chargeback- und Abrechnungsmodelle implementieren.
+
+Sehen link:../audit/index.html["Überprüfen der Überwachungsprotokolle"] für weitere Informationen.
+
+
+
+== Verwenden Sie Prometheus-Metriken
+
+Verwenden Sie optional Prometheus-Metriken, um Berichte zur Mieteraktivität zu erstellen.
+
+* Wählen Sie im Grid Manager *SUPPORT* > *Tools* > *Metriken*. Sie können vorhandene Dashboards wie S3 Overview verwenden, um Clientaktivitäten zu überprüfen.
++
+
+NOTE: Die auf der Seite „Metriken“ verfügbaren Tools sind in erster Linie für die Verwendung durch den technischen Support vorgesehen.  Einige Funktionen und Menüelemente dieser Tools sind absichtlich nicht funktionsfähig.
+
+* Wählen Sie oben im Grid Manager das Hilfesymbol und dann *API-Dokumentation* aus.  Sie können die Metriken im Abschnitt „Metriken“ der Grid Management-API verwenden, um benutzerdefinierte Warnregeln und Dashboards für die Mieteraktivität zu erstellen.
+
+
+Sehen link:reviewing-support-metrics.html["Überprüfen der Supportmetriken"] für weitere Informationen.

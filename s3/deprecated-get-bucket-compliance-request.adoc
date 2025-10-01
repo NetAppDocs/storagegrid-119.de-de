@@ -1,0 +1,95 @@
+---
+permalink: s3/deprecated-get-bucket-compliance-request.html 
+sidebar: sidebar 
+keywords: S3 REST API, S3 operations, deprecated GET compliance requests 
+summary: Die GET Bucket-Compliance-Anforderung ist veraltet.  Sie können diese Anfrage jedoch weiterhin verwenden, um die aktuell geltenden Compliance-Einstellungen für einen vorhandenen Legacy-Compliant-Bucket zu ermitteln. 
+---
+= Veraltet: GET Bucket-Compliance-Anforderung
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Die GET Bucket-Compliance-Anforderung ist veraltet.  Sie können diese Anfrage jedoch weiterhin verwenden, um die aktuell geltenden Compliance-Einstellungen für einen vorhandenen Legacy-Compliant-Bucket zu ermitteln.
+
+[NOTE]
+====
+Die StorageGRID Compliance-Funktion, die in früheren StorageGRID Versionen verfügbar war, ist veraltet und wurde durch S3 Object Lock ersetzt.  Weitere Einzelheiten finden Sie im Folgenden:
+
+* link:../s3/use-s3-api-for-s3-object-lock.html["Verwenden Sie die S3 REST API, um S3 Object Lock zu konfigurieren"]
+* https://kb.netapp.com/Advice_and_Troubleshooting/Hybrid_Cloud_Infrastructure/StorageGRID/How_to_manage_legacy_Compliant_buckets_in_StorageGRID_11.5["NetApp Knowledge Base: So verwalten Sie ältere konforme Buckets in StorageGRID 11.5"^]
+
+
+====
+Sie müssen über die Berechtigung s3:GetBucketCompliance verfügen oder Root-Kontoinhaber sein, um diesen Vorgang abzuschließen.
+
+
+
+== Anforderungsbeispiel
+
+Mit dieser Beispielanfrage können Sie die Compliance-Einstellungen für den Bucket mit dem Namen ermitteln. `mybucket` .
+
+[listing, subs="specialcharacters,quotes"]
+----
+GET /mybucket/?x-ntap-sg-compliance HTTP/1.1
+Date: _date_
+Authorization: _authorization string_
+Host: _host_
+----
+
+
+== Antwortbeispiel
+
+In der Antwort-XML `<SGCompliance>` listet die für den Bucket geltenden Compliance-Einstellungen auf.  Diese Beispielantwort zeigt die Compliance-Einstellungen für einen Bucket, in dem jedes Objekt ab dem Zeitpunkt der Aufnahme des Objekts in das Grid ein Jahr lang (525.600 Minuten) aufbewahrt wird.  Für diesen Bucket besteht derzeit keine rechtliche Sperre.  Jedes Objekt wird nach einem Jahr automatisch gelöscht.
+
+[listing, subs="specialcharacters,quotes"]
+----
+HTTP/1.1 200 OK
+Date: _date_
+Connection: _connection_
+Server: StorageGRID/11.1.0
+x-amz-request-id: _request ID_
+Content-Length: _length_
+Content-Type: application/xml
+
+<SGCompliance>
+  <RetentionPeriodMinutes>525600</RetentionPeriodMinutes>
+  <LegalHold>false</LegalHold>
+  <AutoDelete>true</AutoDelete>
+</SGCompliance>
+----
+[cols="1a,2a"]
+|===
+| Name | Beschreibung 
+
+
+ a| 
+Aufbewahrungsdauer in Minuten
+ a| 
+Die Länge der Aufbewahrungsfrist für diesem Bucket hinzugefügte Objekte in Minuten.  Die Aufbewahrungsfrist beginnt, wenn das Objekt in das Raster aufgenommen wird.
+
+
+
+ a| 
+LegalHold
+ a| 
+* True: Dieser Bucket unterliegt derzeit einer rechtlichen Sperre.  Objekte in diesem Bucket können erst gelöscht werden, wenn die rechtliche Sperre aufgehoben wird, auch wenn ihre Aufbewahrungsfrist abgelaufen ist.
+* Falsch: Dieser Bucket unterliegt derzeit keiner rechtlichen Sperre.  Objekte in diesem Bucket können gelöscht werden, wenn ihre Aufbewahrungsfrist abgelaufen ist.
+
+
+
+
+ a| 
+AutoDelete
+ a| 
+* True: Die Objekte in diesem Bucket werden automatisch gelöscht, wenn ihre Aufbewahrungsfrist abläuft, es sei denn, der Bucket unterliegt einer rechtlichen Sperre.
+* Falsch: Die Objekte in diesem Bucket werden nicht automatisch gelöscht, wenn die Aufbewahrungsfrist abläuft.  Sie müssen diese Objekte manuell löschen, wenn Sie sie löschen müssen.
+
+
+|===
+
+
+== Fehlerantworten
+
+Wenn der Bucket nicht konform erstellt wurde, lautet der HTTP-Statuscode für die Antwort `404 Not Found` , mit einem S3-Fehlercode von `XNoSuchBucketCompliance` .

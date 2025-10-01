@@ -1,0 +1,36 @@
+---
+permalink: maintain/considerations-for-decommissioning-admin-or-gateway-nodes.html 
+sidebar: sidebar 
+keywords: storagegrid, decommission admin node, decommission gateway node 
+summary: Überprüfen Sie die Überlegungen zur Außerbetriebnahme eines Admin-Knotens oder Gateway-Knotens. 
+---
+= Überlegungen zur Außerbetriebnahme von Admin- oder Gateway-Knoten
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Überprüfen Sie die Überlegungen zur Außerbetriebnahme eines Admin-Knotens oder Gateway-Knotens.
+
+
+
+== Überlegungen zum Admin-Knoten
+
+* Sie können den primären Admin-Knoten nicht außer Betrieb nehmen.
+* Sie können einen Admin-Knoten nicht außer Betrieb nehmen, wenn eine seiner Netzwerkschnittstellen Teil einer Hochverfügbarkeitsgruppe (HA) ist.  Sie müssen zuerst die Netzwerkschnittstellen aus der HA-Gruppe entfernen. Siehe die Anweisungen fürlink:../admin/managing-high-availability-groups.html["Verwalten von HA-Gruppen"] .
+* Bei Bedarf können Sie ILM-Richtlinien sicher ändern, während Sie einen Admin-Knoten außer Betrieb nehmen.
+* Wenn Sie einen Admin-Knoten außer Betrieb nehmen und Single Sign-On (SSO) für Ihr StorageGRID System aktiviert ist, müssen Sie daran denken, die Vertrauensstellung der vertrauenden Seite des Knotens aus Active Directory Federation Services (AD FS) zu entfernen.
+* Wenn Sielink:../admin/grid-federation-overview.html["Netzverbund"] , stellen Sie sicher, dass die IP-Adresse des Knotens, den Sie außer Betrieb nehmen, nicht für eine Grid-Föderation-Verbindung angegeben wurde.
+* Wenn Sie einen getrennten Admin-Knoten außer Betrieb nehmen, gehen die Prüfprotokolle dieses Knotens verloren. Diese Protokolle sollten jedoch auch auf dem primären Admin-Knoten vorhanden sein.
+
+
+
+
+== Überlegungen zum Gateway-Knoten
+
+* Sie können einen Gateway-Knoten nicht außer Betrieb nehmen, wenn eine seiner Netzwerkschnittstellen Teil einer Hochverfügbarkeitsgruppe (HA) ist.  Sie müssen zuerst die Netzwerkschnittstellen aus der HA-Gruppe entfernen. Siehe die Anweisungen fürlink:../admin/managing-high-availability-groups.html["Verwalten von HA-Gruppen"] .
+* Bei Bedarf können Sie ILM-Richtlinien sicher ändern, während Sie einen Gateway-Knoten außer Betrieb nehmen.
+* Wenn Sielink:../admin/grid-federation-overview.html["Netzverbund"] , stellen Sie sicher, dass die IP-Adresse des Knotens, den Sie außer Betrieb nehmen, nicht für eine Grid-Föderation-Verbindung angegeben wurde.
+* Sie können einen Gateway-Knoten sicher außer Betrieb nehmen, während er getrennt ist.
+

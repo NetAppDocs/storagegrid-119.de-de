@@ -1,0 +1,40 @@
+---
+permalink: tenant/duplicating-group.html 
+sidebar: sidebar 
+keywords: how to duplicate tenant group 
+summary: Sie können neue Gruppen schneller erstellen, indem Sie eine vorhandene Gruppe duplizieren. 
+---
+= Gruppe duplizieren
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Sie können neue Gruppen schneller erstellen, indem Sie eine vorhandene Gruppe duplizieren.
+
+.Bevor Sie beginnen
+* Sie sind beim Tenant Manager angemeldet mit einemlink:../admin/web-browser-requirements.html["unterstützter Webbrowser"] .
+* Sie gehören zu einer Benutzergruppe, die über die Root-Zugriffsberechtigung verfügt. Sehen link:tenant-management-permissions.html["Berechtigungen zur Mandantenverwaltung"] .
+
+
+.Schritte
+. Wählen Sie *ZUGRIFFSVERWALTUNG* > *Gruppen*.
+. Aktivieren Sie das Kontrollkästchen für die Gruppe, die Sie duplizieren möchten.
+. Wählen Sie *Gruppe duplizieren*. Weitere Einzelheiten zum Erstellen einer Gruppe finden Sie in den Anweisungen zum Erstellen von Gruppen fürlink:creating-groups-for-s3-tenant.html["ein S3-Mieter"] oder fürlink:creating-groups-for-swift-tenant.html["ein Swift-Mieter"] .
+. Wählen Sie die Registerkarte *Lokale Gruppe*, um eine lokale Gruppe zu erstellen, oder wählen Sie die Registerkarte *Verbundgruppe*, um eine Gruppe aus der zuvor konfigurierten Identitätsquelle zu importieren.
++
+Wenn Single Sign-On (SSO) für Ihr StorageGRID System aktiviert ist, können sich Benutzer, die zu lokalen Gruppen gehören, nicht beim Tenant Manager anmelden, obwohl sie Client-Anwendungen verwenden können, um die Ressourcen des Mandanten zu verwalten, basierend auflink:tenant-management-permissions.html["Gruppenberechtigungen"] .
+
+. Geben Sie den Namen der Gruppe ein.
++
+** *Lokale Gruppe*: Geben Sie sowohl einen Anzeigenamen als auch einen eindeutigen Namen ein.  Sie können den Anzeigenamen später bearbeiten.
+** *Föderierte Gruppe*: Geben Sie den eindeutigen Namen ein.  Für Active Directory ist der eindeutige Name der Name, der mit dem `sAMAccountName` Attribut.  Bei OpenLDAP ist der eindeutige Name der Name, der mit dem `uid` Attribut.
+
+
+. Wählen Sie *Weiter*.
+. Ändern Sie bei Bedarf die Berechtigungen für diese Gruppe.
+. Wählen Sie *Weiter*.
+. Wenn Sie eine Gruppe für einen S3-Mandanten duplizieren, wählen Sie bei Bedarf optional eine andere Richtlinie aus den Optionsfeldern *S3-Richtlinie hinzufügen* aus.  Wenn Sie eine benutzerdefinierte Richtlinie ausgewählt haben, aktualisieren Sie die JSON-Zeichenfolge nach Bedarf.
+. Wählen Sie *Gruppe erstellen*.
+

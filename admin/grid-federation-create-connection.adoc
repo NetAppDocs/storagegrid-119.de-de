@@ -1,0 +1,157 @@
+---
+permalink: admin/grid-federation-create-connection.html 
+sidebar: sidebar 
+keywords: grid federation, create connection, configure connection 
+summary: Sie können eine Grid-Föderationsverbindung zwischen zwei StorageGRID -Systemen erstellen, wenn Sie Mandantendetails klonen und Objektdaten replizieren möchten. 
+---
+= Erstellen von Grid-Föderationsverbindungen
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Sie können eine Grid-Föderationsverbindung zwischen zwei StorageGRID -Systemen erstellen, wenn Sie Mandantendetails klonen und Objektdaten replizieren möchten.
+
+Wie in der Abbildung gezeigt, umfasst das Erstellen einer Grid-Föderationsverbindung Schritte auf beiden Grids.  Sie fügen die Verbindung auf einem Raster hinzu und vervollständigen sie auf dem anderen Raster.  Sie können von jedem Raster aus beginnen.
+
+image::../media/grid-federation-create-connection.png[grafische Übersicht der Schritte zum Erstellen einer Verbindung auf zwei Rastern]
+
+.Bevor Sie beginnen
+* Sie haben dielink:grid-federation-overview.html["Überlegungen und Anforderungen"] zum Konfigurieren von Grid-Föderation-Verbindungen.
+* Wenn Sie für jedes Grid vollqualifizierte Domänennamen (FQDNs) anstelle von IP- oder VIP-Adressen verwenden möchten, wissen Sie, welche Namen Sie verwenden müssen, und Sie haben bestätigt, dass der DNS-Server für jedes Grid über die entsprechenden Einträge verfügt.
+* Sie verwenden einelink:../admin/web-browser-requirements.html["unterstützter Webbrowser"] .
+* Sie verfügen über Root-Zugriffsberechtigung und die Bereitstellungspassphrase für beide Grids.
+
+
+
+
+== Verbindung hinzufügen
+
+Führen Sie diese Schritte auf einem der beiden StorageGRID Systeme aus.
+
+.Schritte
+. Sign in .
+. Wählen Sie *KONFIGURATION* > *System* > *Grid-Föderation*.
+. Wählen Sie *Verbindung hinzufügen*.
+. Geben Sie Details für die Verbindung ein.
++
+[cols="1a,2a"]
+|===
+| Feld | Beschreibung 
+
+
+ a| 
+Verbindungsname
+ a| 
+Ein eindeutiger Name, der Ihnen hilft, diese Verbindung zu erkennen, z. B. „Raster 1 – Raster 2“.
+
+
+
+ a| 
+FQDN oder IP für dieses Grid
+ a| 
+Eine der folgenden Optionen:
+
+** Der FQDN des Grids, bei dem Sie derzeit angemeldet sind
+** Eine VIP-Adresse einer HA-Gruppe in diesem Grid
+** Eine IP-Adresse eines Admin-Knotens oder Gateway-Knotens in diesem Grid.  Die IP kann sich in jedem Netzwerk befinden, das das Zielnetz erreichen kann.
+
+
+
+
+ a| 
+Hafen
+ a| 
+Der Port, den Sie für diese Verbindung verwenden möchten.  Sie können jede nicht verwendete Portnummer zwischen 23000 und 23999 eingeben.
+
+Beide Grids verwenden in dieser Verbindung denselben Port.  Sie müssen sicherstellen, dass kein Knoten in einem der Grids diesen Port für andere Verbindungen verwendet.
+
+
+
+ a| 
+Zertifikat gültige Tage für dieses Raster
+ a| 
+Die Anzahl der Tage, die die Sicherheitszertifikate für dieses Grid in der Verbindung gültig sein sollen.  Der Standardwert beträgt 730 Tage (2 Jahre), Sie können jedoch einen beliebigen Wert zwischen 1 und 762 Tagen eingeben.
+
+StorageGRID generiert automatisch Client- und Serverzertifikate für jedes Grid, wenn Sie die Verbindung speichern.
+
+
+
+ a| 
+Bereitstellungspassphrase für dieses Raster
+ a| 
+Die Bereitstellungspassphrase für das Grid, bei dem Sie angemeldet sind.
+
+
+
+ a| 
+FQDN oder IP für das andere Grid
+ a| 
+Eine der folgenden Optionen:
+
+** Der FQDN des Grids, mit dem Sie sich verbinden möchten
+** Eine VIP-Adresse einer HA-Gruppe im anderen Grid
+** Eine IP-Adresse eines Admin-Knotens oder Gateway-Knotens im anderen Grid.  Die IP kann sich in jedem Netzwerk befinden, das das Quellraster erreichen kann.
+
+
+|===
+. Wählen Sie *Speichern und fortfahren*.
+. Wählen Sie für den Schritt „Bestätigungsdatei herunterladen“ die Option „Bestätigungsdatei herunterladen“ aus.
++
+Nachdem die Verbindung im anderen Grid hergestellt wurde, können Sie die Bestätigungsdatei von keinem Grid mehr herunterladen.
+
+. Suchen Sie die heruntergeladene Datei(`_connection-name_.grid-federation` ) und speichern Sie es an einem sicheren Ort.
++
+
+CAUTION: Diese Datei enthält Geheimnisse (maskiert als `***` ) und andere sensible Daten und müssen sicher gespeichert und übertragen werden.
+
+. Wählen Sie *Schließen*, um zur Grid-Föderationsseite zurückzukehren.
+. Bestätigen Sie, dass die neue Verbindung angezeigt wird und dass ihr *Verbindungsstatus* *Warten auf Verbindung* lautet.
+. Geben Sie die `_connection-name_.grid-federation` Datei an den Grid-Administrator für das andere Grid.
+
+
+
+
+== Vollständige Verbindung
+
+Führen Sie diese Schritte auf dem StorageGRID -System aus, mit dem Sie eine Verbindung herstellen (dem anderen Grid).
+
+.Schritte
+. Sign in .
+. Wählen Sie *KONFIGURATION* > *System* > *Grid-Föderation*.
+. Wählen Sie *Bestätigungsdatei hochladen*, um auf die Upload-Seite zuzugreifen.
+. Wählen Sie *Verifizierungsdatei hochladen*.  Navigieren Sie dann zu der Datei, die aus dem ersten Raster heruntergeladen wurde, und wählen Sie sie aus.(`_connection-name_.grid-federation` ).
++
+Die Details zur Verbindung werden angezeigt.
+
+. Geben Sie optional eine andere Anzahl gültiger Tage für die Sicherheitszertifikate dieses Rasters ein.  Der Eintrag *Gültigkeitstage des Zertifikats* entspricht standardmäßig dem Wert, den Sie im ersten Raster eingegeben haben, aber für jedes Raster können unterschiedliche Ablaufdaten verwendet werden.
++
+Verwenden Sie grundsätzlich auf beiden Seiten der Verbindung die gleiche Anzahl von Tagen für die Zertifikate.
+
++
+
+CAUTION: Wenn die Zertifikate an einem der Enden der Verbindung ablaufen, funktioniert die Verbindung nicht mehr und Replikationen stehen aus, bis die Zertifikate aktualisiert werden.
+
+. Geben Sie die Bereitstellungspassphrase für das Grid ein, bei dem Sie derzeit angemeldet sind.
+. Wählen Sie *Speichern und testen*.
++
+Die Zertifikate werden generiert und die Verbindung getestet.  Wenn die Verbindung gültig ist, wird eine Erfolgsmeldung angezeigt und die neue Verbindung wird auf der Grid-Föderationsseite aufgeführt.  Der *Verbindungsstatus* lautet *Verbunden*.
+
++
+Wenn eine Fehlermeldung angezeigt wird, beheben Sie alle Probleme. Sehen link:grid-federation-troubleshoot.html["Beheben von Grid-Föderationsfehlern"] .
+
+. Gehen Sie zur Grid-Föderationsseite im ersten Grid und aktualisieren Sie den Browser.  Bestätigen Sie, dass der *Verbindungsstatus* jetzt *Verbunden* ist.
+. Nachdem die Verbindung hergestellt wurde, löschen Sie alle Kopien der Verifizierungsdatei sicher.
++
+Wenn Sie diese Verbindung bearbeiten, wird eine neue Verifizierungsdatei erstellt.  Die Originaldatei kann nicht wiederverwendet werden.
+
+
+
+.Nach Abschluss
+* Überprüfen Sie die Überlegungen fürlink:grid-federation-manage-tenants.html["Verwaltung zugelassener Mieter"] .
+* link:creating-tenant-account.html["Erstellen Sie ein oder mehrere neue Mandantenkonten"], weisen Sie die Berechtigung *Grid-Föderationsverbindung verwenden* zu und wählen Sie die neue Verbindung aus.
+* link:grid-federation-manage-connection.html["Verwalten der Verbindung"]nach Bedarf.  Sie können Verbindungswerte bearbeiten, eine Verbindung testen, Verbindungszertifikate rotieren oder eine Verbindung entfernen.
+* link:../monitor/grid-federation-monitor-connections.html["Überwachen Sie die Verbindung"]als Teil Ihrer normalen StorageGRID Überwachungsaktivitäten.
+* link:grid-federation-troubleshoot.html["Beheben Sie Verbindungsprobleme"], einschließlich der Behebung aller Warnungen und Fehler im Zusammenhang mit dem Klonen von Konten und der Cross-Grid-Replikation.
+

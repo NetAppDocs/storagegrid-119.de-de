@@ -1,0 +1,225 @@
+---
+permalink: expand/performing-expansion.html 
+sidebar: sidebar 
+keywords: expand, expansion procedure 
+summary: Wenn Sie die Erweiterung durchführen, werden die neuen Grid-Knoten zu Ihrer vorhandenen StorageGRID Bereitstellung hinzugefügt. 
+---
+= Erweiterung durchführen
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Wenn Sie die Erweiterung durchführen, werden die neuen Grid-Knoten zu Ihrer vorhandenen StorageGRID Bereitstellung hinzugefügt.
+
+.Bevor Sie beginnen
+* Sie sind beim Grid Manager angemeldet mit einemlink:../admin/web-browser-requirements.html["unterstützter Webbrowser"] .
+* Sie haben die Bereitstellungspassphrase.
+* Sie haben alle Grid-Knoten bereitgestellt, die in dieser Erweiterung hinzugefügt werden.
+* Sie haben dielink:../admin/admin-group-permissions.html["Wartungs- oder Root-Zugriffsberechtigung"] .
+* Wenn Sie Speicherknoten hinzufügen, haben Sie bestätigt, dass alle im Rahmen einer Wiederherstellung durchgeführten Datenreparaturvorgänge abgeschlossen sind. Sehen link:../maintain/checking-data-repair-jobs.html["Überprüfen Sie die Datenreparaturaufträge"] .
+* Wenn Sie Speicherknoten hinzufügen und diesen Knoten eine benutzerdefinierte Speicherklasse zuweisen möchten, haben Sie bereitslink:../ilm/creating-and-assigning-storage-grades.html["erstellt die benutzerdefinierte Speicherklasse"] .  Sie verfügen außerdem entweder über die Root-Zugriffsberechtigung oder sowohl über die Wartungs- als auch über die ILM-Berechtigung.
+* Wenn Sie eine neue Site hinzufügen, haben Sie die ILM-Regeln überprüft und aktualisiert.  Sie müssen sicherstellen, dass Objektkopien erst nach Abschluss der Erweiterung auf der neuen Site gespeichert werden.  Wenn beispielsweise eine Regel den Standardspeicherpool (*Alle Speicherknoten*) verwendet, müssen Sielink:../ilm/creating-storage-pool.html["Erstellen Sie einen neuen Speicherpool"] das nur die vorhandenen Speicherknoten enthält undlink:../ilm/working-with-ilm-rules-and-ilm-policies.html["ILM-Regeln aktualisieren"] und die ILM-Richtlinie zur Verwendung dieses neuen Speicherpools.  Andernfalls werden Objekte an den neuen Standort kopiert, sobald der erste Knoten an diesem Standort aktiv wird.
+
+
+.Informationen zu diesem Vorgang
+Die Durchführung der Erweiterung umfasst die folgenden Hauptaufgaben des Benutzers:
+
+. Konfigurieren Sie die Erweiterung.
+. Starten Sie die Erweiterung.
+. Laden Sie eine neue Wiederherstellungspaketdatei herunter.
+. Überwachen Sie die Erweiterungsschritte und -phasen, bis alle neuen Knoten installiert und konfiguriert sind und alle Dienste gestartet wurden.
++
+
+CAUTION: Die Ausführung einiger Erweiterungsschritte und -phasen in einem großen Grid kann eine beträchtliche Zeit in Anspruch nehmen.  Beispielsweise kann das Streamen von Cassandra auf einen neuen Speicherknoten nur wenige Minuten dauern, wenn die Cassandra-Datenbank leer ist.  Wenn die Cassandra-Datenbank jedoch eine große Menge an Objektmetadaten enthält, kann dieser Schritt mehrere Stunden oder länger dauern.  Starten Sie während der Phasen „Erweitern des Cassandra-Clusters“ oder „Starten von Cassandra und Streamen von Daten“ keine Speicherknoten neu.
+
+
+
+.Schritte
+. Wählen Sie *WARTUNG* > *Aufgaben* > *Erweiterung*.
++
+Die Seite „Netzerweiterung“ wird angezeigt.  Im Abschnitt „Ausstehende Knoten“ werden die Knoten aufgelistet, die zum Hinzufügen bereit sind.
+
++
+image::../media/grid_expansion_page.png[Screenshot der Seite „Netzerweiterung“]
+
+. Wählen Sie *Erweiterung konfigurieren*.
++
+Das Dialogfeld „Site-Auswahl“ wird angezeigt.
+
+. Wählen Sie den Typ der Erweiterung aus, die Sie starten:
++
+** Wenn Sie eine neue Site hinzufügen, wählen Sie *Neu* und geben Sie den Namen der neuen Site ein.
+** Wenn Sie einer vorhandenen Site einen oder mehrere Knoten hinzufügen, wählen Sie *Vorhanden* aus.
+
+
+. Wählen Sie *Speichern*.
+. Überprüfen Sie die Liste *Ausstehende Knoten* und vergewissern Sie sich, dass alle von Ihnen bereitgestellten Grid-Knoten angezeigt werden.
++
+Bei Bedarf können Sie Ihren Cursor über die *Grid-Netzwerk-MAC-Adresse* eines Knotens positionieren, um Details zu diesem Knoten anzuzeigen.
+
++
+image::../media/grid_node_details.png[Screenshot der Grid-Node-Details]
+
++
+
+NOTE: Wenn ein Knoten fehlt, bestätigen Sie, dass er erfolgreich bereitgestellt wurde.
+
+. Genehmigen Sie aus der Liste der ausstehenden Knoten die Knoten, die Sie dieser Erweiterung hinzufügen möchten.
++
+.. Wählen Sie das Optionsfeld neben dem ersten ausstehenden Rasterknoten aus, den Sie genehmigen möchten.
+.. Wählen Sie *Genehmigen*.
++
+Das Konfigurationsformular für Rasterknoten wird angezeigt.
+
+.. Passen Sie bei Bedarf die allgemeinen Einstellungen an:
++
+[cols="1a,2a"]
+|===
+| Feld | Beschreibung 
+
+
+ a| 
+Website
+ a| 
+Der Name der Site, mit der der Rasterknoten verknüpft wird.  Wenn Sie mehrere Knoten hinzufügen, achten Sie darauf, für jeden Knoten die richtige Site auszuwählen.  Wenn Sie eine neue Site hinzufügen, werden alle Knoten zur neuen Site hinzugefügt.
+
+
+
+ a| 
+Name
+ a| 
+Der Systemname für den Knoten. Systemnamen sind für interne StorageGRID -Vorgänge erforderlich und können nicht geändert werden.
+
+
+
+ a| 
+Speichertyp (nur Speicherknoten)
+ a| 
+*** *Daten und Metadaten* („kombiniert“): Objektdaten- und Metadaten-Speicherknoten
+*** *Nur Daten*: Speicherknoten, der nur Objektdaten enthält (keine Metadaten)
+*** *Nur Metadaten*: Speicherknoten, der nur Metadaten enthält (keine Objektdaten)
+
+
+
+
+ a| 
+NTP-Rolle
+ a| 
+Die Network Time Protocol (NTP)-Rolle des Grid-Knotens:
+
+*** Wählen Sie *Automatisch* (Standard), um dem Knoten automatisch die NTP-Rolle zuzuweisen.  Die primäre Rolle wird Admin-Knoten, Speicherknoten mit ADC-Diensten, Gateway-Knoten und allen Grid-Knoten mit nicht statischen IP-Adressen zugewiesen.  Die Client-Rolle wird allen anderen Grid-Knoten zugewiesen.
+*** Wählen Sie *Primär* aus, um dem Knoten manuell die primäre NTP-Rolle zuzuweisen.  Mindestens zwei Knoten an jedem Standort sollten die primäre Rolle haben, um redundanten Systemzugriff auf externe Zeitquellen bereitzustellen.
+*** Wählen Sie *Client* aus, um dem Knoten manuell die Client-NTP-Rolle zuzuweisen.
+
+
+
+
+ a| 
+ADC-Dienst (kombinierte oder reine Metadaten-Speicherknoten)
+ a| 
+Ob dieser Speicherknoten den Administrative Domain Controller (ADC)-Dienst ausführen wird. Der ADC-Dienst verfolgt den Standort und die Verfügbarkeit von Grid-Diensten. Mindestens drei Speicherknoten an jedem Standort müssen den ADC-Dienst enthalten. Sie können den ADC-Dienst nach der Bereitstellung nicht mehr zu einem Knoten hinzufügen.
+
+*** Wählen Sie *Ja*, wenn der Speicherknoten, den Sie ersetzen, den ADC-Dienst enthält. Da Sie einen Speicherknoten nicht außer Betrieb nehmen können, wenn zu wenige ADC-Dienste übrig bleiben, wird dadurch sichergestellt, dass ein neuer ADC-Dienst verfügbar ist, bevor der alte Dienst entfernt wird.
+*** Wählen Sie *Automatisch*, damit das System ermittelt, ob dieser Knoten den ADC-Dienst benötigt.
+
+
+Erfahren Sie mehr über dielink:../maintain/understanding-adc-service-quorum.html["ADC-Quorum"] .
+
+
+
+ a| 
+Speicherqualität (kombinierte oder reine Datenspeicherknoten)
+ a| 
+Verwenden Sie die *Standard*-Speicherklasse oder wählen Sie die benutzerdefinierte Speicherklasse aus, die Sie diesem neuen Knoten zuweisen möchten.
+
+Speicherklassen werden von ILM-Speicherpools verwendet, Ihre Auswahl kann sich also darauf auswirken, welche Objekte auf dem Speicherknoten platziert werden.
+
+|===
+.. Ändern Sie nach Bedarf die Einstellungen für das Grid-Netzwerk, das Admin-Netzwerk und das Client-Netzwerk.
++
+*** *IPv4-Adresse (CIDR)*: Die CIDR-Netzwerkadresse für die Netzwerkschnittstelle.  Beispiel: 172.16.10.100/24
++
+
+NOTE: Wenn Sie beim Genehmigen von Knoten feststellen, dass Knoten im Grid-Netzwerk doppelte IP-Adressen haben, müssen Sie die Erweiterung abbrechen, die virtuellen Maschinen oder Appliances mit einer nicht doppelten IP erneut bereitstellen und die Erweiterung neu starten.
+
+*** *Gateway*: Das Standard-Gateway des Grid-Knotens.  Beispiel: 172.16.10.1
+*** *Subnetze (CIDR)*: Ein oder mehrere Subnetze für das Admin-Netzwerk.
+
+
+.. Wählen Sie *Speichern*.
++
+Der genehmigte Rasterknoten wird in die Liste „Genehmigte Knoten“ verschoben.
+
++
+*** Um die Eigenschaften eines genehmigten Rasterknotens zu ändern, wählen Sie dessen Optionsfeld aus und wählen Sie *Bearbeiten*.
+*** Um einen genehmigten Rasterknoten zurück in die Liste „Ausstehende Knoten“ zu verschieben, wählen Sie das entsprechende Optionsfeld aus und wählen Sie „Zurücksetzen“.
+*** Um einen genehmigten Grid-Knoten dauerhaft zu entfernen, schalten Sie den Knoten aus.  Wählen Sie dann das Optionsfeld und wählen Sie *Entfernen*.
+
+
+.. Wiederholen Sie diese Schritte für jeden ausstehenden Rasterknoten, den Sie genehmigen möchten.
++
+
+NOTE: Wenn möglich, sollten Sie alle ausstehenden Rasternotizen genehmigen und eine einzelne Erweiterung durchführen.  Wenn Sie mehrere kleine Erweiterungen durchführen, ist mehr Zeit erforderlich.
+
+
+
+. Wenn Sie alle Grid-Knoten genehmigt haben, geben Sie die *Bereitstellungspassphrase* ein und wählen Sie *Erweitern*.
++
+Nach einigen Minuten wird diese Seite aktualisiert und zeigt den Status des Erweiterungsvorgangs an.  Wenn Aufgaben ausgeführt werden, die einzelne Grid-Knoten betreffen, wird im Abschnitt „Grid-Knotenstatus“ der aktuelle Status für jeden Grid-Knoten aufgelistet.
+
++
+
+NOTE: Während des Schritts „Grid-Knoten installieren“ für ein neues Gerät zeigt das StorageGRID Appliance Installer den Übergang der Installation von Phase 3 zu Phase 4, „Installation abschließen“.  Wenn Phase 4 abgeschlossen ist, wird der Controller neu gestartet.
+
++
+image::../media/grid_expansion_progress.png[Dieses Bild wird durch den umgebenden Text erklärt.]
+
++
+
+NOTE: Eine Site-Erweiterung umfasst eine zusätzliche Aufgabe zum Konfigurieren von Cassandra für die neue Site.
+
+. Sobald der Link *Wiederherstellungspaket herunterladen* angezeigt wird, laden Sie die Wiederherstellungspaketdatei herunter.
++
+Sie müssen so schnell wie möglich eine aktualisierte Kopie der Wiederherstellungspaketdatei herunterladen, nachdem Sie Änderungen an der Netztopologie am StorageGRID -System vorgenommen haben.  Mit der Wiederherstellungspaketdatei können Sie das System wiederherstellen, wenn ein Fehler auftritt.
+
++
+.. Wählen Sie den Download-Link.
+.. Geben Sie die Bereitstellungspassphrase ein und wählen Sie *Download starten*.
+.. Wenn der Download abgeschlossen ist, öffnen Sie die `.zip` Datei und bestätigen Sie, dass Sie auf den Inhalt zugreifen können, einschließlich der `Passwords.txt` Datei.
+.. Kopieren Sie die heruntergeladene Wiederherstellungspaketdatei(`.zip` ) an zwei sichere und getrennte Orte.
++
+
+CAUTION: Die Datei des Wiederherstellungspakets muss gesichert werden, da sie Verschlüsselungsschlüssel und Passwörter enthält, mit denen Daten aus dem StorageGRID -System abgerufen werden können.
+
+
+
+. Wenn Sie Speicherknoten zu einer vorhandenen Site hinzufügen oder eine Site hinzufügen, überwachen Sie die Cassandra-Phasen, die auftreten, wenn Dienste auf den neuen Grid-Knoten gestartet werden.
++
+
+CAUTION: Starten Sie während der Phasen „Erweitern des Cassandra-Clusters“ oder „Starten von Cassandra und Streamen von Daten“ keine Speicherknoten neu.  Die Ausführung dieser Schritte kann für jeden neuen Speicherknoten mehrere Stunden dauern, insbesondere wenn vorhandene Speicherknoten eine große Menge an Objektmetadaten enthalten.
+
++
+[role="tabbed-block"]
+====
+.Hinzufügen von Speicherknoten
+--
+Wenn Sie einer vorhandenen Site Speicherknoten hinzufügen, überprüfen Sie den Prozentsatz, der in der Statusmeldung „Cassandra wird gestartet und Daten werden gestreamt“ angezeigt wird.
+
+image::../media/grid_expansion_starting_cassandra.png[Netzausbau > Cassandra starten und Daten streamen]
+
+Dieser Prozentsatz schätzt, wie vollständig der Cassandra-Streaming-Vorgang ist, basierend auf der Gesamtmenge der verfügbaren Cassandra-Daten und der Menge, die bereits auf den neuen Knoten geschrieben wurde.
+
+--
+.Site hinzufügen
+--
+Wenn Sie eine neue Site hinzufügen, verwenden Sie `nodetool status` um den Fortschritt des Cassandra-Streamings zu überwachen und zu sehen, wie viele Metadaten während der Phase „Erweitern des Cassandra-Clusters“ auf die neue Site kopiert wurden.  Die gesamte Datenlast auf der neuen Site sollte etwa 20 % der Gesamtdatenlast einer aktuellen Site betragen.
+
+--
+====
+. Überwachen Sie die Erweiterung weiter, bis alle Aufgaben abgeschlossen sind und die Schaltfläche *Erweiterung konfigurieren* erneut angezeigt wird.
+
+
+.Nach Abschluss
+Führen Sie je nachdem, welche Arten von Grid-Knoten Sie hinzugefügt haben, zusätzliche Integrations- und Konfigurationsschritte durch. Sehen link:configuring-expanded-storagegrid-system.html["Konfigurationsschritte nach der Erweiterung"] .

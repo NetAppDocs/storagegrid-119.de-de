@@ -1,0 +1,28 @@
+---
+permalink: expand/adding-storage-capacity-for-erasure-coded-objects.html 
+sidebar: sidebar 
+keywords: erasure coding, capacity, storage nodes, ec, expand, expansion 
+summary: Wenn Ihre ILM-Richtlinie eine Regel zum Erstellen von Erasure-Coded-Kopien enthält, müssen Sie planen, wo und wann neuer Speicher hinzugefügt werden soll.  Die Menge des hinzugefügten Speichers und der Zeitpunkt der Hinzufügung können sich auf die nutzbare Speicherkapazität des Netzes auswirken. 
+---
+= Speicherkapazität für Erasure-Coded-Objekte hinzufügen
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Wenn Ihre ILM-Richtlinie eine Regel zum Erstellen von Erasure-Coded-Kopien enthält, müssen Sie planen, wo und wann neuer Speicher hinzugefügt werden soll.  Die Menge des hinzugefügten Speichers und der Zeitpunkt der Hinzufügung können sich auf die nutzbare Speicherkapazität des Netzes auswirken.
+
+Der erste Schritt bei der Planung einer Speichererweiterung besteht darin, die Regeln in Ihrer ILM-Richtlinie zu untersuchen, die Erasure-Coded-Objekte erstellen.  Da StorageGRID für jedes Erasure-Codierte-Objekt _k+m_ Fragmente erstellt und jedes Fragment auf einem anderen Speicherknoten speichert, müssen Sie sicherstellen, dass nach der Erweiterung mindestens _k+m_ Speicherknoten Platz für neue Erasure-Codierte-Daten haben.  Wenn das Erasure-Coding-Profil Schutz vor Site-Verlust bietet, müssen Sie jedem Site Speicher hinzufügen.  Sehenlink:../ilm/what-erasure-coding-schemes-are.html["Was sind Erasure-Coding-Schemata?"] für Informationen zu Erasure-Coding-Profilen.
+
+Die Anzahl der hinzuzufügenden Knoten hängt auch davon ab, wie voll die vorhandenen Knoten sind, wenn Sie die Erweiterung durchführen.
+
+
+
+== Allgemeine Empfehlung zum Hinzufügen von Speicherkapazität für Erasure-Coded-Objekte
+
+Wenn Sie detaillierte Berechnungen vermeiden möchten, können Sie zwei Speicherknoten pro Site hinzufügen, wenn die vorhandenen Speicherknoten 70 % ihrer Kapazität erreichen.
+
+Diese allgemeine Empfehlung liefert angemessene Ergebnisse für eine breite Palette von Erasure-Coding-Schemata sowohl für Einzelstandort-Grids als auch für Grids, bei denen Erasure Coding Schutz vor Standortverlust bietet.
+
+Um die Faktoren, die zu dieser Empfehlung geführt haben, besser zu verstehen oder einen präziseren Plan für Ihre Site zu entwickeln, lesen Sielink:considerations-for-rebalancing-erasure-coded-data.html["Überlegungen zum Neuausgleich von Erasure-Coded-Daten"] .  Wenden Sie sich an Ihren NetApp Professional Services-Berater, um eine individuelle, auf Ihre Situation optimierte Empfehlung zu erhalten.

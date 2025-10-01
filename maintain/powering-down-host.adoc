@@ -1,0 +1,126 @@
+---
+permalink: maintain/powering-down-host.html 
+sidebar: sidebar 
+keywords: storagegrid, recover, stop services, power down host, power off host 
+summary: Bevor Sie einen Host herunterfahren, müssen Sie die Dienste auf allen Grid-Knoten auf diesem Host stoppen. 
+---
+= Host herunterfahren
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Bevor Sie einen Host herunterfahren, müssen Sie die Dienste auf allen Grid-Knoten auf diesem Host stoppen.
+
+.Schritte
+. Melden Sie sich beim Grid-Knoten an:
++
+.. Geben Sie den folgenden Befehl ein: `ssh admin@_grid_node_IP_`
+.. Geben Sie das Passwort ein, das in der `Passwords.txt` Datei.
+.. Geben Sie den folgenden Befehl ein, um zum Root zu wechseln: `su -`
+.. Geben Sie das Passwort ein, das in der `Passwords.txt` Datei.
+
+
++
+Wenn Sie als Root angemeldet sind, ändert sich die Eingabeaufforderung von `$` Zu `#` .
+
+. Stoppen Sie alle auf dem Knoten laufenden Dienste: `service servermanager stop`
++
+Das Herunterfahren von Diensten kann bis zu 15 Minuten dauern. Sie möchten sich möglicherweise per Fernzugriff beim System anmelden, um den Herunterfahrvorgang zu überwachen.
+
+. Wiederholen Sie die Schritte 1 und 2 für jeden Knoten auf dem Host.
+. Wenn Sie einen Linux-Host haben:
++
+.. Melden Sie sich beim Host-Betriebssystem an.
+.. Stoppen Sie den Knoten: `storagegrid node stop`
+.. Fahren Sie das Host-Betriebssystem herunter.
+
+
+. Wenn der Knoten auf einer virtuellen VMware-Maschine ausgeführt wird oder es sich um einen Appliance-Knoten handelt, geben Sie den Befehl zum Herunterfahren ein: `shutdown -h now`
++
+Führen Sie diesen Schritt unabhängig vom Ergebnis der `service servermanager stop` Befehl.
+
++
+
+NOTE: Nachdem Sie die `shutdown -h now` Befehl auf einem Appliance-Knoten ausführen, müssen Sie die Appliance aus- und wieder einschalten, um den Knoten neu zu starten.
+
++
+Für das Gerät fährt dieser Befehl den Controller herunter, das Gerät bleibt jedoch eingeschaltet.  Sie müssen den nächsten Schritt abschließen.
+
+. Wenn Sie einen Appliance-Knoten herunterfahren, befolgen Sie die Schritte für Ihre Appliance.
++
+[role="tabbed-block"]
+====
+.SG6160
+--
+.. Schalten Sie die Stromversorgung des SG6100-CN-Speichercontrollers aus.
+.. Warten Sie, bis die blaue Betriebs-LED am SG6100-CN-Speichercontroller erlischt.
+
+
+--
+.SGF6112
+--
+.. Schalten Sie die Stromversorgung des Geräts aus.
+.. Warten Sie, bis die blaue Betriebs-LED erlischt.
+
+
+--
+.SG6000
+--
+.. Warten Sie, bis die grüne Cache Active-LED auf der Rückseite der Speichercontroller erlischt.
++
+Diese LED leuchtet, wenn zwischengespeicherte Daten auf die Laufwerke geschrieben werden müssen.  Sie müssen warten, bis diese LED erlischt, bevor Sie die Stromversorgung ausschalten.
+
+.. Schalten Sie das Gerät aus und warten Sie, bis die blaue Betriebs-LED erlischt.
+
+
+--
+.SG5800
+--
+.. Warten Sie, bis die grüne Cache Active-LED auf der Rückseite des Speichercontrollers erlischt.
++
+Diese LED leuchtet, wenn zwischengespeicherte Daten auf die Laufwerke geschrieben werden müssen.  Sie müssen warten, bis diese LED erlischt, bevor Sie die Stromversorgung ausschalten.
+
+.. Wählen Sie auf der Startseite des SANtricity System Managers *Laufende Vorgänge anzeigen* aus.
+.. Bestätigen Sie, dass alle Vorgänge abgeschlossen sind, bevor Sie mit dem nächsten Schritt fortfahren.
+.. Schalten Sie beide Netzschalter am Controller-Regal aus und warten Sie, bis alle LEDs am Controller-Regal erloschen sind.
+
+
+--
+.SG5700
+--
+.. Warten Sie, bis die grüne Cache Active-LED auf der Rückseite des Speichercontrollers erlischt.
++
+Diese LED leuchtet, wenn zwischengespeicherte Daten auf die Laufwerke geschrieben werden müssen.  Sie müssen warten, bis diese LED erlischt, bevor Sie die Stromversorgung ausschalten.
+
+.. Schalten Sie das Gerät aus und warten Sie, bis alle LED- und Siebensegmentanzeigen nicht mehr aktiv sind.
+
+
+--
+.SG110 oder SG1100
+--
+.. Schalten Sie die Stromversorgung des Geräts aus.
+.. Warten Sie, bis die blaue Betriebs-LED erlischt.
+
+
+--
+.SG100 oder SG1000
+--
+.. Schalten Sie die Stromversorgung des Geräts aus.
+.. Warten Sie, bis die blaue Betriebs-LED erlischt.
+
+
+--
+====
+. Melden Sie sich von der Befehlsshell ab: `exit`
+
+
+.Ähnliche Informationen
+* link:https://docs.netapp.com/us-en/storagegrid-appliances/sg6100/index.html["SGF6112 und SG6160 Speichergeräte"^]
+* link:https://docs.netapp.com/us-en/storagegrid-appliances/sg6000/index.html["SG6000-Speichergeräte"^]
+* link:https://docs.netapp.com/us-en/storagegrid-appliances/sg5700/index.html["SG5700-Speichergeräte"^]
+* link:https://docs.netapp.com/us-en/storagegrid-appliances/sg5800/index.html["SG5800-Speichergeräte"^]
+* link:https://docs.netapp.com/us-en/storagegrid-appliances/sg110-1100/index.html["SG110 und SG1100 Servicegeräte"^]
+* link:https://docs.netapp.com/us-en/storagegrid-appliances/sg100-1000/index.html["SG100 und SG1000 Servicegeräte"^]
+

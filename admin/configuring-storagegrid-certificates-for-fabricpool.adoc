@@ -1,0 +1,40 @@
+---
+permalink: admin/configuring-storagegrid-certificates-for-fabricpool.html 
+sidebar: sidebar 
+keywords: fabricpool, ONTAP certificates 
+summary: Für S3-Clients, die eine strenge Hostnamenvalidierung durchführen und die Deaktivierung der strengen Hostnamenvalidierung nicht unterstützen, wie z. B. ONTAP -Clients, die FabricPool verwenden, können Sie beim Konfigurieren des Load Balancer-Endpunkts ein Serverzertifikat generieren oder hochladen. 
+---
+= Konfigurieren Sie StorageGRID -Zertifikate für FabricPool
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Für S3-Clients, die eine strenge Hostnamenvalidierung durchführen und die Deaktivierung der strengen Hostnamenvalidierung nicht unterstützen, wie z. B. ONTAP Clients, die FabricPool verwenden, können Sie beim Konfigurieren des Load Balancer-Endpunkts ein Serverzertifikat generieren oder hochladen.
+
+.Bevor Sie beginnen
+* Du hastlink:admin-group-permissions.html["spezifische Zugriffsberechtigungen"] .
+* Sie sind beim Grid Manager angemeldet mit einemlink:../admin/web-browser-requirements.html["unterstützter Webbrowser"] .
+
+
+.Informationen zu diesem Vorgang
+Wenn Sie einen Load Balancer-Endpunkt erstellen, können Sie ein selbstsigniertes Serverzertifikat generieren oder ein Zertifikat hochladen, das von einer bekannten Zertifizierungsstelle (CA) signiert ist.  In Produktionsumgebungen sollten Sie ein Zertifikat verwenden, das von einer bekannten Zertifizierungsstelle signiert ist.  Von einer Zertifizierungsstelle signierte Zertifikate können unterbrechungsfrei rotiert werden.  Sie sind außerdem sicherer, da sie einen besseren Schutz vor Man-in-the-Middle-Angriffen bieten.
+
+Die folgenden Schritte bieten allgemeine Richtlinien für S3-Clients, die FabricPool verwenden.  Ausführlichere Informationen und Vorgehensweisen finden Sie unterlink:../fabricpool/index.html["Konfigurieren von StorageGRID für FabricPool"] .
+
+.Schritte
+. Konfigurieren Sie optional eine Hochverfügbarkeitsgruppe (HA) für die Verwendung durch FabricPool .
+. Erstellen Sie einen S3-Load Balancer-Endpunkt für die Verwendung durch FabricPool .
++
+Wenn Sie einen HTTPS-Load Balancer-Endpunkt erstellen, werden Sie aufgefordert, Ihr Serverzertifikat, Ihren privaten Zertifikatsschlüssel und das optionale CA-Paket hochzuladen.
+
+. Hängen Sie StorageGRID als Cloud-Ebene in ONTAP an.
++
+Geben Sie den Endpunktport des Lastenausgleichs und den vollqualifizierten Domänennamen an, der im von Ihnen hochgeladenen CA-Zertifikat verwendet wird.  Geben Sie dann das CA-Zertifikat an.
+
++
+
+NOTE: Wenn das StorageGRID -Zertifikat von einer Zwischenzertifizierungsstelle ausgestellt wurde, müssen Sie das Zwischenzertifizierungsstellenzertifikat angeben.  Wenn das StorageGRID -Zertifikat direkt von der Root-CA ausgestellt wurde, müssen Sie das Root-CA-Zertifikat angeben.
+
+

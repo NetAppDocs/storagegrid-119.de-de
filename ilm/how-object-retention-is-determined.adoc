@@ -1,0 +1,96 @@
+---
+permalink: ilm/how-object-retention-is-determined.html 
+sidebar: sidebar 
+keywords: how object retention is determined 
+summary: StorageGRID bietet sowohl Grid-Administratoren als auch einzelnen Mandantenbenutzern Optionen zum Angeben der Speicherdauer von Objekten.  Im Allgemeinen haben alle Aufbewahrungsanweisungen eines Mandantenbenutzers Vorrang vor den Aufbewahrungsanweisungen des Grid-Administrators. 
+---
+= So wird die Objektaufbewahrung bestimmt
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+StorageGRID bietet sowohl Grid-Administratoren als auch einzelnen Mandantenbenutzern Optionen zum Angeben der Speicherdauer von Objekten.  Im Allgemeinen haben alle Aufbewahrungsanweisungen eines Mandantenbenutzers Vorrang vor den Aufbewahrungsanweisungen des Grid-Administrators.
+
+
+
+== So steuern Mandantenbenutzer die Objektaufbewahrung
+
+Mandantenbenutzer können mit diesen Methoden steuern, wie lange ihre Objekte in StorageGRID gespeichert werden:
+
+* Wenn die globale S3-Objektsperreinstellung für das Raster aktiviert ist, können S3-Mandantenbenutzer Buckets mit aktivierter S3-Objektsperre erstellen und dann für jeden Bucket eine *Standardaufbewahrungsdauer* auswählen.
+* Wenn die globale Einstellung „S3 Object Lock“ für das Raster aktiviert ist, können S3-Mandantenbenutzer Buckets mit aktivierter S3 Object Lock erstellen und dann die S3 REST-API verwenden, um Einstellungen für das Aufbewahrungsdatum und die gesetzliche Aufbewahrung für jede diesem Bucket hinzugefügte Objektversion festzulegen.
++
+** Eine Objektversion, die einer rechtlichen Sperre unterliegt, kann mit keiner Methode gelöscht werden.
+** Bevor das Aufbewahrungsdatum einer Objektversion erreicht ist, kann diese Version mit keiner Methode gelöscht werden.
+** Objekte in Buckets mit aktivierter S3-Objektsperre werden von ILM „für immer“ aufbewahrt.  Nach Erreichen des Aufbewahrungsdatums kann eine Objektversion jedoch durch eine Clientanforderung oder den Ablauf des Bucket-Lebenszyklus gelöscht werden. Sehen link:managing-objects-with-s3-object-lock.html["Verwalten von Objekten mit S3 Object Lock"] .
+
+
+* S3-Tenant-Benutzer können ihren Buckets eine Lebenszykluskonfiguration hinzufügen, die eine Ablaufaktion angibt.  Wenn ein Bucket-Lebenszyklus vorhanden ist, speichert StorageGRID ein Objekt, bis das in der Ablaufaktion angegebene Datum oder die Anzahl der Tage erreicht ist, es sei denn, der Client löscht das Objekt zuerst. Sehen link:../s3/create-s3-lifecycle-configuration.html["Erstellen einer S3-Lebenszykluskonfiguration"] .
+* Ein S3-Client kann eine Anforderung zum Löschen eines Objekts stellen.  StorageGRID priorisiert Client-Löschanforderungen immer gegenüber dem S3-Bucket-Lebenszyklus oder ILM, wenn entschieden wird, ob ein Objekt gelöscht oder behalten werden soll.
+
+
+
+
+== So steuern Grid-Administratoren die Objektaufbewahrung
+
+Grid-Administratoren können die Objektaufbewahrung mithilfe dieser Methoden steuern:
+
+* Legen Sie für jeden Mandanten eine maximale Aufbewahrungsdauer für S3 Object Lock fest.  Anschließend können Mandantenbenutzer für jeden ihrer Buckets eine Standardaufbewahrungsdauer festlegen.  Die maximale Aufbewahrungsdauer wird auch für alle neu aufgenommenen Objekte für diesen Bucket erzwungen (Aufbewahrungsdatum des Objekts).
+* Erstellen Sie ILM-Platzierungsanweisungen, um zu steuern, wie lange Objekte gespeichert werden.  Wenn Objekte mit einer ILM-Regel übereinstimmen, speichert StorageGRID diese Objekte, bis der letzte Zeitraum in der ILM-Regel abgelaufen ist.  Objekte bleiben unbegrenzt erhalten, wenn für die Platzierungsanweisungen „für immer“ angegeben ist.
+* Unabhängig davon, wer kontrolliert, wie lange Objekte aufbewahrt werden, steuern die ILM-Einstellungen, welche Arten von Objektkopien (repliziert oder löschcodiert) gespeichert werden und wo sich die Kopien befinden (Speicherknoten oder Cloud-Speicherpools).
+
+
+
+
+== So interagieren S3-Bucket-Lebenszyklus und ILM
+
+Wenn ein S3-Bucket-Lebenszyklus konfiguriert ist, überschreiben die Aktionen zum Ablauf des Lebenszyklus die ILM-Richtlinie für Objekte, die dem Lebenszyklusfilter entsprechen.  Dies kann dazu führen, dass ein Objekt auch dann noch auf dem Raster verbleibt, wenn keine ILM-Anweisungen zum Platzieren des Objekts mehr vorliegen.
+
+
+
+== Beispiele für die Objektaufbewahrung
+
+Um die Interaktionen zwischen S3 Object Lock, Bucket-Lebenszykluseinstellungen, Client-Löschanforderungen und ILM besser zu verstehen, betrachten Sie die folgenden Beispiele.
+
+
+
+=== Beispiel 1: Der S3-Bucket-Lebenszyklus speichert Objekte länger als ILM
+
+ILM:: Bewahren Sie zwei Kopien für 1 Jahr (365 Tage) auf
+Bucket-Lebenszyklus:: Objekte laufen in 2 Jahren (730 Tagen) ab
+Ergebnis:: StorageGRID speichert das Objekt 730 Tage lang.  StorageGRID verwendet die Bucket-Lebenszykluseinstellungen, um zu bestimmen, ob ein Objekt gelöscht oder beibehalten werden soll.
+
+
+
+NOTE: Wenn der Bucket-Lebenszyklus vorgibt, dass Objekte länger aufbewahrt werden sollen als von ILM angegeben, verwendet StorageGRID weiterhin die ILM-Platzierungsanweisungen, um die Anzahl und den Typ der zu speichernden Kopien zu bestimmen.  In diesem Beispiel werden von Tag 366 bis 730 weiterhin zwei Kopien des Objekts in StorageGRID gespeichert.
+
+
+
+=== Beispiel 2: S3-Bucket-Lebenszyklus lässt Objekte vor ILM ablaufen
+
+ILM:: Bewahren Sie zwei Kopien 2 Jahre lang (730 Tage) auf.
+Bucket-Lebenszyklus:: Objekte laufen in 1 Jahr (365 Tagen) ab
+Ergebnis:: StorageGRID löscht beide Kopien des Objekts nach Tag 365.
+
+
+
+
+=== Beispiel 3: Client-Löschen überschreibt Bucket-Lebenszyklus und ILM
+
+ILM:: Speichern Sie zwei Kopien „für immer“ auf Speicherknoten
+Bucket-Lebenszyklus:: Objekte laufen in 2 Jahren (730 Tagen) ab
+Client-Löschanforderung:: Ausgestellt am Tag 400
+Ergebnis:: StorageGRID löscht beide Kopien des Objekts am Tag 400 als Antwort auf die Löschanforderung des Clients.
+
+
+
+
+=== Beispiel 4: S3 Object Lock überschreibt Client-Löschanforderung
+
+S3-Objektsperre:: Das Aufbewahrungsdatum für eine Objektversion ist der 31.03.2026.  Eine rechtliche Sperre besteht nicht.
+Konforme ILM-Regel:: Speichern Sie zwei Kopien „für immer“ auf Speicherknoten
+Client-Löschanforderung:: Ausgestellt am 31.03.2024
+Ergebnis:: StorageGRID löscht die Objektversion nicht, da das Aufbewahrungsdatum noch 2 Jahre entfernt ist.
+

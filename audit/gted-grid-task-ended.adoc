@@ -1,0 +1,49 @@
+---
+permalink: audit/gted-grid-task-ended.html 
+sidebar: sidebar 
+keywords: storagegrid, audit, message, GTED, Grid Task Ended 
+summary: Diese Prüfmeldung zeigt an, dass der CMN-Dienst die Verarbeitung der angegebenen Rasteraufgabe abgeschlossen und die Aufgabe in die Verlaufstabelle verschoben hat.  Wenn das Ergebnis SUCS, ABRT oder ROLF ist, wird eine entsprechende Prüfmeldung „Grid Task Started“ angezeigt.  Die anderen Ergebnisse deuten darauf hin, dass die Verarbeitung dieser Grid-Aufgabe nie begonnen hat. 
+---
+= GTED: Grid-Aufgabe beendet
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Diese Prüfmeldung zeigt an, dass der CMN-Dienst die Verarbeitung der angegebenen Rasteraufgabe abgeschlossen und die Aufgabe in die Verlaufstabelle verschoben hat.  Wenn das Ergebnis SUCS, ABRT oder ROLF ist, wird eine entsprechende Prüfmeldung „Grid Task Started“ angezeigt.  Die anderen Ergebnisse deuten darauf hin, dass die Verarbeitung dieser Grid-Aufgabe nie begonnen hat.
+
+[cols="1a,1a,4a"]
+|===
+| Code | Feld | Beschreibung 
+
+
+ a| 
+TSID
+ a| 
+Aufgaben-ID
+ a| 
+Dieses Feld identifiziert eine generierte Grid-Aufgabe eindeutig und ermöglicht die Verwaltung der Grid-Aufgabe über ihren Lebenszyklus.
+
+*Hinweis:* Die Aufgaben-ID wird zum Zeitpunkt der Generierung einer Rasteraufgabe zugewiesen, nicht zum Zeitpunkt der Übermittlung.  Es ist möglich, dass eine bestimmte Rasteraufgabe mehrmals übermittelt wird. In diesem Fall reicht das Feld „Aufgaben-ID“ nicht aus, um die Prüfmeldungen „Übermittelt“, „Gestartet“ und „Beendet“ eindeutig zu verknüpfen.
+
+
+
+ a| 
+RSLT
+ a| 
+Ergebnis
+ a| 
+Das endgültige Statusergebnis der Grid-Aufgabe:
+
+* SUCS: Die Rasteraufgabe wurde erfolgreich abgeschlossen.
+* ABRT: Die Grid-Aufgabe wurde ohne Rollback-Fehler beendet.
+* ROLF: Die Grid-Aufgabe wurde beendet und konnte den Rollback-Prozess nicht abschließen.
+* CANC: Die Grid-Aufgabe wurde vom Benutzer abgebrochen, bevor sie gestartet wurde.
+* EXPR: Die Grid-Aufgabe ist abgelaufen, bevor sie gestartet wurde.
+* IVLD: Die Rasteraufgabe war ungültig.
+* AUTH: Die Grid-Aufgabe war nicht autorisiert.
+* DUPL: Die Rasteraufgabe wurde als Duplikat abgelehnt.
+
+
+|===

@@ -1,0 +1,94 @@
+---
+permalink: audit/object-storage-audit-messages.html 
+sidebar: sidebar 
+keywords: audit, object storage, object management, object retrieval, node transfer, verification, BROR, CBSE, CBRE, CGRR, EBDL, EBKR, SCMT, SREM 
+summary: Sie sollten mit Audit-Meldungen der Kategorie „Objektspeicher-Audit“ vertraut sein.  Dies sind Ereignisse im Zusammenhang mit der Speicherung und Verwaltung von Objekten innerhalb des StorageGRID -Systems.  Hierzu gehören die Speicherung und Abfrage von Objekten, Übertragungen von Grid-Knoten zu Grid-Knoten und Überprüfungen. 
+---
+= Objektspeicher-Auditmeldungen
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Die Audit-Meldungen der Kategorie „Objektspeicher-Audit“ werden für Ereignisse im Zusammenhang mit der Speicherung und Verwaltung von Objekten innerhalb des StorageGRID -Systems verwendet.  Hierzu gehören die Speicherung und Abfrage von Objekten, Übertragungen von Grid-Knoten zu Grid-Knoten und Überprüfungen.
+
+
+NOTE: Prüfcodes werden aus dem Produkt und der Dokumentation entfernt, wenn Funktionen veraltet sind. Wenn Sie auf einen Prüfcode stoßen, der hier nicht aufgeführt ist, überprüfen Sie die vorherigen Versionen dieses Themas auf ältere SG-Versionen. Beispiel:  https://docs.netapp.com/us-en/storagegrid-118/audit/object-storage-audit-messages.html["StorageGRID 11.8 Objektspeicher-Auditmeldungen"^] .
+
+[cols="1a,2a,1a"]
+|===
+| Code | Beschreibung | Siehe 
+
+
+ a| 
+BROR
+ a| 
+Bucket-Nur-Lese-Anforderung: Ein Bucket hat den Nur-Lese-Modus betreten oder verlassen.
+ a| 
+link:bror-bucket-read-only-request.html["BROR: Bucket-Nur-Lese-Anforderung"]
+
+
+
+ a| 
+CBSE
+ a| 
+Ende der Objektübertragung: Die Quelleinheit hat einen Datenübertragungsvorgang von Grid-Knoten zu Grid-Knoten abgeschlossen.
+ a| 
+link:cbse-object-send-end.html["CBSE: Objekt senden Ende"]
+
+
+
+ a| 
+CBRE
+ a| 
+Objektempfangsende: Die Zielentität hat einen Datenübertragungsvorgang von Grid-Knoten zu Grid-Knoten abgeschlossen.
+ a| 
+link:cbre-object-receive-end.html["CBRE: Objektempfangsende"]
+
+
+
+ a| 
+CGRR
+ a| 
+Cross-Grid-Replikationsanforderung: StorageGRID hat einen Cross-Grid-Replikationsvorgang versucht, um Objekte zwischen Buckets in einer Grid-Föderationsverbindung zu replizieren.
+ a| 
+link:cgrr-cross-grid-replication-request.html["CGRR: Cross-Grid-Replikationsanforderung"]
+
+
+
+ a| 
+EBDL
+ a| 
+Löschen eines leeren Buckets: Der ILM-Scanner hat ein Objekt in einem Bucket gelöscht, der alle Objekte löscht (führt einen Vorgang zum Leeren des Buckets aus).
+ a| 
+link:ebdl-empty-bucket-delete.html["EBDL: Leeren Bucket löschen"]
+
+
+
+ a| 
+EBKR
+ a| 
+Anforderung zum Leeren des Buckets: Ein Benutzer hat eine Anforderung gesendet, den leeren Bucket ein- oder auszuschalten (d. h. Bucket-Objekte zu löschen oder das Löschen von Objekten zu beenden).
+ a| 
+link:ebkr-empty-bucket-request.html["EBKR: Leere Bucket-Anforderung"]
+
+
+
+ a| 
+SCMT
+ a| 
+Object Store Commit: Ein Inhaltsblock wurde vollständig gespeichert und verifiziert und kann nun angefordert werden.
+ a| 
+link:scmt-object-store-commit.html["SCMT: Object Store Commit-Anforderung"]
+
+
+
+ a| 
+SREM
+ a| 
+Object Store Remove: Ein Inhaltsblock wurde aus einem Rasterknoten gelöscht und kann nicht mehr direkt angefordert werden.
+ a| 
+link:srem-object-store-remove.html["SREM: Objektspeicher entfernen"]
+
+|===

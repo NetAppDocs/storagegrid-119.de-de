@@ -1,0 +1,36 @@
+---
+permalink: tenant/deleting-platform-services-endpoint.html 
+sidebar: sidebar 
+keywords: how to delete tenant platform services endpoint 
+summary: Sie können einen Endpunkt löschen, wenn Sie den zugehörigen Plattformdienst nicht mehr verwenden möchten. 
+---
+= Plattformdienst-Endpunkt löschen
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Sie können einen Endpunkt löschen, wenn Sie den zugehörigen Plattformdienst nicht mehr verwenden möchten.
+
+.Bevor Sie beginnen
+* Sie sind beim Tenant Manager angemeldet mit einemlink:../admin/web-browser-requirements.html["unterstützter Webbrowser"] .
+* Sie gehören einer Benutzergruppe an, die über dielink:tenant-management-permissions.html["Verwalten von Endpunkten oder Root-Zugriffsberechtigungen"] .
+
+
+.Schritte
+. Wählen Sie *STORAGE (S3)* > *Plattformdienst-Endpunkte*.
++
+Die Seite „Plattformdienst-Endpunkte“ wird angezeigt und zeigt die Liste der bereits konfigurierten Plattformdienst-Endpunkte.
+
+. Aktivieren Sie das Kontrollkästchen für jeden Endpunkt, den Sie löschen möchten.
++
+
+NOTE: Wenn Sie einen verwendeten Plattformdienst-Endpunkt löschen, wird der zugehörige Plattformdienst für alle Buckets deaktiviert, die den Endpunkt verwenden.  Alle noch nicht abgeschlossenen Anfragen werden gelöscht.  Alle neuen Anfragen werden weiterhin generiert, bis Sie Ihre Bucket-Konfiguration so ändern, dass sie nicht mehr auf die gelöschte URN verweist.  StorageGRID meldet diese Anfragen als nicht behebbare Fehler.
+
+. Wählen Sie *Aktionen* > *Endpunkt löschen*.
++
+Es wird eine Bestätigungsmeldung angezeigt.
+
+. Wählen Sie *Endpunkt löschen*.
+

@@ -1,0 +1,52 @@
+---
+permalink: upgrade/upgrade-workflow.html 
+sidebar: sidebar 
+keywords: upgrade workflow 
+summary: Überprüfen Sie den allgemeinen Arbeitsablauf, bevor Sie mit dem Upgrade beginnen.  Die StorageGRID -Upgradeseite führt Sie durch die Upgradeschritte. 
+---
+= Upgrade-Schnellstart
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Überprüfen Sie den allgemeinen Arbeitsablauf, bevor Sie mit dem Upgrade beginnen.  Die StorageGRID -Upgradeseite führt Sie durch jeden Upgrade-Schritt.
+
+.image:https://raw.githubusercontent.com/NetAppDocs/common/main/media/number-1.png["Eins"]Vorbereiten von Linux-Hosts
+[role="quick-margin-para"]
+Wenn StorageGRID -Knoten auf Linux-Hosts bereitgestellt werden,link:linux-installing-rpm-or-deb-package-on-all-hosts.html["Installieren Sie das RPM- oder DEB-Paket auf jedem Host"] bevor Sie mit dem Upgrade beginnen.
+
+.image:https://raw.githubusercontent.com/NetAppDocs/common/main/media/number-2.png["Zwei"]Upgrade- und Hotfix-Dateien hochladen
+[role="quick-margin-para"]
+Greifen Sie vom primären Admin-Knoten auf die StorageGRID -Upgrade-Seite zu und laden Sie die Upgrade-Datei und bei Bedarf die Hotfix-Datei hoch.
+
+.image:https://raw.githubusercontent.com/NetAppDocs/common/main/media/number-3.png["Drei"]Wiederherstellungspaket herunterladen
+[role="quick-margin-para"]
+Laden Sie das aktuelle Wiederherstellungspaket herunter, bevor Sie mit dem Upgrade beginnen.
+
+.image:https://raw.githubusercontent.com/NetAppDocs/common/main/media/number-4.png["Vier"]Ausführen von Upgrade-Vorabprüfungen
+[role="quick-margin-para"]
+Mithilfe von Upgrade-Vorabprüfungen können Sie Probleme erkennen, sodass Sie diese beheben können, bevor Sie mit dem eigentlichen Upgrade beginnen.
+
+.image:https://raw.githubusercontent.com/NetAppDocs/common/main/media/number-5.png["Fünf"]Upgrade starten
+[role="quick-margin-para"]
+Wenn Sie das Upgrade starten, werden die Vorprüfungen erneut ausgeführt und der primäre Admin-Knoten wird automatisch aktualisiert.  Sie können nicht auf den Grid Manager zugreifen, während der primäre Admin-Knoten aktualisiert wird.  Auch Audit-Protokolle sind nicht verfügbar.  Dieses Upgrade kann bis zu 30 Minuten dauern.
+
+.image:https://raw.githubusercontent.com/NetAppDocs/common/main/media/number-6.png["Sechs"]Wiederherstellungspaket herunterladen
+[role="quick-margin-para"]
+Laden Sie nach dem Upgrade des primären Admin-Knotens ein neues Wiederherstellungspaket herunter.
+
+.image:https://raw.githubusercontent.com/NetAppDocs/common/main/media/number-7.png["Sieben"]Knoten genehmigen
+[role="quick-margin-para"]
+Sie können einzelne Rasterknoten, Gruppen von Rasterknoten oder alle Rasterknoten genehmigen.
+
+
+CAUTION: Genehmigen Sie das Upgrade für einen Grid-Knoten nicht, es sei denn, Sie sind sicher, dass der Knoten zum Anhalten und Neustarten bereit ist.
+
+.image:https://raw.githubusercontent.com/NetAppDocs/common/main/media/number-8.png["Acht"]Betrieb wieder aufnehmen
+[role="quick-margin-para"]
+Wenn alle Grid-Knoten aktualisiert wurden, werden neue Funktionen aktiviert und Sie können den Betrieb wieder aufnehmen.  Mit der Durchführung einer Außerbetriebnahme oder Erweiterung müssen Sie warten, bis die Hintergrundaufgabe *Datenbank aktualisieren* und die Aufgabe *Letzte Aktualisierungsschritte* abgeschlossen sind.
+
+.Ähnliche Informationen
+link:estimating-time-to-complete-upgrade.html["Schätzen Sie die Zeit, die für die Durchführung eines Upgrades benötigt wird"]

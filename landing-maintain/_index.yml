@@ -1,0 +1,37 @@
+---
+indexpage:
+  title: Warten Sie ein StorageGRID -System
+  summary: Sie können Wartungsvorgänge durchführen, um Fehler zu beheben oder Ihr
+    StorageGRID -System auf dem neuesten Stand und in leistungsfähiger Form zu halten.
+  keywords: maintain grid, recovery package
+  lead: Sie können Wartungsvorgänge durchführen, um Fehler zu beheben oder Ihr StorageGRID
+    -System auf dem neuesten Stand und in leistungsfähiger Form zu halten.
+  tiles:
+  - title: Erste Schritte
+    links:
+    - title: Netzwartung
+      url: "../maintain/index.html"
+    - title: Wiederherstellungspaket herunterladen
+      url: "../maintain/downloading-recovery-package.html"
+  - title: Knoten oder Sites außer Betrieb nehmen
+    links:
+    - title: Außerbetriebnahmetypen
+      url: "../maintain/decommission-procedure.html"
+    - title: Entfernen eines Rasterknotens
+      url: "../maintain/grid-node-decommissioning.html"
+    - title: Entfernen einer Site
+      url: "../maintain/considerations-for-removing-site.html"
+  - title: Zusätzliche Wartungsverfahren
+    links:
+    - title: Raster, Site oder Knoten umbenennen
+      url: "../maintain/rename-grid-site-node-overview.html"
+    - title: Knotenprozeduren
+      url: "../maintain/grid-node-procedures.html"
+    - title: Netzwerkverfahren
+      url: "../maintain/updating-subnets-for-grid-network.html"
+    - title: Host- und Middleware-Verfahren
+      url: "../maintain/linux-migrating-grid-node-to-new-host.html"
+  - title: Wartung von StorageGRID -Geräten
+    links:
+    - title: Dokumentation zu StorageGRID -Geräten
+      url: https://docs.netapp.com/us-en/storagegrid-appliances/

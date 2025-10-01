@@ -1,0 +1,161 @@
+---
+permalink: tenant/creating-s3-bucket.html 
+sidebar: sidebar 
+keywords: how to create S3 bucket 
+summary: Mit dem Tenant Manager können Sie S3-Buckets für Objektdaten erstellen. 
+---
+= Erstellen eines S3-Buckets
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Mit dem Tenant Manager können Sie S3-Buckets für Objektdaten erstellen.
+
+.Bevor Sie beginnen
+* Sie sind beim Tenant Manager angemeldet mit einemlink:../admin/web-browser-requirements.html["unterstützter Webbrowser"] .
+* Sie gehören zu einer Benutzergruppe, die über Root-Zugriff oder die Möglichkeit verfügt, alle Buckets zu verwalten.link:tenant-management-permissions.html["Erlaubnis"] . Diese Berechtigungen überschreiben die Berechtigungseinstellungen in Gruppen- oder Bucket-Richtlinien.
++
+
+NOTE: Berechtigungen zum Festlegen oder Ändern der S3 Object Lock-Eigenschaften von Buckets oder Objekten können erteilt werden durchlink:../s3/bucket-and-group-access-policies.html["Bucket-Richtlinie oder Gruppenrichtlinie"] .
+
+* Wenn Sie S3 Object Lock für einen Bucket aktivieren möchten, hat ein Grid-Administrator die globale S3 Object Lock-Einstellung für das StorageGRID System aktiviert und Sie haben die Anforderungen für S3 Object Lock-Buckets und -Objekte überprüft.
+* Wenn jeder Mandant über 5.000 Buckets verfügt, verfügt jeder Speicherknoten im Grid über mindestens 64 GB RAM.
++
+
+NOTE: Jedes Raster kann maximal 100.000 Buckets enthalten.
+
+
+
+
+
+== Zugriff auf den Assistenten
+
+.Schritte
+. Wählen Sie im Dashboard *Buckets anzeigen* oder wählen Sie *STORAGE (S3)* > *Buckets*.
+. Wählen Sie *Bucket erstellen*.
+
+
+
+
+== Details eingeben
+
+.Schritte
+. Geben Sie Details zum Bucket ein.
++
+[cols="1a,3a"]
+|===
+| Feld | Beschreibung 
+
+
+ a| 
+Bucket-Name
+ a| 
+Ein Name für den Bucket, der diesen Regeln entspricht:
+
+** Muss in jedem StorageGRID -System eindeutig sein (nicht nur innerhalb des Mandantenkontos).
+** Muss DNS-kompatibel sein.
+** Muss mindestens 3 und darf nicht mehr als 63 Zeichen enthalten.
+** Jedes Etikett muss mit einem Kleinbuchstaben oder einer Zahl beginnen und enden und darf nur Kleinbuchstaben, Zahlen und Bindestriche enthalten.
+** Darf in Anfragen im virtuell gehosteten Stil keine Punkte enthalten.  Punkte verursachen Probleme bei der Überprüfung des Platzhalterzertifikats des Servers.
+
+
+Weitere Informationen finden Sie im https://docs.aws.amazon.com/AmazonS3/latest/userguide/bucketnamingrules.html["Amazon Web Services (AWS)-Dokumentation zu Bucket-Benennungsregeln"^] .
+
+*Hinweis*: Sie können den Bucket-Namen nach dem Erstellen des Buckets nicht mehr ändern.
+
+
+
+ a| 
+Region
+ a| 
+Die Region des Buckets.
+
+Ihr StorageGRID Administrator verwaltet die verfügbaren Regionen. Die Region eines Buckets kann sich auf die auf Objekte angewendete Datenschutzrichtlinie auswirken. Standardmäßig werden alle Buckets im `us-east-1` Region.
+
+*Hinweis*: Sie können die Region nach dem Erstellen des Buckets nicht mehr ändern.
+
+|===
+. Wählen Sie *Weiter*.
+
+
+
+
+== Einstellungen verwalten
+
+.Schritte
+. Aktivieren Sie optional die Objektversionierung für den Bucket.
++
+Aktivieren Sie die Objektversionierung, wenn Sie jede Version jedes Objekts in diesem Bucket speichern möchten.  Sie können dann bei Bedarf frühere Versionen eines Objekts abrufen.  Sie müssen die Objektversionierung aktivieren, wenn der Bucket für die gitterübergreifende Replikation verwendet wird.
+
+. Wenn die globale Einstellung „S3 Object Lock“ aktiviert ist, aktivieren Sie optional „S3 Object Lock“ für den Bucket, um Objekte mithilfe eines WORM-Modells (Write-Once-Read-Many) zu speichern.
++
+Aktivieren Sie die S3-Objektsperre für einen Bucket nur, wenn Sie Objekte für einen festgelegten Zeitraum aufbewahren müssen, beispielsweise um bestimmte gesetzliche Anforderungen zu erfüllen. S3 Object Lock ist eine permanente Einstellung, mit der Sie das Löschen oder Überschreiben von Objekten für einen festgelegten Zeitraum oder auf unbestimmte Zeit verhindern können.
+
++
+
+CAUTION: Nachdem die S3-Objektsperreinstellung für einen Bucket aktiviert wurde, kann sie nicht mehr deaktiviert werden. Jeder mit den entsprechenden Berechtigungen kann diesem Bucket Objekte hinzufügen, die nicht geändert werden können.  Möglicherweise können Sie diese Objekte oder den Bucket selbst nicht löschen.
+
++
+Wenn Sie S3 Object Lock für einen Bucket aktivieren, wird die Bucket-Versionierung automatisch aktiviert.
+
+. Wenn Sie *S3-Objektsperre aktivieren* ausgewählt haben, aktivieren Sie optional *Standardaufbewahrung* für diesen Bucket.
++
+
+NOTE: Ihr Grid-Administrator muss Ihnen die Berechtigung erteilen,link:../tenant/using-s3-object-lock.html["Verwenden Sie bestimmte Funktionen von S3 Object Lock"] .
+
++
+Wenn die *Standardaufbewahrung* aktiviert ist, werden neue Objekte, die dem Bucket hinzugefügt werden, automatisch vor dem Löschen oder Überschreiben geschützt. Die Einstellung *Standardaufbewahrung* gilt nicht für Objekte, die über eigene Aufbewahrungszeiträume verfügen.
+
++
+.. Wenn *Standardaufbewahrung* aktiviert ist, geben Sie einen *Standardaufbewahrungsmodus* für den Bucket an.
++
+[cols="1a,2a"]
+|===
+| Standardaufbewahrungsmodus | Beschreibung 
+
+
+ a| 
+Führung
+ a| 
+*** Benutzer mit der `s3:BypassGovernanceRetention` Berechtigung kann die `x-amz-bypass-governance-retention: true` Anforderungsheader zum Umgehen der Aufbewahrungseinstellungen.
+*** Diese Benutzer können eine Objektversion löschen, bevor ihr Aufbewahrungsdatum erreicht ist.
+*** Diese Benutzer können das Aufbewahrungsdatum eines Objekts erhöhen, verringern oder entfernen.
+
+
+
+
+ a| 
+Einhaltung
+ a| 
+*** Das Objekt kann erst gelöscht werden, wenn sein Aufbewahrungsdatum erreicht ist.
+*** Das Aufbewahrungsdatum des Objekts kann erhöht, aber nicht verringert werden.
+*** Das Aufbewahrungsdatum des Objekts kann erst entfernt werden, wenn dieses Datum erreicht ist.
+
+
+*Hinweis*: Ihr Grid-Administrator muss Ihnen die Verwendung des Compliance-Modus gestatten.
+
+|===
+.. Wenn die *Standardaufbewahrung* aktiviert ist, geben Sie die *Standardaufbewahrungsdauer* für den Bucket an.
++
+Die *Standardaufbewahrungsfrist* gibt an, wie lange neue Objekte, die diesem Bucket hinzugefügt werden, ab dem Zeitpunkt ihrer Aufnahme aufbewahrt werden sollen. Geben Sie einen Wert an, der kleiner oder gleich der vom Grid-Administrator festgelegten maximalen Aufbewahrungsdauer für den Mandanten ist.
+
++
+Eine _maximale_ Aufbewahrungsdauer, die zwischen 1 Tag und 100 Jahren liegen kann, wird festgelegt, wenn der Grid-Administrator den Mandanten erstellt.  Wenn Sie eine _Standard_-Aufbewahrungsdauer festlegen, darf diese den für die maximale Aufbewahrungsdauer festgelegten Wert nicht überschreiten.  Bitten Sie Ihren Grid-Administrator bei Bedarf, die maximale Aufbewahrungsdauer zu verlängern oder zu verkürzen.
+
+
+
+. [[Kapazitätslimit]]Wählen Sie optional *Kapazitätslimit aktivieren* aus.
++
+Die Kapazitätsgrenze ist die maximal verfügbare Kapazität für die Objekte dieses Buckets. Dieser Wert stellt eine logische Menge (Objektgröße) dar, keine physische Menge (Größe auf der Festplatte).
+
++
+Wenn kein Limit festgelegt ist, ist die Kapazität für diesen Bucket unbegrenzt. Weitere Informationen finden Sie unter link:../tenant/understanding-tenant-manager-dashboard.html#bucket-capacity-usage["Kapazitätslimitnutzung"] für weitere Informationen.
+
+. Wählen Sie *Bucket erstellen*.
++
+Der Bucket wird erstellt und der Tabelle auf der Seite „Buckets“ hinzugefügt.
+
+. Wählen Sie optional *Zur Bucket-Detailseite*, umlink:viewing-s3-bucket-details.html["Bucket-Details anzeigen"] und führen Sie zusätzliche Konfigurationen durch.
+

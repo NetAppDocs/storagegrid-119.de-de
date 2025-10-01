@@ -1,0 +1,47 @@
+---
+permalink: ilm/access-create-ilm-rule-wizard.html 
+sidebar: sidebar 
+keywords: create ILM rule, information lifecycle rule 
+summary: Mit dem Assistenten „ILM-Regel erstellen“ erstellen Sie eine ILM-Regel. 
+---
+= Greifen Sie auf den Assistenten zum Erstellen einer ILM-Regel zu
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Mithilfe von ILM-Regeln können Sie die Platzierung von Objektdaten im Laufe der Zeit verwalten.  Zum Erstellen einer ILM-Regel verwenden Sie den Assistenten „ILM-Regel erstellen“.
+
+
+NOTE: Wenn Sie die Standard-ILM-Regel für eine Richtlinie erstellen möchten, folgen Sie denlink:creating-default-ilm-rule.html["Anleitung zum Erstellen einer Standard-ILM-Regel"] stattdessen.
+
+.Bevor Sie beginnen
+* Sie sind beim Grid Manager angemeldet mit einemlink:../admin/web-browser-requirements.html["unterstützter Webbrowser"] .
+* Du hastlink:../admin/admin-group-permissions.html["spezifische Zugriffsberechtigungen"] .
+* Wenn Sie festlegen möchten, für welche Mandantenkonten diese Regel gilt, haben Sie dielink:../admin/admin-group-permissions.html["Berechtigung für Mandantenkonten"] oder Sie kennen die Konto-ID für jedes Konto.
+* Wenn die Regel Objekte anhand der Metadaten zum letzten Zugriffszeitpunkt filtern soll, müssen Aktualisierungen des letzten Zugriffszeitpunkts durch den S3-Bucket aktiviert werden.
+* Sie haben alle Cloud-Speicherpools konfiguriert, die Sie verwenden möchten. Sehen link:creating-cloud-storage-pool.html["Cloud-Speicherpool erstellen"] .
+* Sie kennen dielink:data-protection-options-for-ingest.html["Aufnahmeoptionen"] .
+* Wenn Sie eine konforme Regel für die Verwendung mit S3 Object Lock erstellen müssen, sind Sie vertraut mit demlink:requirements-for-s3-object-lock.html["Anforderungen für S3 Object Lock"] .
+* Optional haben Sie das Video angesehen: https://netapp.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=9872d38f-80b3-4ad4-9f79-b1ff008760c7["Video: Übersicht über ILM-Regeln"^] .
++
+[link=https://netapp.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=9872d38f-80b3-4ad4-9f79-b1ff008760c7]
+image::../media/video-screenshot-ilm-rules-118.png[Video: Übersicht über ILM-Regeln]
+
+
+
+.Informationen zu diesem Vorgang
+Beim Erstellen von ILM-Regeln:
+
+* Berücksichtigen Sie die Topologie und Speicherkonfigurationen des StorageGRID -Systems.
+* Überlegen Sie, welche Arten von Objektkopien Sie erstellen möchten (repliziert oder löschcodiert) und wie viele Kopien jedes Objekts erforderlich sind.
+* Bestimmen Sie, welche Arten von Objektmetadaten in den Anwendungen verwendet werden, die eine Verbindung zum StorageGRID -System herstellen.  ILM-Regeln filtern Objekte basierend auf ihren Metadaten.
+* Überlegen Sie, wo Sie Objektkopien im Laufe der Zeit platzieren möchten.
+* Entscheiden Sie, welche Aufnahmeoption verwendet werden soll (Balanced, Strict oder Dual Commit).
+
+
+.Schritte
+. Wählen Sie *ILM* > *Regeln*.
+. Wählen Sie *Erstellen*. link:create-ilm-rule-enter-details.html["Schritt 1 (Details eingeben)"]des Assistenten „ILM-Regel erstellen“ wird angezeigt.
+

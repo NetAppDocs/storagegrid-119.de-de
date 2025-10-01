@@ -1,0 +1,66 @@
+---
+permalink: tenant/using-storagegrid-tenant-account.html 
+sidebar: sidebar 
+keywords: how to use tenant account 
+summary: 'Mit einem Mandantenkonto können Sie die REST-API des Simple Storage Service (S3) verwenden, um Objekte in einem StorageGRID System zu speichern und abzurufen.' 
+---
+= Verwenden Sie das StorageGRID Mandantenkonto
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Mit einem Mandantenkonto können Sie die REST-API des Simple Storage Service (S3) verwenden, um Objekte in einem StorageGRID -System zu speichern und abzurufen.
+
+Jedes Mandantenkonto verfügt über seine eigenen föderierten oder lokalen Gruppen, Benutzer, S3-Buckets und Objekte.
+
+
+TIP: Swift-Details wurden aus dieser Version der Dokumentationssite entfernt. Sehen https://docs.netapp.com/us-en/storagegrid-118/tenant/using-storagegrid-tenant-account.html["StorageGRID 11.8: StorageGRID Mandantenkonto verwenden"^] .
+
+Optional können Mandantenkonten verwendet werden, um gespeicherte Objekte nach verschiedenen Entitäten zu trennen.  Beispielsweise können mehrere Mandantenkonten für einen der folgenden Anwendungsfälle verwendet werden:
+
+* *Anwendungsfall für Unternehmen:* Wenn das StorageGRID -System innerhalb eines Unternehmens verwendet wird, kann der Objektspeicher des Grids nach den verschiedenen Abteilungen der Organisation getrennt sein.  Beispielsweise kann es Mandantenkonten für die Marketingabteilung, die Kundensupportabteilung, die Personalabteilung usw. geben.
++
+
+NOTE: Wenn Sie das S3-Clientprotokoll verwenden, können Sie auch S3-Buckets und Bucket-Richtlinien verwenden, um Objekte zwischen den Abteilungen in einem Unternehmen zu trennen. Sie müssen keine separaten Mieterkonten erstellen. Siehe Anweisungen zur Implementierunglink:../s3/bucket-and-group-access-policies.html["S3-Buckets und Bucket-Richtlinien"] für weitere Informationen.
+
+* *Anwendungsfall für Dienstanbieter:* Wenn das StorageGRID -System von einem Dienstanbieter verwendet wird, kann der Objektspeicher des Grids nach den verschiedenen Einheiten, die den Speicher mieten, getrennt sein.  Beispielsweise kann es Mandantenkonten für Unternehmen A, Unternehmen B, Unternehmen C usw. geben.
+
+
+
+
+== Mandantenkonten erstellen
+
+Mandantenkonten werden von einem StorageGRID Grid-Administrator mithilfe des Grid Managers erstellt.  Beim Anlegen eines Mandantenkontos gibt der Grid-Administrator folgende Informationen an:
+
+* Anzeigename für den Mandanten (die Konto-ID des Mandanten wird automatisch zugewiesen und kann nicht geändert werden).
+* Ob das Mandantenkonto das S3- oder Swift-Protokoll verwendet.
+* Für S3-Mandantenkonten: Ob das Mandantenkonto Plattformdienste verwenden darf.  Wenn die Verwendung von Plattformdiensten zulässig ist, muss das Grid so konfiguriert sein, dass es deren Verwendung unterstützt.
+* Optional ein Speicherkontingent für das Mandantenkonto – die maximale Anzahl an Gigabyte, Terabyte oder Petabyte, die für die Objekte des Mandanten verfügbar ist.  Das Speicherkontingent eines Mandanten stellt eine logische Menge (Objektgröße) dar, keine physische Menge (Größe auf der Festplatte).
+* Wenn die Identitätsföderation für das StorageGRID -System aktiviert ist, welche föderierte Gruppe verfügt über die Root-Zugriffsberechtigung zum Konfigurieren des Mandantenkontos?
+* Wenn Single Sign-On (SSO) für das StorageGRID System nicht verwendet wird, ob das Mandantenkonto seine eigene Identitätsquelle verwendet oder die Identitätsquelle des Grids gemeinsam nutzt, und das anfängliche Kennwort für den lokalen Root-Benutzer des Mandanten.
+
+
+Darüber hinaus können Grid-Administratoren die S3 Object Lock-Einstellung für das StorageGRID -System aktivieren, wenn S3-Mandantenkonten gesetzliche Anforderungen erfüllen müssen.  Wenn S3 Object Lock aktiviert ist, können alle S3-Mandantenkonten konforme Buckets erstellen und verwalten.
+
+
+
+== Konfigurieren von S3-Mandanten
+
+Nachdem ein S3-Mandantenkonto erstellt wurde, können Sie auf den Mandanten-Manager zugreifen, um beispielsweise die folgenden Aufgaben auszuführen:
+
+* Einrichten einer Identitätsföderation (sofern die Identitätsquelle nicht mit dem Grid geteilt wird) oder Erstellen lokaler Gruppen und Benutzer
+* Verwalten von S3-Zugriffsschlüsseln
+* Erstellen und Verwalten von S3-Buckets, einschließlich konformer Buckets
+* Nutzung von Plattformdiensten (sofern aktiviert)
+* Überwachen der Speichernutzung
+
+
+
+TIP: Während Sie mit dem Tenant Manager S3-Buckets erstellen und verwalten können, müssen Sie über S3-Zugriffsschlüssel verfügen und die S3-REST-API verwenden, um Objekte aufzunehmen und zu verwalten.
+
+.Ähnliche Informationen
+* link:../admin/index.html["StorageGRID verwalten"]
+* link:../s3/index.html["Verwenden Sie die S3 REST-API"]
+

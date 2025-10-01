@@ -1,0 +1,69 @@
+---
+permalink: maintain/restoring-audit-log-on-recovered-non-primary-admin-node.html 
+sidebar: sidebar 
+keywords: storagegrid, recover, restore audit log, non-primary admin node 
+summary: Wenn Sie das Prüfprotokoll des ausgefallenen nicht primären Admin-Knotens aufbewahren konnten, sodass die historischen Prüfprotokollinformationen erhalten bleiben, können Sie es auf den nicht primären Admin-Knoten kopieren, den Sie wiederherstellen. 
+---
+= Wiederherstellen des Überwachungsprotokolls auf dem wiederhergestellten nicht primären Admin-Knoten
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Wenn Sie das Prüfprotokoll des ausgefallenen nicht primären Admin-Knotens aufbewahren konnten, sodass die historischen Prüfprotokollinformationen erhalten bleiben, können Sie es auf den nicht primären Admin-Knoten kopieren, den Sie wiederherstellen.
+
+.Bevor Sie beginnen
+* Der wiederhergestellte Admin-Knoten ist installiert und läuft.
+* Sie haben die Prüfprotokolle an einen anderen Speicherort kopiert, nachdem der ursprüngliche Admin-Knoten ausgefallen war.
+
+
+.Informationen zu diesem Vorgang
+Wenn ein Admin-Knoten ausfällt, gehen die auf diesem Admin-Knoten gespeicherten Prüfprotokolle möglicherweise verloren.  Möglicherweise können Daten vor Verlust bewahrt werden, indem Prüfprotokolle vom ausgefallenen Admin-Knoten kopiert und diese Prüfprotokolle dann auf dem wiederhergestellten Admin-Knoten wiederhergestellt werden.  Je nach Fehler ist es möglicherweise nicht möglich, Prüfprotokolle vom ausgefallenen Admin-Knoten zu kopieren.  In diesem Fall können Sie, wenn die Bereitstellung über mehr als einen Admin-Knoten verfügt, Prüfprotokolle von einem anderen Admin-Knoten wiederherstellen, da Prüfprotokolle auf alle Admin-Knoten repliziert werden.
+
+Wenn nur ein Admin-Knoten vorhanden ist und das Prüfprotokoll nicht vom ausgefallenen Knoten kopiert werden kann, beginnt der wiederhergestellte Admin-Knoten mit der Aufzeichnung von Ereignissen im Prüfprotokoll, als ob die Installation neu wäre.
+
+Sie müssen einen Admin-Knoten so schnell wie möglich wiederherstellen, um die Protokollierungsfunktionalität wiederherzustellen.
+
+[NOTE]
+====
+Standardmäßig werden Audit-Informationen an das Audit-Protokoll auf den Admin-Knoten gesendet.  Sie können diese Schritte überspringen, wenn einer der folgenden Punkte zutrifft:
+
+* Sie haben einen externen Syslog-Server konfiguriert und Prüfprotokolle werden jetzt an den Syslog-Server statt an Admin-Knoten gesendet.
+* Sie haben ausdrücklich angegeben, dass Prüfmeldungen nur auf den lokalen Knoten gespeichert werden sollen, die sie generiert haben.
+
+
+Sehenlink:../monitor/configure-audit-messages.html["Konfigurieren von Überwachungsmeldungen und Protokollzielen"] für Details.
+
+====
+.Schritte
+. Melden Sie sich beim wiederhergestellten Admin-Knoten an:
++
+.. Geben Sie den folgenden Befehl ein: +
+`ssh admin@recovery_Admin_Node_IP`
+.. Geben Sie das Passwort ein, das in der `Passwords.txt` Datei.
+.. Geben Sie den folgenden Befehl ein, um zum Root zu wechseln: `su -`
+.. Geben Sie das Passwort ein, das in der `Passwords.txt` Datei.
+
+
++
+Nachdem Sie als Root angemeldet sind, ändert sich die Eingabeaufforderung von `$` Zu `#` .
+
+. Überprüfen Sie, welche Audit-Dateien erhalten geblieben sind:
++
+`cd /var/local/log`
+
+. Kopieren Sie die gespeicherten Audit-Protokolldateien auf den wiederhergestellten Admin-Knoten:
++
+`scp admin@grid_node_IP:/var/local/tmp/saved-audit-logs/YYYY*`
+
++
+Geben Sie bei der entsprechenden Aufforderung das Kennwort für den Administrator ein.
+
+. Löschen Sie aus Sicherheitsgründen die Prüfprotokolle vom ausgefallenen Grid-Knoten, nachdem Sie überprüft haben, dass sie erfolgreich auf den wiederhergestellten Admin-Knoten kopiert wurden.
+. Aktualisieren Sie die Benutzer- und Gruppeneinstellungen der Audit-Protokolldateien auf dem wiederhergestellten Admin-Knoten:
++
+`chown ams-user:bycast *`
+
+. Als Root abmelden: `exit`
+

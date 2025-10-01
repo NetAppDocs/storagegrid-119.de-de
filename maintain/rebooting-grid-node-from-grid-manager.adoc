@@ -1,0 +1,56 @@
+---
+permalink: maintain/rebooting-grid-node-from-grid-manager.html 
+sidebar: sidebar 
+keywords: reboot grid node, tasks tab 
+summary: Sie können einen einzelnen Grid-Knoten über die Registerkarte „Aufgaben“ auf der Seite „Knoten“ neu starten. 
+---
+= Starten Sie den Grid-Knoten über die Registerkarte „Aufgaben“ neu.
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Sie können einen einzelnen Grid-Knoten über die Registerkarte „Aufgaben“ auf der Seite „Knoten“ neu starten.
+
+.Bevor Sie beginnen
+* Sie sind beim Grid Manager angemeldet mit einemlink:../admin/web-browser-requirements.html["unterstützter Webbrowser"] .
+* Sie haben dielink:../admin/admin-group-permissions.html["Wartungs- oder Root-Zugriffsberechtigung"] .
+* Sie haben die Bereitstellungspassphrase.
+* Wenn Sie den primären Admin-Knoten oder einen beliebigen Speicherknoten neu starten, haben Sie die folgenden Überlegungen überprüft:
++
+** Wenn Sie den primären Admin-Knoten neu starten, verliert Ihr Browser vorübergehend den Zugriff auf den Grid Manager.
+** Wenn Sie zwei oder mehr Speicherknoten an einem bestimmten Standort neu starten, können Sie für die Dauer des Neustarts möglicherweise nicht auf bestimmte Objekte zugreifen.  Dieses Problem kann auftreten, wenn eine ILM-Regel die Aufnahmeoption *Dual Commit* verwendet (oder eine Regel *Balanced* angibt und es nicht möglich ist, alle erforderlichen Kopien sofort zu erstellen).  In diesem Fall übergibt StorageGRID neu aufgenommene Objekte an zwei Speicherknoten am selben Standort und wertet ILM später aus.
+** Um sicherzustellen, dass Sie während des Neustarts eines Speicherknotens auf alle Objekte zugreifen können, unterbrechen Sie die Aufnahme von Objekten an einem Standort etwa eine Stunde lang, bevor Sie den Knoten neu starten.
+
+
+
+
+.Informationen zu diesem Vorgang
+Wenn StorageGRID einen Grid-Knoten neu startet, gibt es die `reboot` Befehl auf dem Knoten, der dazu führt, dass der Knoten heruntergefahren und neu gestartet wird.  Alle Dienste werden automatisch neu gestartet.
+
+* Durch den Neustart eines VMware-Knotens wird die virtuelle Maschine neu gestartet.
+* Durch den Neustart eines Linux-Knotens wird der Container neu gestartet.
+* Durch den Neustart eines StorageGRID Appliance-Knotens wird der Compute-Controller neu gestartet.
+
+
+
+TIP: Wenn Sie mehr als einen Knoten neu starten müssen, können Sie dielink:../maintain/rolling-reboot-procedure.html["Rolling-Reboot-Verfahren"] .
+
+.Schritte
+. Wählen Sie *NODES*.
+. Wählen Sie den Grid-Knoten aus, den Sie neu starten möchten.
+. Wählen Sie die Registerkarte *Aufgaben*.
+. Wählen Sie *Neustart*.
++
+Ein Bestätigungsdialogfeld wird angezeigt.  Wenn Sie den primären Admin-Knoten neu starten, werden Sie im Bestätigungsdialogfeld daran erinnert, dass die Verbindung Ihres Browsers zum Grid Manager vorübergehend verloren geht, wenn die Dienste gestoppt werden.
+
+. Geben Sie die Bereitstellungspassphrase ein und wählen Sie *OK*.
+. Warten Sie, bis der Knoten neu gestartet wurde.
++
+Es kann einige Zeit dauern, bis die Dienste heruntergefahren werden.
+
++
+Beim Neustart des Knotens wird auf der Seite „Knoten“ das graue Symbol (Administrativ ausgefallen) für den Knoten angezeigt.  Wenn alle Dienste erneut gestartet wurden und der Knoten erfolgreich mit dem Grid verbunden ist, sollte auf der Seite „Knoten“ der normale Status angezeigt werden (keine Symbole links neben dem Knotennamen). Dies bedeutet, dass keine Warnungen aktiv sind und der Knoten mit dem Grid verbunden ist.
+
+

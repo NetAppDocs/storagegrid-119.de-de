@@ -1,0 +1,39 @@
+---
+permalink: monitor/managing-alerts.html 
+sidebar: sidebar 
+keywords: alert rules, managing alerts, alerts, alert notifications. edit alert rules 
+summary: Das Warnsystem bietet eine benutzerfreundliche Schnittstelle zum Erkennen, Bewerten und Beheben von Problemen, die während des StorageGRID -Betriebs auftreten können. 
+---
+= Verwalten von Warnungen
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Das Warnsystem bietet eine benutzerfreundliche Schnittstelle zum Erkennen, Bewerten und Beheben von Problemen, die während des StorageGRID -Betriebs auftreten können.
+
+Warnungen werden bei bestimmten Schweregraden ausgelöst, wenn die Bedingungen der Warnungsregel als wahr ausgewertet werden.  Wenn eine Warnung ausgelöst wird, werden die folgenden Aktionen ausgeführt:
+
+* Auf dem Dashboard im Grid Manager wird ein Symbol für den Schweregrad der Warnung angezeigt und die Anzahl der aktuellen Warnungen wird erhöht.
+* Die Warnung wird auf der Übersichtsseite *NODES* und auf der Registerkarte *NODES* > *_node_* > *Übersicht* angezeigt.
+* Vorausgesetzt, Sie haben einen SMTP-Server konfiguriert und E-Mail-Adressen für die Empfänger angegeben, wird eine E-Mail-Benachrichtigung gesendet.
+* Vorausgesetzt, Sie haben den StorageGRID SNMP-Agenten konfiguriert, wird eine SNMP-Benachrichtigung (Simple Network Management Protocol) gesendet.
+
+
+Sie können benutzerdefinierte Warnungen erstellen, Warnungen bearbeiten oder deaktivieren und Warnbenachrichtigungen verwalten.
+
+Weitere Informationen:
+
+* Sehen Sie sich das Video an: https://netapp.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=2eea81c5-8323-417f-b0a0-b1ff008506c1["Video: Übersicht über Warnungen"^]
++
+[link=https://netapp.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=2eea81c5-8323-417f-b0a0-b1ff008506c1]
+image::../media/video-screenshot-alert-overview-118.png[Video: Übersicht über Warnungen]
+
+* Sehen Sie sich das Video an: https://netapp.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=54af90c4-9a38-4136-9621-b1ff008604a3["Video: Benutzerdefinierte Benachrichtigungen"^]
++
+[link=https://netapp.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=54af90c4-9a38-4136-9621-b1ff008604a3]
+image::../media/video-screenshot-alert-create-custom-118.png[Video: Benutzerdefinierte Benachrichtigungen]
+
+* Siehe dielink:alerts-reference.html["Warnungsreferenz"] .
+

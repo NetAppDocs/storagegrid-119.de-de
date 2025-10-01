@@ -1,0 +1,77 @@
+---
+permalink: maintain/recovering-from-storage-node-failures.html 
+sidebar: sidebar 
+keywords: recover, storage node failure, Reaper 
+summary: Das Verfahren zur Wiederherstellung eines ausgefallenen Speicherknotens hängt von der Art des Fehlers und dem Typ des ausgefallenen Speicherknotens ab. 
+---
+= Wiederherstellung nach Speicherknotenfehlern
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Das Verfahren zur Wiederherstellung eines ausgefallenen Speicherknotens hängt von der Art des Fehlers und dem Typ des ausgefallenen Speicherknotens ab.
+
+Verwenden Sie diese Tabelle, um das Wiederherstellungsverfahren für einen ausgefallenen Speicherknoten auszuwählen.
+
+[cols="1a,1a,1a"]
+|===
+| Ausgabe | Aktion | Hinweise 
+
+
+ a| 
+* Mehr als ein Speicherknoten ist ausgefallen.
+* Ein zweiter Speicherknoten ist weniger als 15 Tage nach einem Speicherknotenausfall oder einer Wiederherstellung ausgefallen.
++
+Dies gilt auch für den Fall, dass ein Speicherknoten ausfällt, während die Wiederherstellung eines anderen Speicherknotens noch läuft.
+
+
+ a| 
+Wenden Sie sich an den technischen Support.
+ a| 
+Die Wiederherstellung von mehr als einem Speicherknoten (oder mehr als einem Speicherknoten innerhalb von 15 Tagen) kann die Integrität der Cassandra-Datenbank beeinträchtigen, was zu Datenverlust führen kann.
+
+Der technische Support kann feststellen, wann die Wiederherstellung eines zweiten Speicherknotens sicher beginnen kann.
+
+*Hinweis*: Wenn an einem Standort mehr als ein Speicherknoten ausfällt, der den ADC-Dienst enthält, gehen alle ausstehenden Plattformdienstanforderungen für diesen Standort verloren.
+
+
+
+ a| 
+An einem Standort ist mehr als ein Speicherknoten ausgefallen oder ein ganzer Standort ist ausgefallen.
+ a| 
+Wenden Sie sich an den technischen Support. Möglicherweise muss ein Site-Wiederherstellungsverfahren durchgeführt werden.
+ a| 
+Der technische Support wird Ihre Situation beurteilen und einen Wiederherstellungsplan entwickeln. Sehen link:how-site-recovery-is-performed-by-technical-support.html["So stellt der technische Support eine Site wieder her"] .
+
+
+
+ a| 
+Ein Appliance-Speicherknoten ist ausgefallen.
+ a| 
+link:recovering-storagegrid-appliance-storage-node.html["Wiederherstellen des Appliance-Speicherknotens"]
+ a| 
+Das Wiederherstellungsverfahren für Appliance-Speicherknoten ist bei allen Fehlern gleich.
+
+
+
+ a| 
+Ein oder mehrere Speichervolumes sind ausgefallen, aber das Systemlaufwerk ist intakt
+ a| 
+link:recovering-from-storage-volume-failure-where-system-drive-is-intact.html["Wiederherstellung nach einem Speichervolume-Fehler, wenn das Systemlaufwerk intakt ist"]
+ a| 
+Dieses Verfahren wird für softwarebasierte Storage Nodes verwendet.
+
+
+
+ a| 
+Das Systemlaufwerk ist ausgefallen.
+ a| 
+link:reviewing-warnings-for-system-drive-recovery.html["Wiederherstellung nach einem Systemlaufwerksfehler"]
+ a| 
+Das Verfahren zum Ersetzen des Knotens hängt von der Bereitstellungsplattform und davon ab, ob auch Speichervolumes ausgefallen sind.
+
+|===
+
+NOTE: Einige StorageGRID Wiederherstellungsverfahren verwenden Reaper zur Durchführung von Cassandra-Reparaturen.  Reparaturen erfolgen automatisch, sobald die entsprechenden bzw. erforderlichen Leistungen begonnen haben.  Möglicherweise bemerken Sie eine Skriptausgabe, in der „Reaper“ oder „Cassandra-Reparatur“ erwähnt wird.  Wenn eine Fehlermeldung angezeigt wird, die darauf hinweist, dass die Reparatur fehlgeschlagen ist, führen Sie den in der Fehlermeldung angegebenen Befehl aus.

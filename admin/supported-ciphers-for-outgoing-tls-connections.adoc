@@ -1,0 +1,25 @@
+---
+permalink: admin/supported-ciphers-for-outgoing-tls-connections.html 
+sidebar: sidebar 
+keywords: tls cipher suites, transport layer security connections 
+summary: 'Das StorageGRID -System unterstützt eine begrenzte Anzahl von Verschlüsselungssammlungen für Transport Layer Security (TLS)-Verbindungen zu den externen Systemen, die für die Identitätsföderation und Cloud Storage Pools verwendet werden.' 
+---
+= Unterstützte Verschlüsselungen für ausgehende TLS-Verbindungen
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Das StorageGRID -System unterstützt eine begrenzte Anzahl von Verschlüsselungssammlungen für Transport Layer Security (TLS)-Verbindungen zu den externen Systemen, die für die Identitätsföderation und Cloud Storage Pools verwendet werden.
+
+
+
+== Unterstützte Versionen von TLS
+
+StorageGRID unterstützt TLS 1.2 und TLS 1.3 für Verbindungen zu externen Systemen, die für die Identitätsföderation und Cloud-Speicherpools verwendet werden.
+
+Die für die Verwendung mit externen Systemen unterstützten TLS-Chiffren wurden ausgewählt, um die Kompatibilität mit einer Reihe externer Systeme sicherzustellen. Die Liste ist größer als die Liste der Chiffren, die für die Verwendung mit S3-Clientanwendungen unterstützt werden. Um Verschlüsselungen zu konfigurieren, gehen Sie zu *KONFIGURATION* > *Sicherheit* > *Sicherheitseinstellungen* und wählen Sie *TLS- und SSH-Richtlinien*.
+
+
+NOTE: TLS-Konfigurationsoptionen wie Protokollversionen, Chiffren, Schlüsselaustauschalgorithmen und MAC-Algorithmen sind in StorageGRID nicht konfigurierbar.  Wenden Sie sich an Ihren NetApp -Kundenbetreuer, wenn Sie spezielle Anfragen zu diesen Einstellungen haben.

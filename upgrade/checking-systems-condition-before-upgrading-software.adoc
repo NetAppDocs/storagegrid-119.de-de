@@ -1,0 +1,60 @@
+---
+permalink: upgrade/checking-systems-condition-before-upgrading-software.html 
+sidebar: sidebar 
+keywords: upgrade, grid tasks, firewall, ports 
+summary: Überprüfen Sie vor dem Upgrade eines StorageGRID -Systems, ob das System für das Upgrade bereit ist.  Stellen Sie sicher, dass das System normal läuft und alle Grid-Knoten betriebsbereit sind. 
+---
+= Überprüfen Sie den Zustand des Systems
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Bevor Sie ein StorageGRID -System aktualisieren, stellen Sie sicher, dass das System für die Aktualisierung bereit ist.  Stellen Sie sicher, dass das System normal läuft und alle Grid-Knoten betriebsbereit sind.
+
+.Schritte
+. Sign in beim Grid Manager an mit einemlink:../admin/web-browser-requirements.html["unterstützter Webbrowser"] .
+. Suchen Sie nach aktiven Warnungen und beheben Sie diese.
+. Stellen Sie sicher, dass keine widersprüchlichen Grid-Aufgaben aktiv oder ausstehend sind.
++
+.. Wählen Sie *SUPPORT* > *Tools* > *Gittertopologie*.
+.. Wählen Sie *_site_* > *_primärer Admin-Knoten_* > *CMN* > *Grid-Aufgaben* > *Konfiguration*.
++
+ILME-Aufgaben (Information Lifecycle Management Evaluation) sind die einzigen Grid-Aufgaben, die gleichzeitig mit dem Software-Upgrade ausgeführt werden können.
+
+.. Wenn andere Grid-Aufgaben aktiv oder ausstehend sind, warten Sie, bis sie abgeschlossen sind oder ihre Sperre aufgehoben wird.
++
+
+NOTE: Wenden Sie sich an den technischen Support, wenn eine Aufgabe nicht abgeschlossen oder die Sperre nicht aufgehoben wird.
+
+
+
+. Siehelink:../network/internal-grid-node-communications.html["Interne Grid-Knoten-Kommunikation"] Undlink:../network/external-communications.html["Externe Kommunikation"] um sicherzustellen, dass alle erforderlichen Ports für StorageGRID 11.9 geöffnet sind, bevor Sie ein Upgrade durchführen.
++
+
+NOTE: Beim Upgrade auf StorageGRID 11.9 sind keine zusätzlichen Ports erforderlich.
+
++
+Der folgende erforderliche Port wurde in StorageGRID 11.7 hinzugefügt.  Stellen Sie sicher, dass es verfügbar ist, bevor Sie auf StorageGRID 11.9 aktualisieren.
+
++
+[cols="1a,2a"]
+|===
+| Hafen | Beschreibung 
+
+
+ a| 
+18086
+ a| 
+Der TCP-Port wird für S3-Anfragen vom StorageGRID Load Balancer an LDR und den neuen LDR-Dienst verwendet.
+
+Vergewissern Sie sich vor dem Upgrade, dass dieser Port von allen Grid-Knoten zu allen Speicherknoten geöffnet ist.
+
+Das Blockieren dieses Ports führt nach dem Upgrade auf StorageGRID 11.9 zu Unterbrechungen des S3-Dienstes.
+
+|===
+
+
+
+CAUTION: Wenn Sie benutzerdefinierte Firewall-Ports geöffnet haben, werden Sie während der Upgrade-Vorprüfung benachrichtigt.  Sie müssen sich an den technischen Support wenden, bevor Sie mit dem Upgrade fortfahren.

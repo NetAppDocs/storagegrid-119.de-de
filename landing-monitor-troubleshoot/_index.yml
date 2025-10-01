@@ -1,0 +1,51 @@
+---
+indexpage:
+  title: Überwachen und beheben Sie Fehler eines StorageGRID -Systems
+  summary: Wenn Ihr System betriebsbereit ist, sollten Sie seine Aktivitäten regelmäßig
+    überwachen und alle Fehler beheben und Warnmeldungen beseitigen.  Möglicherweise
+    möchten Sie auch einen externen Syslog-Server konfigurieren, SNMP-Überwachung
+    verwenden oder zusätzliche Daten sammeln.
+  keywords: monitor, troubleshoot
+  lead: Wenn Ihr System betriebsbereit ist, sollten Sie seine Aktivitäten regelmäßig
+    überwachen und alle Fehler beheben und Warnmeldungen beseitigen.  Möglicherweise
+    möchten Sie auch einen externen Syslog-Server konfigurieren, SNMP-Überwachung
+    verwenden oder zusätzliche Daten sammeln.
+  tiles:
+  - title: Überwachen Sie Ihr System
+    links:
+    - title: Dashboard verwalten
+      url: "../monitor/viewing-dashboard.html"
+    - title: Seite „Knoten anzeigen“
+      url: "../monitor/viewing-nodes-page.html"
+    - title: Überwachen Sie den Systemzustand
+      url: "../monitor/monitoring-system-health.html"
+    - title: Überwachen der Speicherkapazität
+      url: "../monitor/monitoring-storage-capacity.html"
+  - title: Verwalten von Warnungen und Benachrichtigungen
+    links:
+    - title: Verwalten von Warnungen
+      url: "../monitor/managing-alerts.html"
+    - title: Erstellen Sie benutzerdefinierte Benachrichtigungen
+      url: "../monitor/creating-custom-alert-rules.html"
+    - title: Verwalten von Warn-E-Mails
+      url: "../monitor/email-alert-notifications.html"
+    - title: Verwenden Sie die SNMP-Überwachung
+      url: "../monitor/using-snmp-monitoring.html"
+  - title: Verwenden Sie Prüfmeldungen und andere Protokolle
+    links:
+    - title: Konfigurieren von Überwachungsmeldungen
+      url: "../monitor/configure-audit-messages.html"
+    - title: Externen Syslog-Server verwenden
+      url: "../monitor/considerations-for-external-syslog-server.html"
+    - title: Überprüfen der Überwachungsprotokolle
+      url: "../audit/index.html"
+    - title: Referenz zu Protokolldateien
+      url: "../monitor/logs-files-reference.html"
+  - title: Diagnose und Fehlerbehebung
+    links:
+    - title: Überprüfen der Supportmetriken
+      url: "../monitor/reviewing-support-metrics.html"
+    - title: Diagnose ausführen
+      url: "../monitor/running-diagnostics.html"
+    - title: Beheben häufiger Probleme
+      url: "../troubleshoot/index.html"

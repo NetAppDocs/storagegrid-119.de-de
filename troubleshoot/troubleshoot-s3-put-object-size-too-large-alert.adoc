@@ -1,0 +1,137 @@
+---
+permalink: troubleshoot/troubleshoot-s3-put-object-size-too-large-alert.html 
+sidebar: sidebar 
+keywords: how to troubleshoot S3 PUT Object size too large alert, S3 PutObject size 
+summary: Die Warnung „S3 PUT-Objektgröße zu groß“ wird ausgelöst, wenn ein Mandant einen nicht mehrteiligen PutObject-Vorgang versucht, der die S3-Größenbeschränkung von 5 GiB überschreitet. 
+---
+= Fehlerbehebung bei der Warnung „S3 PUT-Objektgröße zu groß“
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Die Warnung „S3 PUT-Objektgröße zu groß“ wird ausgelöst, wenn ein Mandant einen nicht mehrteiligen PutObject-Vorgang versucht, der die S3-Größenbeschränkung von 5 GiB überschreitet.
+
+.Bevor Sie beginnen
+* Sie sind beim Grid Manager angemeldet mit einemlink:../admin/web-browser-requirements.html["unterstützter Webbrowser"] .
+* Du hastlink:../admin/admin-group-permissions.html["spezifische Zugriffsberechtigungen"] .
+
+
+Ermitteln Sie, welche Mandanten Objekte verwenden, die größer als 5 GiB sind, damit Sie sie benachrichtigen können.
+
+.Schritte
+. Gehen Sie zu *KONFIGURATION* > *Überwachung* > *Audit- und Syslog-Server*.
+. Wenn die Client-Schreibvorgänge normal sind, greifen Sie auf das Prüfprotokoll zu:
++
+.. Eingeben `ssh admin@_primary_Admin_Node_IP_`
+.. Geben Sie das Passwort ein, das in der `Passwords.txt` Datei.
+.. Geben Sie den folgenden Befehl ein, um zum Root zu wechseln: `su -`
+.. Geben Sie das Passwort ein, das in der `Passwords.txt` Datei.
++
+Wenn Sie als Root angemeldet sind, ändert sich die Eingabeaufforderung von `$` Zu `#` .
+
+.. Wechseln Sie in das Verzeichnis, in dem sich die Überwachungsprotokolle befinden.
++
+--
+Das Prüfprotokollverzeichnis und die entsprechenden Knoten hängen von Ihren Prüfzieleinstellungen ab.
+
+[cols="1a,2a"]
+|===
+| Option | Ziel 
+
+
+ a| 
+Lokale Knoten (Standard)
+ a| 
+`/var/local/log/localaudit.log`
+
+
+
+ a| 
+Admin-Knoten/lokale Knoten
+ a| 
+*** Admin-Knoten (primär und nicht primär): `/var/local/audit/export/audit.log`
+*** Alle Knoten: Die `/var/local/log/localaudit.log` Die Datei ist in diesem Modus normalerweise leer oder fehlt.
+
+
+
+
+ a| 
+Externer Syslog-Server
+ a| 
+`/var/local/log/localaudit.log`
+
+|===
+Geben Sie je nach Ihren Audit-Zieleinstellungen Folgendes ein: `cd /var/local/log` oder `/var/local/audit/export/`
+
+Weitere Informationen finden Sie unterlink:../monitor/configure-audit-messages.html#select-audit-information-destinations["Auswählen von Zielen für Auditinformationen"] .
+
+--
+.. Ermitteln Sie, welche Mandanten Objekte verwenden, die größer als 5 GiB sind.
++
+... Eingeben `zgrep SPUT * | egrep "CSIZ\(UI64\):([5-9]|[1-9][0-9]+)[0-9]{9}"`
+... Sehen Sie sich für jede Prüfnachricht in den Ergebnissen Folgendes an: `S3AI` Feld, um die Mandantenkonto-ID zu bestimmen.  Verwenden Sie die anderen Felder in der Nachricht, um zu bestimmen, welche IP-Adresse vom Client, dem Bucket und dem Objekt verwendet wurde:
++
+[cols="1a,2a"]
+|===
+| Code | Beschreibung 
+
+
+| SAIP  a| 
+Quell-IP
+
+
+
+| S3AI  a| 
+Mandanten-ID
+
+
+
+| S3BK  a| 
+Eimer
+
+
+
+| S3KY  a| 
+Objekt
+
+
+
+| CSIZ  a| 
+Größe (Bytes)
+
+|===
++
+*Beispiel für Audit-Protokollergebnisse*
+
++
+[listing]
+----
+audit.log:2023-01-05T18:47:05.525999 [AUDT:[RSLT(FC32):SUCS][CNID(UI64):1672943621106262][TIME(UI64):804317333][SAIP(IPAD):"10.96.99.127"][S3AI(CSTR):"93390849266154004343"][SACC(CSTR):"bhavna"][S3AK(CSTR):"06OX85M40Q90Y280B7YT"][SUSR(CSTR):"urn:sgws:identity::93390849266154004343:root"][SBAI(CSTR):"93390849266154004343"][SBAC(CSTR):"bhavna"][S3BK(CSTR):"test"][S3KY(CSTR):"large-object"][CBID(UI64):0x077EA25F3B36C69A][UUID(CSTR):"A80219A2-CD1E-466F-9094-B9C0FDE2FFA3"][CSIZ(UI64):6040000000][MTME(UI64):1672943621338958][AVER(UI32):10][ATIM(UI64):1672944425525999][ATYP(FC32):SPUT][ANID(UI32):12220829][AMID(FC32):S3RQ][ATID(UI64):4333283179807659119]]
+----
+
+
+
+
+. Wenn Client-Schreibvorgänge nicht normal sind, verwenden Sie die Mandanten-ID aus der Warnung, um den Mandanten zu identifizieren:
++
+.. Gehen Sie zu *SUPPORT* > *Tools* > *Protokolle*. Sammeln Sie Anwendungsprotokolle für den Speicherknoten in der Warnung. Geben Sie 15 Minuten vor und nach der Warnung an.
+.. Extrahieren Sie die Datei und gehen Sie zu `bycast.log` :
++
+`/GID<grid_id>_<time_stamp>/<site_node>/<time_stamp>/grid/bycast.log`
+
+.. Suchen Sie im Protokoll nach `method=PUT` und identifizieren Sie den Client in der `clientIP` Feld.
++
+*Beispiel bycast.log*
+
++
+[listing]
+----
+Jan  5 18:33:41 BHAVNAJ-DC1-S1-2-65 ADE: |12220829 1870864574 S3RQ %CEA 2023-01-05T18:33:41.208790| NOTICE   1404 af23cb66b7e3efa5 S3RQ: EVENT_PROCESS_CREATE - connection=1672943621106262 method=PUT name=</test/4MiB-0> auth=<V4> clientIP=<10.96.99.127>
+----
+
+
+. Informieren Sie die Mieter, dass die maximale PutObject-Größe 5 GiB beträgt und dass für Objekte, die größer als 5 GiB sind, mehrteilige Uploads verwendet werden sollen.
+. Ignorieren Sie die Warnung eine Woche lang, wenn die Anwendung geändert wurde.
+

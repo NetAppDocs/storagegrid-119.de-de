@@ -1,0 +1,69 @@
+---
+permalink: tenant/update-default-retention-settings.html 
+sidebar: sidebar 
+keywords: update default retention for s3 object lock bucket, default retention mode, default retention period, compliance, governance 
+summary: 'Wenn Sie beim Erstellen des Buckets die S3-Objektsperre aktiviert haben, können Sie den Bucket bearbeiten, um die Standardaufbewahrungseinstellungen zu ändern.  Sie können die Standardaufbewahrung aktivieren (oder deaktivieren) und einen Standardaufbewahrungsmodus und eine Standardaufbewahrungsdauer festlegen.' 
+---
+= Standardaufbewahrung für S3 Object Lock aktualisieren
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Wenn Sie beim Erstellen des Buckets die S3-Objektsperre aktiviert haben, können Sie den Bucket bearbeiten, um die Standardaufbewahrungseinstellungen zu ändern.  Sie können die Standardaufbewahrung aktivieren (oder deaktivieren) und einen Standardaufbewahrungsmodus und eine Standardaufbewahrungsdauer festlegen.
+
+.Bevor Sie beginnen
+* Sie sind beim Tenant Manager angemeldet mit einemlink:../admin/web-browser-requirements.html["unterstützter Webbrowser"] .
+* Sie gehören einer Benutzergruppe an, die über dielink:tenant-management-permissions.html["Verwalten Sie alle Buckets oder Root-Zugriffsberechtigungen"] . Diese Berechtigungen überschreiben die Berechtigungseinstellungen in Gruppen- oder Bucket-Richtlinien.
+* S3 Object Lock ist global für Ihr StorageGRID -System aktiviert und Sie haben S3 Object Lock beim Erstellen des Buckets aktiviert. Sehen link:using-s3-object-lock.html["Verwenden Sie S3 Object Lock, um Objekte beizubehalten"] .
+
+
+.Schritte
+. Wählen Sie im Dashboard *Buckets anzeigen* oder wählen Sie *STORAGE (S3)* > *Buckets*.
+. Wählen Sie den Bucket-Namen aus der Tabelle aus.
++
+Die Bucket-Detailseite wird angezeigt.
+
+. Wählen Sie auf der Registerkarte *Bucket-Optionen* das Akkordeon *S3-Objektsperre* aus.
+. Aktivieren oder deaktivieren Sie optional die *Standardaufbewahrung* für diesen Bucket.
++
+Änderungen an dieser Einstellung gelten nicht für Objekte, die sich bereits im Bucket befinden, oder für Objekte, die möglicherweise eigene Aufbewahrungszeiträume haben.
+
+. Wenn *Standardaufbewahrung* aktiviert ist, geben Sie einen *Standardaufbewahrungsmodus* für den Bucket an.
++
+[cols="1a,2a"]
+|===
+| Standardaufbewahrungsmodus | Beschreibung 
+
+
+ a| 
+Führung
+ a| 
+** Benutzer mit der `s3:BypassGovernanceRetention` Berechtigung kann die `x-amz-bypass-governance-retention: true` Anforderungsheader zum Umgehen der Aufbewahrungseinstellungen.
+** Diese Benutzer können eine Objektversion löschen, bevor ihr Aufbewahrungsdatum erreicht ist.
+** Diese Benutzer können das Aufbewahrungsdatum eines Objekts erhöhen, verringern oder entfernen.
+
+
+
+
+ a| 
+Einhaltung
+ a| 
+** Das Objekt kann erst gelöscht werden, wenn sein Aufbewahrungsdatum erreicht ist.
+** Das Aufbewahrungsdatum des Objekts kann erhöht, aber nicht verringert werden.
+** Das Aufbewahrungsdatum des Objekts kann erst entfernt werden, wenn dieses Datum erreicht ist.
+
+
+*Hinweis*: Ihr Grid-Administrator muss Ihnen die Verwendung des Compliance-Modus gestatten.
+
+|===
+. Wenn die *Standardaufbewahrung* aktiviert ist, geben Sie die *Standardaufbewahrungsdauer* für den Bucket an.
++
+Die *Standardaufbewahrungsfrist* gibt an, wie lange neue Objekte, die diesem Bucket hinzugefügt werden, ab dem Zeitpunkt ihrer Aufnahme aufbewahrt werden sollen. Geben Sie einen Wert an, der kleiner oder gleich der vom Grid-Administrator festgelegten maximalen Aufbewahrungsdauer für den Mandanten ist.
+
++
+Eine _maximale_ Aufbewahrungsdauer, die zwischen 1 Tag und 100 Jahren liegen kann, wird festgelegt, wenn der Grid-Administrator den Mandanten erstellt.  Wenn Sie eine _Standard_-Aufbewahrungsdauer festlegen, darf diese den für die maximale Aufbewahrungsdauer festgelegten Wert nicht überschreiten.  Bitten Sie Ihren Grid-Administrator bei Bedarf, die maximale Aufbewahrungsdauer zu verlängern oder zu verkürzen.
+
+. Wählen Sie *Änderungen speichern*.
+

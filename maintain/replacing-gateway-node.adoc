@@ -1,0 +1,49 @@
+---
+permalink: maintain/replacing-gateway-node.html 
+sidebar: sidebar 
+keywords: storagegrid, recover, replace gateway node, replacing gateway node 
+summary: Sie können einen ausgefallenen Gateway-Knoten durch einen Gateway-Knoten ersetzen, der auf derselben physischen oder virtuellen Hardware ausgeführt wird, oder Sie können einen Gateway-Knoten, der auf VMware oder einem Linux-Host ausgeführt wird, durch einen Gateway-Knoten ersetzen, der auf einer Service-Appliance gehostet wird. 
+---
+= Gateway-Knoten ersetzen
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Sie können einen ausgefallenen Gateway-Knoten durch einen Gateway-Knoten ersetzen, der auf derselben physischen oder virtuellen Hardware ausgeführt wird, oder Sie können einen Gateway-Knoten, der auf VMware oder einem Linux-Host ausgeführt wird, durch einen Gateway-Knoten ersetzen, der auf einer Service-Appliance gehostet wird.
+
+Das Verfahren zum Ersetzen des Knotens, das Sie befolgen müssen, hängt davon ab, welche Plattform vom Ersatzknoten verwendet wird.  Nachdem Sie das Verfahren zum Ersetzen des Knotens abgeschlossen haben (das für alle Knotentypen geeignet ist), werden Sie durch dieses Verfahren zum nächsten Schritt für die Wiederherstellung des Gateway-Knotens weitergeleitet.
+
+[cols="1a,2a"]
+|===
+| Ersatzplattform | Verfahren 
+
+
+ a| 
+VMware
+ a| 
+link:all-node-types-replacing-vmware-node.html["Ersetzen eines VMware-Knotens"]
+
+
+
+ a| 
+Linux
+ a| 
+link:all-node-types-replacing-linux-node.html["Ersetzen eines Linux-Knotens"]
+
+
+
+ a| 
+Servicegeräte
+ a| 
+link:replacing-failed-node-with-services-appliance.html["Ersetzen einer Service-Appliance"]
+
+
+
+ a| 
+OpenStack
+ a| 
+Von NetApp bereitgestellte Festplattendateien und Skripts für virtuelle Maschinen für OpenStack werden für Wiederherstellungsvorgänge nicht mehr unterstützt.  Wenn Sie einen Knoten wiederherstellen müssen, der in einer OpenStack-Bereitstellung ausgeführt wird, laden Sie die Dateien für Ihr Linux-Betriebssystem herunter.  Befolgen Sie dann die Anweisungen fürlink:all-node-types-replacing-linux-node.html["Ersetzen eines Linux-Knotens"] .
+
+|===

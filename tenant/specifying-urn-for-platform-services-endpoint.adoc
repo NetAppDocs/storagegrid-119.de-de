@@ -1,0 +1,166 @@
+---
+permalink: tenant/specifying-urn-for-platform-services-endpoint.html 
+sidebar: sidebar 
+keywords: how to specify platform services urn 
+summary: 'Wenn Sie einen Plattformdienste-Endpunkt erstellen, müssen Sie einen eindeutigen Ressourcennamen (URN) angeben.  Sie verwenden die URN, um auf den Endpunkt zu verweisen, wenn Sie eine XML-Konfiguration für den Plattformdienst erstellen.  Die URN für jeden Endpunkt muss eindeutig sein.' 
+---
+= Geben Sie die URN für den Plattformdienst-Endpunkt an
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Wenn Sie einen Plattformdienste-Endpunkt erstellen, müssen Sie einen eindeutigen Ressourcennamen (URN) angeben.  Sie verwenden die URN, um auf den Endpunkt zu verweisen, wenn Sie eine XML-Konfiguration für den Plattformdienst erstellen.  Die URN für jeden Endpunkt muss eindeutig sein.
+
+StorageGRID validiert die Endpunkte der Plattformdienste, während Sie sie erstellen.  Bevor Sie einen Plattformdienste-Endpunkt erstellen, bestätigen Sie, dass die im Endpunkt angegebene Ressource vorhanden und erreichbar ist.
+
+
+
+== URN-Elemente
+
+Die URN für einen Plattformdienst-Endpunkt muss mit einem der folgenden Zeichen beginnen: `arn:aws` oder `urn:mysite` , wie folgt:
+
+* Wenn der Dienst auf Amazon Web Services (AWS) gehostet wird, verwenden Sie `arn:aws`
+* Wenn der Dienst auf der Google Cloud Platform (GCP) gehostet wird, verwenden Sie `arn:aws`
+* Wenn der Dienst lokal gehostet wird, verwenden Sie `urn:mysite`
+
+
+Wenn Sie beispielsweise die URN für einen CloudMirror-Endpunkt angeben, der auf StorageGRID gehostet wird, könnte die URN mit beginnen `urn:sgws` .
+
+Das nächste Element der URN gibt den Typ des Plattformdienstes wie folgt an:
+
+[cols="2a,1a"]
+|===
+| Service | Typ 
+
+
+ a| 
+CloudMirror-Replikation
+ a| 
+`s3`
+
+
+
+ a| 
+Benachrichtigungen
+ a| 
+`sns`oder `kafka`
+
+
+
+ a| 
+Suchintegration
+ a| 
+`es`
+
+|===
+Um beispielsweise weiterhin die URN für einen CloudMirror-Endpunkt anzugeben, der auf StorageGRID gehostet wird, würden Sie hinzufügen `s3` zu bekommen `urn:sgws:s3` .
+
+Das letzte Element der URN identifiziert die spezifische Zielressource an der Ziel-URI.
+
+[cols="1a,2a"]
+|===
+| Service | Spezifische Ressource 
+
+
+ a| 
+CloudMirror-Replikation
+ a| 
+`bucket-name`
+
+
+
+ a| 
+Benachrichtigungen
+ a| 
+`sns-topic-name`oder `kafka-topic-name`
+
+
+
+ a| 
+Suchintegration
+ a| 
+`domain-name/index-name/type-name`
+
+*Hinweis:* Wenn der Elasticsearch-Cluster *nicht* für die automatische Erstellung von Indizes konfiguriert ist, müssen Sie den Index manuell erstellen, bevor Sie den Endpunkt erstellen.
+
+|===
+
+
+== URNs für auf AWS und GCP gehostete Dienste
+
+Für AWS- und GCP-Entitäten ist die vollständige URN eine gültige AWS-ARN. Beispiel:
+
+* CloudMirror-Replikation:
++
+[listing]
+----
+arn:aws:s3:::bucket-name
+----
+* Benachrichtigungen:
++
+[listing]
+----
+arn:aws:sns:region:account-id:topic-name
+----
+* Suchintegration:
++
+[listing]
+----
+arn:aws:es:region:account-id:domain/domain-name/index-name/type-name
+----
++
+
+NOTE: Für einen AWS-Suchintegrationsendpunkt ist der `domain-name` muss die Literalzeichenfolge enthalten `domain/` , wie hier gezeigt.
+
+
+
+
+
+== URNs für lokal gehostete Dienste
+
+Wenn Sie lokal gehostete Dienste anstelle von Cloud-Diensten verwenden, können Sie die URN auf jede beliebige Weise angeben, die eine gültige und eindeutige URN erstellt, solange die URN die erforderlichen Elemente an der dritten und letzten Stelle enthält.  Sie können die optional angegebenen Elemente leer lassen oder sie auf eine beliebige Weise angeben, die Ihnen bei der Identifizierung der Ressource hilft und die URN eindeutig macht. Beispiel:
+
+* CloudMirror-Replikation:
++
+[listing]
+----
+urn:mysite:s3:optional:optional:bucket-name
+----
++
+Für einen CloudMirror-Endpunkt, der auf StorageGRID gehostet wird, können Sie eine gültige URN angeben, die mit beginnt `urn:sgws` :
+
++
+[listing]
+----
+urn:sgws:s3:optional:optional:bucket-name
+----
+* Benachrichtigungen:
++
+Geben Sie einen Amazon Simple Notification Service-Endpunkt an:
+
++
+[listing]
+----
+urn:mysite:sns:optional:optional:sns-topic-name
+----
++
+Geben Sie einen Kafka-Endpunkt an:
+
++
+[listing]
+----
+urn:mysite:kafka:optional:optional:kafka-topic-name
+----
+* Suchintegration:
++
+[listing]
+----
+urn:mysite:es:optional:optional:domain-name/index-name/type-name
+----
++
+
+NOTE: Für lokal gehostete Suchintegrationsendpunkte gilt: `domain-name` Das Element kann eine beliebige Zeichenfolge sein, solange die URN des Endpunkts eindeutig ist.
+
+

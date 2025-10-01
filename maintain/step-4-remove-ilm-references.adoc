@@ -1,0 +1,44 @@
+---
+permalink: maintain/step-4-remove-ilm-references.html 
+sidebar: sidebar 
+keywords: storagegrid, recover, remove ilm reference 
+summary: 'Ab Schritt 4 (ILM-Referenzen entfernen) des Assistenten „Site außer Betrieb setzen“ müssen Sie alle nicht verwendeten ILM-Regeln löschen oder bearbeiten, die auf die Site verweisen, auch wenn die Regeln in keiner ILM-Richtlinie verwendet werden.' 
+---
+= Schritt 4: ILM-Referenzen entfernen
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Ab Schritt 4 (ILM-Referenzen entfernen) des Assistenten „Site außer Betrieb nehmen“ müssen Sie alle nicht verwendeten ILM-Regeln löschen oder bearbeiten, die auf die Site verweisen, auch wenn die Regeln in keiner ILM-Richtlinie verwendet werden.
+
+.Schritte
+. Stellen Sie fest, ob nicht verwendete ILM-Regeln auf die Site verweisen.
++
+Wenn ILM-Regeln aufgelistet sind, beziehen sich diese Regeln weiterhin auf die Site, werden jedoch in keiner Richtlinie verwendet.
+
++
+
+NOTE: Wenn StorageGRID die Site außer Betrieb nimmt, werden automatisch alle nicht verwendeten Erasure-Coding-Profile deaktiviert, die sich auf die Site beziehen, und alle nicht verwendeten Speicherpools gelöscht, die sich auf die Site beziehen.  Der Speicherpool „Alle Speicherknoten“ (StorageGRID 11.6 und früher) wird entfernt, da er die Site „Alle Sites“ verwendet.
+
+. Bearbeiten oder löschen Sie jede nicht verwendete Regel:
++
+** Um eine Regel zu bearbeiten, gehen Sie zur ILM-Regelseite und aktualisieren Sie alle Platzierungen, die ein Erasure-Coding-Profil oder einen Speicherpool verwenden, der auf die Site verweist.  Kehren Sie dann zu *Schritt 4 (ILM-Referenzen entfernen)* zurück.
+** Um eine Regel zu löschen, wählen Sie das Papierkorbsymbolimage:../media/icon_trash_can.png["Symbol Mülleimer"] und wählen Sie *OK*.
++
+
+NOTE: Sie müssen die Regel *2 Kopien erstellen* löschen, bevor Sie eine Site außer Betrieb nehmen können.
+
+
+
+. Bestätigen Sie, dass keine ungenutzten ILM-Regeln auf die Site verweisen und die Schaltfläche *Weiter* aktiviert ist.
+. Wählen Sie *Weiter*.
++
+
+NOTE: Alle verbleibenden Speicherpools und Erasure-Coding-Profile, die auf die Site verweisen, werden ungültig, wenn die Site entfernt wird.  Wenn StorageGRID die Site außer Betrieb nimmt, werden automatisch alle nicht verwendeten Erasure-Coding-Profile deaktiviert, die sich auf die Site beziehen, und alle nicht verwendeten Speicherpools gelöscht, die sich auf die Site beziehen.  Der Speicherpool „Alle Speicherknoten“ (StorageGRID 11.6 und früher) wird entfernt, da er die Site „Alle Sites“ verwendet.
+
++
+Schritt 5 (Knotenkonflikte lösen) wird angezeigt.
+
+

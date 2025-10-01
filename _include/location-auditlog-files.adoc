@@ -1,0 +1,36 @@
+= 
+:allow-uri-read: 
+
+
+Das Prüfprotokollverzeichnis und die entsprechenden Knoten hängen von Ihren Prüfzieleinstellungen ab.
+
+[cols="1a,2a"]
+|===
+| Option | Ziel 
+
+
+ a| 
+Lokale Knoten (Standard)
+ a| 
+`/var/local/log/localaudit.log`
+
+
+
+ a| 
+Admin-Knoten/lokale Knoten
+ a| 
+* Admin-Knoten (primär und nicht primär): `/var/local/audit/export/audit.log`
+* Alle Knoten: Die `/var/local/log/localaudit.log` Die Datei ist in diesem Modus normalerweise leer oder fehlt.
+
+
+
+
+ a| 
+Externer Syslog-Server
+ a| 
+`/var/local/log/localaudit.log`
+
+|===
+Geben Sie je nach Ihren Audit-Zieleinstellungen Folgendes ein: `cd /var/local/log` oder `/var/local/audit/export/`
+
+Weitere Informationen finden Sie unterlink:../monitor/configure-audit-messages.html#select-audit-information-destinations["Auswählen von Zielen für Auditinformationen"] .

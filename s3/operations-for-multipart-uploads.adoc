@@ -1,0 +1,92 @@
+---
+permalink: s3/operations-for-multipart-uploads.html 
+sidebar: sidebar 
+keywords: operations, multipart uploads, uploads, rest API 
+summary: In diesem Abschnitt wird beschrieben, wie StorageGRID Vorgänge für mehrteilige Uploads unterstützt. 
+---
+= Vorgänge für mehrteilige Uploads
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+In diesem Abschnitt wird beschrieben, wie StorageGRID Vorgänge für mehrteilige Uploads unterstützt.
+
+Für alle mehrteiligen Uploadvorgänge gelten die folgenden Bedingungen und Hinweise:
+
+* Sie sollten nicht mehr als 1.000 gleichzeitige mehrteilige Uploads in einen einzelnen Bucket durchführen, da die Ergebnisse von ListMultipartUploads-Abfragen für diesen Bucket möglicherweise unvollständige Ergebnisse zurückgeben.
+* StorageGRID erzwingt AWS-Größenbeschränkungen für mehrteilige Teile.  S3-Clients müssen diese Richtlinien befolgen:
++
+** Jeder Teil eines mehrteiligen Uploads muss zwischen 5 MiB (5.242.880 Bytes) und 5 GiB (5.368.709.120 Bytes) groß sein.
+** Der letzte Teil kann kleiner als 5 MiB (5.242.880 Bytes) sein.
+** Generell sollten die Teilegrößen möglichst groß sein.  Verwenden Sie beispielsweise Teilgrößen von 5 GiB für ein 100-GiB-Objekt.  Da jedes Teil als einzigartiges Objekt betrachtet wird, reduziert die Verwendung großer Teilegrößen den StorageGRID Metadaten-Overhead.
+** Erwägen Sie für Objekte, die kleiner als 5 GiB sind, stattdessen die Verwendung eines nicht mehrteiligen Uploads.
+
+
+* ILM wird für jeden Teil eines mehrteiligen Objekts ausgewertet, wenn es aufgenommen wird, und für das Objekt als Ganzes, wenn der mehrteilige Upload abgeschlossen ist, wenn die ILM-Regel die Balanced- oder Strict-Regel verwendet.link:../ilm/data-protection-options-for-ingest.html["Aufnahmeoption"] .  Sie sollten sich darüber im Klaren sein, welche Auswirkungen dies auf die Platzierung von Objekten und Teilen hat:
++
+** Wenn sich ILM während eines laufenden S3-Multipart-Uploads ändert, erfüllen einige Teile des Objekts nach Abschluss des Multipart-Uploads möglicherweise nicht die aktuellen ILM-Anforderungen.  Alle Teile, die nicht richtig platziert sind, werden zur erneuten ILM-Bewertung in die Warteschlange gestellt und später an die richtige Position verschoben.
+** Bei der Auswertung von ILM für ein Teil filtert StorageGRID nach der Größe des Teils, nicht nach der Größe des Objekts.  Dies bedeutet, dass Teile eines Objekts an Orten gespeichert werden können, die die ILM-Anforderungen für das gesamte Objekt nicht erfüllen.  Wenn beispielsweise eine Regel angibt, dass alle Objekte mit 10 GB oder mehr bei DC1 gespeichert werden, während alle kleineren Objekte bei DC2 gespeichert werden, wird jeder 1-GB-Teil eines 10-teiligen mehrteiligen Uploads bei der Aufnahme bei DC2 gespeichert.  Wenn ILM jedoch für das gesamte Objekt ausgewertet wird, werden alle Teile des Objekts nach DC1 verschoben.
+
+
+* Alle mehrteiligen Upload-Vorgänge unterstützen StorageGRIDlink:consistency-controls.html["Konsistenzwerte"] .
+* Wenn ein Objekt per mehrteiligem Upload aufgenommen wird,link:../admin/what-object-segmentation-is.html["Schwellenwert für Objektsegmentierung (1 GiB)"] wird nicht angewendet.
+* Bei Bedarf können Sielink:using-server-side-encryption.html["serverseitige Verschlüsselung"] mit mehrteiligen Uploads.  Um SSE (serverseitige Verschlüsselung mit StorageGRID-verwalteten Schlüsseln) zu verwenden, schließen Sie die `x-amz-server-side-encryption` Anforderungsheader nur in der CreateMultipartUpload-Anforderung.  Um SSE-C (serverseitige Verschlüsselung mit vom Kunden bereitgestellten Schlüsseln) zu verwenden, geben Sie in der CreateMultipartUpload-Anforderung und in jeder nachfolgenden UploadPart-Anforderung dieselben drei Anforderungsheader für Verschlüsselungsschlüssel an.
+
+
+[cols="2a,3a"]
+|===
+| Betrieb | Durchführung 
+
+
+ a| 
+AbortMultipartUpload
+ a| 
+Implementiert mit dem gesamten Amazon S3 REST API-Verhalten.  Änderungen vorbehalten.
+
+
+
+ a| 
+CompleteMultipartUpload
+ a| 
+Sehenlink:complete-multipart-upload.html["CompleteMultipartUpload"]
+
+
+
+ a| 
+CreateMultipartUpload
+
+(früher „Mehrteiligen Upload initiieren“ genannt)
+ a| 
+Sehenlink:initiate-multipart-upload.html["CreateMultipartUpload"]
+
+
+
+ a| 
+ListMultipartUploads
+ a| 
+Sehenlink:list-multipart-uploads.html["ListMultipartUploads"]
+
+
+
+ a| 
+Teileliste
+ a| 
+Implementiert mit dem gesamten Amazon S3 REST API-Verhalten.  Änderungen vorbehalten.
+
+
+
+ a| 
+UploadPart
+ a| 
+Sehenlink:upload-part.html["UploadPart"]
+
+
+
+ a| 
+UploadPartCopy
+ a| 
+Sehenlink:upload-part-copy.html["UploadPartCopy"]
+
+|===

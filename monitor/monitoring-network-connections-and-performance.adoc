@@ -1,0 +1,97 @@
+---
+permalink: monitor/monitoring-network-connections-and-performance.html 
+sidebar: sidebar 
+keywords: monitoring, monitoring network connections, network, network performance 
+summary: Die Integrität und Bandbreite des Netzwerks zwischen Knoten und Standorten sowie die Ressourcennutzung durch einzelne Grid-Knoten sind für einen effizienten Betrieb von entscheidender Bedeutung. 
+---
+= Überwachen Sie Netzwerk- und Systemressourcen
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Die Integrität und Bandbreite des Netzwerks zwischen Knoten und Standorten sowie die Ressourcennutzung durch einzelne Grid-Knoten sind für einen effizienten Betrieb von entscheidender Bedeutung.
+
+
+
+== Überwachen Sie Netzwerkverbindungen und Leistung
+
+Netzwerkkonnektivität und Bandbreite sind besonders wichtig, wenn Ihre ILM-Richtlinie (Information Lifecycle Management) replizierte Objekte zwischen Standorten kopiert oder löschcodierte Objekte mithilfe eines Schemas speichert, das Schutz vor Standortverlust bietet.  Wenn das Netzwerk zwischen den Standorten nicht verfügbar ist, die Netzwerklatenz zu hoch ist oder die Netzwerkbandbreite nicht ausreicht, können einige ILM-Regeln Objekte möglicherweise nicht an der erwarteten Stelle platzieren.  Dies kann zu Aufnahmefehlern (wenn für ILM-Regeln die Option „Strenge Aufnahme“ ausgewählt ist) oder zu einer schlechten Aufnahmeleistung und ILM-Rückständen führen.
+
+Verwenden Sie den Grid Manager, um die Konnektivität und Netzwerkleistung zu überwachen, damit Sie etwaige Probleme umgehend beheben können.
+
+Darüber hinaus sollten Sielink:../admin/managing-traffic-classification-policies.html["Erstellen von Richtlinien zur Klassifizierung des Netzwerkverkehrs"] damit Sie den Datenverkehr im Zusammenhang mit bestimmten Mandanten, Buckets, Subnetzen oder Load Balancer-Endpunkten überwachen können.  Sie können bei Bedarf Richtlinien zur Verkehrsbeschränkung festlegen.
+
+.Schritte
+. Wählen Sie *NODES*.
++
+Die Seite „Knoten“ wird angezeigt.  Jeder Knoten im Raster wird im Tabellenformat aufgelistet.
+
++
+image::../media/nodes_menu.png[Knotenmenü]
+
+. Wählen Sie den Grid-Namen, einen bestimmten Rechenzentrumsstandort oder einen Grid-Knoten aus und wählen Sie dann die Registerkarte *Netzwerk*.
++
+Das Netzwerkverkehrsdiagramm bietet eine Zusammenfassung des gesamten Netzwerkverkehrs für das gesamte Grid, den Rechenzentrumsstandort oder den Knoten.
+
++
+image::../media/nodes_page_network_traffic_graph.png[Netzwerkverkehrsdiagramm der Knotenseite]
+
++
+.. Wenn Sie einen Grid-Knoten ausgewählt haben, scrollen Sie nach unten, um den Abschnitt *Netzwerkschnittstellen* der Seite zu überprüfen.
++
+image::../media/nodes_page_network_interfaces.png[Knotenseite Netzwerkschnittstellen]
+
+.. Scrollen Sie für Grid-Knoten nach unten, um den Abschnitt *Netzwerkkommunikation* der Seite zu lesen.
++
+Die Empfangs- und Sendetabellen zeigen, wie viele Bytes und Pakete über jedes Netzwerk empfangen und gesendet wurden, sowie andere Empfangs- und Sendemetriken.
+
++
+image::../media/nodes_page_network_communication.png[Knoten Seite Netzwerk Kommunikation]
+
+
+
+. Verwenden Sie die mit Ihren Richtlinien zur Verkehrsklassifizierung verknüpften Metriken, um den Netzwerkverkehr zu überwachen.
++
+.. Wählen Sie *KONFIGURATION* > *Netzwerk* > *Verkehrsklassifizierung*.
++
+Die Seite „Richtlinien zur Verkehrsklassifizierung“ wird angezeigt und die vorhandenen Richtlinien werden in der Tabelle aufgelistet.
+
++
+image::../media/traffic_classification_policies_main_screen_w_examples.png[Verkehrsrichtlinie für Diagrammbeispiel]
+
+.. Um Diagramme anzuzeigen, die die mit einer Richtlinie verknüpften Netzwerkmetriken zeigen, wählen Sie das Optionsfeld links neben der Richtlinie aus und klicken Sie dann auf *Metriken*.
+.. Sehen Sie sich die Diagramme an, um den mit der Richtlinie verbundenen Netzwerkverkehr zu verstehen.
++
+Wenn eine Datenverkehrsklassifizierungsrichtlinie darauf ausgelegt ist, den Netzwerkdatenverkehr zu begrenzen, analysieren Sie, wie oft der Datenverkehr begrenzt wird, und entscheiden Sie, ob die Richtlinie weiterhin Ihren Anforderungen entspricht.  Von Zeit zu Zeit,link:../admin/managing-traffic-classification-policies.html["Passen Sie jede Verkehrsklassifizierungsrichtlinie nach Bedarf an"] .
+
+
+
+
+
+.Ähnliche Informationen
+* link:viewing-network-tab.html["Anzeigen der Registerkarte „Netzwerk“"]
+* link:monitoring-system-health.html#monitor-node-connection-states["Überwachen Sie den Verbindungsstatus des Knotens"]
+
+
+
+
+== Überwachen von Ressourcen auf Knotenebene
+
+Überwachen Sie einzelne Grid-Knoten, um deren Ressourcennutzungsgrade zu überprüfen.  Wenn Knoten ständig überlastet sind, sind für einen effizienten Betrieb möglicherweise mehr Knoten erforderlich.
+
+.Schritte
+. Wählen Sie auf der Seite *NODES* den Knoten aus.
+. Wählen Sie die Registerkarte *Hardware*, um Diagramme zur CPU-Auslastung und Speichernutzung anzuzeigen.
++
+image::../media/nodes_page_hardware_tab_graphs.png[Seite „Knoten“ Registerkarte „Hardware“]
+
+. Um ein anderes Zeitintervall anzuzeigen, wählen Sie eines der Steuerelemente über dem Diagramm oder der Grafik aus.  Sie können die verfügbaren Informationen für Intervalle von 1 Stunde, 1 Tag, 1 Woche oder 1 Monat anzeigen.  Sie können auch ein benutzerdefiniertes Intervall festlegen, in dem Sie Datums- und Zeitbereiche angeben können.
+. Wenn der Knoten auf einem Speichergerät oder einem Servicegerät gehostet wird, scrollen Sie nach unten, um die Komponententabellen anzuzeigen.  Der Status aller Komponenten sollte „Nominal“ sein.  Untersuchen Sie Komponenten mit einem anderen Status.
+
+
+.Ähnliche Informationen
+* link:viewing-hardware-tab.html#view-information-about-appliance-storage-nodes["Informationen zu Appliance-Speicherknoten anzeigen"]
+* link:viewing-hardware-tab.html#view-information-about-appliance-admin-nodes-and-gateway-nodes["Informationen zu Appliance-Admin-Knoten und Gateway-Knoten anzeigen"]
+

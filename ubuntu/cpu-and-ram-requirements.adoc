@@ -1,0 +1,52 @@
+---
+permalink: ubuntu/cpu-and-ram-requirements.html 
+sidebar: sidebar 
+keywords: cpu, ram, cpu cores 
+summary: Überprüfen und konfigurieren Sie vor der Installation der StorageGRID -Software die Hardware, sodass sie das StorageGRID -System unterstützen kann. 
+---
+= CPU- und RAM-Anforderungen
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Überprüfen und konfigurieren Sie vor der Installation der StorageGRID -Software die Hardware, sodass sie das StorageGRID -System unterstützen kann.
+
+Jeder StorageGRID -Knoten benötigt die folgenden Mindestressourcen:
+
+* CPU-Kerne: 8 pro Knoten
+* RAM: Abhängig vom insgesamt verfügbaren RAM und der Menge der auf dem System ausgeführten Nicht- StorageGRID -Software
++
+** Im Allgemeinen mindestens 24 GB pro Knoten und 2 bis 16 GB weniger als der gesamte System-RAM
+** Mindestens 64 GB für jeden Mandanten mit etwa 5.000 Buckets
+
+
+
+
+Softwarebasierte Knotenressourcen, die nur Metadaten enthalten, müssen mit den vorhandenen Speicherknotenressourcen übereinstimmen. Beispiel:
+
+* Wenn die vorhandene StorageGRID Site SG6000- oder SG6100-Geräte verwendet, müssen die softwarebasierten Nur-Metadaten-Knoten die folgenden Mindestanforderungen erfüllen:
++
+** 128 GB RAM
+** 8-Kern-CPU
+** 8 TB SSD oder gleichwertiger Speicher für die Cassandra-Datenbank (rangedb/0)
+
+
+* Wenn die vorhandene StorageGRID Site virtuelle Speicherknoten mit 24 GB RAM, 8-Kern-CPU und 3 TB oder 4 TB Metadatenspeicher verwendet, sollten die softwarebasierten Nur-Metadaten-Knoten ähnliche Ressourcen verwenden (24 GB RAM, 8-Kern-CPU und 4 TB Metadatenspeicher (rangedb/0).
+
+
+Beim Hinzufügen einer neuen StorageGRID Site sollte die Gesamtmetadatenkapazität der neuen Site mindestens der vorhandenen StorageGRID Sites entsprechen und die neuen Site-Ressourcen sollten den Speicherknoten an vorhandenen StorageGRID Sites entsprechen.
+
+Stellen Sie sicher, dass die Anzahl der StorageGRID -Knoten, die Sie auf jedem physischen oder virtuellen Host ausführen möchten, die Anzahl der verfügbaren CPU-Kerne oder des physischen RAM nicht überschreitet.  Wenn die Hosts nicht ausschließlich für die Ausführung von StorageGRID vorgesehen sind (nicht empfohlen), müssen Sie unbedingt den Ressourcenbedarf der anderen Anwendungen berücksichtigen.
+
+
+CAUTION: Überwachen Sie regelmäßig Ihre CPU- und Speichernutzung, um sicherzustellen, dass diese Ressourcen weiterhin Ihrer Arbeitslast gerecht werden.  Beispielsweise würde eine Verdoppelung der RAM- und CPU-Zuweisung für virtuelle Speicherknoten ähnliche Ressourcen bereitstellen wie für StorageGRID Appliance-Knoten.  Wenn die Menge der Metadaten pro Knoten 500 GB übersteigt, sollten Sie außerdem eine Erhöhung des RAM pro Knoten auf 48 GB oder mehr in Betracht ziehen.  Informationen zum Verwalten des Objektmetadatenspeichers, zum Erhöhen der Einstellung für reservierten Speicherplatz für Metadaten und zum Überwachen der CPU- und Speicherauslastung finden Sie in den Anweisungen fürlink:../admin/index.html["Verabreichung"] ,link:../monitor/index.html["Überwachung"] , Undlink:../upgrade/index.html["Upgrade"] StorageGRID.
+
+Wenn Hyperthreading auf den zugrunde liegenden physischen Hosts aktiviert ist, können Sie 8 virtuelle Kerne (4 physische Kerne) pro Knoten bereitstellen.  Wenn Hyperthreading auf den zugrunde liegenden physischen Hosts nicht aktiviert ist, müssen Sie 8 physische Kerne pro Knoten bereitstellen.
+
+Wenn Sie virtuelle Maschinen als Hosts verwenden und die Kontrolle über die Größe und Anzahl der VMs haben, sollten Sie für jeden StorageGRID Knoten eine einzelne VM verwenden und die VM entsprechend dimensionieren.
+
+Bei Produktionsbereitstellungen sollten Sie nicht mehrere Speicherknoten auf derselben physischen Speicherhardware oder demselben virtuellen Host ausführen. Jeder Speicherknoten in einer einzelnen StorageGRID Bereitstellung sollte sich in seiner eigenen isolierten Fehlerdomäne befinden. Sie können die Haltbarkeit und Verfügbarkeit von Objektdaten maximieren, wenn Sie sicherstellen, dass ein einzelner Hardwarefehler nur einen einzelnen Speicherknoten beeinträchtigen kann.
+
+Siehe auch link:storage-and-performance-requirements.html["Speicher- und Leistungsanforderungen"].

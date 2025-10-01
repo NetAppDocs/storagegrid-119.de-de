@@ -1,0 +1,45 @@
+---
+permalink: ubuntu/specifying-network-time-protocol-server-information.html 
+sidebar: sidebar 
+keywords: how to specify Network Time Protocol server information 
+summary: 'Sie müssen die Network Time Protocol \(NTP\)-Konfigurationsinformationen für das StorageGRID -System angeben, damit die auf separaten Servern ausgeführten Vorgänge synchronisiert bleiben können.' 
+---
+= Geben Sie die Serverinformationen des Network Time Protocol an
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Sie müssen die Network Time Protocol (NTP)-Konfigurationsinformationen für das StorageGRID -System angeben, damit die auf separaten Servern ausgeführten Vorgänge synchronisiert bleiben können.
+
+.Informationen zu diesem Vorgang
+Sie müssen IPv4-Adressen für die NTP-Server angeben.
+
+Sie müssen externe NTP-Server angeben.  Die angegebenen NTP-Server müssen das NTP-Protokoll verwenden.
+
+Sie müssen vier NTP-Serverreferenzen von Stratum 3 oder besser angeben, um Probleme mit Zeitabweichungen zu vermeiden.
+
+[NOTE]
+====
+Wenn Sie die externe NTP-Quelle für eine StorageGRID Installation auf Produktionsebene angeben, verwenden Sie den Windows-Zeitdienst (W32Time) nicht auf einer Windows-Version vor Windows Server 2016.  Der Zeitdienst früherer Windows-Versionen ist nicht genau genug und wird von Microsoft für die Verwendung in Umgebungen mit hoher Genauigkeit, wie z. B. StorageGRID, nicht unterstützt.
+
+https://support.microsoft.com/en-us/help/939322/support-boundary-to-configure-the-windows-time-service-for-high-accura["Supportgrenze zum Konfigurieren des Windows-Zeitdienstes für Umgebungen mit hoher Genauigkeit"^]
+
+====
+Die externen NTP-Server werden von den Knoten verwendet, denen Sie zuvor primäre NTP-Rollen zugewiesen haben.
+
+
+CAUTION: Stellen Sie sicher, dass mindestens zwei Knoten an jedem Standort auf mindestens vier externe NTP-Quellen zugreifen können.  Wenn an einem Standort nur ein Knoten die NTP-Quellen erreichen kann, treten bei einem Ausfall dieses Knotens Zeitprobleme auf.  Darüber hinaus gewährleistet die Festlegung von zwei Knoten pro Site als primäre NTP-Quellen eine genaue Zeitmessung, wenn eine Site vom Rest des Netzes isoliert ist.
+
+.Schritte
+. Geben Sie die IPv4-Adressen für mindestens vier NTP-Server in den Textfeldern *Server 1* bis *Server 4* an.
+. Wählen Sie bei Bedarf das Pluszeichen neben dem letzten Eintrag aus, um weitere Servereinträge hinzuzufügen.
++
+image::../media/8_gmi_installer_ntp_page.gif[Dieses Bild wird durch den umgebenden Text erklärt.]
+
+. Wählen Sie *Weiter*.
+
+
+.Ähnliche Informationen
+link:../network/index.html["Netzwerkrichtlinien"]

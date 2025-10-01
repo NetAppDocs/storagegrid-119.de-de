@@ -1,0 +1,72 @@
+---
+permalink: monitor/collecting-log-files-and-system-data.html 
+sidebar: sidebar 
+keywords: how to collect system data, how to collect logs 
+summary: 'Mit dem Grid Manager können Sie Protokolldateien und Systemdaten (einschließlich Konfigurationsdaten) für Ihr StorageGRID -System abrufen.' 
+---
+= Erfassen von Protokolldateien und Systemdaten
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Mit dem Grid Manager können Sie Protokolldateien und Systemdaten (einschließlich Konfigurationsdaten) für Ihr StorageGRID System abrufen.
+
+.Bevor Sie beginnen
+* Sie müssen beim Grid Manager auf dem primären Admin-Knoten mit einemlink:../admin/web-browser-requirements.html["unterstützter Webbrowser"] .
+* Du hastlink:../admin/admin-group-permissions.html["spezifische Zugriffsberechtigungen"] .
+* Sie müssen über die Bereitstellungspassphrase verfügen.
+
+
+.Informationen zu diesem Vorgang
+Mit dem Grid Manager können Sielink:logs-files-reference.html["Protokolldateien"] , Systemdaten und Konfigurationsdaten von jedem Grid-Knoten für den von Ihnen ausgewählten Zeitraum.  Daten werden gesammelt und in einer .tar.gz-Datei archiviert, die Sie dann auf Ihren lokalen Computer herunterladen können.
+
+Optional können Sie das Ziel der Überwachungsprotokolle ändern und Überwachungsinformationen an einen externen Syslog-Server senden. Wenn ein externer Syslog-Server konfiguriert ist, werden weiterhin lokale Protokolle von Prüfdatensätzen generiert und gespeichert. Sehen link:../monitor/configure-audit-messages.html["Konfigurieren von Überwachungsmeldungen und Protokollzielen"] .
+
+.Schritte
+. Wählen Sie *SUPPORT* > *Tools* > *Protokolle*.
++
+image::../media/support_logs_select_nodes.png[Screenshot der Benutzeroberfläche zur Protokollsammlung]
+
+. Wählen Sie die Grid-Knoten aus, für die Sie Protokolldateien sammeln möchten.
++
+Bei Bedarf können Sie Protokolldateien für das gesamte Grid oder einen gesamten Rechenzentrumsstandort sammeln.
+
+. Wählen Sie eine *Startzeit* und eine *Endzeit* aus, um den Zeitbereich der Daten festzulegen, die in die Protokolldateien aufgenommen werden sollen.
++
+Wenn Sie einen sehr langen Zeitraum auswählen oder Protokolle von allen Knoten in einem großen Raster sammeln, kann das Protokollarchiv zu groß werden, um auf einem Knoten gespeichert zu werden, oder zu groß, um zum Download auf dem primären Admin-Knoten gesammelt zu werden.  In diesem Fall müssen Sie die Protokollerfassung mit einem kleineren Datensatz neu starten.
+
+. Wählen Sie die Protokolltypen aus, die Sie sammeln möchten.
++
+** *Anwendungsprotokolle*: Anwendungsspezifische Protokolle, die der technische Support am häufigsten zur Fehlerbehebung verwendet. Die gesammelten Protokolle sind eine Teilmenge der verfügbaren Anwendungsprotokolle.
+** *Audit-Protokolle*: Protokolle mit den während des normalen Systembetriebs generierten Audit-Meldungen.
+** *Netzwerkverfolgung*: Protokolle, die zum Debuggen des Netzwerks verwendet werden.
+** *Prometheus-Datenbank*: Zeitreihenmetriken von den Diensten auf allen Knoten.
+
+
+. Geben Sie optional Notizen zu den Protokolldateien ein, die Sie im Textfeld *Notizen* sammeln.
++
+Mithilfe dieser Hinweise können Sie dem technischen Support Informationen zu dem Problem geben, das Sie zum Sammeln der Protokolldateien veranlasst hat.  Ihre Notizen werden einer Datei mit dem Namen hinzugefügt `info.txt` , zusammen mit anderen Informationen zur Protokolldateisammlung.  Der `info.txt` Die Datei wird im Protokolldatei-Archivpaket gespeichert.
+
+. Geben Sie die Bereitstellungspassphrase für Ihr StorageGRID -System in das Textfeld *Bereitstellungspassphrase* ein.
+. Wählen Sie *Protokolle sammeln*.
++
+Wenn Sie eine neue Anfrage senden, wird die vorherige Sammlung von Protokolldateien gelöscht.
+
++
+Auf der Seite „Protokolle“ können Sie den Fortschritt der Protokolldateierfassung für jeden Grid-Knoten überwachen.
+
++
+Wenn Sie eine Fehlermeldung bezüglich der Protokollgröße erhalten, versuchen Sie, Protokolle für einen kürzeren Zeitraum oder für weniger Knoten zu sammeln.
+
+. Wählen Sie *Herunterladen*, wenn die Protokolldateierfassung abgeschlossen ist.
++
+Die Datei _.tar.gz_ enthält alle Protokolldateien von allen Grid-Knoten, bei denen die Protokollerfassung erfolgreich war.  In der kombinierten _.tar.gz_-Datei befindet sich für jeden Grid-Knoten ein Protokolldateiarchiv.
+
+
+
+.Nach Abschluss
+Sie können das Protokolldatei-Archivpaket bei Bedarf später erneut herunterladen.
+
+Optional können Sie *Löschen* auswählen, um das Protokolldatei-Archivpaket zu entfernen und Speicherplatz freizugeben.  Das aktuelle Protokolldatei-Archivpaket wird beim nächsten Sammeln von Protokolldateien automatisch entfernt.

@@ -1,0 +1,62 @@
+---
+permalink: ilm/advantages-disadvantages-and-requirements-for-ec.html 
+sidebar: sidebar 
+keywords: erasure coding advantages, disadvantages, EC requirements 
+summary: Bevor Sie sich entscheiden, ob Sie Replikation oder Erasure Coding zum Schutz von Objektdaten vor Verlust verwenden, sollten Sie die Vor- und Nachteile sowie die Anforderungen von Erasure Coding verstehen. 
+---
+= Vorteile, Nachteile und Voraussetzungen für Erasure Coding
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Bevor Sie sich entscheiden, ob Sie Replikation oder Erasure Coding zum Schutz von Objektdaten vor Verlust verwenden, sollten Sie die Vor- und Nachteile sowie die Anforderungen von Erasure Coding verstehen.
+
+
+
+== Vorteile der Erasure Coding
+
+Im Vergleich zur Replikation bietet Erasure Coding eine verbesserte Zuverlässigkeit, Verfügbarkeit und Speichereffizienz.
+
+* *Zuverlässigkeit*: Die Zuverlässigkeit wird anhand der Fehlertoleranz gemessen, d. h. anhand der Anzahl gleichzeitiger Fehler, die ohne Datenverlust toleriert werden können.  Bei der Replikation werden mehrere identische Kopien auf verschiedenen Knoten und an verschiedenen Standorten gespeichert.  Beim Erasure Coding wird ein Objekt in Daten- und Paritätsfragmente kodiert und auf viele Knoten und Standorte verteilt. Diese Verteilung bietet sowohl Site- als auch Knotenausfallschutz.  Im Vergleich zur Replikation bietet Erasure Coding eine verbesserte Zuverlässigkeit bei vergleichbaren Speicherkosten.
+* *Verfügbarkeit*: Verfügbarkeit kann als die Fähigkeit definiert werden, Objekte abzurufen, wenn Speicherknoten ausfallen oder nicht mehr zugänglich sind. Im Vergleich zur Replikation bietet Erasure Coding eine höhere Verfügbarkeit bei vergleichbaren Speicherkosten.
+* *Speichereffizienz*: Bei vergleichbarer Verfügbarkeit und Zuverlässigkeit verbrauchen durch Erasure Coding geschützte Objekte weniger Speicherplatz als dieselben Objekte, die durch Replikation geschützt wären. Beispielsweise verbraucht ein 10 MB großes Objekt, das an zwei Standorten repliziert wird, 20 MB Speicherplatz (zwei Kopien), während ein Objekt, das an drei Standorten mit einem 6+3-Erasure-Coding-Schema löschcodiert wird, nur 15 MB Speicherplatz verbraucht.
++
+
+NOTE: Der Speicherplatz für Erasure-Codierte Objekte wird aus der Objektgröße plus Speicher-Overhead berechnet.  Der Prozentsatz des Speicher-Overheads ist die Anzahl der Paritätsfragmente geteilt durch die Anzahl der Datenfragmente.
+
+
+
+
+
+== Nachteile der Erasure Coding
+
+Im Vergleich zur Replikation weist Erasure Coding folgende Nachteile auf:
+
+* Je nach Erasure-Coding-Schema wird eine erhöhte Anzahl von Speicherknoten und -standorten empfohlen.  Wenn Sie dagegen Objektdaten replizieren, benötigen Sie nur einen Speicherknoten für jede Kopie. Sehenlink:what-erasure-coding-schemes-are.html#erasure-coding-schemes-for-storage-pools-containing-three-or-more-sites["Erasure-Coding-Schemata für Speicherpools mit drei oder mehr Standorten"] Undlink:what-erasure-coding-schemes-are.html#erasure-coding-schemes-for-one-site-storage-pools["Erasure-Coding-Schemata für Speicherpools an einem Standort"] .
+* Erhöhte Kosten und Komplexität von Speichererweiterungen.  Um eine Bereitstellung zu erweitern, die Replikation verwendet, fügen Sie an jedem Standort, an dem Objektkopien erstellt werden, Speicherkapazität hinzu.  Um eine Bereitstellung zu erweitern, die Erasure Coding verwendet, müssen Sie sowohl das verwendete Erasure-Coding-Schema als auch den Füllstand vorhandener Speicherknoten berücksichtigen.  Wenn Sie beispielsweise warten, bis vorhandene Knoten zu 100 % belegt sind, müssen Sie mindestens `k+m` Speicherknoten. Wenn Sie jedoch erweitern, wenn die vorhandenen Knoten zu 70 % belegt sind, können Sie zwei Knoten pro Site hinzufügen und trotzdem die nutzbare Speicherkapazität maximieren. Weitere Informationen finden Sie unter link:../expand/adding-storage-capacity-for-erasure-coded-objects.html["Speicherkapazität für Erasure-Coded-Objekte hinzufügen"] .
+* Bei der Verwendung von Erasure Coding an geografisch verteilten Standorten kommt es zu längeren Abruflatenzen.  Das Abrufen der Objektfragmente für ein Objekt, das mit einem Erasure Code versehen und über Remote-Standorte verteilt ist, über WAN-Verbindungen dauert länger als das Abrufen eines Objekts, das repliziert und lokal verfügbar ist (derselbe Standort, mit dem der Client eine Verbindung herstellt).
+* Wenn Sie Erasure Coding an geografisch verteilten Standorten verwenden, kommt es zu einer höheren Auslastung des WAN-Netzwerkverkehrs für Abrufe und Reparaturen, insbesondere bei häufig abgerufenen Objekten oder für Objektreparaturen über WAN-Netzwerkverbindungen.
+* Wenn Sie Erasure Coding standortübergreifend verwenden, sinkt der maximale Objektdurchsatz stark, da die Netzwerklatenz zwischen den Standorten zunimmt. Dieser Rückgang ist auf den entsprechenden Rückgang des TCP-Netzwerkdurchsatzes zurückzuführen, der sich darauf auswirkt, wie schnell das StorageGRID -System Objektfragmente speichern und abrufen kann.
+* Höhere Nutzung von Rechenressourcen.
+
+
+
+
+== Wann wird Erasure Coding verwendet?
+
+Erasure Coding eignet sich am besten für folgende Anforderungen:
+
+* Objekte mit einer Größe von mehr als 1 MB.
++
+
+NOTE: Erasure Coding eignet sich am besten für Objekte, die größer als 1 MB sind.  Verwenden Sie Erasure Coding nicht für Objekte, die kleiner als 200 KB sind, um den Verwaltungsaufwand für sehr kleine Erasure-Coding-Fragmente zu vermeiden.
+
+* Langzeit- oder Cold-Storage für selten abgerufene Inhalte.
+* Hohe Datenverfügbarkeit und Zuverlässigkeit.
+* Schutz vor vollständigen Site- und Knotenausfällen.
+* Speichereffizienz.
+* Einzelstandortbereitstellungen, die einen effizienten Datenschutz mit nur einer einzigen löschcodierten Kopie anstelle mehrerer replizierter Kopien erfordern.
+* Bereitstellungen an mehreren Standorten, bei denen die Latenz zwischen den Standorten weniger als 100 ms beträgt.
+

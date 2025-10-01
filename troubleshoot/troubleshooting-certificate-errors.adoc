@@ -1,0 +1,55 @@
+---
+permalink: troubleshoot/troubleshooting-certificate-errors.html 
+sidebar: sidebar 
+keywords: how to troubleshoot certificate errors 
+summary: Wenn beim Versuch, über einen Webbrowser, einen S3-Client oder ein externes Überwachungstool eine Verbindung zu StorageGRID herzustellen, ein Sicherheits- oder Zertifikatsproblem auftritt, sollten Sie das Zertifikat überprüfen. 
+---
+= Beheben von Zertifikatsfehlern
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Wenn beim Versuch, über einen Webbrowser, einen S3-Client oder ein externes Überwachungstool eine Verbindung zu StorageGRID herzustellen, ein Sicherheits- oder Zertifikatsproblem auftritt, sollten Sie das Zertifikat überprüfen.
+
+.Informationen zu diesem Vorgang
+Zertifikatsfehler können Probleme verursachen, wenn Sie versuchen, über den Grid Manager, die Grid Management API, den Tenant Manager oder die Tenant Management API eine Verbindung zu StorageGRID herzustellen.  Zertifikatsfehler können auch auftreten, wenn Sie versuchen, eine Verbindung mit einem S3-Client oder einem externen Überwachungstool herzustellen.
+
+Wenn Sie auf den Grid Manager oder Tenant Manager über einen Domänennamen statt einer IP-Adresse zugreifen, zeigt der Browser einen Zertifikatsfehler ohne Umgehungsoption an, wenn einer der folgenden Fälle eintritt:
+
+* Ihr benutzerdefiniertes Verwaltungsschnittstellenzertifikat läuft ab.
+* Sie kehren von einem benutzerdefinierten Verwaltungsschnittstellenzertifikat zum Standardserverzertifikat zurück.
+
+
+Das folgende Beispiel zeigt einen Zertifikatsfehler, wenn das Zertifikat der benutzerdefinierten Verwaltungsschnittstelle abgelaufen ist:
+
+image::../media/certificate_error.png[Beispiel für einen Zertifikatsfehler]
+
+Um sicherzustellen, dass der Betrieb nicht durch ein fehlerhaftes Serverzertifikat unterbrochen wird, wird die Warnung *Ablauf des Serverzertifikats für die Verwaltungsschnittstelle* ausgelöst, wenn das Serverzertifikat bald abläuft.
+
+Wenn Sie Client-Zertifikate für die externe Prometheus-Integration verwenden, können Zertifikatsfehler durch das Zertifikat der StorageGRID Verwaltungsschnittstelle oder durch Client-Zertifikate verursacht werden.  Die Warnung *Ablauf der auf der Seite „Zertifikate“ konfigurierten Client-Zertifikate* wird ausgelöst, wenn ein Client-Zertifikat bald abläuft.
+
+.Schritte
+Wenn Sie eine Warnmeldung über ein abgelaufenes Zertifikat erhalten haben, greifen Sie auf die Zertifikatsdetails zu: . Wählen Sie *KONFIGURATION* > *Sicherheit* > *Zertifikate* und dannlink:../admin/using-storagegrid-security-certificates.html#access-security-certificates["Wählen Sie die entsprechende Zertifikatsregisterkarte aus"] .
+
+. Überprüfen Sie die Gültigkeitsdauer des Zertifikats.  + Einige Webbrowser und S3-Clients akzeptieren keine Zertifikate mit einer Gültigkeitsdauer von mehr als 398 Tagen.
+. Wenn das Zertifikat abgelaufen ist oder bald abläuft, laden Sie ein neues Zertifikat hoch oder generieren Sie ein neues.
++
+** Informationen zum Serverzertifikat finden Sie in den Schritten fürlink:../admin/configuring-custom-server-certificate-for-grid-manager-tenant-manager.html#add-a-custom-management-interface-certificate["Konfigurieren eines benutzerdefinierten Serverzertifikats für den Grid Manager und den Tenant Manager"] .
+** Informationen zum Ein Client-Zertifikat finden Sie in den Schritten fürlink:../admin/configuring-administrator-client-certificates.html["Konfigurieren eines Client-Zertifikats"] .
+
+
+. Versuchen Sie bei Serverzertifikatsfehlern eine oder beide der folgenden Optionen:
++
+** Stellen Sie sicher, dass der Subject Alternative Name (SAN) des Zertifikats ausgefüllt ist und dass der SAN mit der IP-Adresse oder dem Hostnamen des Knotens übereinstimmt, mit dem Sie eine Verbindung herstellen.
+** Wenn Sie versuchen, über einen Domänennamen eine Verbindung zu StorageGRID herzustellen:
++
+... Geben Sie anstelle des Domänennamens die IP-Adresse des Admin-Knotens ein, um den Verbindungsfehler zu umgehen und auf den Grid Manager zuzugreifen.
+... Wählen Sie im Grid Manager *KONFIGURATION* > *Sicherheit* > *Zertifikate* und dannlink:../admin/using-storagegrid-security-certificates.html#access-security-certificates["Wählen Sie die entsprechende Zertifikatsregisterkarte aus"] um ein neues benutzerdefiniertes Zertifikat zu installieren oder mit dem Standardzertifikat fortzufahren.
+... In den Anweisungen zur Verwaltung von StorageGRID finden Sie die Schritte fürlink:../admin/configuring-custom-server-certificate-for-grid-manager-tenant-manager.html#add-a-custom-management-interface-certificate["Konfigurieren eines benutzerdefinierten Serverzertifikats für den Grid Manager und den Tenant Manager"] .
+
+
+
+
+

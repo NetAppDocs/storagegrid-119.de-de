@@ -1,0 +1,174 @@
+---
+permalink: upgrade/whats-new.html 
+sidebar: sidebar 
+keywords: what is new in StorageGRID 11.9 
+summary: Diese Version von StorageGRID führt die folgenden Funktionen ein. 
+---
+= Was ist neu in StorageGRID 11.9
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Diese Version von StorageGRID führt die folgenden Funktionen und Funktionsänderungen ein.
+
+
+
+== Skalierbarkeit
+
+
+
+=== Reine Datenspeicherknoten
+
+Um eine detailliertere Skalierung zu ermöglichen, können Sie jetzt installierenlink:../primer/what-storage-node-is.html#types-of-storage-nodes["Nur-Daten-Speicherknoten"] .  Wenn die Metadatenverarbeitung nicht kritisch ist, können Sie Ihre Infrastruktur kostengünstig optimieren.  Diese Flexibilität hilft dabei, unterschiedliche Arbeitsbelastungen und Wachstumsmuster zu bewältigen.
+
+
+
+== Verbesserungen des Cloud Storage Pools
+
+
+
+=== IAM-Rollen überall
+
+StorageGRID unterstützt jetzt kurzfristige Anmeldeinformationen mitlink:../ilm/creating-cloud-storage-pool.html["IAM-Rollen überall in Amazon S3 für Cloud-Speicherpools"] .
+
+Die Verwendung langfristiger Anmeldeinformationen für den Zugriff auf S3-Buckets birgt Sicherheitsrisiken, wenn diese Anmeldeinformationen kompromittiert werden.  Kurzzeit-Anmeldeinformationen haben eine begrenzte Lebensdauer, wodurch das Risiko eines unbefugten Zugriffs verringert wird.
+
+
+
+=== S3 Object Lock-Buckets
+
+Sie können jetztlink:../ilm/creating-cloud-storage-pool.html["Konfigurieren Sie einen Cloud-Speicherpool mithilfe eines Amazon S3-Endpunkts"] .  S3 Object Lock hilft, das versehentliche oder böswillige Löschen von Objekten zu verhindern.  Wenn Sie Daten von StorageGRID auf Amazon S3 verschieben, verbessert die Aktivierung der Objektsperre auf beiden Systemen den Datenschutz über den gesamten Lebenszyklus der Daten.
+
+
+
+== Mandantenfähigkeit
+
+
+
+=== Bucket-Grenzen
+
+Vonlink:../tenant/creating-s3-bucket.html["Festlegen von Grenzwerten für S3-Buckets"] können Sie verhindern, dass Mieter Kapazitäten monopolisieren.  Darüber hinaus kann unkontrolliertes Wachstum zu unerwarteten Kosten führen.  Durch die Festlegung von Grenzen können Sie die Lagerkosten Ihrer Mieter besser einschätzen.
+
+
+
+=== 5.000 Eimer pro Mieter
+
+Um die Skalierbarkeit zu verbessern, unterstützt StorageGRID jetzt bis zulink:../s3/operations-on-buckets.html["5.000 S3-Buckets pro Mandant"] .  Jedes Raster kann maximal 100.000 Buckets enthalten.
+
+Um 5.000 Buckets zu unterstützen, muss jeder Speicherknoten im Grid über mindestens 64 GB RAM verfügen.
+
+
+
+== Verbesserungen bei S3 Object Lock
+
+Die Konfigurationsmöglichkeiten pro Mandant bieten das richtige Gleichgewicht zwischen Flexibilität und Datensicherheit.  Sie können jetzt Aufbewahrungseinstellungen pro Mandant konfigurieren, um:
+
+* Compliance-Modus zulassen oder nicht zulassen
+* Legen Sie eine maximale Aufbewahrungsdauer fest
+
+
+Siehe:
+
+* link:../ilm/managing-objects-with-s3-object-lock.html["Verwalten von Objekten mit S3 Object Lock"]
+* link:../ilm/how-object-retention-is-determined.html#how-grid-administrators-control-object-retention["So steuern Grid-Administratoren die Objektaufbewahrung"]
+* link:../admin/creating-tenant-account.html["Mieterkonto erstellen"]
+
+
+
+
+== S3-Kompatibilität
+
+
+
+=== x-amz-checksum-sha256 Prüfsumme
+
+* Die S3 REST API bietet jetzt Unterstützung für link:../s3/operations-on-objects.html[`x-amz-checksum-sha256` Prüfsumme].
+* StorageGRID bietet jetzt SHA-256-Prüfsummenunterstützung für PUT-, GET- und HEAD-Operationen.  Diese Prüfsummen verbessern die Datenintegrität.
+
+
+
+
+=== Änderungen an der S3-Protokollunterstützung
+
+* Unterstützung für Mountpoint für Amazon S3 hinzugefügt, wodurch Anwendungen eine direkte Verbindung zu S3-Buckets herstellen können, als wären sie lokale Dateisysteme.  Sie können StorageGRID jetzt mit mehr Anwendungen und mehr Anwendungsfällen verwenden.
+* Im Rahmen der Unterstützung für Mountpoint enthält StorageGRID 11.9link:../s3/index.html#updates-to-rest-api-support["zusätzliche Änderungen an der S3-Protokollunterstützung"] .
+
+
+
+
+== Wartung und Support
+
+
+
+=== AutoSupport
+
+link:../admin/what-is-autosupport.html["AutoSupport"]Erstellt jetzt automatisch Hardwarefehlerfälle für ältere Geräte.
+
+
+
+=== Erweiterte Knotenklonvorgänge
+
+Die Nutzbarkeit von Knotenklonen wurde erweitert, um größere Speicherknoten zu unterstützen.
+
+
+
+=== Verbesserte ILM-Behandlung abgelaufener Löschmarkierungen
+
+ILM-Aufnahmezeitregeln mit einem Zeitraum von Tagen entfernen jetzt auch abgelaufene Objektlöschmarkierungen.  Löschmarkierungen werden nur entfernt, wenn ein Zeitraum von Tagen verstrichen ist und die aktuelle Löschmarkierung abgelaufen ist (es gibt keine nicht aktuellen Versionen).
+
+Siehelink:../ilm/how-objects-are-deleted.html#delete-s3-versioned-objects["So werden versionierte S3-Objekte gelöscht"] Undlink:../ilm/example-8-priorities-for-s3-bucket-lifecycle-and-ilm-policy.html#example-of-bucket-lifecycle-taking-priority-over-ilm-policy["Beispiel für den Bucket-Lebenszyklus, der Vorrang vor der ILM-Richtlinie hat"] .
+
+
+
+=== Verbesserte Knoten-Außerbetriebnahme
+
+Um einen reibungslosen und effizienten Übergang zur StorageGRID Hardware der nächsten Generation zu gewährleisten,link:../maintain/grid-node-decommissioning.html["Knotenstilllegung"] wurde verbessert.
+
+
+
+=== Syslog für Load Balancer-Endpunkte
+
+Die Zugriffsprotokolle der Load Balancer-Endpunkte enthalten Informationen zur Fehlerbehebung, beispielsweise HTTP-Statuscodes.  StorageGRID unterstützt jetztlink:../monitor/configure-audit-messages.html["Exportieren dieser Protokolle auf einen externen Syslog-Server"] .  Diese Verbesserung ermöglicht eine effizientere Protokollverwaltung und Integration in vorhandene Überwachungs- und Warnsysteme.
+
+
+
+=== Zusätzliche Verbesserungen für Wartung und Support
+
+* Aktualisierung der Metrik-Benutzeroberfläche
+* Neue Betriebssystemqualifikationen
+* Unterstützung für neue Komponenten von Drittanbietern
+
+
+
+
+== Sicherheit
+
+
+
+=== Rotation der SSH-Zugriffsschlüssel
+
+Grid-Administratoren können jetztlink:../admin/change-ssh-access-passwords.html["SSH-Schlüssel aktualisieren und rotieren"] .  Die Möglichkeit, SSH-Schlüssel zu rotieren, ist eine bewährte Sicherheitsmethode und ein proaktiver Abwehrmechanismus.
+
+
+
+=== Warnungen für Root-Anmeldungen
+
+Wenn sich eine unbekannte Entität als Root beim Grid Manager anmeldet,link:../monitor/alerts-reference.html["ein Alarm ausgelöst wird"] .  Die Überwachung von Root-SSH-Anmeldungen ist ein proaktiver Schritt zum Schutz Ihrer Infrastruktur.
+
+
+
+== Grid Manager-Erweiterungen
+
+
+
+=== Die Seite mit den Erasure-Coding-Profilen wurde verschoben
+
+Die Seite mit den Erasure-Coding-Profilen befindet sich jetzt unter *KONFIGURATION* > *System* > *Erasure Coding*.  Früher war es im ILM-Menü.
+
+
+
+=== Suchverbesserungen
+
+Derlink:../primer/exploring-grid-manager.html#search-field["Suchfeld im Grid Manager"] enthält jetzt eine bessere Übereinstimmungslogik, mit der Sie Seiten finden können, indem Sie nach gängigen Abkürzungen und den Namen bestimmter Einstellungen innerhalb einer Seite suchen.  Sie können auch nach weiteren Elementtypen suchen, beispielsweise nach Knoten, Benutzern und Mandantenkonten.

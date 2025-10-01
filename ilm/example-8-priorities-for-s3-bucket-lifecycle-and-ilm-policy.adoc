@@ -1,0 +1,118 @@
+---
+permalink: ilm/example-8-priorities-for-s3-bucket-lifecycle-and-ilm-policy.html 
+sidebar: sidebar 
+keywords: retention priority, example S3 bucket lifecycle, example ILM policy 
+summary: Abhängig von Ihrer Lebenszykluskonfiguration folgen Objekte entweder den Aufbewahrungseinstellungen des S3-Bucket-Lebenszyklus oder einer ILM-Richtlinie. 
+---
+= Beispiel 8: Prioritäten für den S3-Bucket-Lebenszyklus und die ILM-Richtlinie
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Abhängig von Ihrer Lebenszykluskonfiguration folgen Objekte entweder den Aufbewahrungseinstellungen des S3-Bucket-Lebenszyklus oder einer ILM-Richtlinie.
+
+
+
+== Beispiel für den Bucket-Lebenszyklus, der Vorrang vor der ILM-Richtlinie hat
+
+ILM-Richtlinie::
++
+--
+* Regel basierend auf einem nicht aktuellen Zeitbezug: Am Tag 0 X Kopien 20 Tage lang aufbewahren
+* Regel basierend auf der Aufnahmezeitreferenz (Standard): Am Tag 0 X Kopien 50 Tage lang aufbewahren
+
+
+--
+Bucket-Lebenszyklus:: `"Filter": {"Prefix": "docs/"}, "Expiration": {"Days": 100}, "NoncurrentVersionExpiration": {"NoncurrentDays": 5}`
+Ergebnis::
++
+--
+* Ein Objekt mit dem Namen „docs/text“ wird aufgenommen.  Es entspricht dem Bucket-Lebenszyklusfilter des Präfixes „docs/“.
++
+** Nach 100 Tagen wird eine Löschmarkierung erstellt und „docs/text“ wird nicht mehr aktuell.
+** Nach 5 Tagen, insgesamt 105 Tage seit der Aufnahme, wird „docs/text“ gelöscht.
+** Nach 95 Tagen, also insgesamt 200 Tagen seit der Aufnahme und 100 Tagen seit der Erstellung des Löschmarkers, wird der abgelaufene Löschmarker gelöscht.
+
+
+* Ein Objekt mit dem Namen „Video/Film“ wird aufgenommen.  Es entspricht nicht dem Filter und verwendet die ILM-Aufbewahrungsrichtlinie.
++
+** Nach 50 Tagen wird eine Löschmarkierung erstellt und „Video/Film“ wird nicht mehr aktuell.
+** Nach 20 Tagen, also insgesamt 70 Tagen seit der Aufnahme, wird „Video/Film“ gelöscht.
+** Nach 30 Tagen, also insgesamt 100 Tagen seit der Aufnahme und 50 Tagen seit der Erstellung des Löschmarkers, wird der abgelaufene Löschmarker gelöscht.
+
+
+
+
+--
+
+
+
+
+== Beispiel für den Bucket-Lebenszyklus mit impliziter ewiger Aufbewahrung
+
+ILM-Richtlinie::
++
+--
+* Regel basierend auf einem nicht aktuellen Zeitbezug: Am Tag 0 X Kopien 20 Tage lang aufbewahren
+* Regel basierend auf der Aufnahmezeitreferenz (Standard): Am Tag 0 X Kopien 50 Tage lang aufbewahren
+
+
+--
+Bucket-Lebenszyklus:: `"Filter": {"Prefix": "docs/"}, "Expiration": {"ExpiredObjectDeleteMarker": true}`
+Ergebnis::
++
+--
+* Ein Objekt mit dem Namen „docs/text“ wird aufgenommen.  Es entspricht dem Bucket-Lebenszyklusfilter des Präfixes „docs/“.
++
+Der `Expiration` Die Aktion gilt nur für abgelaufene Löschmarkierungen, was bedeutet, dass alles andere (beginnend mit „docs/“) für immer erhalten bleibt.
+
++
+Löschmarkierungen, die mit „docs/“ beginnen, werden entfernt, wenn sie ablaufen.
+
+* Ein Objekt mit dem Namen „Video/Film“ wird aufgenommen.  Es entspricht nicht dem Filter und verwendet die ILM-Aufbewahrungsrichtlinie.
++
+** Nach 50 Tagen wird eine Löschmarkierung erstellt und „Video/Film“ wird nicht mehr aktuell.
+** Nach 20 Tagen, also insgesamt 70 Tagen seit der Aufnahme, wird „Video/Film“ gelöscht.
+** Nach 30 Tagen, also insgesamt 100 Tagen seit der Aufnahme und 50 Tagen seit der Erstellung des Löschmarkers, wird der abgelaufene Löschmarker gelöscht.
+
+
+
+
+--
+
+
+
+
+== Beispiel für die Verwendung des Bucket-Lebenszyklus zum Duplizieren von ILM und Bereinigen abgelaufener Löschmarkierungen
+
+ILM-Richtlinie::
++
+--
+* Regel basierend auf einem nicht aktuellen Zeitbezug: Am Tag 0 X Kopien 20 Tage lang aufbewahren
+* Regel basierend auf der Aufnahmezeitreferenz (Standard): Am Tag 0 X Kopien für immer behalten
+
+
+--
+Bucket-Lebenszyklus:: `"Filter": {}, "Expiration": {"ExpiredObjectDeleteMarker": true}, "NoncurrentVersionExpiration": {"NoncurrentDays": 20}`
+Ergebnis::
++
+--
+* Die ILM-Richtlinie wird im Bucket-Lebenszyklus dupliziert.
++
+** Die „Für immer“-Regel der ILM-Richtlinie ist darauf ausgelegt, Objekte manuell zu entfernen und nicht aktuelle Versionen nach 20 Tagen zu bereinigen.  Folglich behält die Aufnahmezeitregel abgelaufene Löschmarkierungen für immer bei.
+** Der Bucket-Lebenszyklus dupliziert das Verhalten der ILM-Richtlinie und fügt hinzu `"ExpiredObjectDeleteMarker": true` , wodurch Löschmarkierungen entfernt werden, sobald sie abgelaufen sind
+
+
+* Ein Gegenstand wird verschluckt.  Kein Filter bedeutet, dass der Bucket-Lebenszyklus für alle Objekte gilt und die ILM-Aufbewahrungseinstellungen überschreibt.
++
+** Wenn ein Mandant eine Anforderung zum Löschen eines Objekts ausgibt, wird eine Löschmarkierung erstellt und das Objekt wird nicht mehr aktuell.
+** Nach 20 Tagen wird das nicht aktuelle Objekt gelöscht und die Löschmarkierung läuft ab.
+** Kurz darauf wird der abgelaufene Löschmarker gelöscht.
+
+
+
+
+--
+

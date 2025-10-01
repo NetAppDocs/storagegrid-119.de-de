@@ -1,0 +1,26 @@
+---
+permalink: network/post-installation-guidelines.html 
+sidebar: sidebar 
+keywords: networking after installation, dhcp networking 
+summary: Befolgen Sie nach Abschluss der Bereitstellung und Konfiguration des Grid-Knotens diese Richtlinien für DHCP-Adressierung und Netzwerkkonfigurationsänderungen. 
+---
+= Richtlinien nach der Installation
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Befolgen Sie nach Abschluss der Bereitstellung und Konfiguration des Grid-Knotens diese Richtlinien für DHCP-Adressierung und Netzwerkkonfigurationsänderungen.
+
+* Wenn DHCP zum Zuweisen von IP-Adressen verwendet wurde, konfigurieren Sie eine DHCP-Reservierung für jede IP-Adresse in den verwendeten Netzwerken.
++
+Sie können DHCP nur während der Bereitstellungsphase einrichten.  Sie können DHCP während der Konfiguration nicht einrichten.
+
++
+
+CAUTION: Knoten werden neu gestartet, wenn die Grid-Netzwerkkonfiguration per DHCP geändert wird. Dies kann zu Ausfällen führen, wenn eine DHCP-Änderung mehrere Knoten gleichzeitig betrifft.
+
+* Sie müssen die Verfahren zum Ändern der IP-Adresse verwenden, wenn Sie IP-Adressen, Subnetzmasken und Standard-Gateways für einen Grid-Knoten ändern möchten. Sehen link:../maintain/configuring-ip-addresses.html["Konfigurieren von IP-Adressen"] .
+* Wenn Sie Änderungen an der Netzwerkkonfiguration vornehmen, einschließlich Routing- und Gateway-Änderungen, kann die Client-Konnektivität zum primären Admin-Knoten und anderen Grid-Knoten verloren gehen.  Abhängig von den vorgenommenen Netzwerkänderungen müssen Sie diese Verbindungen möglicherweise erneut herstellen.
+

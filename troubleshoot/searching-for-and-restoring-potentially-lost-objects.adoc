@@ -1,0 +1,250 @@
+---
+permalink: troubleshoot/searching-for-and-restoring-potentially-lost-objects.html 
+sidebar: sidebar 
+keywords: how to search lost object, how to restore lost object, how to find lost object 
+summary: 'Möglicherweise ist es möglich, Objekte zu finden und wiederherzustellen, die eine *Objekt verloren*-Warnung und einen älteren „Lost Objects“-Alarm (LOST) ausgelöst haben und die Sie als potenziell verloren identifiziert haben.' 
+---
+= Suchen und Wiederherstellen potenziell verlorener Objekte
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Möglicherweise ist es möglich, Objekte zu finden und wiederherzustellen, die eine *Objekt verloren*-Warnung und einen älteren „Lost Objects“-Alarm (LOST) ausgelöst haben und die Sie als potenziell verloren identifiziert haben.
+
+.Bevor Sie beginnen
+* Sie haben die UUID eines verlorenen Objekts, wie inlink:../troubleshoot/investigating-lost-objects.html["Untersuchen Sie verlorene Gegenstände"] .
+* Sie haben die `Passwords.txt` Datei.
+
+
+.Informationen zu diesem Vorgang
+Sie können dieses Verfahren befolgen, um an anderer Stelle im Raster nach replizierten Kopien des verlorenen Objekts zu suchen.  In den meisten Fällen wird der verlorene Gegenstand nicht gefunden.  In einigen Fällen können Sie jedoch möglicherweise ein verlorenes repliziertes Objekt finden und wiederherstellen, wenn Sie umgehend Maßnahmen ergreifen.
+
+
+CAUTION: Wenden Sie sich an den technischen Support, um Hilfe bei diesem Verfahren zu erhalten.
+
+.Schritte
+. Durchsuchen Sie von einem Admin-Knoten aus die Prüfprotokolle nach möglichen Objektstandorten:
++
+.. Melden Sie sich beim Grid-Knoten an:
++
+... Geben Sie den folgenden Befehl ein: `ssh admin@grid_node_IP`
+... Geben Sie das Passwort ein, das in der `Passwords.txt` Datei.
+... Geben Sie den folgenden Befehl ein, um zum Root zu wechseln: `su -`
+... Geben Sie das Passwort ein, das in der `Passwords.txt` Datei.  Wenn Sie als Root angemeldet sind, ändert sich die Eingabeaufforderung von `$` Zu `#` .
+
+
+.. [[substep-1b]]Wechseln Sie in das Verzeichnis, in dem sich die Überwachungsprotokolle befinden.
++
+--
+Das Prüfprotokollverzeichnis und die entsprechenden Knoten hängen von Ihren Prüfzieleinstellungen ab.
+
+[cols="1a,2a"]
+|===
+| Option | Ziel 
+
+
+ a| 
+Lokale Knoten (Standard)
+ a| 
+`/var/local/log/localaudit.log`
+
+
+
+ a| 
+Admin-Knoten/lokale Knoten
+ a| 
+*** Admin-Knoten (primär und nicht primär): `/var/local/audit/export/audit.log`
+*** Alle Knoten: Die `/var/local/log/localaudit.log` Die Datei ist in diesem Modus normalerweise leer oder fehlt.
+
+
+
+
+ a| 
+Externer Syslog-Server
+ a| 
+`/var/local/log/localaudit.log`
+
+|===
+Geben Sie je nach Ihren Audit-Zieleinstellungen Folgendes ein: `cd /var/local/log` oder `/var/local/audit/export/`
+
+Weitere Informationen finden Sie unterlink:../monitor/configure-audit-messages.html#select-audit-information-destinations["Auswählen von Zielen für Auditinformationen"] .
+
+--
+.. Verwenden Sie grep, um dielink:../audit/object-ingest-transactions.html["Prüfmeldungen im Zusammenhang mit dem möglicherweise verlorenen Objekt"] und senden Sie sie an eine Ausgabedatei.  Eingeben: `grep uuid-value audit_file_name > output_file_name`
++
+Beispiel:
+
++
+[listing]
+----
+Admin: # grep 926026C4-00A4-449B-AC72-BCCA72DD1311 audit.log > /var/local/tmp/messages_about_lost_object.txt
+----
+.. Verwenden Sie grep, um die LLST-Auditmeldungen (Location Lost) aus dieser Ausgabedatei zu extrahieren.  Eingeben: `grep LLST output_file_name`
++
+Beispiel:
+
++
+[listing]
+----
+Admin: # grep LLST /var/local/tmp/messages_about_lost_objects.txt
+----
++
+Eine LLST-Auditnachricht sieht wie diese Beispielnachricht aus.
+
++
+[listing]
+----
+[AUDT:[NOID(UI32):12448208][CBIL(UI64):0x38186FE53E3C49A5]
+[UUID(CSTR):"926026C4-00A4-449B-AC72-BCCA72DD1311"][LTYP(FC32):CLDI]
+[PCLD(CSTR):"/var/local/rangedb/1/p/17/11/00rH0%DkRs&LgA#3tN6"]
+[TSRC(FC32):SYST][RSLT(FC32):NONE][AVER(UI32):10][ATIM(UI64):1581535134379225]
+[ATYP(FC32):LLST][ANID(UI32):12448208][AMID(FC32):CLSM][ATID(UI64):7086871083190743409]]
+----
+.. Suchen Sie das PCLD-Feld und das NOID-Feld in der LLST-Nachricht.
++
+Falls vorhanden, ist der Wert von PCLD der vollständige Pfad auf der Festplatte zur fehlenden replizierten Objektkopie.  Der Wert von NOID ist die Knoten-ID des LDR, in dem eine Kopie des Objekts gefunden werden kann.
+
++
+Wenn Sie einen Objektspeicherort finden, können Sie das Objekt möglicherweise wiederherstellen.
+
+.. Suchen Sie den Speicherknoten, der dieser LDR-Knoten-ID zugeordnet ist.  Wählen Sie im Grid Manager *SUPPORT* > *Tools* > *Grid-Topologie*.  Wählen Sie dann *_Data Center_* > *_Storage Node_* > *LDR*.
++
+Die Knoten-ID für den LDR-Dienst befindet sich in der Knoteninformationstabelle.  Überprüfen Sie die Informationen für jeden Speicherknoten, bis Sie denjenigen finden, der diesen LDR hostet.
+
+
+
+. Stellen Sie fest, ob das Objekt auf dem in der Prüfnachricht angegebenen Speicherknoten vorhanden ist:
++
+.. Melden Sie sich beim Grid-Knoten an:
++
+... Geben Sie den folgenden Befehl ein: `ssh admin@grid_node_IP`
+... Geben Sie das Passwort ein, das in der `Passwords.txt` Datei.
+... Geben Sie den folgenden Befehl ein, um zum Root zu wechseln: `su -`
+... Geben Sie das Passwort ein, das in der `Passwords.txt` Datei.
++
+Wenn Sie als Root angemeldet sind, ändert sich die Eingabeaufforderung von `$` Zu `#` .
+
+
+
+.. Stellen Sie fest, ob der Dateipfad für das Objekt vorhanden ist.
++
+Verwenden Sie für den Dateipfad des Objekts den PCLD-Wert aus der LLST-Auditnachricht.
+
++
+Geben Sie beispielsweise Folgendes ein:
+
++
+[listing]
+----
+ls '/var/local/rangedb/1/p/17/11/00rH0%DkRs&LgA%#3tN6'
+----
++
+
+NOTE: Setzen Sie den Objektdateipfad in Befehlen immer in einfache Anführungszeichen, um Sonderzeichen zu maskieren.
+
++
+*** Wenn der Objektpfad nicht gefunden wird, ist das Objekt verloren und kann mit diesem Verfahren nicht wiederhergestellt werden. Wenden Sie sich an den technischen Support.
+*** Wenn der Objektpfad gefunden wurde, fahren Sie mit dem nächsten Schritt fort.  Sie können versuchen, das gefundene Objekt wieder in StorageGRID wiederherzustellen.
+
+
+
+
+. Wenn der Objektpfad gefunden wurde, versuchen Sie, das Objekt in StorageGRID wiederherzustellen:
++
+.. Ändern Sie vom selben Speicherknoten aus den Besitz der Objektdatei, sodass sie von StorageGRID verwaltet werden kann.  Eingeben: `chown ldr-user:bycast 'file_path_of_object'`
+.. Um auf die LDR-Konsole zuzugreifen, greifen Sie per Telnet auf den Localhost 1402 zu.  Eingeben: `telnet 0 1402`
+.. Eingeben: `cd /proc/STOR`
+.. Eingeben: `Object_Found 'file_path_of_object'`
++
+Geben Sie beispielsweise Folgendes ein:
+
++
+[listing]
+----
+Object_Found '/var/local/rangedb/1/p/17/11/00rH0%DkRs&LgA%#3tN6'
+----
++
+Ausgabe der `Object_Found` Der Befehl benachrichtigt das Raster über den Standort des Objekts.  Außerdem werden dadurch die aktiven ILM-Richtlinien ausgelöst, die zusätzliche Kopien gemäß den Angaben in den einzelnen Richtlinien erstellen.
+
++
+
+NOTE: Wenn der Speicherknoten, auf dem Sie das Objekt gefunden haben, offline ist, können Sie das Objekt auf jeden Speicherknoten kopieren, der online ist.  Platzieren Sie das Objekt in einem beliebigen /var/local/rangedb-Verzeichnis des Online-Speicherknotens.  Geben Sie dann die `Object_Found` Befehl unter Verwendung dieses Dateipfads zum Objekt.
+
++
+*** Wenn das Objekt nicht wiederhergestellt werden kann, `Object_Found` Befehl schlägt fehl. Wenden Sie sich an den technischen Support.
+*** Wenn das Objekt erfolgreich in StorageGRID wiederhergestellt wurde, wird eine Erfolgsmeldung angezeigt. Beispiel:
++
+[listing]
+----
+ade 12448208: /proc/STOR > Object_Found '/var/local/rangedb/1/p/17/11/00rH0%DkRs&LgA%#3tN6'
+
+ade 12448208: /proc/STOR > Object found succeeded.
+First packet of file was valid. Extracted key: 38186FE53E3C49A5
+Renamed '/var/local/rangedb/1/p/17/11/00rH0%DkRs&LgA%#3tN6' to '/var/local/rangedb/1/p/17/11/00rH0%DkRt78Ila#3udu'
+----
++
+Fahren Sie mit dem nächsten Schritt fort.
+
+
+
+
+
+. Wenn das Objekt erfolgreich in StorageGRID wiederhergestellt wurde, überprüfen Sie, ob die neuen Speicherorte erstellt wurden:
++
+.. Sign in beim Grid Manager an mit einemlink:../admin/web-browser-requirements.html["unterstützter Webbrowser"] .
+.. Wählen Sie *ILM* > *Objektmetadatensuche*.
+.. Geben Sie die UUID ein und wählen Sie *Nachschlagen*.
+.. Überprüfen Sie die Metadaten und bestätigen Sie die neuen Standorte.
+
+
+. Suchen Sie von einem Admin-Knoten aus in den Prüfprotokollen nach der ORLM-Prüfnachricht für dieses Objekt, um zu bestätigen, dass das Information Lifecycle Management (ILM) die erforderlichen Kopien platziert hat.
++
+.. Melden Sie sich beim Grid-Knoten an:
++
+... Geben Sie den folgenden Befehl ein: `ssh admin@grid_node_IP`
+... Geben Sie das Passwort ein, das in der `Passwords.txt` Datei.
+... Geben Sie den folgenden Befehl ein, um zum Root zu wechseln: `su -`
+... Geben Sie das Passwort ein, das in der `Passwords.txt` Datei.  Wenn Sie als Root angemeldet sind, ändert sich die Eingabeaufforderung von `$` Zu `#` .
+
+
+.. Wechseln Sie in das Verzeichnis, in dem sich die Überwachungsprotokolle befinden.  Siehe<<substep-1b,Unterschritt 1. b>> .
+.. Verwenden Sie grep, um die mit dem Objekt verknüpften Prüfmeldungen in eine Ausgabedatei zu extrahieren.  Eingeben: `grep uuid-value audit_file_name > output_file_name`
++
+Beispiel:
+
++
+[listing]
+----
+Admin: # grep 926026C4-00A4-449B-AC72-BCCA72DD1311 audit.log > /var/local/tmp/messages_about_restored_object.txt
+----
+.. Verwenden Sie grep, um die ORLM-Auditmeldungen (Object Rules Met) aus dieser Ausgabedatei zu extrahieren.  Eingeben: `grep ORLM output_file_name`
++
+Beispiel:
+
++
+[listing]
+----
+Admin: # grep ORLM /var/local/tmp/messages_about_restored_object.txt
+----
++
+Eine ORLM-Auditnachricht sieht wie diese Beispielnachricht aus.
+
++
+[listing]
+----
+[AUDT:[CBID(UI64):0x38186FE53E3C49A5][RULE(CSTR):"Make 2 Copies"]
+[STAT(FC32):DONE][CSIZ(UI64):0][UUID(CSTR):"926026C4-00A4-449B-AC72-BCCA72DD1311"]
+[LOCS(CSTR):"**CLDI 12828634 2148730112**, CLDI 12745543 2147552014"]
+[RSLT(FC32):SUCS][AVER(UI32):10][ATYP(FC32):ORLM][ATIM(UI64):1563398230669]
+[ATID(UI64):15494889725796157557][ANID(UI32):13100453][AMID(FC32):BCMS]]
+----
+.. Suchen Sie das LOCS-Feld in der Prüfnachricht.
++
+Falls vorhanden, ist der Wert von CLDI in LOCS die Knoten-ID und die Volume-ID, auf der eine Objektkopie erstellt wurde.  Diese Meldung zeigt an, dass das ILM angewendet wurde und dass zwei Objektkopien an zwei Stellen im Grid erstellt wurden.
+
+
+
+. link:resetting-lost-and-missing-object-counts.html["Setzen Sie die Anzahl verlorener und fehlender Objekte zurück"]im Grid Manager.
+

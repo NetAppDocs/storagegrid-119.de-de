@@ -1,0 +1,22 @@
+---
+permalink: monitor/creating-custom-monitoring-applications.html 
+sidebar: sidebar 
+keywords: custom monitoring, monitoring, dashboard 
+summary: Sie können benutzerdefinierte Überwachungsanwendungen und Dashboards mithilfe der StorageGRID -Metriken erstellen, die über die Grid Management API verfügbar sind. 
+---
+= Erstellen Sie benutzerdefinierte Überwachungsanwendungen
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Sie können benutzerdefinierte Überwachungsanwendungen und Dashboards mithilfe der StorageGRID -Metriken erstellen, die über die Grid Management API verfügbar sind.
+
+Wenn Sie Metriken überwachen möchten, die nicht auf einer vorhandenen Seite des Grid Managers angezeigt werden, oder wenn Sie benutzerdefinierte Dashboards für StorageGRID erstellen möchten, können Sie die Grid Management-API verwenden, um StorageGRID -Metriken abzufragen.
+
+Sie können auch mit einem externen Überwachungstool wie Grafana direkt auf Prometheus-Metriken zugreifen.  Wenn Sie ein externes Tool verwenden, müssen Sie ein administratives Client-Zertifikat hochladen oder generieren, damit StorageGRID das Tool aus Sicherheitsgründen authentifizieren kann. Siehe dielink:../admin/index.html["Anweisungen zur Administration von StorageGRID"] .
+
+Um die Metrik-API-Operationen anzuzeigen, einschließlich der vollständigen Liste der verfügbaren Metriken, gehen Sie zum Grid Manager.  Wählen Sie oben auf der Seite das Hilfesymbol und dann *API-Dokumentation* > *Metriken* aus.image:../media/help_api_docs_metrics.png["Hilfe API-Dokumentation Abschnitt „Metriken“"]
+
+Die Einzelheiten zur Implementierung einer benutzerdefinierten Überwachungsanwendung gehen über den Rahmen dieser Dokumentation hinaus.

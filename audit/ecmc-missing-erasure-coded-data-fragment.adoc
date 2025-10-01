@@ -1,0 +1,46 @@
+---
+permalink: audit/ecmc-missing-erasure-coded-data-fragment.html 
+sidebar: sidebar 
+keywords: storagegrid, audit, message, ECMC, Missing Erasure-Coded Data Fragment 
+summary: Diese Prüfmeldung zeigt an, dass das System ein fehlendes Erasure-Coded-Datenfragment erkannt hat. 
+---
+= ECMC: Fehlendes Erasure-Coded-Datenfragment
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Diese Prüfmeldung zeigt an, dass das System ein fehlendes Erasure-Coded-Datenfragment erkannt hat.
+
+[cols="1a,1a,4a"]
+|===
+| Code | Feld | Beschreibung 
+
+
+ a| 
+VCMC
+ a| 
+VCS-ID
+ a| 
+Der Name des VCS, das den fehlenden Block enthält.
+
+
+
+ a| 
+MCID
+ a| 
+Chunk-ID
+ a| 
+Die Kennung des fehlenden Erasure-Codierten-Fragments.
+
+
+
+ a| 
+RSLT
+ a| 
+Ergebnis
+ a| 
+Dieses Feld hat den Wert „NONE“.  RSLT ist ein obligatorisches Nachrichtenfeld, ist für diese spezielle Nachricht jedoch nicht relevant.  Damit diese Nachricht nicht gefiltert wird, wird „NONE“ anstelle von „SUCS“ verwendet.
+
+|===

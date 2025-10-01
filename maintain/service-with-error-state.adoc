@@ -1,0 +1,60 @@
+---
+permalink: maintain/service-with-error-state.html 
+sidebar: sidebar 
+keywords: storagegrid, recover, service error state, error, error state 
+summary: Wenn Sie feststellen, dass ein Dienst in einen Fehlerzustand geraten ist, versuchen Sie, den Dienst neu zu starten. 
+---
+= Dienst mit einem Fehlerzustand
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Wenn Sie feststellen, dass ein Dienst in einen Fehlerzustand geraten ist, versuchen Sie, den Dienst neu zu starten.
+
+.Bevor Sie beginnen
+Sie haben die `Passwords.txt` Datei.
+
+.Informationen zu diesem Vorgang
+Server Manager überwacht Dienste und startet alle Dienste neu, die unerwartet beendet wurden.  Wenn ein Dienst ausfällt, versucht Server Manager, ihn neu zu starten.  Wenn innerhalb von fünf Minuten drei Versuche zum Starten eines Dienstes fehlschlagen, wechselt der Dienst in einen Fehlerzustand.  Der Server-Manager versucht keinen weiteren Neustart.
+
+.Schritte
+. Melden Sie sich beim Grid-Knoten an:
++
+.. Geben Sie den folgenden Befehl ein: `ssh admin@_grid_node_IP_`
+.. Geben Sie das Passwort ein, das in der `Passwords.txt` Datei.
+.. Geben Sie den folgenden Befehl ein, um zum Root zu wechseln: `su -`
+.. Geben Sie das Passwort ein, das in der `Passwords.txt` Datei.
+
+
++
+Wenn Sie als Root angemeldet sind, ändert sich die Eingabeaufforderung von `$` Zu `#` .
+
+. Bestätigen Sie den Fehlerstatus des Dienstes: `service _servicename_ status`
++
+Beispiel:
+
++
+[listing]
+----
+service ldr status
+----
++
+Wenn sich der Dienst in einem Fehlerzustand befindet, wird die folgende Meldung zurückgegeben: `_servicename_ in error state` . Beispiel:
+
++
+[listing]
+----
+ldr in error state
+----
++
+
+NOTE: Wenn der Dienststatus `disabled` , siehe die Anweisungen fürlink:using-donotstart-file.html["Entfernen einer DoNotStart-Datei für einen Dienst"] .
+
+. Versuchen Sie, den Fehlerzustand durch einen Neustart des Dienstes zu beheben: `service _servicename_ restart`
++
+Wenn der Dienst nicht neu gestartet werden kann, wenden Sie sich an den technischen Support.
+
+. Melden Sie sich von der Befehlsshell ab: `exit`
+

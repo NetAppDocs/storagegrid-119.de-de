@@ -1,0 +1,161 @@
+---
+permalink: audit/idel-ilm-initiated-delete.html 
+sidebar: sidebar 
+keywords: storagegrid, audit, message, IDEL, ILM Initiated Delete 
+summary: Diese Nachricht wird generiert, wenn ILM den Löschvorgang eines Objekts startet. 
+---
+= IDEL: Von ILM initiiertes Löschen
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Diese Nachricht wird generiert, wenn ILM den Löschvorgang eines Objekts startet.
+
+Die IDEL-Nachricht wird in einer der folgenden Situationen generiert:
+
+* *Für Objekte in konformen S3-Buckets*: Diese Nachricht wird generiert, wenn ILM den Prozess des automatischen Löschens eines Objekts startet, weil seine Aufbewahrungsfrist abgelaufen ist (vorausgesetzt, die Einstellung zum automatischen Löschen ist aktiviert und die rechtliche Aufbewahrungsfrist ist deaktiviert).
+* *Für Objekte in nicht konformen S3-Buckets*.  Diese Nachricht wird generiert, wenn ILM mit dem Löschen eines Objekts beginnt, weil in den aktiven ILM-Richtlinien derzeit keine Platzierungsanweisungen für das Objekt gelten.
+
+
+[cols="1a,1a,4a"]
+|===
+| Code | Feld | Beschreibung 
+
+
+ a| 
+CBID
+ a| 
+Inhaltsblockkennung
+ a| 
+Die CBID des Objekts.
+
+
+
+ a| 
+CMPA
+ a| 
+Compliance: Automatisches Löschen
+ a| 
+Nur für Objekte in konformen S3-Buckets.  0 (falsch) oder 1 (wahr) gibt an, ob ein konformes Objekt automatisch gelöscht werden soll, wenn seine Aufbewahrungsfrist endet, es sei denn, der Bucket unterliegt einer rechtlichen Sperre.
+
+
+
+ a| 
+CMPL
+ a| 
+Compliance: Gesetzliche Aufbewahrungspflicht
+ a| 
+Nur für Objekte in konformen S3-Buckets.  0 (falsch) oder 1 (wahr), gibt an, ob der Bucket derzeit einer rechtlichen Sperre unterliegt.
+
+
+
+ a| 
+CMPR
+ a| 
+Compliance: Aufbewahrungsfrist
+ a| 
+Nur für Objekte in konformen S3-Buckets.  Die Länge der Aufbewahrungsdauer des Objekts in Minuten.
+
+
+
+ a| 
+CTME
+ a| 
+Compliance: Aufnahmezeit
+ a| 
+Nur für Objekte in konformen S3-Buckets.  Die Aufnahmezeit des Objekts.  Sie können zu diesem Wert die Aufbewahrungsdauer in Minuten hinzufügen, um festzulegen, wann das Objekt aus dem Bucket gelöscht werden kann.
+
+
+
+ a| 
+DMRK
+ a| 
+Marker-Versions-ID löschen
+ a| 
+Die Versions-ID der Löschmarkierung, die beim Löschen eines Objekts aus einem versionierten Bucket erstellt wird.  Operationen an Buckets schließen dieses Feld nicht ein.
+
+
+
+ a| 
+CSIZ
+ a| 
+Inhaltsgröße
+ a| 
+Die Größe des Objekts in Bytes.
+
+
+
+ a| 
+LOCS
+ a| 
+Standorte
+ a| 
+Der Speicherort der Objektdaten innerhalb des StorageGRID -Systems.  Der Wert für LOCS ist "", wenn das Objekt keine Standorte hat (z. B. wenn es gelöscht wurde).
+
+CLEC: für Erasure-Coding-Objekte die Erasure-Coding-Profil-ID und die Erasure-Coding-Gruppen-ID, die auf die Daten des Objekts angewendet wird.
+
+CLDI: für replizierte Objekte die LDR-Knoten-ID und die Volume-ID des Objektstandorts.
+
+CLNL: ARC-Knoten-ID des Objektstandorts, wenn die Objektdaten archiviert sind.
+
+
+
+ a| 
+WEG
+ a| 
+S3-Bucket/Schlüssel
+ a| 
+Der S3-Bucket-Name und der S3-Schlüsselname.
+
+
+
+ a| 
+RSLT
+ a| 
+Ergebnis
+ a| 
+Das Ergebnis des ILM-Vorgangs.
+
+SUCS: Der ILM-Vorgang war erfolgreich.
+
+
+
+ a| 
+REGEL
+ a| 
+Regelbezeichnung
+ a| 
+* Wenn ein Objekt in einem konformen S3-Bucket automatisch gelöscht wird, weil seine Aufbewahrungsfrist abgelaufen ist, ist dieses Feld leer.
+* Wenn das Objekt gelöscht wird, weil derzeit keine Platzierungsanweisungen mehr für das Objekt gelten, wird in diesem Feld die menschenlesbare Bezeichnung der letzten ILM-Regel angezeigt, die für das Objekt galt.
+
+
+
+
+ a| 
+SGRP
+ a| 
+Site (Gruppe)
+ a| 
+Falls vorhanden, wurde das Objekt an der angegebenen Site gelöscht, die nicht die Site ist, an der das Objekt aufgenommen wurde.
+
+
+
+ a| 
+UUID
+ a| 
+Universell eindeutige Kennung
+ a| 
+Die Kennung des Objekts innerhalb des StorageGRID -Systems.
+
+
+
+ a| 
+VSID
+ a| 
+Versions-ID
+ a| 
+Die Versions-ID der spezifischen Version eines Objekts, das gelöscht wurde.  Vorgänge an Buckets und Objekten in Buckets ohne Versionierung schließen dieses Feld nicht ein.
+
+|===

@@ -1,0 +1,102 @@
+---
+permalink: ilm/what-cloud-storage-pool-is.html 
+sidebar: sidebar 
+keywords: what is a cloud storage pool 
+summary: Mit einem Cloud-Speicherpool können Sie mithilfe von ILM Objektdaten außerhalb Ihres StorageGRID Systems verschieben.  Beispielsweise möchten Sie möglicherweise selten aufgerufene Objekte in einen kostengünstigeren Cloud-Speicher verschieben, etwa Amazon S3 Glacier, S3 Glacier Deep Archive, Google Cloud oder die Archivzugriffsebene im Microsoft Azure Blob-Speicher.  Oder Sie möchten möglicherweise ein Cloud-Backup von StorageGRID -Objekten verwalten, um die Notfallwiederherstellung zu verbessern. 
+---
+= Was ist ein Cloud-Speicherpool?
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Mit einem Cloud-Speicherpool können Sie mithilfe von ILM Objektdaten außerhalb Ihres StorageGRID Systems verschieben.  Beispielsweise möchten Sie möglicherweise selten aufgerufene Objekte in einen kostengünstigeren Cloud-Speicher verschieben, etwa Amazon S3 Glacier, S3 Glacier Deep Archive, Google Cloud oder die Archivzugriffsebene im Microsoft Azure Blob-Speicher.  Oder Sie möchten möglicherweise ein Cloud-Backup von StorageGRID -Objekten verwalten, um die Notfallwiederherstellung zu verbessern.
+
+Aus ILM-Sicht ähnelt ein Cloud-Speicherpool einem Speicherpool.  Um Objekte an einem der beiden Speicherorte zu speichern, wählen Sie den Pool aus, wenn Sie die Platzierungsanweisungen für eine ILM-Regel erstellen.  Während Speicherpools jedoch aus Speicherknoten innerhalb des StorageGRID Systems bestehen, besteht ein Cloud-Speicherpool aus einem externen Bucket (S3) oder Container (Azure Blob-Speicher).
+
+Die Tabelle vergleicht Speicherpools mit Cloud-Speicherpools und zeigt die allgemeinen Ähnlichkeiten und Unterschiede.
+
+[cols="1a,2a,5a"]
+|===
+|  | Speicherpool | Cloud-Speicherpool 
+
+
+ a| 
+Wie entsteht es?
+ a| 
+Verwenden Sie die Option *ILM* > *Speicherpools* im Grid Manager.
+ a| 
+Verwenden Sie die Option *ILM* > *Speicherpools* > *Cloud-Speicherpools* im Grid Manager.
+
+Sie müssen den externen Bucket oder Container einrichten, bevor Sie den Cloud Storage Pool erstellen können.
+
+
+
+ a| 
+Wie viele Pools können Sie erstellen?
+ a| 
+Unbegrenzt.
+ a| 
+Bis zu 10.
+
+
+
+ a| 
+Wo werden Objekte gespeichert?
+ a| 
+Auf einem oder mehreren Speicherknoten innerhalb von StorageGRID.
+ a| 
+In einem Amazon S3-Bucket, Azure Blob-Speichercontainer oder Google Cloud, der sich außerhalb des StorageGRID Systems befindet.
+
+Wenn der Cloud Storage Pool ein Amazon S3-Bucket ist:
+
+* Sie können optional einen Bucket-Lebenszyklus konfigurieren, um Objekte in einen kostengünstigen Langzeitspeicher wie Amazon S3 Glacier oder S3 Glacier Deep Archive zu verschieben.  Das externe Speichersystem muss die Glacier-Speicherklasse und die S3 RestoreObject-API unterstützen.
+* Sie können Cloud-Speicherpools zur Verwendung mit AWS Commercial Cloud Services (C2S) erstellen, die die AWS Secret Region unterstützen.
+
+
+Wenn es sich bei dem Cloud-Speicherpool um einen Azure Blob-Speichercontainer handelt, überträgt StorageGRID das Objekt in die Archivebene.
+
+*Hinweis:* Konfigurieren Sie die Lebenszyklusverwaltung des Azure Blob-Speichers grundsätzlich nicht für den Container, der für einen Cloud-Speicherpool verwendet wird.  RestoreObject-Vorgänge für Objekte im Cloud-Speicherpool können durch den konfigurierten Lebenszyklus beeinflusst werden.
+
+
+
+ a| 
+Was steuert die Objektplatzierung?
+ a| 
+Eine ILM-Regel in den aktiven ILM-Richtlinien.
+ a| 
+Eine ILM-Regel in den aktiven ILM-Richtlinien.
+
+
+
+ a| 
+Welche Datenschutzmethode wird verwendet?
+ a| 
+Replikation oder Erasure Coding.
+ a| 
+Replikation.
+
+
+
+ a| 
+Wie viele Kopien jedes Objekts sind zulässig?
+ a| 
+Mehrere.
+ a| 
+Eine Kopie im Cloud Storage Pool und optional eine oder mehrere Kopien in StorageGRID.
+
+*Hinweis:* Sie können ein Objekt nicht gleichzeitig in mehr als einem Cloud-Speicherpool speichern.
+
+
+
+ a| 
+Was sind die Vorteile?
+ a| 
+Objekte sind jederzeit schnell zugänglich.
+ a| 
+Kostengünstige Lagerung.
+
+*Hinweis*: FabricPool Daten können nicht in Cloud-Speicherpools gestaffelt werden.
+
+|===

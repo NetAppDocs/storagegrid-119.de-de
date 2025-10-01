@@ -1,0 +1,65 @@
+---
+permalink: ilm/creating-and-assigning-storage-grades.html 
+sidebar: sidebar 
+keywords: what is a storage grade, create storage grade 
+summary: Speicherklassen identifizieren den von einem Speicherknoten verwendeten Speichertyp.  Sie können Speicherklassen erstellen, wenn Sie möchten, dass ILM-Regeln bestimmte Objekte auf bestimmten Speicherknoten platzieren. 
+---
+= Erstellen und Zuweisen von Speicherklassen
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Speicherklassen identifizieren den von einem Speicherknoten verwendeten Speichertyp.  Sie können Speicherklassen erstellen, wenn Sie möchten, dass ILM-Regeln bestimmte Objekte auf bestimmten Speicherknoten platzieren.
+
+.Bevor Sie beginnen
+* Sie sind beim Grid Manager angemeldet mit einemlink:../admin/web-browser-requirements.html["unterstützter Webbrowser"] .
+* Du hastlink:../admin/admin-group-permissions.html["spezifische Zugriffsberechtigungen"] .
+
+
+.Informationen zu diesem Vorgang
+Wenn Sie StorageGRID zum ersten Mal installieren, wird jedem Speicherknoten in Ihrem System automatisch die Speicherklasse *Standard* zugewiesen.  Bei Bedarf können Sie optional benutzerdefinierte Speicherklassen definieren und diese verschiedenen Speicherknoten zuweisen.
+
+Durch die Verwendung benutzerdefinierter Speicherklassen können Sie ILM-Speicherpools erstellen, die nur einen bestimmten Typ von Speicherknoten enthalten.  Beispielsweise möchten Sie möglicherweise, dass bestimmte Objekte auf Ihren schnellsten Speicherknoten gespeichert werden, wie etwa StorageGRID -All-Flash-Speichergeräten.
+
+
+NOTE: Speicherknoten können während der Installation so konfiguriert werden, dass sie nur Objektmetadaten und keine Objektdaten enthalten. Nur Metadaten-Speicherknoten kann keine Speicherklasse zugewiesen werden. Weitere Informationen finden Sie unter link:../primer/what-storage-node-is.html#types-of-storage-nodes["Arten von Speicherknoten"] .
+
+Wenn die Speicherqualität kein Problem darstellt (z. B. wenn alle Speicherknoten identisch sind), können Sie dieses Verfahren überspringen und die Option *beinhaltet alle Speicherqualitäten* für die Speicherqualität verwenden, wenn Sielink:creating-storage-pool.html["Speicherpools erstellen"] .  Durch diese Auswahl wird sichergestellt, dass der Speicherpool jeden Speicherknoten am Standort umfasst, unabhängig von seiner Speicherklasse.
+
+
+NOTE: Erstellen Sie nicht mehr Speicherklassen als nötig.  Erstellen Sie beispielsweise nicht für jeden Speicherknoten eine eigene Speicherklasse.  Weisen Sie stattdessen jeder Speicherklasse zwei oder mehr Knoten zu.  Nur einem Knoten zugewiesene Speicherklassen können zu ILM-Rückständen führen, wenn dieser Knoten nicht mehr verfügbar ist.
+
+.Schritte
+. Wählen Sie *ILM* > *Speichergrade*.
+. Definieren Sie benutzerdefinierte Speicherklassen:
++
+.. Wählen Sie für jede benutzerdefinierte Speicherklasse, die Sie hinzufügen möchten, *Einfügen*image:../media/icon_nms_insert.gif["Symbol einfügen"] , um eine Zeile hinzuzufügen.
+.. Geben Sie eine beschreibende Bezeichnung ein.
++
+image::../media/editing_storage_grades.gif[Seite „Speicherklassen“]
+
+.. Wählen Sie *Änderungen übernehmen*.
+.. Wenn Sie ein gespeichertes Etikett ändern möchten, wählen Sie optional *Bearbeiten*image:../media/icon_nms_edit.gif["Symbol „Bearbeiten“"] und wählen Sie *Änderungen übernehmen*.
++
+
+NOTE: Sie können keine Speichergrade löschen.
+
+
+
+. Weisen Sie Speicherknoten neue Speicherklassen zu:
++
+.. Suchen Sie den Speicherknoten in der LDR-Liste und wählen Sie das Symbol *Bearbeiten*image:../media/icon_nms_edit.gif["Symbol „Bearbeiten“"] .
+.. Wählen Sie aus der Liste die entsprechende Speicherklasse aus.
++
+image::../media/assigning_storage_grades_to_storage_nodes.gif[Seite „Speicherklassen“]
+
++
+
+NOTE: Weisen Sie einem bestimmten Speicherknoten nur einmal eine Speicherklasse zu.  Ein nach einem Ausfall wiederhergestellter Speicherknoten behält die zuvor zugewiesene Speicherklasse bei.  Ändern Sie diese Zuweisung nicht, nachdem die ILM-Richtlinie aktiviert wurde.  Bei einer Änderung der Zuordnung werden die Daten entsprechend der neuen Speicherklasse gespeichert.
+
+.. Wählen Sie *Änderungen übernehmen*.
+
+
+

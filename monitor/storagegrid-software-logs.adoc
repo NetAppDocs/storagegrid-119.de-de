@@ -1,0 +1,416 @@
+---
+permalink: monitor/storagegrid-software-logs.html 
+sidebar: sidebar 
+keywords: logs 
+summary: Sie können StorageGRID Protokolle zur Fehlerbehebung verwenden. 
+---
+= StorageGRID -Softwareprotokolle
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Sie können StorageGRID Protokolle zur Fehlerbehebung verwenden.
+
+
+NOTE: Wenn Sie Ihre Protokolle an einen externen Syslog-Server senden oder das Ziel der Audit-Informationen ändern möchten, wie z. B. die `bycast.log` Und `nms.log` , sehenlink:../monitor/configure-audit-messages.html#["Konfigurieren von Überwachungsmeldungen und Protokollzielen"] .
+
+
+
+== Allgemeine StorageGRID Protokolle
+
+[cols="3a,3a,2a"]
+|===
+| Dateiname | Hinweise | Gefunden auf 
+
+
+| /var/local/log/bycast.log  a| 
+Die primäre StorageGRID Fehlerbehebungsdatei. Wählen Sie *SUPPORT* > *Tools* > *Gittertopologie*.  Wählen Sie dann *_Site_* > *_Node_* > *SSM* > *Events*.
+ a| 
+Alle Knoten
+
+
+
+| /var/local/log/bycast-err.log  a| 
+Enthält eine Teilmenge von `bycast.log` (Meldungen mit Schweregrad ERROR und CRITICAL). Außerdem werden im System KRITISCHE Meldungen angezeigt. Wählen Sie *SUPPORT* > *Tools* > *Gittertopologie*.  Wählen Sie dann *_Site_* > *_Node_* > *SSM* > *Events*.
+ a| 
+Alle Knoten
+
+
+
+| /var/local/core/  a| 
+Enthält alle Core-Dump-Dateien, die bei einer abnormalen Programmbeendigung erstellt werden.  Mögliche Ursachen sind Assertionsfehler, Verstöße oder Thread-Timeouts.
+
+*Hinweis*: Die Datei ``/var/local/core/kexec_cmd` ist normalerweise auf Appliance-Knoten vorhanden und weist nicht auf einen Fehler hin.
+ a| 
+Alle Knoten
+
+|===
+
+
+== Verschlüsselungsbezogene Protokolle
+
+[cols="3a,3a,2a"]
+|===
+| Dateiname | Hinweise | Gefunden auf 
+
+
+| /var/local/log/ssh-config-generation.log  a| 
+Enthält Protokolle im Zusammenhang mit der Generierung von SSH-Konfigurationen und dem Neuladen von SSH-Diensten.
+ a| 
+Alle Knoten
+
+
+
+| /var/local/log/nginx/config-generation.log  a| 
+Enthält Protokolle im Zusammenhang mit der Generierung von Nginx-Konfigurationen und dem Neuladen von Nginx-Diensten.
+ a| 
+Alle Knoten
+
+
+
+| /var/local/log/nginx-gw/config-generation.log  a| 
+Enthält Protokolle im Zusammenhang mit der Generierung von nginx-gw-Konfigurationen (und dem Neuladen von nginx-gw-Diensten).
+ a| 
+Admin- und Gateway-Knoten
+
+
+
+| /var/local/log/update-cipher-configurations.log  a| 
+Enthält Protokolle im Zusammenhang mit der Konfiguration von TLS- und SSH-Richtlinien.
+ a| 
+Alle Knoten
+
+|===
+
+
+== Grid-Föderationsprotokolle
+
+[cols="3a,3a,2a"]
+|===
+| Dateiname | Hinweise | Gefunden auf 
+
+
+| /var/local/log/update_grid_federation_config.log  a| 
+Enthält Protokolle im Zusammenhang mit der Generierung von Nginx- und Nginx-GW-Konfigurationen für Grid-Föderationsverbindungen.
+ a| 
+Alle Knoten
+
+|===
+
+
+== NMS-Protokolle
+
+[cols="3a,3a,2a"]
+|===
+| Dateiname | Hinweise | Gefunden auf 
+
+
+| /var/local/log/nms.log  a| 
+* Erfasst Benachrichtigungen vom Grid Manager und Tenant Manager.
+* Erfasst Ereignisse im Zusammenhang mit dem Betrieb des NMS-Dienstes.  Zum Beispiel E-Mail-Benachrichtigungen und Konfigurationsänderungen.
+* Enthält XML-Bundle-Updates, die sich aus im System vorgenommenen Konfigurationsänderungen ergeben.
+* Enthält Fehlermeldungen im Zusammenhang mit dem einmal täglich durchgeführten Downsampling der Attribute.
+* Enthält Fehlermeldungen des Java-Webservers, beispielsweise Fehler bei der Seitengenerierung und HTTP-Status 500-Fehler.
+
+ a| 
+Admin-Knoten
+
+
+
+| /var/local/log/nms.errlog  a| 
+Enthält Fehlermeldungen im Zusammenhang mit MySQL-Datenbank-Upgrades.
+
+Enthält den Standardfehler-Stream (stderr) der entsprechenden Dienste.  Es gibt eine Protokolldatei pro Dienst.  Diese Dateien sind im Allgemeinen leer, es sei denn, es gibt Probleme mit dem Dienst.
+ a| 
+Admin-Knoten
+
+
+
+| /var/local/log/nms.requestlog  a| 
+Enthält Informationen zu ausgehenden Verbindungen von der Management-API zu internen StorageGRID Diensten.
+ a| 
+Admin-Knoten
+
+|===
+
+
+== Server Manager-Protokolle
+
+[cols="3a,3a,2a"]
+|===
+| Dateiname | Hinweise | Gefunden auf 
+
+
+| /var/local/log/servermanager.log  a| 
+Protokolldatei für die auf dem Server ausgeführte Server Manager-Anwendung.
+ a| 
+Alle Knoten
+
+
+
+| /var/local/log/GridstatBackend.errlog  a| 
+Protokolldatei für die Server Manager-GUI-Backend-Anwendung.
+ a| 
+Alle Knoten
+
+
+
+| /var/local/log/gridstat.errlog  a| 
+Protokolldatei für die Server Manager-GUI.
+ a| 
+Alle Knoten
+
+|===
+
+
+== StorageGRID -Dienstprotokolle
+
+[cols="3a,3a,2a"]
+|===
+| Dateiname | Hinweise | Gefunden auf 
+
+
+| /var/local/log/acct.errlog  a| 
+ a| 
+Speicherknoten, auf denen der ADC-Dienst ausgeführt wird
+
+
+
+| /var/local/log/adc.errlog  a| 
+Enthält den Standardfehler-Stream (stderr) der entsprechenden Dienste.  Es gibt eine Protokolldatei pro Dienst.  Diese Dateien sind im Allgemeinen leer, es sei denn, es gibt Probleme mit dem Dienst.
+ a| 
+Speicherknoten, auf denen der ADC-Dienst ausgeführt wird
+
+
+
+| /var/local/log/ams.errlog  a| 
+ a| 
+Admin-Knoten
+
+
+
+| /var/local/log/cassandra/system.log  a| 
+Informationen zum Metadatenspeicher (Cassandra-Datenbank), die verwendet werden können, wenn beim Hinzufügen neuer Speicherknoten Probleme auftreten oder die Nodetool-Reparaturaufgabe hängen bleibt.
+ a| 
+Speicherknoten
+
+
+
+| /var/local/log/cassandra-reaper.log  a| 
+Informationen zum Cassandra Reaper-Dienst, der Reparaturen der Daten in der Cassandra-Datenbank durchführt.
+ a| 
+Speicherknoten
+
+
+
+| /var/local/log/cassandra-reaper.errlog  a| 
+Fehlerinformationen für den Cassandra Reaper-Dienst.
+ a| 
+Speicherknoten
+
+
+
+| /var/local/log/chunk.errlog  a| 
+ a| 
+Speicherknoten
+
+
+
+| /var/local/log/cmn.errlog  a| 
+ a| 
+Admin-Knoten
+
+
+
+| /var/local/log/cms.errlog  a| 
+Diese Protokolldatei ist möglicherweise auf Systemen vorhanden, die von einer älteren Version von StorageGRID aktualisiert wurden.  Es enthält Legacy-Informationen.
+ a| 
+Speicherknoten
+
+
+
+| /var/local/log/dds.errlog  a| 
+ a| 
+Speicherknoten
+
+
+
+| /var/local/log/dmv.errlog  a| 
+ a| 
+Speicherknoten
+
+
+
+| /var/local/log/dynip*  a| 
+Enthält Protokolle im Zusammenhang mit dem Dynip-Dienst, der das Grid auf dynamische IP-Änderungen überwacht und die lokale Konfiguration aktualisiert.
+ a| 
+Alle Knoten
+
+
+
+| /var/local/log/grafana.log  a| 
+Das mit dem Grafana-Dienst verknüpfte Protokoll, das zur Visualisierung von Metriken im Grid Manager verwendet wird.
+ a| 
+Admin-Knoten
+
+
+
+| /var/local/log/hagroups.log  a| 
+Das mit Hochverfügbarkeitsgruppen verknüpfte Protokoll.
+ a| 
+Admin-Knoten und Gateway-Knoten
+
+
+
+| /var/local/log/hagroups_events.log  a| 
+Verfolgt Statusänderungen, wie etwa den Übergang von BACKUP zu MASTER oder FAULT.
+ a| 
+Admin-Knoten und Gateway-Knoten
+
+
+
+| /var/local/log/idnt.errlog  a| 
+ a| 
+Speicherknoten, auf denen der ADC-Dienst ausgeführt wird
+
+
+
+| /var/local/log/jaeger.log  a| 
+Das mit dem Jaeger-Dienst verknüpfte Protokoll, das zur Ablaufverfolgung verwendet wird.
+ a| 
+Alle Knoten
+
+
+
+| /var/local/log/kstn.errlog  a| 
+ a| 
+Speicherknoten, auf denen der ADC-Dienst ausgeführt wird
+
+
+
+| /var/local/log/lambda*  a| 
+Enthält Protokolle für den S3 Select-Dienst.
+ a| 
+Admin- und Gateway-Knoten
+
+Nur bestimmte Admin- und Gateway-Knoten enthalten dieses Protokoll. Siehe dielink:../admin/manage-s3-select-for-tenant-accounts.html["S3 Select-Anforderungen und -Einschränkungen für Admin- und Gateway-Knoten"] .
+
+
+
+| /var/local/log/ldr.errlog  a| 
+ a| 
+Speicherknoten
+
+
+
+| /var/local/log/miscd/*.log  a| 
+Enthält Protokolle für den MISCd-Dienst (Information Service Control Daemon), der eine Schnittstelle zum Abfragen und Verwalten von Diensten auf anderen Knoten und zum Verwalten von Umgebungskonfigurationen auf dem Knoten bereitstellt, z. B. zum Abfragen des Status von Diensten, die auf anderen Knoten ausgeführt werden.
+ a| 
+Alle Knoten
+
+
+
+| /var/local/log/nginx/*.log  a| 
+Enthält Protokolle für den Nginx-Dienst, der als Authentifizierungs- und sicherer Kommunikationsmechanismus für verschiedene Grid-Dienste (wie Prometheus und Dynip) fungiert, um über HTTPS-APIs mit Diensten auf anderen Knoten kommunizieren zu können.
+ a| 
+Alle Knoten
+
+
+
+| /var/local/log/nginx-gw/*.log  a| 
+Enthält allgemeine Protokolle im Zusammenhang mit dem nginx-gw-Dienst, einschließlich Fehlerprotokollen und Protokollen für die eingeschränkten Admin-Ports auf Admin-Knoten.
+ a| 
+Admin-Knoten und Gateway-Knoten
+
+
+
+| /var/local/log/nginx-gw/cgr-access.log.gz  a| 
+Enthält Zugriffsprotokolle im Zusammenhang mit dem gitterübergreifenden Replikationsverkehr.
+ a| 
+Admin-Knoten, Gateway-Knoten oder beides, basierend auf der Grid-Föderationskonfiguration.  Wird nur im Zielraster für die rasterübergreifende Replikation gefunden.
+
+
+
+| /var/local/log/nginx-gw/endpoint-access.log.gz  a| 
+Enthält Zugriffsprotokolle für den Load Balancer-Dienst, der den Lastenausgleich des S3-Verkehrs von Clients zu Speicherknoten bereitstellt.
+ a| 
+Admin-Knoten und Gateway-Knoten
+
+
+
+| /var/local/log/persistenz*  a| 
+Enthält Protokolle für den Persistenzdienst, der Dateien auf der Stammfestplatte verwaltet, die über einen Neustart hinaus bestehen bleiben müssen.
+ a| 
+Alle Knoten
+
+
+
+| /var/local/log/prometheus.log  a| 
+Enthält für alle Knoten das Dienstprotokoll des Knotenexporters und das Dienstprotokoll des Ade-Exporter-Metriken.
+
+​Enthält für Admin-Knoten auch Protokolle für die Dienste Prometheus und Alert Manager.
+ a| 
+Alle Knoten
+
+
+
+| /var/local/log/raft.log  a| 
+Enthält die Ausgabe der vom RSM-Dienst für das Raft-Protokoll verwendeten Bibliothek.
+ a| 
+Speicherknoten mit RSM-Dienst
+
+
+
+| /var/local/log/rms.errlog  a| 
+Enthält Protokolle für den Dienst Replicated State Machine Service (RSM), der für S3-Plattformdienste verwendet wird.
+ a| 
+Speicherknoten mit RSM-Dienst
+
+
+
+| /var/local/log/ssm.errlog  a| 
+ a| 
+Alle Knoten
+
+
+
+| /var/local/log/update-s3vs-domains.log  a| 
+Enthält Protokolle im Zusammenhang mit der Verarbeitung von Updates für die Konfiguration der virtuell gehosteten S3-Domänennamen. Weitere Informationen finden Sie in den Anweisungen zum Implementieren von S3-Clientanwendungen.
+ a| 
+Admin- und Gateway-Knoten
+
+
+
+| /var/local/log/update-snmp-firewall.*  a| 
+Enthalten Protokolle zu den Firewall-Ports, die für SNMP verwaltet werden.
+ a| 
+Alle Knoten
+
+
+
+| /var/local/log/update-sysl.log  a| 
+Enthält Protokolle zu Änderungen an der Syslog-Konfiguration des Systems.
+ a| 
+Alle Knoten
+
+
+
+| /var/local/log/update-traffic-classes.log  a| 
+Enthält Protokolle im Zusammenhang mit Änderungen an der Konfiguration der Verkehrsklassifizierer.
+ a| 
+Admin- und Gateway-Knoten
+
+
+
+| /var/local/log/update-utcn.log  a| 
+Enthält Protokolle im Zusammenhang mit dem nicht vertrauenswürdigen Client-Netzwerkmodus auf diesem Knoten.
+ a| 
+Alle Knoten
+
+|===
+.Ähnliche Informationen
+* link:about-bycast-log.html["Über das bycast.log"]
+* link:../s3/index.html["Verwenden Sie die S3 REST-API"]
+

@@ -1,0 +1,71 @@
+---
+permalink: audit/etaf-security-authentication-failed.html 
+sidebar: sidebar 
+keywords: storagegrid, audit, message, ETAF, Security Authentication Failed 
+summary: 'Diese Meldung wird generiert, wenn ein Verbindungsversuch mit Transport Layer Security (TLS) fehlgeschlagen ist.' 
+---
+= ETAF: Sicherheitsauthentifizierung fehlgeschlagen
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Diese Nachricht wird generiert, wenn ein Verbindungsversuch mit Transport Layer Security (TLS) fehlgeschlagen ist.
+
+[cols="1a,1a,4a"]
+|===
+| Code | Feld | Beschreibung 
+
+
+ a| 
+CNID
+ a| 
+Verbindungskennung
+ a| 
+Die eindeutige Systemkennung für die TCP/IP-Verbindung, über die die Authentifizierung fehlgeschlagen ist.
+
+
+
+ a| 
+RUID
+ a| 
+Benutzeridentität
+ a| 
+Eine dienstabhängige Kennung, die die Identität des Remotebenutzers darstellt.
+
+
+
+ a| 
+RSLT
+ a| 
+Ursachencode
+ a| 
+Der Grund für das Scheitern:
+
+SCNI: Der Aufbau einer sicheren Verbindung ist fehlgeschlagen.
+
+CERM: Zertifikat fehlte.
+
+CERT: Das Zertifikat war ungültig.
+
+CERE: Zertifikat ist abgelaufen.
+
+CERR: Zertifikat wurde widerrufen.
+
+CSGN: Die Zertifikatssignatur war ungültig.
+
+CSGU: Der Zertifikatsunterzeichner war unbekannt.
+
+UCRM: Benutzeranmeldeinformationen fehlten.
+
+UCRI: Benutzeranmeldeinformationen waren ungültig.
+
+UCRU: Benutzeranmeldeinformationen wurden nicht zugelassen.
+
+TOUT: Zeitüberschreitung bei der Authentifizierung.
+
+|===
+Wenn eine Verbindung zu einem sicheren Dienst hergestellt wird, der TLS verwendet, werden die Anmeldeinformationen der Remote-Entität mithilfe des TLS-Profils und zusätzlicher, in den Dienst integrierter Logik überprüft.  Wenn diese Authentifizierung aufgrund ungültiger, unerwarteter oder nicht zulässiger Zertifikate oder Anmeldeinformationen fehlschlägt, wird eine Prüfmeldung protokolliert.  Dies ermöglicht Abfragen bei unberechtigten Zugriffsversuchen und anderen sicherheitsrelevanten Verbindungsproblemen.
+
+Die Meldung kann durch eine falsche Konfiguration einer Remote-Entität oder durch Versuche verursacht werden, dem System ungültige oder nicht zulässige Anmeldeinformationen vorzulegen.  Diese Prüfmeldung sollte überwacht werden, um Versuche zu erkennen, sich unbefugten Zugriff auf das System zu verschaffen.

@@ -1,0 +1,403 @@
+---
+permalink: admin/kms-managing.html 
+sidebar: sidebar 
+keywords: manage kms, manage key management server, view kms, view key management server, edit kms, edit key management server, view encrypted nodes, remove kms, remove key management server 
+summary: 'Die Verwaltung eines Schlüsselverwaltungsservers (KMS) umfasst das Anzeigen oder Bearbeiten von Details, das Verwalten von Zertifikaten, das Anzeigen verschlüsselter Knoten und das Entfernen eines KMS, wenn dieser nicht mehr benötigt wird.' 
+---
+= Verwalten eines KMS
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Die Verwaltung eines Schlüsselverwaltungsservers (KMS) umfasst das Anzeigen oder Bearbeiten von Details, das Verwalten von Zertifikaten, das Anzeigen verschlüsselter Knoten und das Entfernen eines KMS, wenn dieser nicht mehr benötigt wird.
+
+.Bevor Sie beginnen
+* Sie sind beim Grid Manager angemeldet mit einemlink:../admin/web-browser-requirements.html["unterstützter Webbrowser"] .
+* Sie haben dielink:admin-group-permissions.html["erforderliche Zugriffsberechtigung"] .
+
+
+
+
+== KMS-Details anzeigen
+
+Sie können Informationen zu jedem Schlüsselverwaltungsserver (KMS) in Ihrem StorageGRID -System anzeigen, einschließlich Schlüsseldetails und dem aktuellen Status der Server- und Clientzertifikate.
+
+.Schritte
+. Wählen Sie *KONFIGURATION* > *Sicherheit* > *Schlüsselverwaltungsserver*.
++
+Die Seite „Schlüsselverwaltungsserver“ wird angezeigt und zeigt die folgenden Informationen:
+
++
+** Auf der Registerkarte „Konfigurationsdetails“ werden alle konfigurierten Schlüsselverwaltungsserver aufgelistet.
+** Auf der Registerkarte „Verschlüsselte Knoten“ werden alle Knoten aufgelistet, bei denen die Knotenverschlüsselung aktiviert ist.
+
+
+. Um die Details für ein bestimmtes KMS anzuzeigen und Vorgänge auf diesem KMS auszuführen, wählen Sie den Namen des KMS aus.  Auf der Detailseite für das KMS sind die folgenden Informationen aufgeführt:
++
+[cols="1a,3a"]
+|===
+| Feld | Beschreibung 
+
+
+ a| 
+Verwaltet Schlüssel für
+ a| 
+Die mit dem KMS verknüpfte StorageGRID -Site.
+
+In diesem Feld wird der Name einer bestimmten StorageGRID Site oder *Sites angezeigt, die nicht von einem anderen KMS verwaltet werden (Standard-KMS).*
+
+
+
+ a| 
+Hostname
+ a| 
+Der vollqualifizierte Domänenname oder die IP-Adresse des KMS.
+
+Wenn ein Cluster aus zwei Schlüsselverwaltungsservern vorhanden ist, werden die vollqualifizierten Domänennamen oder IP-Adressen beider Server aufgelistet.  Wenn in einem Cluster mehr als zwei Schlüsselverwaltungsserver vorhanden sind, wird der vollqualifizierte Domänenname oder die IP-Adresse des ersten KMS zusammen mit der Anzahl der zusätzlichen Schlüsselverwaltungsserver im Cluster aufgelistet.
+
+Zum Beispiel: `10.10.10.10 and 10.10.10.11` oder `10.10.10.10 and 2 others` .
+
+Um alle Hostnamen in einem Cluster anzuzeigen, wählen Sie ein KMS aus und wählen Sie *Bearbeiten* oder *Aktionen* > *Bearbeiten*.
+
+|===
+. Wählen Sie auf der KMS-Detailseite eine Registerkarte aus, um die folgenden Informationen anzuzeigen:
++
+[cols="1a,1a,3a"]
+|===
+| Tab | Feld | Beschreibung 
+
+
+ a| 
+Wichtige Informationen
+ a| 
+Schlüsselname
+ a| 
+Der Schlüsselalias für den StorageGRID -Client im KMS.
+
+
+
+ a| 
+Schlüssel-UID
+ a| 
+Die eindeutige Kennung der neuesten Version des Schlüssels.
+
+
+
+ a| 
+Zuletzt geändert
+ a| 
+Datum und Uhrzeit der neuesten Version des Schlüssels.
+
+
+
+ a| 
+Serverzertifikat
+ a| 
+Metadaten
+ a| 
+Die Metadaten für das Zertifikat, wie Seriennummer, Ablaufdatum und -uhrzeit sowie das Zertifikat-PEM.
+
+
+
+ a| 
+Zertifikat PEM
+ a| 
+Der Inhalt der PEM-Datei (Privacy Enhanced Mail) für das Zertifikat.
+
+
+
+ a| 
+Client-Zertifikat
+ a| 
+Metadaten
+ a| 
+Die Metadaten für das Zertifikat, wie Seriennummer, Ablaufdatum und -uhrzeit sowie das Zertifikat-PEM.
+
+
+
+ a| 
+Zertifikat PEM
+ a| 
+Der Inhalt der PEM-Datei (Privacy Enhanced Mail) für das Zertifikat.
+
+|===
+. [[rotate-key]]Wählen Sie so oft wie es die Sicherheitspraktiken Ihres Unternehmens erfordern *Schlüssel rotieren* oder verwenden Sie die KMS-Software, um eine neue Version des Schlüssels zu erstellen.
++
+Wenn die Schlüsselrotation erfolgreich war, werden die Felder „Schlüssel-UID“ und „Zuletzt geändert“ aktualisiert.
+
++
+[CAUTION]
+====
+Wenn Sie den Verschlüsselungsschlüssel mithilfe der KMS-Software rotieren, rotieren Sie ihn von der zuletzt verwendeten Version des Schlüssels zu einer neuen Version desselben Schlüssels.  Wechseln Sie nicht zu einem völlig anderen Schlüssel.
+
+Versuchen Sie niemals, einen Schlüssel zu rotieren, indem Sie den Schlüsselnamen (Alias) für das KMS ändern.  StorageGRID erfordert, dass alle zuvor verwendeten Schlüsselversionen (sowie alle zukünftigen) vom KMS mit demselben Schlüsselalias aus zugänglich sind.  Wenn Sie den Schlüsselalias für ein konfiguriertes KMS ändern, kann StorageGRID Ihre Daten möglicherweise nicht entschlüsseln.
+
+====
+
+
+
+
+== Zertifikate verwalten
+
+Beheben Sie umgehend alle Probleme mit Server- oder Clientzertifikaten.  Ersetzen Sie Zertifikate nach Möglichkeit vor ihrem Ablauf.
+
+
+CAUTION: Sie müssen alle Zertifikatsprobleme so schnell wie möglich beheben, um den Datenzugriff aufrechtzuerhalten.
+
+.Schritte
+. Wählen Sie *KONFIGURATION* > *Sicherheit* > *Schlüsselverwaltungsserver*.
+. Sehen Sie sich in der Tabelle den Wert für den Zertifikatsablauf für jeden KMS an.
+. Wenn das Ablaufdatum des Zertifikats für einen KMS unbekannt ist, warten Sie bis zu 30 Minuten und aktualisieren Sie dann Ihren Webbrowser.
+. Wenn in der Spalte „Zertifikatablauf“ angegeben ist, dass ein Zertifikat abgelaufen ist oder bald abläuft, wählen Sie das KMS aus, um zur KMS-Detailseite zu gelangen.
++
+.. Wählen Sie *Serverzertifikat* aus und überprüfen Sie den Wert für das Feld „Läuft ab am“.
+.. Um das Zertifikat zu ersetzen, wählen Sie *Zertifikat bearbeiten*, um ein neues Zertifikat hochzuladen.
+.. Wiederholen Sie diese Teilschritte und wählen Sie *Client-Zertifikat* anstelle von Server-Zertifikat.
+
+
+. Wenn die Warnungen *Ablauf des KMS-CA-Zertifikats*, *Ablauf des KMS-Client-Zertifikats* und *Ablauf des KMS-Server-Zertifikats* ausgelöst werden, notieren Sie sich die Beschreibung der einzelnen Warnungen und führen Sie die empfohlenen Aktionen aus.
++
+Es kann bis zu 30 Minuten dauern, bis StorageGRID Aktualisierungen zum Ablauf des Zertifikats erhält.  Aktualisieren Sie Ihren Webbrowser, um die aktuellen Werte anzuzeigen.
+
+
+
+
+NOTE: Wenn Sie den Status „Serverzertifikatstatus unbekannt“ erhalten, stellen Sie sicher, dass Ihr KMS den Erhalt eines Serverzertifikats ohne Clientzertifikat zulässt.
+
+
+
+== Verschlüsselte Knoten anzeigen
+
+Sie können Informationen zu den Appliance-Knoten in Ihrem StorageGRID -System anzeigen, bei denen die Einstellung *Knotenverschlüsselung* aktiviert ist.
+
+.Schritte
+. Wählen Sie *KONFIGURATION* > *Sicherheit* > *Schlüsselverwaltungsserver*.
++
+Die Seite „Schlüsselverwaltungsserver“ wird angezeigt.  Auf der Registerkarte „Konfigurationsdetails“ werden alle konfigurierten Schlüsselverwaltungsserver angezeigt.
+
+. Wählen Sie oben auf der Seite die Registerkarte *Verschlüsselte Knoten* aus.
++
+Auf der Registerkarte „Verschlüsselte Knoten“ werden die Appliance-Knoten in Ihrem StorageGRID -System aufgelistet, für die die Einstellung *Knotenverschlüsselung* aktiviert ist.
+
+. Überprüfen Sie die Informationen in der Tabelle für jeden Appliance-Knoten.
++
+[cols="1a,3a"]
+|===
+| Spalte | Beschreibung 
+
+
+ a| 
+Knotenname
+ a| 
+Der Name des Appliance-Knotens.
+
+
+
+ a| 
+Knotentyp
+ a| 
+Der Knotentyp: Speicher, Admin oder Gateway.
+
+
+
+ a| 
+Website
+ a| 
+Der Name der StorageGRID -Site, an der der Knoten installiert ist.
+
+
+
+ a| 
+KMS-Name
+ a| 
+Der beschreibende Name des für den Knoten verwendeten KMS.
+
+Wenn kein KMS aufgeführt ist, wählen Sie die Registerkarte „Konfigurationsdetails“ aus, um ein KMS hinzuzufügen.
+
+link:kms-adding.html["Hinzufügen eines Schlüsselverwaltungsservers (KMS)"]
+
+
+
+ a| 
+Schlüssel-UID
+ a| 
+Die eindeutige ID des Verschlüsselungsschlüssels, der zum Verschlüsseln und Entschlüsseln von Daten auf dem Appliance-Knoten verwendet wird.  Um eine vollständige Schlüssel-UID anzuzeigen, wählen Sie den Text aus.
+
+Ein Bindestrich (--) zeigt an, dass die Schlüssel-UID unbekannt ist, möglicherweise aufgrund eines Verbindungsproblems zwischen dem Appliance-Knoten und dem KMS.
+
+
+
+ a| 
+Status
+ a| 
+Der Status der Verbindung zwischen dem KMS und dem Appliance-Knoten.  Wenn der Knoten verbunden ist, wird der Zeitstempel alle 30 Minuten aktualisiert.  Es kann mehrere Minuten dauern, bis der Verbindungsstatus nach Änderungen der KMS-Konfiguration aktualisiert wird.
+
+*Hinweis:* Aktualisieren Sie Ihren Webbrowser, um die neuen Werte anzuzeigen.
+
+|===
+. Wenn in der Spalte „Status“ ein KMS-Problem angezeigt wird, beheben Sie das Problem umgehend.
++
+Während des normalen KMS-Betriebs lautet der Status *Mit KMS verbunden*.  Wenn ein Knoten vom Netz getrennt wird, wird der Verbindungsstatus des Knotens angezeigt (Administrativ deaktiviert oder Unbekannt).
+
++
+Andere Statusmeldungen entsprechen StorageGRID -Warnungen mit denselben Namen:
+
++
+** KMS-Konfiguration konnte nicht geladen werden
+** KMS-Konnektivitätsfehler
+** Name des KMS-Verschlüsselungsschlüssels nicht gefunden
+** Fehler bei der Rotation des KMS-Verschlüsselungsschlüssels
+** KMS-Schlüssel konnte ein Appliance-Volume nicht entschlüsseln
+** KMS ist nicht konfiguriert
+
+
++
+Führen Sie die empfohlenen Aktionen für diese Warnungen aus.
+
+
+
+
+CAUTION: Sie müssen alle Probleme sofort beheben, um sicherzustellen, dass Ihre Daten vollständig geschützt sind.
+
+
+
+== Bearbeiten eines KMS
+
+Möglicherweise müssen Sie die Konfiguration eines Schlüsselverwaltungsservers bearbeiten, beispielsweise wenn ein Zertifikat bald abläuft.
+
+.Bevor Sie beginnen
+* Wenn Sie die für ein KMS ausgewählte Site aktualisieren möchten, haben Sie dielink:kms-considerations-for-changing-for-site.html["Überlegungen zum Ändern des KMS für eine Site"] .
+* Sie sind beim Grid Manager angemeldet mit einemlink:../admin/web-browser-requirements.html["unterstützter Webbrowser"] .
+* Sie haben dielink:admin-group-permissions.html["Root-Zugriffsberechtigung"] .
+
+
+.Schritte
+. Wählen Sie *KONFIGURATION* > *Sicherheit* > *Schlüsselverwaltungsserver*.
++
+Die Seite „Schlüsselverwaltungsserver“ wird angezeigt und zeigt alle konfigurierten Schlüsselverwaltungsserver.
+
+. Wählen Sie das KMS aus, das Sie bearbeiten möchten, und wählen Sie *Aktionen* > *Bearbeiten*.
++
+Sie können ein KMS auch bearbeiten, indem Sie den KMS-Namen in der Tabelle auswählen und auf der KMS-Detailseite *Bearbeiten* auswählen.
+
+. Aktualisieren Sie optional die Details in *Schritt 1 (KMS-Details)* des Assistenten „Schlüsselverwaltungsserver bearbeiten“.
++
+[cols="1a,3a"]
+|===
+| Feld | Beschreibung 
+
+
+ a| 
+KMS-Name
+ a| 
+Ein beschreibender Name, der Ihnen bei der Identifizierung dieses KMS hilft.  Muss zwischen 1 und 64 Zeichen lang sein.
+
+
+
+ a| 
+Schlüsselname
+ a| 
+Der genaue Schlüsselalias für den StorageGRID -Client im KMS.  Muss zwischen 1 und 255 Zeichen lang sein.
+
+Nur in seltenen Fällen müssen Sie den Schlüsselnamen bearbeiten.  Beispielsweise müssen Sie den Schlüsselnamen bearbeiten, wenn der Alias im KMS umbenannt wird oder wenn alle Versionen des vorherigen Schlüssels in den Versionsverlauf des neuen Alias kopiert wurden.
+
+
+
+ a| 
+Verwaltet Schlüssel für
+ a| 
+Wenn Sie ein standortspezifisches KMS bearbeiten und noch kein Standard-KMS haben, wählen Sie optional *Standorte, die nicht von einem anderen KMS verwaltet werden (Standard-KMS)* aus.  Diese Auswahl konvertiert ein standortspezifisches KMS in das Standard-KMS, das für alle Standorte gilt, die kein dediziertes KMS haben, und für alle Standorte, die in einer Erweiterung hinzugefügt werden.
+
+*Hinweis:* Wenn Sie ein standortspezifisches KMS bearbeiten, können Sie keine andere Site auswählen.  Wenn Sie das Standard-KMS bearbeiten, können Sie keine bestimmte Site auswählen.
+
+
+
+ a| 
+Hafen
+ a| 
+Der Port, den der KMS-Server für die KMIP-Kommunikation (Key Management Interoperability Protocol) verwendet.  Der Standardwert ist 5696, der KMIP-Standardport.
+
+
+
+ a| 
+Hostname
+ a| 
+Der vollqualifizierte Domänenname oder die IP-Adresse für den KMS.
+
+*Hinweis:* Das Feld „Subject Alternative Name“ (SAN) des Serverzertifikats muss den FQDN oder die IP-Adresse enthalten, die Sie hier eingeben.  Andernfalls kann StorageGRID keine Verbindung zum KMS oder zu allen Servern in einem KMS-Cluster herstellen.
+
+|===
+. Wenn Sie einen KMS-Cluster konfigurieren, wählen Sie *Weiteren Hostnamen hinzufügen* aus, um für jeden Server im Cluster einen Hostnamen hinzuzufügen.
+. Wählen Sie *Weiter*.
++
+Schritt 2 (Serverzertifikat hochladen) des Assistenten „Schlüsselverwaltungsserver bearbeiten“ wird angezeigt.
+
+. Wenn Sie das Serverzertifikat ersetzen müssen, wählen Sie *Durchsuchen* und laden Sie die neue Datei hoch.
+. Wählen Sie *Weiter*.
++
+Schritt 3 (Client-Zertifikate hochladen) des Assistenten „Schlüsselverwaltungsserver bearbeiten“ wird angezeigt.
+
+. Wenn Sie das Client-Zertifikat und den privaten Schlüssel des Client-Zertifikats ersetzen müssen, wählen Sie *Durchsuchen* und laden Sie die neuen Dateien hoch.
+. Wählen Sie *Testen und speichern*.
++
+Die Verbindungen zwischen dem Schlüsselverwaltungsserver und allen knotenverschlüsselten Appliance-Knoten an den betroffenen Standorten werden getestet.  Wenn alle Knotenverbindungen gültig sind und der richtige Schlüssel auf dem KMS gefunden wird, wird der Schlüsselverwaltungsserver der Tabelle auf der Seite „Schlüsselverwaltungsserver“ hinzugefügt.
+
+. Wenn eine Fehlermeldung angezeigt wird, überprüfen Sie die Nachrichtendetails und wählen Sie *OK*.
++
+Beispielsweise erhalten Sie möglicherweise den Fehler „422: Unprocessable Entity“, wenn die Site, die Sie für dieses KMS ausgewählt haben, bereits von einem anderen KMS verwaltet wird oder wenn ein Verbindungstest fehlgeschlagen ist.
+
+. Wenn Sie die aktuelle Konfiguration speichern müssen, bevor Sie die Verbindungsfehler beheben, wählen Sie *Speichern erzwingen*.
++
+
+CAUTION: Durch Auswahl von *Speichern erzwingen* wird die KMS-Konfiguration gespeichert, die externe Verbindung von jedem Gerät zu diesem KMS wird jedoch nicht getestet.  Wenn ein Problem mit der Konfiguration vorliegt, können Sie Appliance-Knoten, bei denen die Knotenverschlüsselung am betroffenen Standort aktiviert ist, möglicherweise nicht neu starten.  Bis zur Lösung der Probleme verlieren Sie möglicherweise den Zugriff auf Ihre Daten.
+
++
+Die KMS-Konfiguration wird gespeichert.
+
+. Überprüfen Sie die Bestätigungswarnung und wählen Sie *OK*, wenn Sie sicher sind, dass Sie das Speichern der Konfiguration erzwingen möchten.
++
+Die KMS-Konfiguration wird gespeichert, die Verbindung zum KMS wird jedoch nicht getestet.
+
+
+
+
+
+== Entfernen eines Schlüsselverwaltungsservers (KMS)
+
+In manchen Fällen möchten Sie möglicherweise einen Schlüsselverwaltungsserver entfernen.  Beispielsweise möchten Sie möglicherweise ein standortspezifisches KMS entfernen, wenn Sie die Site außer Betrieb genommen haben.
+
+.Bevor Sie beginnen
+* Sie haben dielink:kms-considerations-and-requirements.html["Überlegungen und Anforderungen zur Verwendung eines Schlüsselverwaltungsservers"] .
+* Sie sind beim Grid Manager angemeldet mit einemlink:../admin/web-browser-requirements.html["unterstützter Webbrowser"] .
+* Sie haben dielink:admin-group-permissions.html["Root-Zugriffsberechtigung"] .
+
+
+.Informationen zu diesem Vorgang
+Sie können einen KMS in folgenden Fällen entfernen:
+
+* Sie können ein standortspezifisches KMS entfernen, wenn der Standort außer Betrieb genommen wurde oder wenn der Standort keine Appliance-Knoten mit aktivierter Knotenverschlüsselung enthält.
+* Sie können das Standard-KMS entfernen, wenn für jeden Standort mit Appliance-Knoten und aktivierter Knotenverschlüsselung bereits ein standortspezifischer KMS vorhanden ist.
+
+
+.Schritte
+. Wählen Sie *KONFIGURATION* > *Sicherheit* > *Schlüsselverwaltungsserver*.
++
+Die Seite „Schlüsselverwaltungsserver“ wird angezeigt und zeigt alle konfigurierten Schlüsselverwaltungsserver.
+
+. Wählen Sie das KMS aus, das Sie entfernen möchten, und wählen Sie *Aktionen* > *Entfernen*.
++
+Sie können ein KMS auch entfernen, indem Sie den KMS-Namen in der Tabelle auswählen und auf der KMS-Detailseite *Entfernen* auswählen.
+
+. Bestätigen Sie, dass Folgendes zutrifft:
++
+** Sie entfernen ein standortspezifisches KMS für eine Site, die keinen Appliance-Knoten mit aktivierter Knotenverschlüsselung hat.
+** Sie entfernen das Standard-KMS, aber für jede Site ist bereits ein standortspezifisches KMS mit Knotenverschlüsselung vorhanden.
+
+
+. Wählen Sie *Ja*.
++
+Die KMS-Konfiguration wird entfernt.
+
+

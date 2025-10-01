@@ -1,0 +1,32 @@
+---
+permalink: ilm/how-ilm-operates-throughout-objects-life.html 
+sidebar: sidebar 
+keywords: ilm lifecycle, object lifecycle and ILM 
+summary: Wenn Sie verstehen, wie StorageGRID ILM verwendet, um Objekte in jeder Phase ihres Lebenszyklus zu verwalten, können Sie eine effektivere Richtlinie entwerfen. 
+---
+= Funktionsweise von ILM während der gesamten Lebensdauer eines Objekts
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Wenn Sie verstehen, wie StorageGRID ILM verwendet, um Objekte in jeder Phase ihres Lebenszyklus zu verwalten, können Sie eine effektivere Richtlinie entwerfen.
+
+* *Aufnahme*: Die Aufnahme beginnt, wenn eine S3-Clientanwendung eine Verbindung herstellt, um ein Objekt im StorageGRID -System zu speichern, und ist abgeschlossen, wenn StorageGRID dem Client die Meldung „Aufnahme erfolgreich“ zurückgibt.  Der Schutz der Objektdaten erfolgt während der Aufnahme entweder durch sofortiges Anwenden von ILM-Anweisungen (synchrone Platzierung) oder durch Erstellen von Zwischenkopien und späteres Anwenden von ILM (Dual Commit), je nachdem, wie die ILM-Anforderungen festgelegt wurden.
+* *Kopienverwaltung*: Nachdem die Anzahl und Art der Objektkopien erstellt wurden, die in den Platzierungsanweisungen des ILM angegeben sind, verwaltet StorageGRID die Objektstandorte und schützt Objekte vor Verlust.
++
+** *ILM-Scan und -Auswertung*: StorageGRID scannt kontinuierlich die Liste der im Grid gespeicherten Objekte und prüft, ob die aktuellen Kopien die ILM-Anforderungen erfüllen.  Wenn unterschiedliche Typen, Anzahlen oder Speicherorte von Objektkopien erforderlich sind, erstellt, löscht oder verschiebt StorageGRID Kopien nach Bedarf.
+** *Hintergrundüberprüfung*: StorageGRID führt kontinuierlich eine Hintergrundüberprüfung durch, um die Integrität der Objektdaten zu überprüfen.  Wenn ein Problem gefunden wird, erstellt StorageGRID automatisch eine neue Objektkopie oder ein Ersatz-Löschcodiertes Objektfragment an einem Speicherort, der den aktuellen ILM-Anforderungen entspricht. Sehen link:../troubleshoot/verifying-object-integrity.html["Überprüfen der Objektintegrität"] .
+
+
+* *Objektlöschung*: Die Verwaltung eines Objekts endet, wenn alle Kopien aus dem StorageGRID -System entfernt wurden.  Objekte können aufgrund einer Löschanforderung eines Clients oder aufgrund einer Löschung durch ILM oder einer Löschung aufgrund des Ablaufs des Lebenszyklus eines S3-Buckets entfernt werden.
++
+
+NOTE: Objekte in einem Bucket mit aktivierter S3-Objektsperre können nicht gelöscht werden, wenn sie einer rechtlichen Sperre unterliegen oder wenn ein Aufbewahrungsdatum angegeben, aber noch nicht erreicht wurde.
+
+
+
+Das Diagramm fasst zusammen, wie ILM während des gesamten Lebenszyklus eines Objekts funktioniert.
+
+image::../media/overview_of_object_lifecycle.png[Übersicht über den Objektlebenszyklus]

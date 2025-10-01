@@ -1,0 +1,24 @@
+---
+permalink: expand/adding-storage-capacity-for-replicated-objects.html 
+sidebar: sidebar 
+keywords: replication, replicated, copies, capacity, storage nodes, expand, expansion 
+summary: 'Wenn die Richtlinie für das Information Lifecycle Management (ILM) Ihrer Bereitstellung eine Regel zum Erstellen replizierter Kopien von Objekten enthält, müssen Sie überlegen, wie viel Speicher Sie hinzufügen und wo Sie die neuen Speichervolumes oder Speicherknoten hinzufügen.' 
+---
+= Speicherkapazität für replizierte Objekte hinzufügen
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Wenn die Richtlinie für das Information Lifecycle Management (ILM) Ihrer Bereitstellung eine Regel zum Erstellen replizierter Kopien von Objekten enthält, müssen Sie überlegen, wie viel Speicher Sie hinzufügen und wo Sie die neuen Speichervolumes oder Speicherknoten hinzufügen.
+
+Hinweise dazu, wo zusätzlicher Speicher hinzugefügt werden kann, finden Sie in den ILM-Regeln zum Erstellen replizierter Kopien.  Wenn durch ILM-Regeln zwei oder mehr Objektkopien erstellt werden, planen Sie, an jedem Standort, an dem Objektkopien erstellt werden, zusätzlichen Speicher hinzuzufügen.  Ein einfaches Beispiel: Wenn Sie ein Grid mit zwei Sites haben und eine ILM-Regel, die an jeder Site eine Objektkopie erstellt, müssen Sielink:../expand/adding-storage-volumes-to-storage-nodes.html["Speicher hinzufügen"] zu jedem Standort, um die Gesamtobjektkapazität des Netzes zu erhöhen.  Informationen zur Objektreplikation finden Sie unterlink:../ilm/what-replication-is.html["Was ist Replikation?"] .
+
+Aus Leistungsgründen sollten Sie versuchen, die Speicherkapazität und Rechenleistung zwischen den Standorten auszugleichen.  Für dieses Beispiel sollten Sie also jedem Standort die gleiche Anzahl an Speicherknoten oder zusätzliche Speichervolumes hinzufügen.
+
+Wenn Sie über eine komplexere ILM-Richtlinie verfügen, die Regeln enthält, die Objekte basierend auf Kriterien wie dem Bucket-Namen an verschiedenen Speicherorten platzieren, oder Regeln, die Objektspeicherorte im Laufe der Zeit ändern, ist Ihre Analyse, wo Speicher für die Erweiterung erforderlich ist, ähnlich, aber komplexer.
+
+Durch die Aufzeichnung der Geschwindigkeit, mit der die gesamte Speicherkapazität verbraucht wird, können Sie besser einschätzen, wie viel Speicher Sie bei der Erweiterung hinzufügen müssen und wann der zusätzliche Speicherplatz benötigt wird.  Mit dem Grid Manager können Sielink:../monitor/monitoring-storage-capacity.html["Monitor- und Diagrammspeicherkapazität"] .
+
+Denken Sie bei der Planung des Zeitpunkts einer Erweiterung daran, wie lange die Beschaffung und Installation von zusätzlichem Speicher dauern könnte.

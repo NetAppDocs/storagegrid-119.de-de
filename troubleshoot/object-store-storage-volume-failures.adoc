@@ -1,0 +1,28 @@
+---
+permalink: troubleshoot/object-store-storage-volume-failures.html 
+sidebar: sidebar 
+keywords: how to confirm object location, object metadata lookup 
+summary: Der zugrunde liegende Speicher auf einem Speicherknoten ist in Objektspeicher unterteilt.  Objektspeicher werden auch als Speichervolumes bezeichnet. 
+---
+= Fehler im Objektspeicher (Speichervolumen)
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Der zugrunde liegende Speicher auf einem Speicherknoten ist in Objektspeicher unterteilt.  Objektspeicher werden auch als Speichervolumes bezeichnet.
+
+Sie können Objektspeicherinformationen für jeden Speicherknoten anzeigen. Objektspeicher werden unten auf der Seite *NODES* > *_Storage Node_* > *Storage* angezeigt.
+
+image::../media/nodes_page_storage_nodes_storage_tables.png[Knoten Seitenspeicher Knotenspeicher Tabellen]
+
+Mehr sehenlink:../monitor/viewing-grid-topology-tree.html["Details zu jedem Speicherknoten"] , führen Sie die folgenden Schritte aus:
+
+. Wählen Sie *SUPPORT* > *Tools* > *Gittertopologie*.
+. Wählen Sie *_site_* > *_Storage Node_* > *LDR* > *Storage* > *Overview* > *Main*.
+
+
+image::../media/storage_node_object_stores.png[Storage Node-Objektspeicher]
+
+Abhängig von der Art des Fehlers können sich Fehler bei einem Speichervolumen inlink:../monitor/alerts-reference.html["Speichervolumenwarnungen"] .  Wenn ein Speichervolume ausfällt, sollten Sie das ausgefallene Speichervolume reparieren, um die volle Funktionalität des Speicherknotens so schnell wie möglich wiederherzustellen.  Bei Bedarf können Sie auf die Registerkarte *Konfiguration* gehen undlink:../maintain/checking-storage-state-after-recovering-storage-volumes.html["Versetzen Sie den Speicherknoten in einen schreibgeschützten Zustand"] damit das StorageGRID -System es zum Datenabruf verwenden kann, während Sie eine vollständige Wiederherstellung des Servers vorbereiten.

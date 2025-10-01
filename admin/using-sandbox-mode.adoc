@@ -1,0 +1,387 @@
+---
+permalink: admin/using-sandbox-mode.html 
+sidebar: sidebar 
+keywords: use sandbox mode for sso, how to test single sign-on 
+summary: 'Sie können den Sandbox-Modus verwenden, um Single Sign-On (SSO) zu konfigurieren und zu testen, bevor Sie es für alle StorageGRID Benutzer aktivieren.  Nachdem SSO aktiviert wurde, können Sie jederzeit in den Sandbox-Modus zurückkehren, wenn Sie die Konfiguration ändern oder erneut testen müssen.' 
+---
+= Sandbox-Modus verwenden
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Sie können den Sandbox-Modus verwenden, um Single Sign-On (SSO) zu konfigurieren und zu testen, bevor Sie es für alle StorageGRID Benutzer aktivieren.  Nachdem SSO aktiviert wurde, können Sie jederzeit in den Sandbox-Modus zurückkehren, wenn Sie die Konfiguration ändern oder erneut testen müssen.
+
+.Bevor Sie beginnen
+* Sie sind beim Grid Manager angemeldet mit einemlink:../admin/web-browser-requirements.html["unterstützter Webbrowser"] .
+* Sie haben dielink:admin-group-permissions.html["Root-Zugriffsberechtigung"] .
+* Sie haben die Identitätsföderation für Ihr StorageGRID -System konfiguriert.
+* Für den *LDAP-Diensttyp* der Identitätsföderation haben Sie je nach dem SSO-Identitätsanbieter, den Sie verwenden möchten, entweder Active Directory oder Azure ausgewählt.
++
+[cols="1a,1a"]
+|===
+| Konfigurierter LDAP-Diensttyp | Optionen für SSO-Identitätsanbieter 
+
+
+ a| 
+Active Directory
+ a| 
+** Active Directory
+** Azurblau
+** PingFederate
+
+
+
+
+ a| 
+Azurblau
+ a| 
+Azurblau
+
+|===
+
+
+.Informationen zu diesem Vorgang
+Wenn SSO aktiviert ist und ein Benutzer versucht, sich bei einem Admin-Knoten anzumelden, sendet StorageGRID eine Authentifizierungsanforderung an den SSO-Identitätsanbieter.  Im Gegenzug sendet der SSO-Identitätsanbieter eine Authentifizierungsantwort zurück an StorageGRID, die angibt, ob die Authentifizierungsanforderung erfolgreich war.  Für erfolgreiche Anfragen:
+
+* Die Antwort von Active Directory oder PingFederate enthält eine universell eindeutige Kennung (UUID) für den Benutzer.
+* Die Antwort von Azure enthält einen User Principal Name (UPN).
+
+
+Damit StorageGRID (der Dienstanbieter) und der SSO-Identitätsanbieter sicher über Benutzerauthentifizierungsanforderungen kommunizieren können, müssen Sie bestimmte Einstellungen in StorageGRID konfigurieren.  Als Nächstes müssen Sie die Software des SSO-Identitätsanbieters verwenden, um für jeden Admin-Knoten eine Vertrauensstellung der vertrauenden Seite (AD FS), eine Unternehmensanwendung (Azure) oder einen Dienstanbieter (PingFederate) zu erstellen.  Abschließend müssen Sie zu StorageGRID zurückkehren, um SSO zu aktivieren.
+
+Der Sandbox-Modus erleichtert die Durchführung dieser Hin- und Her-Konfiguration und das Testen aller Ihrer Einstellungen, bevor Sie SSO aktivieren. Wenn Sie den Sandbox-Modus verwenden, können sich Benutzer nicht per SSO anmelden.
+
+
+
+== Zugriff auf den Sandbox-Modus
+
+.Schritte
+. Wählen Sie *KONFIGURATION* > *Zugriffskontrolle* > *Einmaliges Anmelden*.
++
+Die Seite „Single Sign-On“ wird mit der ausgewählten Option *Deaktiviert* angezeigt.
+
++
+image::../media/sso_status_disabled.png[Single Sign-On-Seite mit deaktiviertem SSO-Status]
+
++
+
+NOTE: Wenn die SSO-Statusoptionen nicht angezeigt werden, bestätigen Sie, dass Sie den Identitätsanbieter als Verbundidentitätsquelle konfiguriert haben. Sehen link:requirements-for-sso.html["Anforderungen und Überlegungen zur einmaligen Anmeldung"] .
+
+. Wählen Sie *Sandbox-Modus*.
++
+Der Abschnitt „Identitätsanbieter“ wird angezeigt.
+
+
+
+
+
+== Geben Sie die Details des Identitätsanbieters ein
+
+.Schritte
+. Wählen Sie den *SSO-Typ* aus der Dropdown-Liste aus.
+. Füllen Sie die Felder im Abschnitt „Identitätsanbieter“ basierend auf dem von Ihnen ausgewählten SSO-Typ aus.
++
+[role="tabbed-block"]
+====
+.Active Directory
+--
+.. Geben Sie den *Verbunddienstnamen* für den Identitätsanbieter genau so ein, wie er im Active Directory Federation Service (AD FS) angezeigt wird.
++
+
+NOTE: Um den Namen des Verbunddienstes zu finden, gehen Sie zum Windows Server-Manager.  Wählen Sie *Tools* > *AD FS-Verwaltung*.  Wählen Sie im Aktionsmenü *Eigenschaften des Verbunddienstes bearbeiten* aus.  Der Name des Verbunddienstes wird im zweiten Feld angezeigt.
+
+.. Geben Sie an, welches TLS-Zertifikat zum Sichern der Verbindung verwendet wird, wenn der Identitätsanbieter als Antwort auf StorageGRID -Anfragen SSO-Konfigurationsinformationen sendet.
++
+*** *CA-Zertifikat des Betriebssystems verwenden*: Verwenden Sie das auf dem Betriebssystem installierte Standard-CA-Zertifikat, um die Verbindung zu sichern.
+*** *Benutzerdefiniertes CA-Zertifikat verwenden*: Verwenden Sie ein benutzerdefiniertes CA-Zertifikat, um die Verbindung zu sichern.
++
+Wenn Sie diese Einstellung auswählen, kopieren Sie den Text des benutzerdefinierten Zertifikats und fügen Sie ihn in das Textfeld *CA-Zertifikat* ein.
+
+*** *TLS nicht verwenden*: Verwenden Sie kein TLS-Zertifikat, um die Verbindung zu sichern.
++
+
+CAUTION: Wenn Sie das CA-Zertifikat ändern, sofortlink:../maintain/starting-or-restarting-service.html["Starten Sie den mgmt-api-Dienst auf den Admin-Knoten neu"] und testen Sie, ob eine erfolgreiche einmalige Anmeldung beim Grid Manager erfolgt.
+
+
+
+.. Geben Sie im Abschnitt „Relying Party“ die *Relying Party-Kennung* für StorageGRID an. Dieser Wert steuert den Namen, den Sie für jede Vertrauensstellung der vertrauenden Seite in AD FS verwenden.
++
+*** Wenn Ihr Grid beispielsweise nur einen Admin-Knoten hat und Sie nicht beabsichtigen, in Zukunft weitere Admin-Knoten hinzuzufügen, geben Sie `SG` oder `StorageGRID` .
+*** Wenn Ihr Raster mehr als einen Admin-Knoten enthält, fügen Sie die Zeichenfolge ein `[HOSTNAME]` im Bezeichner. Beispiel:  `SG-[HOSTNAME]` . Dadurch wird eine Tabelle generiert, die die Kennung der vertrauenden Partei für jeden Admin-Knoten in Ihrem System basierend auf dem Hostnamen des Knotens anzeigt.
++
+image::../media/sso_status_sandbox_mode_active_directory.png[Einmaliges Anmelden,Sandbox mode enabled,Relying party identifiers shown for several Admin Nodes]
+
++
+
+NOTE: Sie müssen für jeden Admin-Knoten in Ihrem StorageGRID -System eine Vertrauensstellung der vertrauenden Partei erstellen.  Durch die Einrichtung einer Vertrauensstellung der vertrauenden Partei für jeden Admin-Knoten wird sichergestellt, dass sich Benutzer sicher bei jedem Admin-Knoten an- und abmelden können.
+
+
+
+.. Wählen Sie *Speichern*.
++
+Auf der Schaltfläche *Speichern* wird für einige Sekunden ein grünes Häkchen angezeigt.
+
++
+image::../media/save_button_green_checkmark.gif[Schaltfläche „Speichern“ mit einem grünen Häkchen]
+
+
+
+--
+.Azurblau
+--
+.. Geben Sie an, welches TLS-Zertifikat zum Sichern der Verbindung verwendet wird, wenn der Identitätsanbieter als Antwort auf StorageGRID -Anfragen SSO-Konfigurationsinformationen sendet.
++
+*** *CA-Zertifikat des Betriebssystems verwenden*: Verwenden Sie das auf dem Betriebssystem installierte Standard-CA-Zertifikat, um die Verbindung zu sichern.
+*** *Benutzerdefiniertes CA-Zertifikat verwenden*: Verwenden Sie ein benutzerdefiniertes CA-Zertifikat, um die Verbindung zu sichern.
++
+Wenn Sie diese Einstellung auswählen, kopieren Sie den Text des benutzerdefinierten Zertifikats und fügen Sie ihn in das Textfeld *CA-Zertifikat* ein.
+
+*** *TLS nicht verwenden*: Verwenden Sie kein TLS-Zertifikat, um die Verbindung zu sichern.
++
+
+CAUTION: Wenn Sie das CA-Zertifikat ändern, sofortlink:../maintain/starting-or-restarting-service.html["Starten Sie den mgmt-api-Dienst auf den Admin-Knoten neu"] und testen Sie, ob eine erfolgreiche einmalige Anmeldung beim Grid Manager erfolgt.
+
+
+
+.. Geben Sie im Abschnitt „Unternehmensanwendung“ den *Namen der Unternehmensanwendung* für StorageGRID an. Dieser Wert steuert den Namen, den Sie für jede Unternehmensanwendung in Azure AD verwenden.
++
+*** Wenn Ihr Grid beispielsweise nur einen Admin-Knoten hat und Sie nicht beabsichtigen, in Zukunft weitere Admin-Knoten hinzuzufügen, geben Sie `SG` oder `StorageGRID` .
+*** Wenn Ihr Raster mehr als einen Admin-Knoten enthält, fügen Sie die Zeichenfolge ein `[HOSTNAME]` im Bezeichner. Beispiel:  `SG-[HOSTNAME]` . Dadurch wird eine Tabelle generiert, die basierend auf dem Hostnamen des Knotens einen Unternehmensanwendungsnamen für jeden Admin-Knoten in Ihrem System anzeigt.
++
+image::../media/sso_status_sandbox_mode_azure.png[Einmaliges Anmelden,Sandbox mode enabled,Relying party identifiers shown for several Admin Nodes]
+
++
+
+NOTE: Sie müssen für jeden Admin-Knoten in Ihrem StorageGRID System eine Unternehmensanwendung erstellen.  Durch die Bereitstellung einer Unternehmensanwendung für jeden Admin-Knoten wird sichergestellt, dass sich Benutzer sicher bei jedem Admin-Knoten anmelden und abmelden können.
+
+
+
+.. Befolgen Sie die Schritte inlink:../admin/creating-enterprise-application-azure.html["Erstellen von Unternehmensanwendungen in Azure AD"] um für jeden in der Tabelle aufgeführten Admin-Knoten eine Unternehmensanwendung zu erstellen.
+.. Kopieren Sie aus Azure AD die URL der Verbundmetadaten für jede Unternehmensanwendung. Fügen Sie diese URL dann in das entsprechende Feld *Federation metadata URL* in StorageGRID ein.
+.. Nachdem Sie eine Föderationsmetadaten-URL für alle Admin-Knoten kopiert und eingefügt haben, wählen Sie *Speichern*.
++
+Auf der Schaltfläche *Speichern* wird für einige Sekunden ein grünes Häkchen angezeigt.
+
++
+image::../media/save_button_green_checkmark.gif[Schaltfläche „Speichern“ mit einem grünen Häkchen]
+
+
+
+--
+.PingFederate
+--
+.. Geben Sie an, welches TLS-Zertifikat zum Sichern der Verbindung verwendet wird, wenn der Identitätsanbieter als Antwort auf StorageGRID -Anfragen SSO-Konfigurationsinformationen sendet.
++
+*** *CA-Zertifikat des Betriebssystems verwenden*: Verwenden Sie das auf dem Betriebssystem installierte Standard-CA-Zertifikat, um die Verbindung zu sichern.
+*** *Benutzerdefiniertes CA-Zertifikat verwenden*: Verwenden Sie ein benutzerdefiniertes CA-Zertifikat, um die Verbindung zu sichern.
++
+Wenn Sie diese Einstellung auswählen, kopieren Sie den Text des benutzerdefinierten Zertifikats und fügen Sie ihn in das Textfeld *CA-Zertifikat* ein.
+
+*** *TLS nicht verwenden*: Verwenden Sie kein TLS-Zertifikat, um die Verbindung zu sichern.
++
+
+CAUTION: Wenn Sie das CA-Zertifikat ändern, sofortlink:../maintain/starting-or-restarting-service.html["Starten Sie den mgmt-api-Dienst auf den Admin-Knoten neu"] und testen Sie, ob eine erfolgreiche einmalige Anmeldung beim Grid Manager erfolgt.
+
+
+
+.. Geben Sie im Abschnitt „Service Provider (SP)“ die * SP Verbindungs-ID* für StorageGRID an.  Dieser Wert steuert den Namen, den Sie für jede SP Verbindung in PingFederate verwenden.
++
+*** Wenn Ihr Grid beispielsweise nur einen Admin-Knoten hat und Sie nicht beabsichtigen, in Zukunft weitere Admin-Knoten hinzuzufügen, geben Sie `SG` oder `StorageGRID` .
+*** Wenn Ihr Raster mehr als einen Admin-Knoten enthält, fügen Sie die Zeichenfolge ein `[HOSTNAME]` im Bezeichner. Beispiel:  `SG-[HOSTNAME]` . Dadurch wird eine Tabelle generiert, die die SP Verbindungs-ID für jeden Admin-Knoten in Ihrem System basierend auf dem Hostnamen des Knotens anzeigt.
++
+image::../media/sso_status_sandbox_mode_ping_federated.png[Einmaliges Anmelden,Sandbox mode enabled,Relying party identifiers shown for several Admin Nodes]
+
++
+
+NOTE: Sie müssen für jeden Admin-Knoten in Ihrem StorageGRID System eine SP -Verbindung erstellen.  Durch eine SP -Verbindung für jeden Admin-Knoten wird sichergestellt, dass sich Benutzer sicher bei jedem Admin-Knoten anmelden und abmelden können.
+
+
+
+.. Geben Sie die URL der Verbundmetadaten für jeden Admin-Knoten im Feld *URL der Verbundmetadaten* an.
++
+Verwenden Sie das folgende Format:
+
++
+[listing]
+----
+https://<Federation Service Name>:<port>/pf/federation_metadata.ping?PartnerSpId=<SP Connection ID>
+----
+.. Wählen Sie *Speichern*.
++
+Auf der Schaltfläche *Speichern* wird für einige Sekunden ein grünes Häkchen angezeigt.
+
++
+image::../media/save_button_green_checkmark.gif[Schaltfläche „Speichern“ mit einem grünen Häkchen]
+
+
+
+--
+====
+
+
+
+
+== Konfigurieren von Vertrauensstellungen der vertrauenden Seite, Unternehmensanwendungen oder SP Verbindungen
+
+Wenn die Konfiguration gespeichert ist, wird die Bestätigungsmeldung für den Sandbox-Modus angezeigt.  Dieser Hinweis bestätigt, dass der Sandbox-Modus jetzt aktiviert ist, und bietet eine Übersichtsanleitung.
+
+StorageGRID kann so lange wie nötig im Sandbox-Modus bleiben. Wenn jedoch auf der Single Sign-On-Seite der *Sandbox-Modus* ausgewählt ist, wird SSO für alle StorageGRID Benutzer deaktiviert.  Nur lokale Benutzer können sich anmelden.
+
+Befolgen Sie diese Schritte, um Vertrauensstellungen der vertrauenden Seite (Active Directory) zu konfigurieren, Unternehmensanwendungen zu vervollständigen (Azure) oder SP Verbindungen zu konfigurieren (PingFederate).
+
+[role="tabbed-block"]
+====
+.Active Directory
+--
+.Schritte
+. Gehen Sie zu Active Directory-Verbunddienste (AD FS).
+. Erstellen Sie eine oder mehrere Vertrauensstellungen der vertrauenden Seite für StorageGRID und verwenden Sie dabei die einzelnen Kennungen der vertrauenden Seite, die in der Tabelle auf der Seite „ StorageGRID Single Sign-on“ angezeigt werden.
++
+Sie müssen für jeden in der Tabelle angezeigten Admin-Knoten eine Vertrauensstellung erstellen.
+
++
+Anweisungen finden Sie unterlink:../admin/creating-relying-party-trusts-in-ad-fs.html["Erstellen von Vertrauensstellungen der vertrauenden Seite in AD FS"] .
+
+
+
+--
+.Azurblau
+--
+.Schritte
+. Wählen Sie auf der Single Sign-On-Seite für den Admin-Knoten, bei dem Sie derzeit angemeldet sind, die Schaltfläche zum Herunterladen und Speichern der SAML-Metadaten aus.
+. Wiederholen Sie dann für alle anderen Admin-Knoten in Ihrem Raster diese Schritte:
++
+.. Sign in .
+.. Wählen Sie *KONFIGURATION* > *Zugriffskontrolle* > *Einmaliges Anmelden*.
+.. Laden Sie die SAML-Metadaten für diesen Knoten herunter und speichern Sie sie.
+
+
+. Gehen Sie zum Azure-Portal.
+. Befolgen Sie die Schritte inlink:../admin/creating-enterprise-application-azure.html["Erstellen von Unternehmensanwendungen in Azure AD"] um die SAML-Metadatendatei für jeden Admin-Knoten in die entsprechende Azure-Unternehmensanwendung hochzuladen.
+
+
+--
+.PingFederate
+--
+.Schritte
+. Wählen Sie auf der Single Sign-On-Seite für den Admin-Knoten, bei dem Sie derzeit angemeldet sind, die Schaltfläche zum Herunterladen und Speichern der SAML-Metadaten aus.
+. Wiederholen Sie dann für alle anderen Admin-Knoten in Ihrem Raster diese Schritte:
++
+.. Sign in .
+.. Wählen Sie *KONFIGURATION* > *Zugriffskontrolle* > *Einmaliges Anmelden*.
+.. Laden Sie die SAML-Metadaten für diesen Knoten herunter und speichern Sie sie.
+
+
+. Gehen Sie zu PingFederate.
+. link:../admin/creating-sp-connection-ping.html["Erstellen Sie eine oder mehrere Service Provider (SP)-Verbindungen für StorageGRID"] . Verwenden Sie die SP Verbindungs-ID für jeden Admin-Knoten (angezeigt in der Tabelle auf der StorageGRID Single-Sign-On-Seite) und die SAML-Metadaten, die Sie für diesen Admin-Knoten heruntergeladen haben.
++
+Sie müssen für jeden in der Tabelle angezeigten Admin-Knoten eine SP Verbindung erstellen.
+
+
+
+--
+====
+
+
+== Testen Sie SSO-Verbindungen
+
+Bevor Sie die Verwendung von Single Sign-On für Ihr gesamtes StorageGRID System erzwingen, sollten Sie bestätigen, dass Single Sign-On und Single Logout für jeden Admin-Knoten richtig konfiguriert sind.
+
+[role="tabbed-block"]
+====
+.Active Directory
+--
+.Schritte
+. Suchen Sie auf der StorageGRID Single Sign-On-Seite den Link in der Sandbox-Modus-Nachricht.
++
+Die URL wird aus dem Wert abgeleitet, den Sie in das Feld *Name des Verbunddienstes* eingegeben haben.
+
++
+image::../media/sso_sandbox_mode_url.gif[URL für die Anmeldeseite des Identitätsanbieters]
+
+. Wählen Sie den Link aus oder kopieren Sie die URL und fügen Sie sie in einen Browser ein, um auf die Anmeldeseite Ihres Identitätsanbieters zuzugreifen.
+. Um zu bestätigen, dass Sie sich mit SSO bei StorageGRID anmelden können, wählen Sie * Bei einer der folgenden Sites Sign in *, wählen Sie die Kennung der vertrauenden Partei für Ihren primären Admin-Knoten und wählen Sie * Sign in*.
++
+image::../media/sso_sandbox_mode_testing.gif[Testen der Vertrauensstellungen der vertrauenden Seite im SSO-Sandbox-Modus]
+
+. Geben Sie Ihren föderierten Benutzernamen und Ihr Passwort ein.
++
+** Wenn die SSO-An- und Abmeldevorgänge erfolgreich sind, wird eine Erfolgsmeldung angezeigt.
++
+image::../media/sso_sandbox_mode_sign_in_success.gif[Erfolgsmeldung zum SSO-Authentifizierungs- und Abmeldetest]
+
+** Wenn der SSO-Vorgang nicht erfolgreich ist, wird eine Fehlermeldung angezeigt.  Beheben Sie das Problem, löschen Sie die Cookies des Browsers und versuchen Sie es erneut.
+
+
+. Wiederholen Sie diese Schritte, um die SSO-Verbindung für jeden Admin-Knoten in Ihrem Raster zu überprüfen.
+
+
+--
+.Azurblau
+--
+.Schritte
+. Wechseln Sie im Azure-Portal zur Seite „Einmaliges Anmelden“.
+. Wählen Sie *Diese Anwendung testen*.
+. Geben Sie die Anmeldeinformationen eines Verbundbenutzers ein.
++
+** Wenn die SSO-An- und Abmeldevorgänge erfolgreich sind, wird eine Erfolgsmeldung angezeigt.
++
+image::../media/sso_sandbox_mode_sign_in_success.gif[Erfolgsmeldung zum SSO-Authentifizierungs- und Abmeldetest]
+
+** Wenn der SSO-Vorgang nicht erfolgreich ist, wird eine Fehlermeldung angezeigt.  Beheben Sie das Problem, löschen Sie die Cookies des Browsers und versuchen Sie es erneut.
+
+
+. Wiederholen Sie diese Schritte, um die SSO-Verbindung für jeden Admin-Knoten in Ihrem Raster zu überprüfen.
+
+
+--
+.PingFederate
+--
+.Schritte
+. Wählen Sie auf der StorageGRID Single Sign-On-Seite den ersten Link in der Sandbox-Modus-Nachricht aus.
++
+Wählen und testen Sie jeweils einen Link.
+
++
+image::../media/sso_sandbox_mode_enabled_ping.png[Einmaliges Anmelden]
+
+. Geben Sie die Anmeldeinformationen eines Verbundbenutzers ein.
++
+** Wenn die SSO-An- und Abmeldevorgänge erfolgreich sind, wird eine Erfolgsmeldung angezeigt.
++
+image::../media/sso_sandbox_mode_sign_in_success.gif[Erfolgsmeldung zum SSO-Authentifizierungs- und Abmeldetest]
+
+** Wenn der SSO-Vorgang nicht erfolgreich ist, wird eine Fehlermeldung angezeigt.  Beheben Sie das Problem, löschen Sie die Cookies des Browsers und versuchen Sie es erneut.
+
+
+. Wählen Sie den nächsten Link aus, um die SSO-Verbindung für jeden Admin-Knoten in Ihrem Raster zu überprüfen.
++
+Wenn die Meldung „Seite abgelaufen“ angezeigt wird, wählen Sie in Ihrem Browser die Schaltfläche *Zurück* und senden Sie Ihre Anmeldeinformationen erneut.
+
+
+
+--
+====
+
+
+== Aktivieren der einmaligen Anmeldung
+
+Wenn Sie bestätigt haben, dass Sie sich mit SSO bei jedem Admin-Knoten anmelden können, können Sie SSO für Ihr gesamtes StorageGRID System aktivieren.
+
+
+TIP: Wenn SSO aktiviert ist, müssen alle Benutzer SSO verwenden, um auf den Grid Manager, den Tenant Manager, die Grid Management API und die Tenant Management API zuzugreifen.  Lokale Benutzer können nicht mehr auf StorageGRID zugreifen.
+
+.Schritte
+. Wählen Sie *KONFIGURATION* > *Zugriffskontrolle* > *Einmaliges Anmelden*.
+. Ändern Sie den SSO-Status in *Aktiviert*.
+. Wählen Sie *Speichern*.
+. Überprüfen Sie die Warnmeldung und wählen Sie *OK*.
++
+Single Sign-On ist jetzt aktiviert.
+
+
+
+
+TIP: Wenn Sie das Azure-Portal verwenden und vom selben Computer aus auf StorageGRID zugreifen, den Sie auch für den Zugriff auf Azure verwenden, stellen Sie sicher, dass der Azure-Portal-Benutzer auch ein autorisierter StorageGRID Benutzer ist (ein Benutzer in einer Verbundgruppe, die in StorageGRID importiert wurde) oder melden Sie sich vom Azure-Portal ab, bevor Sie versuchen, sich bei StorageGRID anzumelden.

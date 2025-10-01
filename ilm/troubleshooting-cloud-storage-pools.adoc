@@ -1,0 +1,160 @@
+---
+permalink: ilm/troubleshooting-cloud-storage-pools.html 
+sidebar: sidebar 
+keywords: cloud storage pool, troubleshoot 
+summary: Verwenden Sie diese Schritte zur Fehlerbehebung, um Fehler zu beheben, die beim Erstellen, Bearbeiten oder Löschen eines Cloud-Speicherpools auftreten können. 
+---
+= Fehlerbehebung bei Cloud-Speicherpools
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Verwenden Sie diese Schritte zur Fehlerbehebung, um Fehler zu beheben, die beim Erstellen, Bearbeiten oder Löschen eines Cloud-Speicherpools auftreten können.
+
+
+
+== Feststellen, ob ein Fehler aufgetreten ist
+
+StorageGRID führt einen einfachen Integritätscheck für jeden Cloud Storage Pool durch, indem es das bekannte Objekt liest `x-ntap-sgws-cloud-pool-uuid` um sicherzustellen, dass auf den Cloud Storage Pool zugegriffen werden kann und dieser ordnungsgemäß funktioniert.  Wenn StorageGRID auf einen Fehler am Endpunkt stößt, führt es jede Minute eine Integritätsprüfung von jedem Speicherknoten aus durch.  Wenn der Fehler behoben ist, werden die Integritätsprüfungen beendet.  Wenn bei einer Integritätsprüfung ein Problem erkannt wird, wird in der Spalte „Letzter Fehler“ der Tabelle „Cloud-Speicherpools“ auf der Seite „Speicherpools“ eine Meldung angezeigt.
+
+Die Tabelle zeigt den zuletzt erkannten Fehler für jeden Cloud-Speicherpool und gibt an, wie lange der Fehler her ist.
+
+Darüber hinaus wird eine Warnung *Verbindungsfehler im Cloud Storage Pool* ausgelöst, wenn die Integritätsprüfung erkennt, dass innerhalb der letzten 5 Minuten ein oder mehrere neue Fehler im Cloud Storage Pool aufgetreten sind.  Wenn Sie eine E-Mail-Benachrichtigung zu dieser Warnung erhalten, gehen Sie zur Seite „Speicherpools“ (wählen Sie *ILM* > *Speicherpools*), überprüfen Sie die Fehlermeldungen in der Spalte „Letzter Fehler“ und beachten Sie die nachstehenden Richtlinien zur Fehlerbehebung.
+
+
+
+== Überprüfen Sie, ob ein Fehler behoben wurde
+
+Nachdem Sie alle zugrunde liegenden Probleme behoben haben, können Sie feststellen, ob der Fehler behoben wurde.  Wählen Sie auf der Seite „Cloud-Speicherpool“ den Endpunkt aus und wählen Sie „Fehler löschen“ aus.  Eine Bestätigungsmeldung zeigt an, dass StorageGRID den Fehler für den Cloud Storage Pool behoben hat.
+
+Wenn das zugrunde liegende Problem behoben wurde, wird die Fehlermeldung nicht mehr angezeigt.  Wenn das zugrunde liegende Problem jedoch nicht behoben wurde (oder ein anderer Fehler auftritt), wird die Fehlermeldung innerhalb weniger Minuten in der Spalte „Letzter Fehler“ angezeigt.
+
+
+
+== Fehler: Integritätsprüfung fehlgeschlagen.  Fehler vom Endpunkt
+
+Dieser Fehler kann auftreten, wenn Sie S3 Object Lock mit Standardaufbewahrung für Ihren Amazon S3-Bucket aktivieren, nachdem Sie diesen Bucket für einen Cloud Storage Pool verwenden.  Dieser Fehler tritt auf, wenn der PUT-Vorgang keinen HTTP-Header mit einem Nutzlast-Prüfsummenwert wie `Content-MD5` .  Dieser Header-Wert wird von AWS für PUT-Operationen in Buckets mit aktivierter S3-Objektsperre benötigt.
+
+Um dieses Problem zu beheben, befolgen Sie die Schritte inlink:editing-cloud-storage-pool.html["Bearbeiten eines Cloud-Speicherpools"] ohne Änderungen vorzunehmen.  Diese Aktion löst die Validierung der Cloud Storage Pool-Konfiguration aus, die das S3 Object Lock-Flag in einer Cloud Storage Pool-Endpunktkonfiguration automatisch erkennt und aktualisiert.
+
+
+
+== Fehler: Dieser Cloud-Speicherpool enthält unerwartete Inhalte
+
+Dieser Fehler kann auftreten, wenn Sie versuchen, einen Cloud-Speicherpool zu erstellen, zu bearbeiten oder zu löschen.  Dieser Fehler tritt auf, wenn der Bucket oder Container Folgendes enthält: `x-ntap-sgws-cloud-pool-uuid` Markerdatei, aber diese Datei verfügt nicht über das Metadatenfeld mit der erwarteten UUID.
+
+Normalerweise wird dieser Fehler nur angezeigt, wenn Sie einen neuen Cloud-Speicherpool erstellen und eine andere Instanz von StorageGRID bereits denselben Cloud-Speicherpool verwendet.
+
+Versuchen Sie, das Problem mit einem der folgenden Schritte zu beheben:
+
+* Wenn Sie einen neuen Cloud Storage Pool konfigurieren und der Bucket die `x-ntap-sgws-cloud-pool-uuid` Datei und zusätzliche Objektschlüssel ähnlich dem folgenden Beispiel, erstellen Sie einen neuen Bucket und verwenden Sie stattdessen diesen neuen Bucket.
++
+Beispiel für einen zusätzlichen Objektschlüssel: `my-bucket.3E64CF2C-B74D-4B7D-AFE7-AD28BC18B2F6.1727326606730410`
+
+* Wenn die `x-ntap-sgws-cloud-pool-uuid` Datei das einzige Objekt im Bucket ist, löschen Sie diese Datei.
+
+
+Wenn diese Schritte nicht auf Ihr Szenario zutreffen, wenden Sie sich an den Support.
+
+
+
+== Fehler: Cloud-Speicherpool konnte nicht erstellt oder aktualisiert werden.  Fehler vom Endpunkt
+
+Dieser Fehler kann unter den folgenden Umständen auftreten:
+
+* Wenn Sie versuchen, einen Cloud-Speicherpool zu erstellen oder zu bearbeiten.
+* Wenn Sie während der Konfiguration eines neuen Cloud-Speicherpools eine nicht unterstützte Plattform-, Authentifizierungs- oder Protokollkombination mit S3 Object Lock auswählen. Sehen link:../ilm/considerations-for-cloud-storage-pools.html["Überlegungen zu Cloud-Speicherpools"] .
+
+
+Dieser Fehler weist darauf hin, dass ein Verbindungs- oder Konfigurationsproblem StorageGRID daran hindert, in den Cloud-Speicherpool zu schreiben.
+
+Um das Problem zu beheben, überprüfen Sie die Fehlermeldung vom Endpunkt.
+
+* Wenn die Fehlermeldung enthält `Get _url_: EOF` , überprüfen Sie, dass der für den Cloud Storage Pool verwendete Dienstendpunkt kein HTTP für einen Container oder Bucket verwendet, der HTTPS erfordert.
+* Wenn die Fehlermeldung enthält `Get _url_: net/http: request canceled while waiting for connection` , überprüfen Sie, ob die Netzwerkkonfiguration Speicherknoten den Zugriff auf den für den Cloud-Speicherpool verwendeten Dienstendpunkt ermöglicht.
+* Wenn der Fehler auf eine nicht unterstützte Plattform, Authentifizierung oder ein nicht unterstütztes Protokoll zurückzuführen ist, wechseln Sie zu einer unterstützten Konfiguration mit S3 Object Lock und versuchen Sie erneut, den neuen Cloud Storage Pool zu speichern.
+* Versuchen Sie bei allen anderen Endpunkt-Fehlermeldungen eine oder mehrere der folgenden Methoden:
++
+** Erstellen Sie einen externen Container oder Bucket mit demselben Namen, den Sie für den Cloud Storage Pool eingegeben haben, und versuchen Sie erneut, den neuen Cloud Storage Pool zu speichern.
+** Korrigieren Sie den Container- oder Bucket-Namen, den Sie für den Cloud Storage Pool angegeben haben, und versuchen Sie erneut, den neuen Cloud Storage Pool zu speichern.
+
+
+
+
+
+
+== Fehler: Das CA-Zertifikat konnte nicht analysiert werden.
+
+Dieser Fehler kann auftreten, wenn Sie versuchen, einen Cloud-Speicherpool zu erstellen oder zu bearbeiten.  Der Fehler tritt auf, wenn StorageGRID das Zertifikat, das Sie beim Konfigurieren des Cloud Storage Pools eingegeben haben, nicht analysieren konnte.
+
+Um das Problem zu beheben, überprüfen Sie das von Ihnen bereitgestellte CA-Zertifikat auf Probleme.
+
+
+
+== Fehler: Ein Cloud-Speicherpool mit dieser ID wurde nicht gefunden
+
+Dieser Fehler kann auftreten, wenn Sie versuchen, einen Cloud-Speicherpool zu bearbeiten oder zu löschen.  Dieser Fehler tritt auf, wenn der Endpunkt eine 404-Antwort zurückgibt, was Folgendes bedeuten kann:
+
+* Die für den Cloud Storage Pool verwendeten Anmeldeinformationen verfügen nicht über die Leseberechtigung für den Bucket.
+* Der für den Cloud Storage Pool verwendete Bucket enthält nicht die `x-ntap-sgws-cloud-pool-uuid` Markierungsdatei.
+
+
+Versuchen Sie einen oder mehrere dieser Schritte, um das Problem zu beheben:
+
+* Überprüfen Sie, ob der mit dem konfigurierten Zugriffsschlüssel verknüpfte Benutzer über die erforderlichen Berechtigungen verfügt.
+* Bearbeiten Sie den Cloud-Speicherpool mit Anmeldeinformationen, die über die erforderlichen Berechtigungen verfügen.
+* Wenn die Berechtigungen korrekt sind, wenden Sie sich an den Support.
+
+
+
+
+== Fehler: Der Inhalt des Cloud-Speicherpools konnte nicht überprüft werden.  Fehler vom Endpunkt
+
+Dieser Fehler kann auftreten, wenn Sie versuchen, einen Cloud-Speicherpool zu löschen.  Dieser Fehler weist darauf hin, dass ein Verbindungs- oder Konfigurationsproblem StorageGRID daran hindert, den Inhalt des Cloud Storage Pool-Buckets zu lesen.
+
+Um das Problem zu beheben, überprüfen Sie die Fehlermeldung vom Endpunkt.
+
+
+
+== Fehler: In diesem Bucket wurden bereits Objekte platziert
+
+Dieser Fehler kann auftreten, wenn Sie versuchen, einen Cloud-Speicherpool zu löschen.  Sie können einen Cloud-Speicherpool nicht löschen, wenn er Daten enthält, die von ILM dorthin verschoben wurden, Daten, die sich im Bucket befanden, bevor Sie den Cloud-Speicherpool konfiguriert haben, oder Daten, die nach der Erstellung des Cloud-Speicherpools von einer anderen Quelle in den Bucket gelegt wurden.
+
+Versuchen Sie einen oder mehrere dieser Schritte, um das Problem zu beheben:
+
+* Befolgen Sie die Anweisungen zum Zurückverschieben von Objekten zu StorageGRID unter „Lebenszyklus eines Cloud Storage Pool-Objekts“.
+* Wenn Sie sicher sind, dass die verbleibenden Objekte nicht von ILM im Cloud Storage Pool abgelegt wurden, löschen Sie die Objekte manuell aus dem Bucket.
++
+
+NOTE: Löschen Sie niemals manuell Objekte aus einem Cloud-Speicherpool, die möglicherweise von ILM dort abgelegt wurden.  Wenn Sie später versuchen, auf ein manuell gelöschtes Objekt aus StorageGRID zuzugreifen, wird das gelöschte Objekt nicht gefunden.
+
+
+
+
+
+== Fehler: Beim Versuch, den Cloud-Speicherpool zu erreichen, ist beim Proxy ein externer Fehler aufgetreten
+
+Dieser Fehler kann auftreten, wenn Sie einen nicht transparenten Speicherproxy zwischen Speicherknoten und dem für den Cloud-Speicherpool verwendeten externen S3-Endpunkt konfiguriert haben.  Dieser Fehler tritt auf, wenn der externe Proxyserver den Endpunkt des Cloud Storage Pools nicht erreichen kann.  Beispielsweise kann der DNS-Server den Hostnamen möglicherweise nicht auflösen oder es liegt ein externes Netzwerkproblem vor.
+
+Versuchen Sie einen oder mehrere dieser Schritte, um das Problem zu beheben:
+
+* Überprüfen Sie die Einstellungen für den Cloud-Speicherpool (*ILM* > *Speicherpools*).
+* Überprüfen Sie die Netzwerkkonfiguration des Speicherproxyservers.
+
+
+
+
+== Fehler: Das X.509-Zertifikat hat seine Gültigkeitsdauer überschritten
+
+Dieser Fehler kann auftreten, wenn Sie versuchen, einen Cloud-Speicherpool zu löschen.  Dieser Fehler tritt auf, wenn für die Authentifizierung ein X.509-Zertifikat erforderlich ist, um sicherzustellen, dass der richtige externe Cloud Storage Pool validiert wird und der externe Pool leer ist, bevor die Cloud Storage Pool-Konfiguration gelöscht wird.
+
+Versuchen Sie, das Problem mit den folgenden Schritten zu beheben:
+
+* Aktualisieren Sie das für die Authentifizierung beim Cloud-Speicherpool konfigurierte Zertifikat.
+* Stellen Sie sicher, dass alle Warnungen zum Ablauf des Zertifikats in diesem Cloud-Speicherpool behoben werden.
+
+
+.Ähnliche Informationen
+link:lifecycle-of-cloud-storage-pool-object.html["Lebenszyklus eines Cloud Storage Pool-Objekts"]

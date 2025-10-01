@@ -1,0 +1,65 @@
+---
+permalink: expand/guidelines-for-adding-object-capacity.html 
+sidebar: sidebar 
+keywords: adding storage capacity, guidelines, storage volumes, expansion 
+summary: 'Sie können die Objektspeicherkapazität Ihres StorageGRID -Systems erweitern, indem Sie Speichervolumes zu vorhandenen Speicherknoten hinzufügen oder neue Speicherknoten zu vorhandenen Sites hinzufügen.  Sie müssen die Speicherkapazität so hinzufügen, dass sie den Anforderungen Ihrer ILM-Richtlinie (Information Lifecycle Management) entspricht.' 
+---
+= Richtlinien zum Hinzufügen von Objektkapazität
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Sie können die Objektspeicherkapazität Ihres StorageGRID -Systems erweitern, indem Sie Speichervolumes zu vorhandenen Speicherknoten hinzufügen oder neue Speicherknoten zu vorhandenen Sites hinzufügen.  Sie müssen die Speicherkapazität so hinzufügen, dass sie den Anforderungen Ihrer ILM-Richtlinie (Information Lifecycle Management) entspricht.
+
+
+
+== Richtlinien zum Hinzufügen von Speichervolumes
+
+Bevor Sie Speichervolumes zu vorhandenen Speicherknoten hinzufügen, lesen Sie die folgenden Richtlinien und Einschränkungen:
+
+* Sie müssen Ihre aktuellen ILM-Regeln prüfen, um festzustellen, wo und wannlink:../expand/adding-storage-volumes-to-storage-nodes.html["Speichervolumes hinzufügen"] um den verfügbaren Speicherplatz zu erhöhen fürlink:../ilm/what-replication-is.html["replizierte Objekte"] oderlink:../ilm/what-erasure-coding-schemes-are.html["Erasure-Codierte Objekte"] .
+* Sie können die Metadatenkapazität Ihres Systems nicht durch Hinzufügen von Speichervolumes erhöhen, da Objektmetadaten nur auf Volume 0 gespeichert werden.
+* Jeder softwarebasierte Speicherknoten kann maximal 48 Speichervolumes unterstützen.  Wenn Sie darüber hinaus Kapazität hinzufügen müssen, müssen Sie neue Speicherknoten hinzufügen.
+* Sie können jedem SG6060-Gerät ein oder zwei Erweiterungsregale hinzufügen.  Jedes Erweiterungsregal fügt 16 Speichervolumes hinzu.  Wenn beide Erweiterungsfächer installiert sind, kann das SG6060 insgesamt 48 Speichervolumes unterstützen.
+* Sie können jedem SG6160-Gerät ein oder zwei Erweiterungsregale hinzufügen.  Jedes Erweiterungsregal fügt 60 Speichervolumes hinzu.  Wenn beide Erweiterungsregale installiert sind, kann das SG6160 insgesamt 180 Speichervolumes unterstützen.
+* Sie können keinem anderen Speichergerät Speichervolumes hinzufügen.
+* Sie können die Größe eines vorhandenen Speichervolumens nicht erhöhen.
+* Sie können einem Speicherknoten keine Speichervolumes hinzufügen, während Sie gleichzeitig ein Systemupgrade, eine Wiederherstellungsoperation oder eine andere Erweiterung durchführen.
+
+
+Nachdem Sie sich entschieden haben, Speichervolumes hinzuzufügen und ermittelt haben, welche Speicherknoten Sie erweitern müssen, um Ihre ILM-Richtlinie zu erfüllen, folgen Sie den Anweisungen für Ihren Speicherknotentyp:
+
+* Um ein oder zwei Erweiterungsregale zu einem SG6060-Speichergerät hinzuzufügen, gehen Sie zu https://docs.netapp.com/us-en/storagegrid-appliances/sg6000/adding-expansion-shelf-to-deployed-sg6060.html["Erweiterungsfach zum bereitgestellten SG6060 hinzufügen"^] .
+* Um ein oder zwei Erweiterungsregale zu einem SG6160-Speichergerät hinzuzufügen, gehen Sie zu https://docs.netapp.com/us-en/storagegrid-appliances/sg6100/adding-expansion-shelf-to-deployed-sg6160.html["Erweiterungsfach zum bereitgestellten SG6160 hinzufügen"^]
+* Für einen softwarebasierten Knoten folgen Sie den Anweisungen fürlink:adding-storage-volumes-to-storage-nodes.html["Hinzufügen von Speichervolumes zu Speicherknoten"] .
+
+
+
+
+== Richtlinien zum Hinzufügen von Speicherknoten
+
+Bevor Sie Speicherknoten zu vorhandenen Sites hinzufügen, lesen Sie die folgenden Richtlinien und Einschränkungen:
+
+* Sie müssen Ihre aktuellen ILM-Regeln prüfen, um zu bestimmen, wo und wann Sie Speicherknoten hinzufügen müssen, um den verfügbaren Speicher fürlink:../ilm/what-replication-is.html["replizierte Objekte"] oderlink:../ilm/what-erasure-coding-schemes-are.html["Erasure-Codierte Objekte"] .
+* Sie sollten in einem einzigen Erweiterungsvorgang nicht mehr als 10 Speicherknoten hinzufügen.
+* Sie können Speicherknoten in einem einzigen Erweiterungsvorgang zu mehreren Standorten hinzufügen.
+* Sie können Speicherknoten und andere Knotentypen in einem einzigen Erweiterungsvorgang hinzufügen.
+* Bevor Sie mit dem Erweiterungsvorgang beginnen, müssen Sie bestätigen, dass alle im Rahmen einer Wiederherstellung durchgeführten Datenreparaturvorgänge abgeschlossen sind. Sehen link:../maintain/checking-data-repair-jobs.html["Überprüfen Sie die Datenreparaturaufträge"] .
+* Wenn Sie vor oder nach einer Erweiterung Speicherknoten entfernen müssen, sollten Sie in einem einzigen Vorgang zum Außerbetriebsetzen von Knoten nicht mehr als 10 Speicherknoten außer Betrieb nehmen.
+
+
+
+
+== Richtlinien für den ADC-Dienst auf Speicherknoten
+
+Beim Konfigurieren der Erweiterung müssen Sie auswählen, ob der Dienst „Administrative Domain Controller“ (ADC) auf jedem neuen Speicherknoten enthalten sein soll. Der ADC-Dienst verfolgt den Standort und die Verfügbarkeit von Grid-Diensten.
+
+* Das StorageGRID -System erfordert einelink:../maintain/understanding-adc-service-quorum.html["Quorum der ADC-Dienste"] an jedem Standort und jederzeit verfügbar zu sein.
+* Mindestens drei Speicherknoten an jedem Standort müssen den ADC-Dienst enthalten.
+* Es wird nicht empfohlen, den ADC-Dienst zu jedem Speicherknoten hinzuzufügen.  Die Einbeziehung zu vieler ADC-Dienste kann aufgrund der erhöhten Kommunikationsmenge zwischen den Knoten zu Verlangsamungen führen.
+* Ein einzelnes Grid sollte nicht mehr als 48 Speicherknoten mit dem ADC-Dienst haben.  Dies entspricht 16 Standorten mit jeweils drei ADC-Diensten.
+* Wenn Sie die Einstellung *ADC-Dienst* für einen neuen Knoten auswählen, sollten Sie im Allgemeinen *Automatisch* auswählen. Wählen Sie *Ja* nur, wenn der neue Knoten einen anderen Speicherknoten ersetzt, der den ADC-Dienst enthält. Da Sie einen Speicherknoten nicht außer Betrieb nehmen können, wenn zu wenige ADC-Dienste übrig bleiben, wird dadurch sichergestellt, dass ein neuer ADC-Dienst verfügbar ist, bevor der alte Dienst entfernt wird.
+* Sie können den ADC-Dienst nach der Bereitstellung nicht mehr zu einem Knoten hinzufügen.
+

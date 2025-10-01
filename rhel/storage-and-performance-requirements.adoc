@@ -1,0 +1,326 @@
+---
+permalink: rhel/storage-and-performance-requirements.html 
+sidebar: sidebar 
+keywords: red hat linux storage requirements, performance requirements host storage, host volumes, netapp ontap, fabricpool 
+summary: Sie müssen die Speicheranforderungen für StorageGRID -Knoten verstehen, damit Sie genügend Speicherplatz für die Erstkonfiguration und zukünftige Speichererweiterungen bereitstellen können. 
+---
+= Speicher- und Leistungsanforderungen
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Sie müssen die Speicheranforderungen für StorageGRID -Knoten verstehen, damit Sie genügend Speicherplatz für die Erstkonfiguration und zukünftige Speichererweiterungen bereitstellen können.
+
+StorageGRID -Knoten erfordern drei logische Speicherkategorien:
+
+* *Containerpool* – Leistungsstarker Speicher (10K SAS oder SSD) für die Knotencontainer, der dem Speichertreiber der Container-Engine zugewiesen wird, wenn Sie die Container-Engine auf den Hosts installieren und konfigurieren, die Ihre StorageGRID Knoten unterstützen.
+* *Systemdaten* – Performance-Tier-Speicher (10K SAS oder SSD) für die dauerhafte Speicherung von Systemdaten und Transaktionsprotokollen pro Knoten, die von den StorageGRID Hostdiensten genutzt und einzelnen Knoten zugeordnet werden.
+* *Objektdaten* – Speicher der Leistungsstufe (10K SAS oder SSD) und Massenspeicher der Kapazitätsstufe (NL-SAS/SATA) für die dauerhafte Speicherung von Objektdaten und Objektmetadaten.
+
+
+Sie müssen für alle Speicherkategorien RAID-gestützte Blockgeräte verwenden.  Nicht redundante Festplatten, SSDs oder JBODs werden nicht unterstützt.  Sie können für jede Speicherkategorie gemeinsam genutzten oder lokalen RAID-Speicher verwenden. Wenn Sie jedoch die Knotenmigrationsfunktion in StorageGRID verwenden möchten, müssen Sie sowohl Systemdaten als auch Objektdaten auf gemeinsam genutztem Speicher speichern. Weitere Informationen finden Sie unter link:node-container-migration-requirements.html["Anforderungen für die Migration von Knotencontainern"] .
+
+
+
+== Leistungsanforderungen
+
+Die Leistung der für den Containerpool, die Systemdaten und die Objektmetadaten verwendeten Volumes hat erhebliche Auswirkungen auf die Gesamtleistung des Systems.  Sie sollten für diese Volumes Speicher der Leistungsstufe (10K SAS oder SSD) verwenden, um eine angemessene Festplattenleistung hinsichtlich Latenz, Eingabe-/Ausgabevorgängen pro Sekunde (IOPS) und Durchsatz sicherzustellen.  Sie können Capacity-Tier-Speicher (NL-SAS/SATA) für die dauerhafte Speicherung von Objektdaten verwenden.
+
+Für die für den Containerpool, die Systemdaten und die Objektdaten verwendeten Volumes muss das Write-Back-Caching aktiviert sein.  Der Cache muss sich auf einem geschützten oder dauerhaften Medium befinden.
+
+
+
+== Anforderungen für Hosts, die NetApp ONTAP -Speicher verwenden
+
+Wenn der StorageGRID Knoten Speicher verwendet, der von einem NetApp ONTAP System zugewiesen wurde, vergewissern Sie sich, dass für das Volume keine FabricPool -Tiering-Richtlinie aktiviert ist.  Das Deaktivieren der FabricPool Tiering-Funktion für Volumes, die mit StorageGRID -Knoten verwendet werden, vereinfacht die Fehlerbehebung und Speichervorgänge.
+
+
+NOTE: Verwenden Sie FabricPool niemals, um Daten im Zusammenhang mit StorageGRID zurück auf StorageGRID selbst zu verschieben.  Das Zurückführen von StorageGRID -Daten in StorageGRID erhöht die Fehlerbehebung und die Betriebskomplexität.
+
+
+
+== Anzahl der benötigten Hosts
+
+Jeder StorageGRID Standort benötigt mindestens drei Speicherknoten.
+
+
+NOTE: Führen Sie bei einer Produktionsbereitstellung nicht mehr als einen Speicherknoten auf einem einzelnen physischen oder virtuellen Host aus.  Durch die Verwendung eines dedizierten Hosts für jeden Speicherknoten wird eine isolierte Fehlerdomäne bereitgestellt.
+
+Andere Knotentypen, wie etwa Admin-Knoten oder Gateway-Knoten, können auf denselben Hosts oder je nach Bedarf auf eigenen dedizierten Hosts bereitgestellt werden.
+
+
+
+== Anzahl der Speichervolumes für jeden Host
+
+Die folgende Tabelle zeigt die Anzahl der für jeden Host erforderlichen Speichervolumes (LUNs) und die für jede LUN erforderliche Mindestgröße, basierend darauf, welche Knoten auf diesem Host bereitgestellt werden.
+
+Die maximal getestete LUN-Größe beträgt 39 TB.
+
+
+NOTE: Diese Zahlen gelten für jeden Host, nicht für das gesamte Grid.
+
+|===
+| LUN-Zweck | Speicherkategorie | Anzahl der LUNs | Mindestgröße/LUN 
+
+
+ a| 
+Container-Engine-Speicherpool
+ a| 
+Containerpool
+ a| 
+1
+ a| 
+Gesamtzahl der Knoten × 100 GB
+
+
+
+ a| 
+`/var/local`Volumen
+ a| 
+Systemdaten
+ a| 
+1 für jeden Knoten auf diesem Host
+ a| 
+90 GB
+
+
+
+ a| 
+Speicherknoten
+ a| 
+Objektdaten
+ a| 
+3 für jeden Speicherknoten auf diesem Host
+
+*Hinweis:* Ein softwarebasierter Speicherknoten kann 1 bis 48 Speichervolumes haben; mindestens 3 Speichervolumes werden empfohlen.
+ a| 
+12 TB (4 TB/LUN) Siehe<<storage_req_SN,Speicheranforderungen für Speicherknoten>> für weitere Informationen.
+
+
+
+ a| 
+Speicherknoten (nur Metadaten)
+ a| 
+Objektmetadaten
+ a| 
+1
+ a| 
+4 TB Siehe<<storage_req_SN,Speicheranforderungen für Speicherknoten>> für weitere Informationen.
+
+*Hinweis*: Für reine Metadaten-Speicherknoten ist nur eine Rangedb erforderlich.
+
+
+
+ a| 
+Audit-Protokolle des Admin-Knotens
+ a| 
+Systemdaten
+ a| 
+1 für jeden Admin-Knoten auf diesem Host
+ a| 
+200 GB
+
+
+
+ a| 
+Admin-Knotentabellen
+ a| 
+Systemdaten
+ a| 
+1 für jeden Admin-Knoten auf diesem Host
+ a| 
+200 GB
+
+|===
+
+NOTE: Abhängig von der konfigurierten Prüfebene, der Größe der Benutzereingaben wie dem S3-Objektschlüsselnamen und der Menge der zu bewahrenden Prüfprotokolldaten müssen Sie möglicherweise die Größe der Prüfprotokoll-LUN auf jedem Admin-Knoten erhöhen. Im Allgemeinen generiert ein Grid ungefähr 1 KB Prüfdaten pro S3-Vorgang, was bedeuten würde, dass ein 200 GB großes LUN 70 Millionen Vorgänge pro Tag oder 800 Vorgänge pro Sekunde für zwei bis drei Tage unterstützen würde.
+
+
+
+== Mindestspeicherplatz für einen Host
+
+Die folgende Tabelle zeigt den für jeden Knotentyp erforderlichen Mindestspeicherplatz.  Mithilfe dieser Tabelle können Sie die Mindestspeichermenge ermitteln, die Sie dem Host in jeder Speicherkategorie bereitstellen müssen, basierend darauf, welche Knoten auf diesem Host bereitgestellt werden.
+
+
+NOTE: Festplatten-Snapshots können nicht zum Wiederherstellen von Grid-Knoten verwendet werden.  Beziehen Sie sich stattdessen auf dielink:../maintain/warnings-and-considerations-for-grid-node-recovery.html["Wiederherstellung von Grid-Knoten"] Verfahren für jeden Knotentyp.
+
+|===
+| Knotentyp | Containerpool | Systemdaten | Objektdaten 
+
+
+| Speicherknoten  a| 
+100 GB
+ a| 
+90 GB
+ a| 
+4.000 GB
+
+
+
+ a| 
+Admin-Knoten
+ a| 
+100 GB
+ a| 
+490 GB (3 LUNs)
+ a| 
+_nicht zutreffend_
+
+
+
+ a| 
+Gateway-Knoten
+ a| 
+100 GB
+ a| 
+90 GB
+ a| 
+_nicht zutreffend_
+
+|===
+
+
+== Beispiel: Berechnung des Speicherbedarfs für einen Host
+
+Angenommen, Sie planen, drei Knoten auf demselben Host bereitzustellen: einen Speicherknoten, einen Admin-Knoten und einen Gateway-Knoten. Sie sollten dem Host mindestens neun Speichervolumes zur Verfügung stellen. Sie benötigen mindestens 300 GB Performance-Tier-Speicher für die Knotencontainer, 670 GB Performance-Tier-Speicher für Systemdaten und Transaktionsprotokolle und 12 TB Capacity-Tier-Speicher für Objektdaten.
+
+|===
+| Knotentyp | LUN-Zweck | Anzahl der LUNs | LUN-Größe 
+
+
+| Speicherknoten  a| 
+Container-Engine-Speicherpool
+ a| 
+1
+ a| 
+300 GB (100 GB/Knoten)
+
+
+
+ a| 
+Speicherknoten
+ a| 
+`/var/local`Volumen
+ a| 
+1
+ a| 
+90 GB
+
+
+
+| Speicherknoten  a| 
+Objektdaten
+ a| 
+3
+ a| 
+12 TB (4 TB/LUN)
+
+
+
+ a| 
+Admin-Knoten
+ a| 
+`/var/local`Volumen
+ a| 
+1
+ a| 
+90 GB
+
+
+
+| Admin-Knoten  a| 
+Audit-Protokolle des Admin-Knotens
+ a| 
+1
+ a| 
+200 GB
+
+
+
+| Admin-Knoten  a| 
+Admin-Knotentabellen
+ a| 
+1
+ a| 
+200 GB
+
+
+
+ a| 
+Gateway-Knoten
+ a| 
+`/var/local`Volumen
+ a| 
+1
+ a| 
+90 GB
+
+
+
+ a| 
+*Gesamt*
+ a| 
+ a| 
+*9*
+ a| 
+*Containerpool:* 300 GB
+
+*Systemdaten:* 670 GB
+
+*Objektdaten:* 12.000 GB
+
+|===
+
+
+== Speicheranforderungen für Speicherknoten
+
+Ein softwarebasierter Speicherknoten kann 1 bis 48 Speichervolumes haben; 3 oder mehr Speichervolumes werden empfohlen. Jedes Speichervolumen sollte mindestens 4 TB groß sein.
+
+
+NOTE: Ein Appliance-Speicherknoten kann außerdem über bis zu 48 Speichervolumes verfügen.
+
+Wie in der Abbildung gezeigt, reserviert StorageGRID Speicherplatz für Objektmetadaten auf Speichervolume 0 jedes Speicherknotens.  Der verbleibende Speicherplatz auf Speichervolume 0 und allen anderen Speichervolumes im Speicherknoten wird ausschließlich für Objektdaten verwendet.
+
+image::../media/metadata_space_storage_node.png[Metadaten-Speicherknoten]
+
+Um Redundanz zu gewährleisten und Objektmetadaten vor Verlust zu schützen, speichert StorageGRID an jedem Standort drei Kopien der Metadaten für alle Objekte im System.  Die drei Kopien der Objektmetadaten werden gleichmäßig auf alle Speicherknoten an jedem Standort verteilt.
+
+Wenn Sie ein Grid mit reinen Metadaten-Speicherknoten installieren, muss das Grid auch eine Mindestanzahl von Knoten für die Objektspeicherung enthalten.  Sehenlink:../primer/what-storage-node-is.html#types-of-storage-nodes["Arten von Speicherknoten"] Weitere Informationen zu reinen Metadaten-Speicherknoten.
+
+* Für ein Single-Site-Grid werden mindestens zwei Storage Nodes für Objekte und Metadaten konfiguriert.
+* Für ein Multi-Site-Grid wird mindestens ein Storage Node pro Site für Objekte und Metadaten konfiguriert.
+
+
+Wenn Sie dem Datenträger 0 eines neuen Speicherknotens Speicherplatz zuweisen, müssen Sie sicherstellen, dass für den Teil aller Objektmetadaten dieses Knotens ausreichend Speicherplatz vorhanden ist.
+
+* Sie müssen dem Volume 0 mindestens 4 TB zuweisen.
++
+
+NOTE: Wenn Sie für einen Speicherknoten nur ein Speichervolume verwenden und dem Volume 4 TB oder weniger zuweisen, wechselt der Speicherknoten beim Start möglicherweise in den schreibgeschützten Speicherzustand und speichert nur Objektmetadaten.
+
++
+
+NOTE: Wenn Sie Volume 0 (nur für nicht produktive Verwendung) weniger als 500 GB zuweisen, werden 10 % der Kapazität des Speichervolumes für Metadaten reserviert.
+
+* Softwarebasierte Knotenressourcen, die nur Metadaten enthalten, müssen mit den vorhandenen Speicherknotenressourcen übereinstimmen. Beispiel:
++
+** Wenn die vorhandene StorageGRID Site SG6000- oder SG6100-Geräte verwendet, müssen die softwarebasierten Nur-Metadaten-Knoten die folgenden Mindestanforderungen erfüllen:
++
+*** 128 GB RAM
+*** 8-Kern-CPU
+*** 8 TB SSD oder gleichwertiger Speicher für die Cassandra-Datenbank (rangedb/0)
+
+
+** Wenn die vorhandene StorageGRID Site virtuelle Speicherknoten mit 24 GB RAM, 8-Kern-CPU und 3 TB oder 4 TB Metadatenspeicher verwendet, sollten die softwarebasierten Nur-Metadaten-Knoten ähnliche Ressourcen verwenden (24 GB RAM, 8-Kern-CPU und 4 TB Metadatenspeicher (rangedb/0).
++
+Beim Hinzufügen einer neuen StorageGRID Site sollte die Gesamtmetadatenkapazität der neuen Site mindestens der vorhandenen StorageGRID Sites entsprechen und die neuen Site-Ressourcen sollten den Speicherknoten an vorhandenen StorageGRID Sites entsprechen.
+
+
+
+* Wenn Sie ein neues System (StorageGRID 11.6 oder höher) installieren und jeder Speicherknoten über 128 GB oder mehr RAM verfügt, weisen Sie Volume 0 8 TB oder mehr zu.  Durch die Verwendung eines größeren Werts für Volume 0 kann der für Metadaten auf jedem Speicherknoten zulässige Speicherplatz erhöht werden.
+* Wenn Sie verschiedene Speicherknoten für eine Site konfigurieren, verwenden Sie nach Möglichkeit dieselbe Einstellung für Volume 0.  Wenn eine Site Speicherknoten unterschiedlicher Größe enthält, bestimmt der Speicherknoten mit dem kleinsten Volume 0 die Metadatenkapazität dieser Site.
+
+
+Weitere Informationen finden Sie unterlink:../admin/managing-object-metadata-storage.html["Verwalten des Objektmetadatenspeichers"] .

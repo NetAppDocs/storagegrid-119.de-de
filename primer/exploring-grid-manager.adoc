@@ -1,0 +1,263 @@
+---
+permalink: primer/exploring-grid-manager.html 
+sidebar: sidebar 
+keywords: what is the grid manager, grid manager dashboard 
+summary: Der Grid Manager ist die browserbasierte grafische Benutzeroberfläche, mit der Sie Ihr StorageGRID -System konfigurieren, verwalten und überwachen können. 
+---
+= Entdecken Sie den Grid Manager
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Der Grid Manager ist die browserbasierte grafische Benutzeroberfläche, mit der Sie Ihr StorageGRID -System konfigurieren, verwalten und überwachen können.
+
+
+NOTE: Der Grid Manager wird mit jeder Version aktualisiert und stimmt möglicherweise nicht mit den Beispiel-Screenshots auf dieser Seite überein.
+
+Wenn Sie sich beim Grid Manager anmelden, stellen Sie eine Verbindung zu einem Admin-Knoten her.  Jedes StorageGRID -System umfasst einen primären Admin-Knoten und eine beliebige Anzahl nicht-primärer Admin-Knoten. Sie können eine Verbindung zu jedem Admin-Knoten herstellen und jeder Admin-Knoten zeigt eine ähnliche Ansicht des StorageGRID Systems an.
+
+Sie können auf den Grid Manager zugreifen, indem Sielink:../admin/web-browser-requirements.html["unterstützter Webbrowser"] .
+
+
+
+== Grid Manager-Dashboard
+
+Wenn Sie sich zum ersten Mal beim Grid Manager anmelden, können Sie das Dashboard verwenden, umlink:../monitor/viewing-dashboard.html["Systemaktivitäten überwachen"] auf einen Blick.
+
+Das Dashboard enthält Informationen zu Systemzustand und -leistung, Speichernutzung, ILM-Prozessen, S3-Vorgängen und den Knoten im Grid.  Du kannstlink:../monitor/viewing-dashboard.html["Konfigurieren Sie das Dashboard"] indem Sie aus einer Sammlung von Karten auswählen, die die Informationen enthalten, die Sie zur effektiven Überwachung Ihres Systems benötigen.
+
+image::../media/grid_manager_dashboard_and_menu.png[Dashboard im Grid Manager]
+
+Für eine Erklärung der auf jeder Karte angezeigten Informationen wählen Sie das Hilfesymbolimage:../media/icon_nms_question.png["Fragezeichensymbol"] für diese Karte.
+
+
+
+== Suchfeld
+
+Über das Feld *Suchen* in der Kopfzeile können Sie schnell zu einer bestimmten Seite im Grid Manager navigieren.  Sie können beispielsweise *km* eingeben, um auf die Seite des Schlüsselverwaltungsservers (KMS) zuzugreifen.
+
+Mit der *Suche* können Sie Einträge in der Seitenleiste des Grid Managers und in den Menüs „Konfiguration“, „Wartung“ und „Support“ finden.  Sie können auch nach Namen nach Elementen wie Grid-Knoten und Mandantenkonten suchen.
+
+
+
+== Hilfemenü
+
+Das Hilfemenüimage:../media/icon-help-menu-bar.png["Hilfesymbol in der Menüleiste"] bietet Zugriff auf:
+
+* Derlink:../fabricpool/use-fabricpool-setup-wizard.html["FabricPool"] Undlink:../admin/use-s3-setup-wizard.html["S3-Einrichtung"] Zauberer
+* Das StorageGRID Dokumentationszentrum für die aktuelle Version
+* link:../admin/using-grid-management-api.html["API-Dokumentation"]
+* Informationen darüber, welche Version von StorageGRID aktuell installiert ist
+
+
+
+
+== Menü „Benachrichtigungen“
+
+Das Menü „Warnungen“ bietet eine benutzerfreundliche Oberfläche zum Erkennen, Auswerten und Beheben von Problemen, die während des StorageGRID -Betriebs auftreten können.
+
+Im Menü „Alarme“ können Sie Folgendes tun:link:../monitor/managing-alerts.html["Benachrichtigungen verwalten"] :
+
+* Aktuelle Warnungen überprüfen
+* Überprüfen gelöster Warnungen
+* Konfigurieren Sie Stummschaltungen, um Warnbenachrichtigungen zu unterdrücken
+* Definieren Sie Warnregeln für Bedingungen, die Warnmeldungen auslösen
+* Konfigurieren Sie den E-Mail-Server für Warnbenachrichtigungen
+
+
+
+
+== Knotenseite
+
+Derlink:../monitor/viewing-nodes-page.html["Knotenseite"] zeigt Informationen zum gesamten Raster, zu jedem Standort im Raster und zu jedem Knoten an einem Standort an.
+
+Auf der Nodes-Startseite werden kombinierte Metriken für das gesamte Raster angezeigt. Um Informationen zu einer bestimmten Site oder einem bestimmten Knoten anzuzeigen, wählen Sie die Site oder den Knoten aus.
+
+image::../media/nodes_page.png[Knotenseite Haupt]
+
+
+
+== Mieterseite
+
+Derlink:../admin/managing-tenants.html["Mieterseite"] ermöglicht es Ihnen,link:../tenant/index.html["Erstellen und Überwachen der Speichermandantenkonten"] für Ihr StorageGRID System.  Sie müssen mindestens ein Mandantenkonto erstellen, um festzulegen, wer Objekte speichern und abrufen kann und welche Funktionen ihm zur Verfügung stehen.
+
+Auf der Seite „Mandanten“ werden auch Nutzungsdetails für jeden Mandanten bereitgestellt, einschließlich der Menge des verwendeten Speichers und der Anzahl der Objekte.  Wenn Sie beim Erstellen des Mandanten ein Kontingent festgelegt haben, können Sie sehen, wie viel von diesem Kontingent verwendet wurde.
+
+image::../media/tenants_page.png[Mietermenü und -seite]
+
+
+
+== ILM-Menü
+
+Derlink:using-information-lifecycle-management.html["ILM-Menü"] ermöglicht es Ihnen,link:../ilm/index.html["Konfigurieren Sie die Regeln und Richtlinien für das Information Lifecycle Management (ILM)."] die die Haltbarkeit und Verfügbarkeit der Daten regeln.  Sie können auch eine Objektkennung eingeben, um die Metadaten für dieses Objekt anzuzeigen.
+
+Über das ILM-Menü können Sie ILM anzeigen und verwalten:
+
+* Regeln
+* Richtlinien
+* Richtlinien-Tags
+* Speicherpools
+* Lagerqualitäten
+* Regionen
+* Objektmetadatensuche
+
+
+
+
+== Konfigurationsmenü
+
+Im Konfigurationsmenü können Sie Netzwerkeinstellungen, Sicherheitseinstellungen, Systemeinstellungen, Überwachungsoptionen und Zugriffskontrolloptionen festlegen.
+
+
+
+=== Netzwerkaufgaben
+
+Zu den Netzwerkaufgaben gehören:
+
+* link:../admin/managing-high-availability-groups.html["Verwalten von Hochverfügbarkeitsgruppen"]
+* link:../admin/managing-load-balancing.html["Verwalten von Load Balancer-Endpunkten"]
+* link:../admin/configuring-s3-api-endpoint-domain-names.html["Konfigurieren von S3-Endpunktdomänennamen"]
+* link:../admin/managing-traffic-classification-policies.html["Verwalten von Richtlinien zur Verkehrsklassifizierung"]
+* link:../admin/configure-vlan-interfaces.html["Konfigurieren von VLAN-Schnittstellen"]
+
+
+
+
+=== Sicherheitsaufgaben
+
+Zu den Sicherheitsaufgaben gehören:
+
+* link:../admin/using-storagegrid-security-certificates.html["Sicherheitszertifikate verwalten"]
+* link:../admin/manage-firewall-controls.html["Verwalten interner Firewall-Kontrollen"]
+* link:../admin/kms-configuring.html["Konfigurieren von Schlüsselverwaltungsservern"]
+* Konfigurieren von Sicherheitseinstellungen, einschließlich derlink:../admin/manage-tls-ssh-policy.html["TLS- und SSH-Richtlinie"] ,link:../admin/changing-network-options-object-encryption.html["Netzwerk- und Objektsicherheitsoptionen"] , Undlink:../admin/changing-browser-session-timeout-interface.html["Schnittstellensicherheitseinstellungen"] .
+* Konfigurieren der Einstellungen für einelink:../admin/configuring-storage-proxy-settings.html["Speicherproxy"] oder einlink:../admin/configuring-admin-proxy-settings.html["Administrator-Proxy"]
+
+
+
+
+=== Systemaufgaben
+
+Zu den Systemaufgaben gehören:
+
+* Verwendenlink:../admin/grid-federation-overview.html["Netzverbund"] um Mandantenkontoinformationen zu klonen und Objektdaten zwischen zwei StorageGRID Systemen zu replizieren.
+* Optional: Aktivieren Sie dielink:../admin/configuring-stored-object-compression.html["Gespeicherte Objekte komprimieren"] Option.
+* link:../ilm/managing-objects-with-s3-object-lock.html["Verwalten der S3-Objektsperre"]
+* Verstehen von Speicheroptionen wielink:../admin/what-object-segmentation-is.html["Objektsegmentierung"] Undlink:../admin/what-storage-volume-watermarks-are.html["Speichervolumen-Wasserzeichen"] .
+* link:../ilm/manage-erasure-coding-profiles.html["Verwalten von Erasure-Coding-Profilen"] .
+
+
+
+
+=== Überwachungsaufgaben
+
+Zu den Überwachungsaufgaben gehören:
+
+* link:../monitor/configure-audit-messages.html["Konfigurieren von Prüfmeldungen und Protokollzielen"]
+* link:../monitor/using-snmp-monitoring.html["Verwenden der SNMP-Überwachung"]
+
+
+
+
+=== Zugriffskontrollaufgaben
+
+Zu den Aufgaben der Zugriffskontrolle gehören:
+
+* link:../admin/managing-admin-groups.html["Verwalten von Administratorgruppen"]
+* link:../admin/managing-users.html["Verwalten von Administratorbenutzern"]
+* Ändern derlink:../admin/changing-provisioning-passphrase.html["Bereitstellungspassphrase"] oderlink:../admin/change-node-console-password.html["Passwörter für die Knotenkonsole"]
+* link:../admin/using-identity-federation.html["Verwenden der Identitätsföderation"]
+* link:../admin/configuring-sso.html["Konfigurieren von SSO"]
+
+
+
+
+== Wartungsmenü
+
+Über das Wartungsmenü können Sie Wartungsaufgaben, Systemwartung und Netzwerkwartung durchführen.
+
+
+
+=== Aufgaben
+
+Zu den Wartungsaufgaben gehören:
+
+* link:../maintain/decommission-procedure.html["Stilllegungsarbeiten"]ungenutzte Netzknoten und Standorte zu entfernen
+* link:../expand/index.html["Expansionsvorgänge"]um neue Grid-Knoten und Sites hinzuzufügen
+* link:../maintain/warnings-and-considerations-for-grid-node-recovery.html["Verfahren zur Wiederherstellung von Grid-Knoten"]um einen ausgefallenen Knoten zu ersetzen und Daten wiederherzustellen
+* link:../maintain/rename-grid-site-node-overview.html["Prozeduren umbenennen"]um die Anzeigenamen Ihres Rasters, Ihrer Sites und Knoten zu ändern
+* link:../troubleshoot/verifying-object-integrity.html["Operationen zur Objektexistenzprüfung"]um die Existenz (jedoch nicht die Richtigkeit) von Objektdaten zu überprüfen
+* Durchführen einerlink:../maintain/rolling-reboot-procedure.html["Rollierender Neustart"] um mehrere Grid-Knoten neu zu starten
+* link:../maintain/restoring-volume.html["Volume-Wiederherstellungsvorgänge"]
+
+
+
+
+=== System
+
+Zu den Aufgaben der Systemwartung, die Sie durchführen können, gehören:
+
+* link:../admin/viewing-storagegrid-license-information.html["Anzeigen von StorageGRID -Lizenzinformationen"]oderlink:../admin/updating-storagegrid-license-information.html["Aktualisieren der Lizenzinformationen"]
+* Generieren und Herunterladen derlink:../maintain/downloading-recovery-package.html["Wiederherstellungspaket"]
+* Durchführen von StorageGRID -Softwareupdates, einschließlich Software-Upgrades, Hotfixes und Updates der SANtricity OS-Software auf ausgewählten Geräten
++
+** link:../upgrade/index.html["Upgrade-Verfahren"]
+** link:../maintain/storagegrid-hotfix-procedure.html["Hotfix-Verfahren"]
+** https://docs.netapp.com/us-en/storagegrid-appliances/sg6000/upgrading-santricity-os-on-storage-controllers-using-grid-manager-sg6000.html["Aktualisieren Sie SANtricity OS auf SG6000-Speichercontrollern mit Grid Manager"^]
+** https://docs.netapp.com/us-en/storagegrid-appliances/sg5700/upgrading-santricity-os-on-storage-controllers-using-grid-manager-sg5700.html["Aktualisieren Sie SANtricity OS auf SG5700-Speichercontrollern mit Grid Manager"^]
+
+
+
+
+
+
+=== Netzwerk
+
+Zu den Aufgaben, die Sie zur Netzwerkwartung durchführen können, gehören:
+
+* link:../maintain/configuring-dns-servers.html["Konfigurieren von DNS-Servern"]
+* link:../maintain/updating-subnets-for-grid-network.html["Aktualisieren von Grid-Netzwerk-Subnetzen"]
+* link:../maintain/configuring-ntp-servers.html["Verwalten von NTP-Servern"]
+
+
+
+
+== Support-Menü
+
+Das Support-Menü bietet Optionen, die dem technischen Support bei der Analyse und Fehlerbehebung Ihres Systems helfen.
+
+
+
+=== Tools
+
+Im Abschnitt „Tools“ des Support-Menüs können Sie:
+
+* link:../admin/configure-autosupport-grid-manager.html["Konfigurieren Sie AutoSupport"]
+* link:../monitor/running-diagnostics.html["Diagnose ausführen"]zum aktuellen Zustand des Netzes
+* link:../monitor/viewing-grid-topology-tree.html["Zugriff auf den Grid-Topologie-Baum"]um detaillierte Informationen zu Grid-Knoten, Diensten und Attributen anzuzeigen
+* link:../monitor/collecting-log-files-and-system-data.html["Erfassen von Protokolldateien und Systemdaten"]
+* link:../monitor/reviewing-support-metrics.html["Überprüfen der Supportmetriken"]
++
+
+NOTE: Die über die Option *Metriken* verfügbaren Tools sind für die Verwendung durch den technischen Support vorgesehen.  Einige Funktionen und Menüelemente dieser Tools sind absichtlich nicht funktionsfähig.
+
+
+
+
+
+=== Alarme (alt)
+
+Die Informationen zu Legacy-Alarmen wurden aus dieser Version der Dokumentation entfernt. Siehe https://docs.netapp.com/us-en/storagegrid-118/monitor/managing-alerts-and-alarms.html["Verwalten von Warnungen und Alarmen (StorageGRID 11.8-Dokumentation)"^] .
+
+
+
+=== Sonstige
+
+Im Abschnitt „Sonstiges“ des Support-Menüs können Sie:
+
+* Verwaltenlink:../admin/manage-link-costs.html["Linkkosten"]
+* Sichtlink:../admin/viewing-notification-status-and-queues.html["Netzwerkmanagementsystem (NMS)"] Einträge
+* Verwaltenlink:../admin/what-storage-volume-watermarks-are.html["Speicherwasserzeichen"]
+

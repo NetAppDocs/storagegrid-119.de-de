@@ -1,0 +1,53 @@
+---
+permalink: s3/s3-operations-tracked-in-audit-logs.html 
+sidebar: sidebar 
+keywords: audit log, auditing bucket and object operations, S3 audit messages 
+summary: Audit-Nachrichten werden von StorageGRID -Diensten generiert und in Textprotokolldateien gespeichert.  Sie können die S3-spezifischen Prüfmeldungen im Prüfprotokoll überprüfen, um Details zu Bucket- und Objektvorgängen zu erhalten. 
+---
+= In den Prüfprotokollen verfolgte S3-Operationen
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Audit-Nachrichten werden von StorageGRID -Diensten generiert und in Textprotokolldateien gespeichert.  Sie können die S3-spezifischen Prüfmeldungen im Prüfprotokoll überprüfen, um Details zu Bucket- und Objektvorgängen zu erhalten.
+
+
+
+== In den Audit-Protokollen verfolgte Bucket-Operationen
+
+* Bucket erstellen
+* Bucket löschen
+* BucketTagging löschen
+* Objekte löschen
+* GetBucketTagging
+* Kopfeimer
+* ListObjects
+* ListObjectVersions
+* PUT Bucket-Konformität
+* PutBucketTagging
+* PutBucketVersioning
+
+
+
+
+== In den Überwachungsprotokollen verfolgte Objektvorgänge
+
+* CompleteMultipartUpload
+* Objekt kopieren
+* Objekt löschen
+* GetObject
+* HeadObject
+* PutObject
+* RestoreObject
+* Objekt auswählen
+* UploadPart (wenn eine ILM-Regel eine ausgeglichene oder strikte Aufnahme verwendet)
+* UploadPartCopy (wenn eine ILM-Regel eine ausgeglichene oder strikte Aufnahme verwendet)
+
+
+.Ähnliche Informationen
+* link:../audit/accessing-audit-log-file.html["Zugriff auf die Überwachungsprotokolldatei"]
+* link:../audit/client-write-audit-messages.html["Client schreibt Prüfmeldungen"]
+* link:../audit/client-read-audit-messages.html["Client liest Audit-Nachrichten"]
+

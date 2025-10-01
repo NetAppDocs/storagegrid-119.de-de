@@ -1,0 +1,171 @@
+---
+permalink: maintain/considerations-for-removing-site.html 
+sidebar: sidebar 
+keywords: how to remove site 
+summary: Bevor Sie das Verfahren zur Außerbetriebnahme einer Site zum Entfernen einer Site verwenden, müssen Sie die Überlegungen überprüfen. 
+---
+= Überlegungen zum Entfernen einer Site
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Bevor Sie das Verfahren zur Außerbetriebnahme einer Site zum Entfernen einer Site verwenden, müssen Sie die Überlegungen überprüfen.
+
+
+
+== Was passiert, wenn Sie eine Site außer Betrieb nehmen?
+
+Wenn Sie eine Site außer Betrieb nehmen, entfernt StorageGRID dauerhaft alle Knoten an der Site und die Site selbst aus dem StorageGRID -System.
+
+Wenn das Verfahren zur Außerbetriebnahme des Standorts abgeschlossen ist:
+
+* Sie können StorageGRID nicht mehr verwenden, um die Site oder einen der Knoten auf der Site anzuzeigen oder darauf zuzugreifen.
+* Sie können keine Speicherpools oder Erasure-Coding-Profile mehr verwenden, die auf die Site verwiesen.  Wenn StorageGRID eine Site außer Betrieb nimmt, entfernt es automatisch diese Speicherpools und deaktiviert diese Erasure-Coding-Profile.
+
+
+
+
+== Unterschiede zwischen den Stilllegungsverfahren für verbundene und getrennte Standorte
+
+Sie können das Verfahren zur Site-Außerbetriebnahme verwenden, um eine Site zu entfernen, bei der alle Knoten mit StorageGRID verbunden sind (als Außerbetriebnahme einer verbundenen Site bezeichnet), oder um eine Site zu entfernen, bei der alle Knoten von StorageGRID getrennt sind (als Außerbetriebnahme einer getrennten Site bezeichnet).  Bevor Sie beginnen, müssen Sie die Unterschiede zwischen diesen Verfahren verstehen.
+
+
+NOTE: Wenn eine Site eine Mischung aus verbundenen (image:../media/icon_alert_green_checkmark.png["Symbol Alarm Grünes Häkchen"] ) und getrennte Knoten (image:../media/icon_alarm_gray_administratively_down.png["Symbol Alarm Grau Administrativ Heruntergefahren"] oderimage:../media/icon_alarm_blue_unknown.png["Symbol Alarm Blau Unbekannt"] ), müssen Sie alle Offline-Knoten wieder online bringen.
+
+* Durch die Außerbetriebnahme einer verbundenen Site können Sie eine Betriebssite aus dem StorageGRID -System entfernen.  Sie können beispielsweise eine verbundene Site-Außerbetriebnahme durchführen, um eine Site zu entfernen, die zwar funktioniert, aber nicht mehr benötigt wird.
+* Wenn StorageGRID eine verbundene Site entfernt, verwendet es ILM, um die Objektdaten an der Site zu verwalten.  Bevor Sie mit der Außerbetriebnahme einer verbundenen Site beginnen können, müssen Sie die Site aus allen ILM-Regeln entfernen und eine neue ILM-Richtlinie aktivieren.  Die ILM-Prozesse zum Migrieren von Objektdaten und die internen Prozesse zum Entfernen einer Site können gleichzeitig ablaufen. Die beste Vorgehensweise besteht jedoch darin, die ILM-Schritte abzuschließen, bevor Sie mit dem eigentlichen Außerbetriebnahmeverfahren beginnen.
+* Durch die Außerbetriebnahme einer getrennten Site können Sie eine ausgefallene Site aus dem StorageGRID -System entfernen.  Sie können beispielsweise eine getrennte Site-Stilllegung durchführen, um eine Site zu entfernen, die durch einen Brand oder eine Überschwemmung zerstört wurde.
++
+Wenn StorageGRID eine getrennte Site entfernt, betrachtet es alle Knoten als nicht wiederherstellbar und unternimmt keinen Versuch, die Daten zu erhalten.  Bevor Sie jedoch mit der Außerbetriebnahme einer getrennten Site beginnen können, müssen Sie die Site aus allen ILM-Regeln entfernen und eine neue ILM-Richtlinie aktivieren.
+
++
+
+CAUTION: Bevor Sie ein Verfahren zur Außerbetriebnahme eines getrennten Standorts durchführen, müssen Sie sich an Ihren NetApp Kundenbetreuer wenden.  NetApp überprüft Ihre Anforderungen, bevor alle Schritte im Assistenten „Site außer Betrieb nehmen“ aktiviert werden.  Sie sollten nicht versuchen, eine getrennte Site außer Betrieb zu nehmen, wenn Sie glauben, dass es möglich sein könnte, die Site wiederherzustellen oder Objektdaten von der Site wiederherzustellen.
+
+
+
+
+
+== Allgemeine Voraussetzungen für das Entfernen einer verbundenen oder getrennten Site
+
+Bevor Sie eine verbundene oder getrennte Site entfernen, müssen Sie sich der folgenden Anforderungen bewusst sein:
+
+* Sie können eine Site, die den primären Admin-Knoten enthält, nicht außer Betrieb nehmen.
+* Sie können eine Site nicht außer Betrieb nehmen, wenn einer der Knoten über eine Schnittstelle verfügt, die zu einer Hochverfügbarkeitsgruppe (HA) gehört.  Sie müssen entweder die HA-Gruppe bearbeiten, um die Schnittstelle des Knotens zu entfernen, oder die gesamte HA-Gruppe entfernen.
+* Sie können eine Site nicht außer Betrieb nehmen, wenn sie eine Mischung aus verbundenen (image:../media/icon_alert_green_checkmark.png["Symbol Alarm Grünes Häkchen"] ) und getrennt (image:../media/icon_alarm_blue_unknown.png["Symbol Alarm Blau Unbekannt"] oderimage:../media/icon_alarm_gray_administratively_down.png["Symbol Alarm Grau Administrativ Heruntergefahren"] ) Knoten.
+* Sie können eine Site nicht außer Betrieb nehmen, wenn ein Knoten an einer anderen Site getrennt ist (image:../media/icon_alarm_blue_unknown.png["Symbol Alarm Blau Unbekannt"] oderimage:../media/icon_alarm_gray_administratively_down.png["Symbol Alarm Grau Administrativ Heruntergefahren"] ).
+* Sie können das Verfahren zur Außerbetriebnahme der Site nicht starten, wenn ein EC-Knoten-Reparaturvorgang ausgeführt wird.  Sehenlink:checking-data-repair-jobs.html["Überprüfen Sie die Datenreparaturaufträge"] um die Reparatur von löschcodierten Daten zu verfolgen.
+* Während das Verfahren zur Außerbetriebnahme des Standorts läuft:
++
+** Sie können keine ILM-Regeln erstellen, die sich auf die Außerbetriebnahme der Site beziehen.  Sie können auch keine vorhandene ILM-Regel bearbeiten, um auf die Site zu verweisen.
+** Sie können keine anderen Wartungsvorgänge wie Erweiterungen oder Upgrades durchführen.
++
+
+NOTE: Wenn Sie während der Außerbetriebnahme einer verbundenen Site eine weitere Wartungsprozedur durchführen müssen, können Sielink:pausing-and-resuming-decommission-process-for-storage-nodes.html["Unterbrechen Sie den Vorgang, während die Speicherknoten entfernt werden"] .  Die Schaltfläche *Pause* ist nur aktiviert, wenn die Phasen der ILM-Auswertung oder der Außerbetriebnahme von Erasure-Coded-Daten erreicht sind. Die ILM-Auswertung (Datenmigration) wird jedoch weiterhin im Hintergrund ausgeführt.  Nachdem die zweite Wartungsprozedur abgeschlossen ist, können Sie mit der Außerbetriebnahme fortfahren.
+
+** Wenn Sie nach dem Start des Site-Außerbetriebnahmeverfahrens einen Knoten wiederherstellen müssen, müssen Sie sich an den Support wenden.
+
+
+* Sie können nicht mehr als eine Site gleichzeitig außer Betrieb nehmen.
+* Wenn die Site einen oder mehrere Admin-Knoten enthält und Single Sign-On (SSO) für Ihr StorageGRID System aktiviert ist, müssen Sie alle Vertrauensstellungen der vertrauenden Seite für die Site aus Active Directory Federation Services (AD FS) entfernen.
+
+
+
+
+== Anforderungen an das Information Lifecycle Management (ILM)
+
+Beim Entfernen einer Site müssen Sie Ihre ILM-Konfiguration aktualisieren.  Der Assistent „Site außer Betrieb nehmen“ führt Sie durch eine Reihe von erforderlichen Schritten, um Folgendes sicherzustellen:
+
+* Auf die Site wird in keiner ILM-Richtlinie verwiesen.  Wenn dies der Fall ist, müssen Sie die Richtlinien bearbeiten oder Richtlinien mit neuen ILM-Regeln erstellen und aktivieren.
+* Es beziehen sich keine ILM-Regeln auf die Site, auch wenn diese Regeln in keiner Richtlinie verwendet werden.  Sie müssen alle Regeln löschen oder bearbeiten, die sich auf die Site beziehen.
+
+
+Wenn StorageGRID die Site außer Betrieb nimmt, werden automatisch alle nicht verwendeten Erasure-Coding-Profile deaktiviert, die sich auf die Site beziehen, und alle nicht verwendeten Speicherpools gelöscht, die sich auf die Site beziehen.  Wenn der Speicherpool „Alle Speicherknoten“ vorhanden ist (StorageGRID 11.6 und früher), wird er entfernt, da er alle Sites verwendet.
+
+
+CAUTION: Bevor Sie eine Site entfernen können, müssen Sie möglicherweise neue ILM-Regeln erstellen und eine neue ILM-Richtlinie aktivieren.  Diese Anweisungen setzen voraus, dass Sie die Funktionsweise von ILM gut verstehen und mit der Erstellung von Speicherpools, Erasure-Coding-Profilen, ILM-Regeln sowie der Simulation und Aktivierung einer ILM-Richtlinie vertraut sind. Sehen link:../ilm/index.html["Objekte mit ILM verwalten"] .
+
+
+
+== Überlegungen zu den Objektdaten an einem verbundenen Standort
+
+Wenn Sie eine verbundene Site außer Betrieb nehmen, müssen Sie entscheiden, was mit den vorhandenen Objektdaten auf der Site geschehen soll, wenn Sie neue ILM-Regeln und eine neue ILM-Richtlinie erstellen.  Sie können eine oder beide der folgenden Aktionen ausführen:
+
+* Verschieben Sie Objektdaten von der ausgewählten Site zu einer oder mehreren anderen Sites in Ihrem Raster.
++
+*Beispiel für das Verschieben von Daten*: Angenommen, Sie möchten einen Standort in Raleigh außer Betrieb nehmen, weil Sie einen neuen Standort in Sunnyvale hinzugefügt haben.  In diesem Beispiel möchten Sie alle Objektdaten von der alten Site auf die neue Site verschieben.  Bevor Sie Ihre ILM-Regeln und ILM-Richtlinien aktualisieren, müssen Sie die Kapazität an beiden Standorten überprüfen.  Sie müssen sicherstellen, dass der Standort Sunnyvale über genügend Kapazität verfügt, um die Objektdaten vom Standort Raleigh aufzunehmen, und dass in Sunnyvale ausreichend Kapazität für zukünftiges Wachstum verbleibt.
+
++
+
+NOTE: Um sicherzustellen, dass ausreichend Kapazität zur Verfügung steht, müssen Sie möglicherweiselink:../expand/index.html["ein Raster erweitern"] indem Sie Speichervolumes oder Speicherknoten zu einer vorhandenen Site hinzufügen oder eine neue Site hinzufügen, bevor Sie dieses Verfahren ausführen.
+
+* Löschen Sie Objektkopien von der ausgewählten Site.
++
+*Beispiel zum Löschen von Daten*: Angenommen, Sie verwenden derzeit eine 3-Kopien-ILM-Regel, um Objektdaten über drei Standorte hinweg zu replizieren.  Bevor Sie einen Standort außer Betrieb nehmen, können Sie eine entsprechende ILM-Regel mit zwei Kopien erstellen, um Daten nur an zwei Standorten zu speichern.  Wenn Sie eine neue ILM-Richtlinie aktivieren, die die 2-Kopien-Regel verwendet, löscht StorageGRID die Kopien vom dritten Standort, da sie die ILM-Anforderungen nicht mehr erfüllen.  Die Objektdaten bleiben jedoch weiterhin geschützt und die Kapazität der beiden verbleibenden Standorte bleibt unverändert.
+
++
+
+CAUTION: Erstellen Sie niemals eine ILM-Regel für eine einzelne Kopie, um die Entfernung einer Site zu ermöglichen.  Eine ILM-Regel, die für einen bestimmten Zeitraum nur eine replizierte Kopie erstellt, birgt das Risiko eines dauerhaften Datenverlusts.  Wenn nur eine replizierte Kopie eines Objekts vorhanden ist, geht dieses Objekt verloren, wenn ein Speicherknoten ausfällt oder einen schwerwiegenden Fehler aufweist.  Auch während Wartungsvorgängen wie Upgrades verlieren Sie vorübergehend den Zugriff auf das Objekt.
+
+
+
+
+
+== Zusätzliche Anforderungen für die Stilllegung eines verbundenen Standorts
+
+Bevor StorageGRID eine verbundene Site entfernen kann, müssen Sie Folgendes sicherstellen:
+
+* Alle Knoten in Ihrem StorageGRID -System müssen den Verbindungsstatus *Verbunden* haben (image:../media/icon_alert_green_checkmark.png["Symbol Alarm Grünes Häkchen"] ); die Knoten können jedoch aktive Warnungen haben.
++
+
+NOTE: Sie können die Schritte 1 bis 4 des Assistenten „Site außer Betrieb nehmen“ abschließen, wenn ein oder mehrere Knoten getrennt sind.  Sie können Schritt 5 des Assistenten, der den Außerbetriebnahmeprozess startet, jedoch erst abschließen, wenn alle Knoten verbunden sind.
+
+* Wenn die Site, die Sie entfernen möchten, einen Gateway-Knoten oder einen Admin-Knoten enthält, der für den Lastenausgleich verwendet wird, müssen Sie möglicherweiselink:../expand/index.html["ein Raster erweitern"] um einen gleichwertigen neuen Knoten an einem anderen Standort hinzuzufügen.  Stellen Sie sicher, dass Clients eine Verbindung zum Ersatzknoten herstellen können, bevor Sie mit der Außerbetriebnahme der Site beginnen.
+* Wenn die Site, die Sie entfernen möchten, Gateway-Knoten oder Admin-Knoten enthält, die sich in einer Hochverfügbarkeitsgruppe (HA) befinden, können Sie die Schritte 1 bis 4 des Assistenten „Site außer Betrieb nehmen“ ausführen.  Sie können Schritt 5 des Assistenten, der den Außerbetriebnahmeprozess startet, jedoch erst abschließen, wenn Sie diese Knoten aus allen HA-Gruppen entfernt haben.  Wenn vorhandene Clients eine Verbindung zu einer HA-Gruppe herstellen, die Knoten von der Site enthält, müssen Sie sicherstellen, dass sie nach dem Entfernen der Site weiterhin eine Verbindung zu StorageGRID herstellen können.
+* Wenn Clients eine direkte Verbindung zu Speicherknoten an dem Standort herstellen, den Sie entfernen möchten, müssen Sie sicherstellen, dass sie eine Verbindung zu Speicherknoten an anderen Standorten herstellen können, bevor Sie mit der Außerbetriebnahme des Standorts beginnen.
+* Sie müssen auf den verbleibenden Sites ausreichend Speicherplatz bereitstellen, um alle Objektdaten unterzubringen, die aufgrund von Änderungen an einer aktiven ILM-Richtlinie verschoben werden.  In manchen Fällen müssen Sie möglicherweiselink:../expand/index.html["ein Raster erweitern"] durch Hinzufügen von Speicherknoten, Speichervolumes oder neuen Sites, bevor Sie die Außerbetriebnahme einer verbundenen Site abschließen können.
+* Sie müssen ausreichend Zeit einplanen, damit der Außerbetriebnahmevorgang abgeschlossen werden kann.  Es kann Tage, Wochen oder sogar Monate dauern, bis StorageGRID ILM-Prozesse Objektdaten von der Site verschieben oder löschen, bevor die Site außer Betrieb genommen werden kann.
++
+
+NOTE: Das Verschieben oder Löschen von Objektdaten von einer Site kann Tage, Wochen oder sogar Monate dauern, abhängig von der Datenmenge an der Site, der Auslastung Ihres Systems, den Netzwerklatenzen und der Art der erforderlichen ILM-Änderungen.
+
+* Wenn möglich, sollten Sie die Schritte 1–4 des Assistenten „Site außer Betrieb nehmen“ so früh wie möglich abschließen.  Der Außerbetriebnahmevorgang wird schneller und mit weniger Unterbrechungen und Leistungseinbußen abgeschlossen, wenn Sie das Verschieben von Daten von der Site zulassen, bevor Sie mit dem eigentlichen Außerbetriebnahmevorgang beginnen (indem Sie in Schritt 5 des Assistenten „Außerbetriebnahme starten“ auswählen).
+
+
+
+
+== Zusätzliche Anforderungen für die Stilllegung eines abgekoppelten Standorts
+
+Bevor StorageGRID eine getrennte Site entfernen kann, müssen Sie Folgendes sicherstellen:
+
+* Sie haben Ihren NetApp Kundenbetreuer kontaktiert.  NetApp überprüft Ihre Anforderungen, bevor alle Schritte im Assistenten „Site außer Betrieb nehmen“ aktiviert werden.
++
+
+CAUTION: Sie sollten nicht versuchen, eine getrennte Site außer Betrieb zu nehmen, wenn Sie glauben, dass es möglich sein könnte, die Site wiederherzustellen oder Objektdaten von der Site wiederherzustellen. Sehen link:how-site-recovery-is-performed-by-technical-support.html["So stellt der technische Support eine Site wieder her"] .
+
+* Alle Knoten am Standort müssen einen der folgenden Verbindungsstatus aufweisen:
++
+** *Unbekannt* (image:../media/icon_alarm_blue_unknown.png["Symbol Alarm Blau Unbekannt"] ): Aus einem unbekannten Grund wird ein Knoten getrennt oder die Dienste auf dem Knoten sind unerwartet ausgefallen.  Beispielsweise könnte ein Dienst auf dem Knoten gestoppt worden sein oder der Knoten könnte aufgrund eines Stromausfalls oder einer unerwarteten Störung seine Netzwerkverbindung verloren haben.
+** *Administrativ nicht erreichbar* (image:../media/icon_alarm_gray_administratively_down.png["Symbol Alarm Grau Administrativ Heruntergefahren"] ): Der Knoten ist aus einem erwarteten Grund nicht mit dem Netz verbunden.  Beispielsweise wurden der Knoten oder die Dienste auf dem Knoten ordnungsgemäß heruntergefahren.
+
+
+* Alle Knoten an allen anderen Standorten müssen den Verbindungsstatus *Verbunden* haben (image:../media/icon_alert_green_checkmark.png["Symbol Alarm Grünes Häkchen"] ); diese anderen Knoten können jedoch aktive Warnungen haben.
+* Sie müssen verstehen, dass Sie StorageGRID nicht mehr verwenden können, um auf der Site gespeicherte Objektdaten anzuzeigen oder abzurufen.  Wenn StorageGRID dieses Verfahren durchführt, unternimmt es keinen Versuch, Daten vom getrennten Standort zu erhalten.
++
+
+NOTE: Wenn Ihre ILM-Regeln und -Richtlinien zum Schutz vor dem Verlust einer einzelnen Site konzipiert wurden, sind auf den verbleibenden Sites weiterhin Kopien Ihrer Objekte vorhanden.
+
+* Sie müssen sich darüber im Klaren sein, dass das Objekt verloren geht und nicht wiederhergestellt werden kann, wenn die Site die einzige Kopie eines Objekts enthält.
+
+
+
+
+== Überlegungen zur Konsistenz beim Entfernen einer Site
+
+Die Konsistenz für einen S3-Bucket bestimmt, ob StorageGRID Objektmetadaten vollständig auf alle Knoten und Sites repliziert, bevor einem Client mitgeteilt wird, dass die Objektaufnahme erfolgreich war.  Konsistenz sorgt für ein Gleichgewicht zwischen der Verfügbarkeit der Objekte und der Konsistenz dieser Objekte über verschiedene Speicherknoten und Standorte hinweg.
+
+Wenn StorageGRID eine Site entfernt, muss sichergestellt werden, dass keine Daten auf die zu entfernende Site geschrieben werden.  Dadurch wird die Konsistenz für jeden Bucket oder Container vorübergehend außer Kraft gesetzt.  Nachdem Sie den Site-Außerbetriebnahmeprozess gestartet haben, verwendet StorageGRID vorübergehend eine starke Site-Konsistenz, um zu verhindern, dass Objektmetadaten auf die zu entfernende Site geschrieben werden.
+
+Beachten Sie, dass aufgrund dieser vorübergehenden Außerkraftsetzung alle Schreib-, Aktualisierungs- und Löschvorgänge des Clients, die während der Außerbetriebnahme eines Standorts erfolgen, fehlschlagen können, wenn mehrere Knoten an den verbleibenden Standorten nicht mehr verfügbar sind.

@@ -1,0 +1,50 @@
+---
+permalink: ilm/enabling-s3-object-lock-globally.html 
+sidebar: sidebar 
+keywords: enable s3 object lock, object lock 
+summary: Wenn ein S3-Mandantenkonto beim Speichern von Objektdaten gesetzliche Anforderungen erfüllen muss, müssen Sie S3 Object Lock für Ihr gesamtes StorageGRID System aktivieren.  Durch Aktivieren der globalen S3 Object Lock-Einstellung kann jeder S3-Mandantenbenutzer Buckets und Objekte mit S3 Object Lock erstellen und verwalten. 
+---
+= S3 Object Lock global aktivieren
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Wenn ein S3-Mandantenkonto beim Speichern von Objektdaten gesetzliche Anforderungen erfüllen muss, müssen Sie S3 Object Lock für Ihr gesamtes StorageGRID System aktivieren.  Durch Aktivieren der globalen S3 Object Lock-Einstellung kann jeder S3-Mandantenbenutzer Buckets und Objekte mit S3 Object Lock erstellen und verwalten.
+
+.Bevor Sie beginnen
+* Sie haben dielink:../admin/admin-group-permissions.html["Root-Zugriffsberechtigung"] .
+* Sie sind beim Grid Manager angemeldet mit einemlink:../admin/web-browser-requirements.html["unterstützter Webbrowser"] .
+* Sie haben den S3 Object Lock-Workflow überprüft und verstehen die Überlegungen.
+* Sie haben bestätigt, dass die Standardregel in der aktiven ILM-Richtlinie konform ist. Sehenlink:creating-default-ilm-rule.html["Erstellen einer ILM-Standardregel"] für Details.
+
+
+.Informationen zu diesem Vorgang
+Ein Grid-Administrator muss die globale S3-Objektsperreinstellung aktivieren, damit Mandantenbenutzer neue Buckets erstellen können, bei denen S3-Objektsperrung aktiviert ist.  Nachdem diese Einstellung aktiviert wurde, kann sie nicht mehr deaktiviert werden.
+
+Überprüfen Sie die Compliance-Einstellungen vorhandener Mandanten, nachdem Sie die globale S3-Objektsperreinstellung aktiviert haben.  Wenn Sie diese Einstellung aktivieren, hängen die S3 Object Lock-Einstellungen pro Mandant von der StorageGRID Version zum Zeitpunkt der Mandantenerstellung ab.
+
+
+NOTE: Die globale Compliance-Einstellung ist veraltet.  Wenn Sie diese Einstellung mit einer früheren Version von StorageGRID aktiviert haben, wird die Einstellung „S3 Object Lock“ automatisch aktiviert.  Sie können StorageGRID weiterhin verwenden, um die Einstellungen vorhandener konformer Buckets zu verwalten. Sie können jedoch keine neuen konformen Buckets erstellen.  Weitere Einzelheiten finden Sie unter https://kb.netapp.com/Advice_and_Troubleshooting/Hybrid_Cloud_Infrastructure/StorageGRID/How_to_manage_legacy_Compliant_buckets_in_StorageGRID_11.5["NetApp Knowledge Base: So verwalten Sie ältere konforme Buckets in StorageGRID 11.5"^] .
+
+.Schritte
+. Wählen Sie *KONFIGURATION* > *System* > *S3-Objektsperre*.
++
+Die Seite „S3-Objektsperreinstellungen“ wird angezeigt.
+
+. Wählen Sie *S3-Objektsperre aktivieren*.
+. Wählen Sie *Übernehmen*.
++
+Ein Bestätigungsdialogfeld wird angezeigt und erinnert Sie daran, dass Sie S3 Object Lock nach der Aktivierung nicht mehr deaktivieren können.
+
+. Wenn Sie sicher sind, dass Sie S3 Object Lock dauerhaft für Ihr gesamtes System aktivieren möchten, wählen Sie *OK*.
++
+Wenn Sie *OK* auswählen:
+
++
+** Wenn die Standardregel in der aktiven ILM-Richtlinie konform ist, ist S3 Object Lock jetzt für das gesamte Grid aktiviert und kann nicht deaktiviert werden.
+** Wenn die Standardregel nicht konform ist, wird ein Fehler angezeigt.  Sie müssen eine neue ILM-Richtlinie erstellen und aktivieren, die eine konforme Regel als Standardregel enthält. Wählen Sie *OK*.  Erstellen Sie dann eine neue Richtlinie, simulieren Sie sie und aktivieren Sie sie. Sehenlink:creating-ilm-policy.html["ILM-Richtlinie erstellen"] Anweisungen hierzu finden Sie unter.
+
+
+

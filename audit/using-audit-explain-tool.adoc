@@ -1,0 +1,98 @@
+---
+permalink: audit/using-audit-explain-tool.html 
+sidebar: sidebar 
+keywords: storagegrid, audit, tool, audit-explain, audit explain, translate audit messages, translate messages, translate audit message, translate message 
+summary: Mit dem Tool „Audit-Explain“ können Sie die Audit-Meldungen im Audit-Protokoll in ein leicht lesbares Format übersetzen. 
+---
+= Verwenden Sie das Audit-Explain-Tool
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Sie können die `audit-explain` Tool zum Übersetzen der Audit-Meldungen im Audit-Protokoll in ein leicht lesbares Format.
+
+.Bevor Sie beginnen
+* Du hastlink:../admin/admin-group-permissions.html["spezifische Zugriffsberechtigungen"] .
+* Sie müssen über die `Passwords.txt` Datei.
+* Sie müssen die IP-Adresse des primären Admin-Knotens kennen.
+
+
+.Informationen zu diesem Vorgang
+Der `audit-explain` Das auf dem primären Admin-Knoten verfügbare Tool bietet vereinfachte Zusammenfassungen der Audit-Meldungen in einem Audit-Protokoll.
+
+
+NOTE: Der `audit-explain` Das Tool ist in erster Linie für die Verwendung durch den technischen Support bei der Fehlerbehebung vorgesehen.  Verarbeitung `audit-explain` Abfragen können eine große Menge an CPU-Leistung verbrauchen, was sich auf den Betrieb von StorageGRID auswirken kann.
+
+Dieses Beispiel zeigt eine typische Ausgabe des `audit-explain` Werkzeug.  Diese vierlink:sput-s3-put.html["SPUT"] Es wurden Prüfmeldungen generiert, als der S3-Mandant mit der Konto-ID 92484777680322627870 S3-PUT-Anfragen verwendete, um einen Bucket mit dem Namen „bucket1“ zu erstellen und diesem Bucket drei Objekte hinzuzufügen.
+
+[listing]
+----
+SPUT S3 PUT bucket bucket1 account:92484777680322627870 usec:124673
+SPUT S3 PUT object bucket1/part1.txt tenant:92484777680322627870  cbid:9DCB157394F99FE5 usec:101485
+SPUT S3 PUT object bucket1/part2.txt tenant:92484777680322627870  cbid:3CFBB07AB3D32CA9 usec:102804
+SPUT S3 PUT object bucket1/part3.txt tenant:92484777680322627870  cbid:5373D73831ECC743 usec:93874
+----
+Der `audit-explain` Das Tool kann Folgendes:
+
+* Verarbeiten Sie einfache oder komprimierte Prüfprotokolle. Beispiel:
++
+`audit-explain audit.log`
+
++
+`audit-explain 2019-08-12.txt.gz`
+
+* Verarbeiten Sie mehrere Dateien gleichzeitig. Beispiel:
++
+`audit-explain audit.log 2019-08-12.txt.gz 2019-08-13.txt.gz`
+
++
+`audit-explain /var/local/log/*`
+
+* Akzeptieren Sie Eingaben von einer Pipe, die es Ihnen ermöglicht, die Eingabe mithilfe der `grep` Befehl oder andere Mittel. Beispiel:
++
+`grep SPUT audit.log | audit-explain`
+
++
+`grep bucket-name audit.log | audit-explain`
+
+
+
+Da Audit-Protokolle sehr groß und langsam zu analysieren sein können, können Sie Zeit sparen, indem Sie Teile filtern, die Sie ansehen möchten, und ausführen `audit-explain` auf die Teile, statt auf die gesamte Datei.
+
+[NOTE]
+====
+Der `audit-explain` Das Tool akzeptiert keine komprimierten Dateien als Pipe-Eingabe. Um komprimierte Dateien zu verarbeiten, geben Sie deren Dateinamen als Befehlszeilenargumente an oder verwenden Sie die `zcat` Tool, um die Dateien zuerst zu dekomprimieren. Beispiel:
+
+`zcat audit.log.gz | audit-explain`
+
+====
+Verwenden Sie die `help (-h)` Option, um die verfügbaren Optionen anzuzeigen. Beispiel:
+
+`$ audit-explain -h`
+
+.Schritte
+. Melden Sie sich beim primären Admin-Knoten an:
++
+.. Geben Sie den folgenden Befehl ein: `ssh admin@_primary_Admin_Node_IP_`
+.. Geben Sie das Passwort ein, das in der `Passwords.txt` Datei.
+.. Geben Sie den folgenden Befehl ein, um zum Root zu wechseln: `su -`
+.. Geben Sie das Passwort ein, das in der `Passwords.txt` Datei.
++
+Wenn Sie als Root angemeldet sind, ändert sich die Eingabeaufforderung von `$` Zu `#` .
+
+
+
+. Geben Sie den folgenden Befehl ein, wobei `/var/local/log/audit.log` stellt den Namen und den Speicherort der Datei(en) dar, die Sie analysieren möchten:
++
+`$ audit-explain /var/local/log/audit.log`
+
++
+Der `audit-explain` Das Tool druckt für Menschen lesbare Interpretationen aller Nachrichten in der bzw. den angegebenen Dateien.
+
++
+
+NOTE: Um die Zeilenlänge zu reduzieren und die Lesbarkeit zu verbessern, werden Zeitstempel standardmäßig nicht angezeigt.  Wenn Sie die Zeitstempel sehen möchten, verwenden Sie den Zeitstempel(`-t` ) Option.
+
+

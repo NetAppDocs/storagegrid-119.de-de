@@ -1,0 +1,178 @@
+---
+permalink: troubleshoot/troubleshooting-admin-node-and-user-interface-issues.html 
+sidebar: sidebar 
+keywords: how to troubleshoot admin node issues, how to troubleshoot user interface issues 
+summary: Sie können verschiedene Aufgaben ausführen, um die Ursache von Problemen im Zusammenhang mit Admin-Knoten und der StorageGRID Benutzeroberfläche zu ermitteln. 
+---
+= Beheben von Problemen mit dem Admin-Knoten und der Benutzeroberfläche
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Sie können verschiedene Aufgaben ausführen, um die Ursache von Problemen im Zusammenhang mit Admin-Knoten und der StorageGRID Benutzeroberfläche zu ermitteln.
+
+
+
+== Anmeldefehler beim Admin-Knoten
+
+Wenn bei der Anmeldung bei einem StorageGRID Admin-Knoten ein Fehler auftritt, liegt möglicherweise ein Problem mit einemlink:../troubleshoot/troubleshooting-network-hardware-and-platform-issues.html["Vernetzung"] oder https://docs.netapp.com/us-en/storagegrid-appliances/installconfig/troubleshooting-hardware-installation-sg100-and-sg1000.html["Hardware"^] Problem, ein Problem mitlink:../primer/what-admin-node-is.html["Admin-Knoten-Dienste"] oder einlink:../maintain/recovering-failed-storage-volumes-and-rebuilding-cassandra-database.html["Problem mit der Cassandra-Datenbank"] auf verbundenen Speicherknoten.
+
+.Bevor Sie beginnen
+* Sie sind beim Grid Manager angemeldet mit einemlink:../admin/web-browser-requirements.html["unterstützter Webbrowser"] .
+* Sie haben die `Passwords.txt` Datei.
+* Du hastlink:../admin/admin-group-permissions.html["spezifische Zugriffsberechtigungen"] .
+
+
+.Informationen zu diesem Vorgang
+Verwenden Sie diese Richtlinien zur Fehlerbehebung, wenn beim Versuch, sich bei einem Admin-Knoten anzumelden, eine der folgenden Fehlermeldungen angezeigt wird:
+
+* `Your credentials for this account were invalid. Please try again.`
+* `Waiting for services to start...`
+* `Internal server error. The server encountered an error and could not complete your request. Please try again. If the problem persists, contact Technical Support.`
+* `Unable to communicate with server. Reloading page...`
+
+
+.Schritte
+. Warten Sie 10 Minuten und versuchen Sie erneut, sich anzumelden.
++
+Wenn der Fehler nicht automatisch behoben wird, fahren Sie mit dem nächsten Schritt fort.
+
+. Wenn Ihr StorageGRID System über mehr als einen Admin-Knoten verfügt, versuchen Sie, sich von einem anderen Admin-Knoten aus beim Grid Manager anzumelden, um den Status eines nicht verfügbaren Admin-Knotens zu überprüfen.
++
+** Wenn Sie sich anmelden können, können Sie die Optionen *Dashboard*, *NODES*, *Alerts* und *SUPPORT* verwenden, um die Fehlerursache zu ermitteln.
+** Wenn Sie nur einen Admin-Knoten haben oder sich immer noch nicht anmelden können, fahren Sie mit dem nächsten Schritt fort.
+
+
+. Stellen Sie fest, ob die Hardware des Knotens offline ist.
+. Wenn Single Sign-On (SSO) für Ihr StorageGRID System aktiviert ist, lesen Sie die Schritte fürlink:../admin/configuring-sso.html["Konfigurieren der einmaligen Anmeldung"] .
++
+Möglicherweise müssen Sie SSO für einen einzelnen Admin-Knoten vorübergehend deaktivieren und erneut aktivieren, um etwaige Probleme zu beheben.
+
++
+
+NOTE: Wenn SSO aktiviert ist, können Sie sich nicht über einen eingeschränkten Port anmelden.  Sie müssen Port 443 verwenden.
+
+. Stellen Sie fest, ob das von Ihnen verwendete Konto einem Verbundbenutzer gehört.
++
+Wenn das föderierte Benutzerkonto nicht funktioniert, versuchen Sie, sich beim Grid Manager als lokaler Benutzer, beispielsweise als Root, anzumelden.
+
++
+** Wenn sich der lokale Benutzer anmelden kann:
++
+... Überprüfen Sie die Warnungen.
+... Wählen Sie *KONFIGURATION* > *Zugriffskontrolle* > *Identitätsföderation*.
+... Klicken Sie auf *Verbindung testen*, um Ihre Verbindungseinstellungen für den LDAP-Server zu validieren.
+... Wenn der Test fehlschlägt, beheben Sie alle Konfigurationsfehler.
+
+
+** Wenn sich der lokale Benutzer nicht anmelden kann und Sie sicher sind, dass die Anmeldeinformationen korrekt sind, fahren Sie mit dem nächsten Schritt fort.
+
+
+. Verwenden Sie Secure Shell (ssh), um sich beim Admin-Knoten anzumelden:
++
+.. Geben Sie den folgenden Befehl ein: `ssh admin@Admin_Node_IP`
+.. Geben Sie das Passwort ein, das in der `Passwords.txt` Datei.
+.. Geben Sie den folgenden Befehl ein, um zum Root zu wechseln: `su -`
+.. Geben Sie das Passwort ein, das in der `Passwords.txt` Datei.
++
+Wenn Sie als Root angemeldet sind, ändert sich die Eingabeaufforderung von `$` Zu `#` .
+
+
+
+. Zeigen Sie den Status aller auf dem Grid-Knoten ausgeführten Dienste an: `storagegrid-status`
++
+Stellen Sie sicher, dass alle NMS-, MI-, Nginx- und Mgmt-API-Dienste ausgeführt werden.
+
++
+Die Ausgabe wird sofort aktualisiert, wenn sich der Status eines Dienstes ändert.
+
++
+....
+$ storagegrid-status
+Host Name                      99-211
+IP Address                     10.96.99.211
+Operating System Kernel        4.19.0         Verified
+Operating System Environment   Debian 10.1    Verified
+StorageGRID Webscale Release   11.4.0         Verified
+Networking                                    Verified
+Storage Subsystem                             Verified
+Database Engine                5.5.9999+default Running
+Network Monitoring             11.4.0         Running
+Time Synchronization           1:4.2.8p10+dfsg Running
+ams                            11.4.0         Running
+cmn                            11.4.0         Running
+nms                            11.4.0         Running
+ssm                            11.4.0         Running
+mi                             11.4.0         Running
+dynip                          11.4.0         Running
+nginx                          1.10.3         Running
+tomcat                         9.0.27         Running
+grafana                        6.4.3          Running
+mgmt api                       11.4.0         Running
+prometheus                     11.4.0         Running
+persistence                    11.4.0         Running
+ade exporter                   11.4.0         Running
+alertmanager                   11.4.0         Running
+attrDownPurge                  11.4.0         Running
+attrDownSamp1                  11.4.0         Running
+attrDownSamp2                  11.4.0         Running
+node exporter                  0.17.0+ds      Running
+sg snmp agent                  11.4.0         Running
+....
+. Bestätigen Sie, dass der Dienst nginx-gw ausgeführt wird `# service nginx-gw status`
+. [[use_Lumberjack_to_collect_logs]]Verwenden Sie Lumberjack, um Protokolle zu sammeln: `# /usr/local/sbin/lumberjack.rb`
++
+Wenn die fehlgeschlagene Authentifizierung in der Vergangenheit aufgetreten ist, können Sie die Skriptoptionen --start und --end von Lumberjack verwenden, um den entsprechenden Zeitraum anzugeben.  Verwenden Sie lumberjack -h, um Einzelheiten zu diesen Optionen zu erfahren.
+
++
+Die Ausgabe an das Terminal zeigt an, wohin das Protokollarchiv kopiert wurde.
+
+. [[review_logs, start=10]]Überprüfen Sie die folgenden Protokolle:
++
+** `/var/local/log/bycast.log`
+** `/var/local/log/bycast-err.log`
+** `/var/local/log/nms.log`
+** `**/*commands.txt`
+
+
+. Wenn Sie keine Probleme mit dem Admin-Knoten feststellen konnten, geben Sie einen der folgenden Befehle ein, um die IP-Adressen der drei Speicherknoten zu ermitteln, auf denen der ADC-Dienst an Ihrem Standort ausgeführt wird.  Normalerweise sind dies die ersten drei Speicherknoten, die am Standort installiert wurden.
++
+[listing]
+----
+# cat /etc/hosts
+----
++
+[listing]
+----
+# gpt-list-services adc
+----
++
+Admin-Knoten verwenden den ADC-Dienst während des Authentifizierungsprozesses.
+
+. Melden Sie sich vom Admin-Knoten aus per SSH bei jedem der ADC-Speicherknoten an, indem Sie die von Ihnen identifizierten IP-Adressen verwenden.
+. Zeigen Sie den Status aller auf dem Grid-Knoten ausgeführten Dienste an: `storagegrid-status`
++
+Stellen Sie sicher, dass alle Dienste idnt, acct, nginx und cassandra ausgeführt werden.
+
+. Schritte wiederholen<<use_Lumberjack_to_collect_logs,Verwenden Sie Lumberjack, um Baumstämme zu sammeln>> Und<<review_logs,Protokolle überprüfen>> um die Protokolle auf den Speicherknoten zu überprüfen.
+. Wenn Sie das Problem nicht lösen können, wenden Sie sich an den technischen Support.
++
+Stellen Sie dem technischen Support die gesammelten Protokolle zur Verfügung. Siehe auch link:../monitor/logs-files-reference.html["Referenz zu Protokolldateien"].
+
+
+
+
+
+== Probleme mit der Benutzeroberfläche
+
+Die Benutzeroberfläche für den Grid Manager oder den Tenant Manager reagiert nach der Aktualisierung der StorageGRID -Software möglicherweise nicht wie erwartet.
+
+.Schritte
+. Stellen Sie sicher, dass Sie einlink:../admin/web-browser-requirements.html["unterstützter Webbrowser"] .
+. Leeren Sie den Cache Ihres Webbrowsers.
++
+Durch das Leeren des Caches werden veraltete Ressourcen entfernt, die von der vorherigen Version der StorageGRID -Software verwendet wurden, und die Benutzeroberfläche kann wieder ordnungsgemäß funktionieren.  Anweisungen finden Sie in der Dokumentation Ihres Webbrowsers.
+
+

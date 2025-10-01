@@ -1,0 +1,237 @@
+---
+permalink: admin/creating-relying-party-trusts-in-ad-fs.html 
+sidebar: sidebar 
+keywords: relying party trust, active directory, ad fs, single sign on, sso 
+summary: 'Sie müssen Active Directory Federation Services (AD FS) verwenden, um für jeden Admin-Knoten in Ihrem System eine Vertrauensstellung der vertrauenden Seite zu erstellen.  Sie können Vertrauensstellungen der vertrauenden Seite mithilfe von PowerShell-Befehlen erstellen, indem Sie SAML-Metadaten aus StorageGRID importieren oder die Daten manuell eingeben.' 
+---
+= Erstellen von Vertrauensstellungen der vertrauenden Seite in AD FS
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Sie müssen Active Directory Federation Services (AD FS) verwenden, um für jeden Admin-Knoten in Ihrem System eine Vertrauensstellung der vertrauenden Seite zu erstellen.  Sie können Vertrauensstellungen der vertrauenden Seite mithilfe von PowerShell-Befehlen erstellen, indem Sie SAML-Metadaten aus StorageGRID importieren oder die Daten manuell eingeben.
+
+.Bevor Sie beginnen
+* Sie haben Single Sign-On für StorageGRID konfiguriert und *AD FS* als SSO-Typ ausgewählt.
+* Der *Sandbox-Modus* ist auf der Single Sign-On-Seite im Grid Manager ausgewählt. Sehen link:../admin/using-sandbox-mode.html["Sandbox-Modus verwenden"] .
+* Sie kennen den vollqualifizierten Domänennamen (oder die IP-Adresse) und die Kennung der vertrauenden Partei für jeden Admin-Knoten in Ihrem System. Sie finden diese Werte in der Detailtabelle „Admin-Knoten“ auf der StorageGRID Single-Sign-On-Seite.
++
+
+NOTE: Sie müssen für jeden Admin-Knoten in Ihrem StorageGRID -System eine Vertrauensstellung der vertrauenden Partei erstellen.  Durch die Einrichtung einer Vertrauensstellung der vertrauenden Partei für jeden Admin-Knoten wird sichergestellt, dass sich Benutzer sicher bei jedem Admin-Knoten an- und abmelden können.
+
+* Sie haben Erfahrung mit der Erstellung von Vertrauensstellungen vertrauender Parteien in AD FS oder Zugriff auf die Microsoft AD FS-Dokumentation.
+* Sie verwenden das AD FS-Verwaltungs-Snap-In und gehören zur Gruppe „Administratoren“.
+* Wenn Sie die Vertrauensstellung der vertrauenden Seite manuell erstellen, verfügen Sie über das benutzerdefinierte Zertifikat, das für die StorageGRID Verwaltungsschnittstelle hochgeladen wurde, oder Sie wissen, wie Sie sich über die Befehlsshell bei einem Admin-Knoten anmelden.
+
+
+.Informationen zu diesem Vorgang
+Diese Anweisungen gelten für Windows Server 2016 AD FS.  Wenn Sie eine andere Version von AD FS verwenden, werden Sie leichte Unterschiede im Verfahren feststellen.  Bei Fragen lesen Sie die Microsoft AD FS-Dokumentation.
+
+
+
+== Erstellen einer Vertrauensstellung der vertrauenden Seite mithilfe von Windows PowerShell
+
+Sie können Windows PowerShell verwenden, um schnell eine oder mehrere Vertrauensstellungen der vertrauenden Seite zu erstellen.
+
+.Schritte
+. Wählen Sie im Windows-Startmenü mit der rechten Maustaste das PowerShell-Symbol aus und wählen Sie *Als Administrator ausführen*.
+. Geben Sie an der PowerShell-Eingabeaufforderung den folgenden Befehl ein:
++
+`Add-AdfsRelyingPartyTrust -Name "_Admin_Node_Identifer_" -MetadataURL "https://_Admin_Node_FQDN_/api/saml-metadata"`
+
++
+** Für `_Admin_Node_Identifier_` Geben Sie die Relying Party Identifier für den Admin-Knoten genau so ein, wie sie auf der Single Sign-On-Seite angezeigt wird. Beispiel:  `SG-DC1-ADM1` .
+** Für `_Admin_Node_FQDN_` , geben Sie den vollqualifizierten Domänennamen für denselben Admin-Knoten ein.  (Bei Bedarf können Sie stattdessen die IP-Adresse des Knotens verwenden.  Wenn Sie hier jedoch eine IP-Adresse eingeben, beachten Sie, dass Sie dieses Vertrauen der vertrauenden Partei aktualisieren oder neu erstellen müssen, wenn sich diese IP-Adresse jemals ändert.)
+
+
+. Wählen Sie im Windows Server Manager *Tools* > *AD FS-Verwaltung*.
++
+Das AD FS-Verwaltungstool wird angezeigt.
+
+. Wählen Sie *AD FS* > *Vertrauensstellungen der vertrauenden Seite*.
++
+Die Liste der Vertrauensstellungen der vertrauenden Seite wird angezeigt.
+
+. Fügen Sie der neu erstellten Vertrauensstellung der vertrauenden Seite eine Zugriffskontrollrichtlinie hinzu:
++
+.. Suchen Sie nach der Vertrauensstellung der vertrauenden Partei, die Sie gerade erstellt haben.
+.. Klicken Sie mit der rechten Maustaste auf die Vertrauensstellung und wählen Sie *Zugriffskontrollrichtlinie bearbeiten*.
+.. Wählen Sie eine Zugriffskontrollrichtlinie aus.
+.. Wählen Sie *Übernehmen* und dann *OK*
+
+
+. Fügen Sie dem neu erstellten Relying Party Trust eine Claim Issuance Policy hinzu:
++
+.. Suchen Sie nach der Vertrauensstellung der vertrauenden Partei, die Sie gerade erstellt haben.
+.. Klicken Sie mit der rechten Maustaste auf den Trust und wählen Sie *Richtlinie zur Anspruchsausstellung bearbeiten*.
+.. Wählen Sie *Regel hinzufügen*.
+.. Wählen Sie auf der Seite „Regelvorlage auswählen“ aus der Liste „LDAP-Attribute als Ansprüche senden“ aus und klicken Sie auf „Weiter“.
+.. Geben Sie auf der Seite „Regel konfigurieren“ einen Anzeigenamen für diese Regel ein.
++
+Beispiel: *ObjectGUID zu Name-ID* oder *UPN zu Name-ID*.
+
+.. Wählen Sie für den Attributspeicher *Active Directory* aus.
+.. Geben Sie in der Spalte „LDAP-Attribut“ der Zuordnungstabelle *objectGUID* ein oder wählen Sie *User-Principal-Name* aus.
+.. Wählen Sie in der Spalte „Ausgehender Anspruchstyp“ der Zuordnungstabelle aus der Dropdownliste „*Namens-ID*“ aus.
+.. Wählen Sie *Fertig* und dann *OK*.
+
+
+. Bestätigen Sie, dass die Metadaten erfolgreich importiert wurden.
++
+.. Klicken Sie mit der rechten Maustaste auf die Vertrauensstellung der vertrauenden Seite, um ihre Eigenschaften zu öffnen.
+.. Bestätigen Sie, dass die Felder auf den Registerkarten *Endpunkte*, *Kennungen* und *Signatur* ausgefüllt sind.
++
+Wenn die Metadaten fehlen, bestätigen Sie, dass die Federation-Metadatenadresse korrekt ist, oder geben Sie die Werte manuell ein.
+
+
+
+. Wiederholen Sie diese Schritte, um eine Vertrauensstellung der vertrauenden Partei für alle Admin-Knoten in Ihrem StorageGRID System zu konfigurieren.
+. Wenn Sie fertig sind, kehren Sie zu StorageGRID zurück und testen Sie alle Vertrauensstellungen der vertrauenden Parteien, um zu bestätigen, dass sie richtig konfiguriert sind. Sehenlink:using-sandbox-mode.html["Sandbox-Modus verwenden"] Anweisungen hierzu finden Sie unter.
+
+
+
+
+== Erstellen einer Vertrauensstellung der vertrauenden Seite durch Importieren von Verbundmetadaten
+
+Sie können die Werte für jede Vertrauensstellung der vertrauenden Partei importieren, indem Sie auf die SAML-Metadaten für jeden Admin-Knoten zugreifen.
+
+.Schritte
+. Wählen Sie im Windows Server-Manager *Tools* und dann *AD FS-Verwaltung* aus.
+. Wählen Sie unter „Aktionen“ die Option „Vertrauensstellung der vertrauenden Partei hinzufügen“ aus.
+. Wählen Sie auf der Willkommensseite *Claims aware* und dann *Start*.
+. Wählen Sie *Online oder in einem lokalen Netzwerk veröffentlichte Daten über die vertrauende Partei importieren*.
+. Geben Sie unter *Federation metadata address (host name or URL)* den Speicherort der SAML-Metadaten für diesen Admin-Knoten ein:
++
+`https://_Admin_Node_FQDN_/api/saml-metadata`
+
++
+Für `_Admin_Node_FQDN_` , geben Sie den vollqualifizierten Domänennamen für denselben Admin-Knoten ein.  (Bei Bedarf können Sie stattdessen die IP-Adresse des Knotens verwenden.  Wenn Sie hier jedoch eine IP-Adresse eingeben, beachten Sie, dass Sie dieses Vertrauen der vertrauenden Partei aktualisieren oder neu erstellen müssen, wenn sich diese IP-Adresse jemals ändert.)
+
+. Schließen Sie den Assistenten „Vertrauensstellung der vertrauenden Seite“ ab, speichern Sie die Vertrauensstellung der vertrauenden Seite und schließen Sie den Assistenten.
++
+
+NOTE: Verwenden Sie beim Eingeben des Anzeigenamens die Relying Party Identifier für den Admin-Knoten, genau so, wie sie auf der Single Sign-On-Seite im Grid Manager angezeigt wird. Beispiel:  `SG-DC1-ADM1` .
+
+. Fügen Sie eine Anspruchsregel hinzu:
++
+.. Klicken Sie mit der rechten Maustaste auf den Trust und wählen Sie *Richtlinie zur Anspruchsausstellung bearbeiten*.
+.. Wählen Sie *Regel hinzufügen*:
+.. Wählen Sie auf der Seite „Regelvorlage auswählen“ aus der Liste „LDAP-Attribute als Ansprüche senden“ aus und klicken Sie auf „Weiter“.
+.. Geben Sie auf der Seite „Regel konfigurieren“ einen Anzeigenamen für diese Regel ein.
++
+Beispiel: *ObjectGUID zu Name-ID* oder *UPN zu Name-ID*.
+
+.. Wählen Sie für den Attributspeicher *Active Directory* aus.
+.. Geben Sie in der Spalte „LDAP-Attribut“ der Zuordnungstabelle *objectGUID* ein oder wählen Sie *User-Principal-Name* aus.
+.. Wählen Sie in der Spalte „Ausgehender Anspruchstyp“ der Zuordnungstabelle aus der Dropdownliste „*Namens-ID*“ aus.
+.. Wählen Sie *Fertig* und dann *OK*.
+
+
+. Bestätigen Sie, dass die Metadaten erfolgreich importiert wurden.
++
+.. Klicken Sie mit der rechten Maustaste auf die Vertrauensstellung der vertrauenden Seite, um ihre Eigenschaften zu öffnen.
+.. Bestätigen Sie, dass die Felder auf den Registerkarten *Endpunkte*, *Kennungen* und *Signatur* ausgefüllt sind.
++
+Wenn die Metadaten fehlen, bestätigen Sie, dass die Federation-Metadatenadresse korrekt ist, oder geben Sie die Werte manuell ein.
+
+
+
+. Wiederholen Sie diese Schritte, um eine Vertrauensstellung der vertrauenden Partei für alle Admin-Knoten in Ihrem StorageGRID System zu konfigurieren.
+. Wenn Sie fertig sind, kehren Sie zu StorageGRID zurück und testen Sie alle Vertrauensstellungen der vertrauenden Parteien, um zu bestätigen, dass sie richtig konfiguriert sind. Sehenlink:using-sandbox-mode.html["Sandbox-Modus verwenden"] Anweisungen hierzu finden Sie unter.
+
+
+
+
+== Manuelles Erstellen einer Vertrauensstellung der vertrauenden Seite
+
+Wenn Sie die Daten für die Vertrauensstellungen des vertrauenden Teils nicht importieren möchten, können Sie die Werte manuell eingeben.
+
+.Schritte
+. Wählen Sie im Windows Server-Manager *Tools* und dann *AD FS-Verwaltung* aus.
+. Wählen Sie unter „Aktionen“ die Option „Vertrauensstellung der vertrauenden Partei hinzufügen“ aus.
+. Wählen Sie auf der Willkommensseite *Claims aware* und dann *Start*.
+. Wählen Sie *Daten zur vertrauenden Partei manuell eingeben* und wählen Sie *Weiter*.
+. Schließen Sie den Assistenten „Relying Party Trust“ ab:
++
+.. Geben Sie einen Anzeigenamen für diesen Admin-Knoten ein.
++
+Verwenden Sie aus Konsistenzgründen die Relying Party Identifier für den Admin-Knoten genau so, wie sie auf der Single Sign-On-Seite im Grid Manager angezeigt wird. Beispiel:  `SG-DC1-ADM1` .
+
+.. Überspringen Sie den Schritt zum Konfigurieren eines optionalen Token-Verschlüsselungszertifikats.
+.. Aktivieren Sie auf der Seite „URL konfigurieren“ das Kontrollkästchen *Unterstützung für das SAML 2.0 WebSSO-Protokoll aktivieren*.
+.. Geben Sie die SAML-Dienstendpunkt-URL für den Admin-Knoten ein:
++
+`https://_Admin_Node_FQDN_/api/saml-response`
+
++
+Für `_Admin_Node_FQDN_` Geben Sie den vollqualifizierten Domänennamen für den Admin-Knoten ein.  (Bei Bedarf können Sie stattdessen die IP-Adresse des Knotens verwenden.  Wenn Sie hier jedoch eine IP-Adresse eingeben, beachten Sie, dass Sie dieses Vertrauen der vertrauenden Partei aktualisieren oder neu erstellen müssen, wenn sich diese IP-Adresse jemals ändert.)
+
+.. Geben Sie auf der Seite „Kennungen konfigurieren“ die Kennung der vertrauenden Partei für denselben Admin-Knoten an:
++
+`_Admin_Node_Identifier_`
+
++
+Für `_Admin_Node_Identifier_` Geben Sie die Relying Party Identifier für den Admin-Knoten genau so ein, wie sie auf der Single Sign-On-Seite angezeigt wird. Beispiel:  `SG-DC1-ADM1` .
+
+.. Überprüfen Sie die Einstellungen, speichern Sie die Vertrauensstellung der vertrauenden Seite und schließen Sie den Assistenten.
++
+Das Dialogfeld „Richtlinie zur Anspruchsausstellung bearbeiten“ wird angezeigt.
+
++
+
+NOTE: Wenn das Dialogfeld nicht angezeigt wird, klicken Sie mit der rechten Maustaste auf den Trust und wählen Sie *Richtlinie zur Anspruchsausstellung bearbeiten*.
+
+
+
+. Um den Anspruchsregel-Assistenten zu starten, wählen Sie *Regel hinzufügen*:
++
+.. Wählen Sie auf der Seite „Regelvorlage auswählen“ aus der Liste „LDAP-Attribute als Ansprüche senden“ aus und klicken Sie auf „Weiter“.
+.. Geben Sie auf der Seite „Regel konfigurieren“ einen Anzeigenamen für diese Regel ein.
++
+Beispiel: *ObjectGUID zu Name-ID* oder *UPN zu Name-ID*.
+
+.. Wählen Sie für den Attributspeicher *Active Directory* aus.
+.. Geben Sie in der Spalte „LDAP-Attribut“ der Zuordnungstabelle *objectGUID* ein oder wählen Sie *User-Principal-Name* aus.
+.. Wählen Sie in der Spalte „Ausgehender Anspruchstyp“ der Zuordnungstabelle aus der Dropdownliste „*Namens-ID*“ aus.
+.. Wählen Sie *Fertig* und dann *OK*.
+
+
+. Klicken Sie mit der rechten Maustaste auf die Vertrauensstellung der vertrauenden Seite, um ihre Eigenschaften zu öffnen.
+. Konfigurieren Sie auf der Registerkarte *Endpunkte* den Endpunkt für Single Logout (SLO):
++
+.. Wählen Sie *SAML hinzufügen*.
+.. Wählen Sie *Endpunkttyp* > *SAML-Abmeldung*.
+.. Wählen Sie *Bindung* > *Umleitung*.
+.. Geben Sie im Feld *Vertrauenswürdige URL* die URL ein, die für die einmalige Abmeldung (SLO) von diesem Admin-Knoten verwendet wird:
++
+`https://_Admin_Node_FQDN_/api/saml-logout`
+
++
+Für `_Admin_Node_FQDN_` Geben Sie den vollqualifizierten Domänennamen des Admin-Knotens ein.  (Bei Bedarf können Sie stattdessen die IP-Adresse des Knotens verwenden.  Wenn Sie hier jedoch eine IP-Adresse eingeben, beachten Sie, dass Sie dieses Vertrauen der vertrauenden Partei aktualisieren oder neu erstellen müssen, wenn sich diese IP-Adresse jemals ändert.)
+
+.. Wählen Sie *OK*.
+
+
+. Geben Sie auf der Registerkarte *Signatur* das Signaturzertifikat für diese Vertrauensstellung der vertrauenden Seite an:
++
+.. Fügen Sie das benutzerdefinierte Zertifikat hinzu:
++
+*** Wenn Sie über das benutzerdefinierte Verwaltungszertifikat verfügen, das Sie in StorageGRID hochgeladen haben, wählen Sie dieses Zertifikat aus.
+*** Wenn Sie nicht über das benutzerdefinierte Zertifikat verfügen, melden Sie sich beim Admin-Knoten an, gehen Sie zu `/var/local/mgmt-api` Verzeichnis des Admin-Knotens und fügen Sie die `custom-server.crt` Zertifikatsdatei.
++
+
+NOTE: Verwenden des Standardzertifikats des Admin-Knotens(`server.crt` ) wird nicht empfohlen.  Wenn der Admin-Knoten ausfällt, wird das Standardzertifikat neu generiert, wenn Sie den Knoten wiederherstellen, und Sie müssen das Vertrauen der vertrauenden Seite aktualisieren.
+
+
+
+.. Wählen Sie *Übernehmen* und dann *OK*.
++
+Die Eigenschaften der vertrauenden Partei werden gespeichert und geschlossen.
+
+
+
+. Wiederholen Sie diese Schritte, um eine Vertrauensstellung der vertrauenden Partei für alle Admin-Knoten in Ihrem StorageGRID System zu konfigurieren.
+. Wenn Sie fertig sind, kehren Sie zu StorageGRID zurück und testen Sie alle Vertrauensstellungen der vertrauenden Parteien, um zu bestätigen, dass sie richtig konfiguriert sind. Sehenlink:using-sandbox-mode.html["Sandbox-Modus verwenden"] Anweisungen hierzu finden Sie unter.
+

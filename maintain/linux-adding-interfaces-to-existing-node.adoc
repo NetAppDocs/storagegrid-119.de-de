@@ -1,0 +1,53 @@
+---
+permalink: maintain/linux-adding-interfaces-to-existing-node.html 
+sidebar: sidebar 
+keywords: add interfaces, add client network interface, add admin network interface 
+summary: Führen Sie die folgenden Schritte aus, um einem Linux-Knoten nach der Installation eine Schnittstelle im Admin-Netzwerk oder im Client-Netzwerk hinzuzufügen. 
+---
+= Linux: Admin- oder Client-Schnittstellen zu einem vorhandenen Knoten hinzufügen
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Führen Sie die folgenden Schritte aus, um einem Linux-Knoten nach der Installation eine Schnittstelle im Admin-Netzwerk oder im Client-Netzwerk hinzuzufügen.
+
+Wenn Sie ADMIN_NETWORK_TARGET oder CLIENT_NETWORK_TARGET während der Installation nicht in der Knotenkonfigurationsdatei auf dem Linux-Host konfiguriert haben, verwenden Sie dieses Verfahren, um die Schnittstelle hinzuzufügen. Weitere Informationen zur Knotenkonfigurationsdatei finden Sie in den Anweisungen für Ihr Linux-Betriebssystem:
+
+* link:../rhel/index.html["Installieren Sie StorageGRID unter Red Hat Enterprise Linux"]
+* link:../ubuntu/index.html["Installieren Sie StorageGRID unter Ubuntu oder Debian"]
+
+
+Sie führen dieses Verfahren auf dem Linux-Server aus, auf dem sich der Knoten befindet, der die neue Netzwerkzuweisung benötigt, und nicht innerhalb des Knotens.  Bei diesem Verfahren wird dem Knoten nur die Schnittstelle hinzugefügt. Wenn Sie versuchen, andere Netzwerkparameter anzugeben, tritt ein Validierungsfehler auf.
+
+Um Adressinformationen bereitzustellen, müssen Sie das Tool „IP ändern“ verwenden. Sehen link:changing-nodes-network-configuration.html["Knotennetzwerkkonfiguration ändern"] .
+
+.Schritte
+. Melden Sie sich beim Linux-Server an, auf dem der Knoten gehostet wird.
+. Bearbeiten Sie die Knotenkonfigurationsdatei: `/etc/storagegrid/nodes/_node-name_.conf` .
++
+
+NOTE: Geben Sie keine anderen Netzwerkparameter an, da sonst ein Validierungsfehler auftritt.
+
++
+.. Fügen Sie einen Eintrag für das neue Netzwerkziel hinzu. Beispiel:
++
+`CLIENT_NETWORK_TARGET = bond0.3206`
+
+.. Optional: Fügen Sie einen Eintrag für die MAC-Adresse hinzu. Beispiel:
++
+`CLIENT_NETWORK_MAC = aa:57:61:07:ea:5c`
+
+
+
+. Führen Sie den Befehl „Node Validate“ aus:
++
+`sudo storagegrid node validate _node-name_`
+
+. Beheben Sie alle Validierungsfehler.
+. Führen Sie den Befehl zum Neuladen des Knotens aus:
++
+`sudo storagegrid node reload _node-name_`
+
+

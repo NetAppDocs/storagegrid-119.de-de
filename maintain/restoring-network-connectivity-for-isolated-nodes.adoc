@@ -1,0 +1,80 @@
+---
+permalink: maintain/restoring-network-connectivity-for-isolated-nodes.html 
+sidebar: sidebar 
+keywords: storagegrid, recover, network connection, restore network connection, isolated node, restore isolated node connection 
+summary: Unter bestimmten Umständen können eine oder mehrere Knotengruppen möglicherweise keinen Kontakt zum Rest des Grids herstellen.  Beispielsweise können standort- oder netzweite IP-Adressänderungen zu isolierten Knoten führen. 
+---
+= Wiederherstellen der Netzwerkkonnektivität für isolierte Knoten
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Unter bestimmten Umständen können eine oder mehrere Knotengruppen möglicherweise keinen Kontakt zum Rest des Grids herstellen.  Beispielsweise können standort- oder netzweite IP-Adressänderungen zu isolierten Knoten führen.
+
+.Informationen zu diesem Vorgang
+Die Knotenisolation wird durch Folgendes angezeigt:
+
+* Warnungen, wie z. B. *Kommunikation mit Knoten nicht möglich* (*Warnungen* > *Aktuell*)
+* Konnektivitätsbezogene Diagnose (*SUPPORT* > *Tools* > *Diagnose*)
+
+
+Zu den Folgen isolierter Knoten zählen unter anderem die folgenden:
+
+* Wenn mehrere Knoten isoliert sind, können Sie sich möglicherweise nicht beim Grid Manager anmelden oder darauf zugreifen.
+* Wenn mehrere Knoten isoliert sind, sind die im Dashboard für den Mandantenmanager angezeigten Werte für Speichernutzung und Kontingent möglicherweise veraltet.  Die Gesamtsummen werden aktualisiert, wenn die Netzwerkverbindung wiederhergestellt ist.
+
+
+Um das Isolationsproblem zu lösen, führen Sie auf jedem isolierten Knoten oder auf einem Knoten in einer Gruppe (alle Knoten in einem Subnetz, das nicht den primären Admin-Knoten enthält) ein Befehlszeilenprogramm aus, der vom Grid isoliert ist.  Das Dienstprogramm stellt den Knoten die IP-Adresse eines nicht isolierten Knotens im Grid zur Verfügung, wodurch der isolierte Knoten oder die Gruppe von Knoten wieder Kontakt zum gesamten Grid aufnehmen kann.
+
+
+NOTE: Wenn das Multicast Domain Name System (mDNS) in den Netzwerken deaktiviert ist, müssen Sie möglicherweise das Befehlszeilenprogramm auf jedem isolierten Knoten ausführen.
+
+.Schritte
+Dieses Verfahren gilt nicht, wenn nur einige Dienste offline sind oder Kommunikationsfehler melden.
+
+. Greifen Sie auf den Knoten zu und überprüfen Sie `/var/local/log/dynip.log` für Isolationsmeldungen.
++
+Beispiel:
+
++
+[listing]
+----
+[2018-01-09T19:11:00.545] UpdateQueue - WARNING -- Possible isolation, no contact with other nodes.
+If this warning persists, manual action might be required.
+----
++
+Wenn Sie die VMware-Konsole verwenden, enthält diese eine Meldung, dass der Knoten möglicherweise isoliert ist.
+
++
+Bei Linux-Bereitstellungen erscheinen Isolationsmeldungen in `/var/log/storagegrid/node/<nodename>.log` Dateien.
+
+. Wenn die Isolationsmeldungen wiederholt und dauerhaft auftreten, führen Sie den folgenden Befehl aus:
++
+`add_node_ip.py <address>`
+
++
+Wo `<address>` ist die IP-Adresse eines Remote-Knotens, der mit dem Grid verbunden ist.
+
++
+[listing]
+----
+# /usr/sbin/add_node_ip.py  10.224.4.210
+
+Retrieving local host information
+Validating remote node at address 10.224.4.210
+Sending node IP hint for 10.224.4.210 to local node
+Local node found on remote node. Update complete.
+----
+. Überprüfen Sie Folgendes für jeden Knoten, der zuvor isoliert wurde:
++
+** Die Dienste des Knotens wurden gestartet.
+** Der Status des Dynamic IP-Dienstes lautet "Wird ausgeführt", nachdem Sie den `storagegrid-status` Befehl.
+** Auf der Seite „Knoten“ wird der Knoten nicht mehr als vom Rest des Rasters getrennt angezeigt.
+
+
+
+
+
+NOTE: Wenn Sie den `add_node_ip.py` Wenn der Befehl das Problem nicht löst, können andere Netzwerkprobleme vorliegen, die behoben werden müssen.

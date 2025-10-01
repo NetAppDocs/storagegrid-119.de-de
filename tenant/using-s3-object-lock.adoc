@@ -1,0 +1,181 @@
+---
+permalink: tenant/using-s3-object-lock.html 
+sidebar: sidebar 
+keywords: how to use s3 object lock 
+summary: Sie können S3 Object Lock verwenden, wenn Buckets und Objekte den gesetzlichen Aufbewahrungsanforderungen entsprechen müssen. 
+---
+= Verwenden Sie S3 Object Lock, um Objekte beizubehalten
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Sie können S3 Object Lock verwenden, wenn Buckets und Objekte den gesetzlichen Aufbewahrungsanforderungen entsprechen müssen.
+
+
+NOTE: Ihr Grid-Administrator muss Ihnen die Berechtigung zur Verwendung bestimmter Funktionen von S3 Object Lock erteilen.
+
+
+
+== Was ist S3 Object Lock?
+
+Die StorageGRID S3 Object Lock-Funktion ist eine Objektschutzlösung, die S3 Object Lock in Amazon Simple Storage Service (Amazon S3) entspricht.
+
+Wenn die globale S3-Objektsperre-Einstellung für ein StorageGRID -System aktiviert ist, kann ein S3-Mandantenkonto Buckets mit oder ohne aktivierte S3-Objektsperre erstellen.  Wenn für einen Bucket die S3-Objektsperre aktiviert ist, ist eine Bucket-Versionierung erforderlich und wird automatisch aktiviert.
+
+*Ein Bucket ohne S3-Objektsperre* kann nur Objekte ohne angegebene Aufbewahrungseinstellungen enthalten.  Für aufgenommene Objekte werden keine Aufbewahrungseinstellungen festgelegt.
+
+*Ein Bucket mit S3 Object Lock* kann Objekte mit und ohne Aufbewahrungseinstellungen enthalten, die von S3-Clientanwendungen angegeben werden.  Für einige aufgenommene Objekte gelten Aufbewahrungseinstellungen.
+
+*Ein Bucket mit S3 Object Lock und konfigurierter Standardaufbewahrung* kann hochgeladene Objekte mit angegebenen Aufbewahrungseinstellungen und neue Objekte ohne Aufbewahrungseinstellungen enthalten.  Die neuen Objekte verwenden die Standardeinstellung, da die Aufbewahrungseinstellung nicht auf Objektebene konfiguriert wurde.
+
+Tatsächlich verfügen alle neu aufgenommenen Objekte über Aufbewahrungseinstellungen, wenn die Standardaufbewahrung konfiguriert ist.  Vorhandene Objekte ohne Objektaufbewahrungseinstellungen bleiben davon unberührt.
+
+
+
+=== Aufbewahrungsmodi
+
+Die StorageGRID S3 Object Lock-Funktion unterstützt zwei Aufbewahrungsmodi, um unterschiedliche Schutzstufen auf Objekte anzuwenden.  Diese Modi entsprechen den Aufbewahrungsmodi von Amazon S3.
+
+* Im Compliance-Modus:
++
+** Das Objekt kann erst gelöscht werden, wenn sein Aufbewahrungsdatum erreicht ist.
+** Das Aufbewahrungsdatum des Objekts kann erhöht, aber nicht verringert werden.
+** Das Aufbewahrungsdatum des Objekts kann erst entfernt werden, wenn dieses Datum erreicht ist.
+
+
+* Im Governance-Modus:
++
+** Benutzer mit Sonderberechtigung können in Anfragen einen Bypass-Header verwenden, um bestimmte Aufbewahrungseinstellungen zu ändern.
+** Diese Benutzer können eine Objektversion löschen, bevor ihr Aufbewahrungsdatum erreicht ist.
+** Diese Benutzer können das Aufbewahrungsdatum eines Objekts erhöhen, verringern oder entfernen.
+
+
+
+
+
+
+=== Aufbewahrungseinstellungen für Objektversionen
+
+Wenn ein Bucket mit aktivierter S3-Objektsperre erstellt wird, können Benutzer mit der S3-Clientanwendung optional die folgenden Aufbewahrungseinstellungen für jedes dem Bucket hinzugefügte Objekt angeben:
+
+* *Aufbewahrungsmodus*: Entweder Compliance oder Governance.
+* *Aufbewahrungsdatum*: Wenn das Aufbewahrungsdatum einer Objektversion in der Zukunft liegt, kann das Objekt abgerufen, aber nicht gelöscht werden.
+* *Rechtliche Sperre*: Durch Anwenden einer rechtlichen Sperre auf eine Objektversion wird dieses Objekt sofort gesperrt.  Beispielsweise müssen Sie möglicherweise ein Objekt, das mit einer Untersuchung oder einem Rechtsstreit in Zusammenhang steht, rechtlich sperren.  Eine rechtliche Sperre hat kein Ablaufdatum, sondern bleibt bestehen, bis sie ausdrücklich aufgehoben wird.  Rechtliche Sperren sind unabhängig vom Aufbewahrungsdatum.
++
+
+NOTE: Wenn ein Objekt einer rechtlichen Sperre unterliegt, kann niemand das Objekt löschen, unabhängig von seinem Aufbewahrungsmodus.
+
++
+Details zu den Objekteinstellungen finden Sie unterlink:../s3/use-s3-api-for-s3-object-lock.html["Verwenden Sie die S3 REST API, um S3 Object Lock zu konfigurieren"] .
+
+
+
+
+
+=== Standardaufbewahrungseinstellung für Buckets
+
+Wenn ein Bucket mit aktivierter S3-Objektsperre erstellt wird, können Benutzer optional die folgenden Standardeinstellungen für den Bucket angeben:
+
+* *Standardaufbewahrungsmodus*: Entweder Compliance oder Governance.
+* *Standardaufbewahrungszeitraum*: Wie lange neue Objektversionen, die diesem Bucket hinzugefügt werden, ab dem Tag ihrer Hinzufügung aufbewahrt werden sollen.
+
+
+Die Standard-Bucket-Einstellungen gelten nur für neue Objekte, die keine eigenen Aufbewahrungseinstellungen haben.  Vorhandene Bucket-Objekte sind nicht betroffen, wenn Sie diese Standardeinstellungen hinzufügen oder ändern.
+
+Sehenlink:../tenant/creating-s3-bucket.html["Erstellen eines S3-Buckets"] Undlink:../tenant/update-default-retention-settings.html["Standardaufbewahrung für S3 Object Lock aktualisieren"] .
+
+
+
+== S3 Object Lock-Aufgaben
+
+Die folgenden Listen für Grid-Administratoren und Mandantenbenutzer enthalten die allgemeinen Aufgaben zur Verwendung der S3 Object Lock-Funktion.
+
+Grid-Administrator::
++
+--
+* Aktivieren Sie die globale S3-Objektsperreinstellung für das gesamte StorageGRID System.
+* Stellen Sie sicher, dass die Richtlinien für das Information Lifecycle Management (ILM) _konform_ sind; das heißt, sie erfüllen dielink:../ilm/managing-objects-with-s3-object-lock.html["Anforderungen an Buckets mit aktivierter S3-Objektsperre"] .
+* Erlauben Sie einem Mandanten bei Bedarf, Compliance als Aufbewahrungsmodus zu verwenden.  Andernfalls ist nur der Governance-Modus zulässig.
+* Legen Sie bei Bedarf eine maximale Aufbewahrungsdauer für einen Mandanten fest.
+
+
+--
+Mandantenbenutzer::
++
+--
+* Überprüfen Sie die Überlegungen zu Buckets und Objekten mit S3 Object Lock.
+* Wenden Sie sich bei Bedarf an den Grid-Administrator, um die globale S3-Objektsperreinstellung zu aktivieren und Berechtigungen festzulegen.
+* Erstellen Sie Buckets mit aktivierter S3-Objektsperre.
+* Konfigurieren Sie optional die Standardaufbewahrungseinstellungen für einen Bucket:
++
+** Standardaufbewahrungsmodus: Governance oder Compliance, sofern vom Grid-Administrator zugelassen.
+** Standardaufbewahrungszeitraum: Muss kleiner oder gleich dem vom Grid-Administrator festgelegten maximalen Aufbewahrungszeitraum sein.
+
+
+* Verwenden Sie die S3-Clientanwendung, um Objekte hinzuzufügen und optional eine objektspezifische Aufbewahrung festzulegen:
++
+** Aufbewahrungsmodus.  Governance oder Compliance, sofern vom Grid-Administrator zugelassen.
+** Aufbewahrungsdatum: Muss kleiner oder gleich dem vom Grid-Administrator festgelegten maximalen Aufbewahrungszeitraum sein.
+
+
+
+
+--
+
+
+
+
+== Anforderungen für Buckets mit aktivierter S3-Objektsperre
+
+* Wenn die globale S3-Objektsperre-Einstellung für das StorageGRID -System aktiviert ist, können Sie den Tenant Manager, die Tenant Management API oder die S3 REST API verwenden, um Buckets mit aktivierter S3-Objektsperre zu erstellen.
+* Wenn Sie S3 Object Lock verwenden möchten, müssen Sie S3 Object Lock beim Erstellen des Buckets aktivieren.  Sie können S3 Object Lock nicht für einen vorhandenen Bucket aktivieren.
+* Wenn S3 Object Lock für einen Bucket aktiviert ist, aktiviert StorageGRID automatisch die Versionierung für diesen Bucket.  Sie können die S3-Objektsperre nicht deaktivieren oder die Versionsverwaltung für den Bucket aussetzen.
+* Optional können Sie mithilfe des Tenant Managers, der Tenant Management API oder der S3 REST API einen Standardaufbewahrungsmodus und eine Standardaufbewahrungsdauer für jeden Bucket angeben.  Die Standardaufbewahrungseinstellungen des Buckets gelten nur für neue Objekte, die dem Bucket hinzugefügt werden und keine eigenen Aufbewahrungseinstellungen haben.  Sie können diese Standardeinstellungen überschreiben, indem Sie beim Hochladen für jede Objektversion einen Aufbewahrungsmodus und ein Aufbewahrungsdatum angeben.
+* Die Bucket-Lebenszykluskonfiguration wird für Buckets mit aktivierter S3-Objektsperre unterstützt.
+* Die CloudMirror-Replikation wird für Buckets mit aktivierter S3-Objektsperre nicht unterstützt.
+
+
+
+
+== Anforderungen für Objekte in Buckets mit aktivierter S3-Objektsperre
+
+* Um eine Objektversion zu schützen, können Sie Standardaufbewahrungseinstellungen für den Bucket oder Aufbewahrungseinstellungen für jede Objektversion angeben.  Aufbewahrungseinstellungen auf Objektebene können mithilfe der S3-Clientanwendung oder der S3-REST-API angegeben werden.
+* Aufbewahrungseinstellungen gelten für einzelne Objektversionen.  Eine Objektversion kann sowohl über eine Aufbewahrungsfrist als auch über eine gesetzliche Aufbewahrungsfrist verfügen, über eine der beiden Einstellungen, aber nicht über die andere, oder über keine von beiden.  Durch die Angabe eines Aufbewahrungsdatums oder einer Einstellung für die rechtliche Aufbewahrung eines Objekts wird nur die in der Anforderung angegebene Version geschützt.  Sie können neue Versionen des Objekts erstellen, während die vorherige Version des Objekts gesperrt bleibt.
+
+
+
+
+== Lebenszyklus von Objekten in Buckets mit aktivierter S3-Objektsperre
+
+Jedes Objekt, das in einem Bucket mit aktivierter S3-Objektsperre gespeichert wird, durchläuft die folgenden Phasen:
+
+. *Objektaufnahme*
++
+Wenn eine Objektversion zu einem Bucket hinzugefügt wird, für den die S3-Objektsperre aktiviert ist, werden die Aufbewahrungseinstellungen wie folgt angewendet:
+
++
+** Wenn für das Objekt Aufbewahrungseinstellungen angegeben sind, werden die Einstellungen auf Objektebene angewendet.  Alle Standard-Bucket-Einstellungen werden ignoriert.
+** Wenn für das Objekt keine Aufbewahrungseinstellungen angegeben sind, werden die Standard-Bucket-Einstellungen angewendet, sofern diese vorhanden sind.
+** Wenn für das Objekt oder den Bucket keine Aufbewahrungseinstellungen angegeben sind, ist das Objekt nicht durch S3 Object Lock geschützt.
+
+
++
+Wenn Aufbewahrungseinstellungen angewendet werden, sind sowohl das Objekt als auch alle benutzerdefinierten S3-Metadaten geschützt.
+
+. *Objektaufbewahrung und -löschung*
++
+Von jedem geschützten Objekt werden von StorageGRID mehrere Kopien für den angegebenen Aufbewahrungszeitraum gespeichert.  Die genaue Anzahl und Art der Objektkopien sowie die Speicherorte werden durch die konformen Regeln in den aktiven ILM-Richtlinien bestimmt.  Ob ein geschütztes Objekt vor Erreichen seines Aufbewahrungsdatums gelöscht werden kann, hängt von seinem Aufbewahrungsmodus ab.
+
++
+** Wenn ein Objekt einer rechtlichen Sperre unterliegt, kann niemand das Objekt löschen, unabhängig von seinem Aufbewahrungsmodus.
+
+
+
+
+
+
+== Kann ich weiterhin ältere konforme Buckets verwalten?
+
+Die S3 Object Lock-Funktion ersetzt die Compliance-Funktion, die in früheren StorageGRID Versionen verfügbar war.  Wenn Sie konforme Buckets mit einer früheren Version von StorageGRID erstellt haben, können Sie die Einstellungen dieser Buckets weiterhin verwalten. Sie können jedoch keine neuen konformen Buckets mehr erstellen. Anweisungen hierzu finden Sie unterhttps://kb.netapp.com/Advice_and_Troubleshooting/Hybrid_Cloud_Infrastructure/StorageGRID/How_to_manage_legacy_Compliant_buckets_in_StorageGRID_11.5["NetApp Knowledge Base: So verwalten Sie ältere konforme Buckets in StorageGRID 11.5"^] .

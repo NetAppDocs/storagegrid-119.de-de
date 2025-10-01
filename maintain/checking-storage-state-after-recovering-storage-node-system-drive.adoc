@@ -1,0 +1,35 @@
+---
+permalink: maintain/checking-storage-state-after-recovering-storage-node-system-drive.html 
+sidebar: sidebar 
+keywords: storagegrid, storage node recovery, system drive, storage state 
+summary: Nachdem Sie das Systemlaufwerk für einen Storage Node wiederhergestellt haben, müssen Sie überprüfen, ob der gewünschte Status des Storage Node auf „Online“ eingestellt ist, und sicherstellen, dass der Status standardmäßig „Online“ ist, wenn der Storage Node-Server neu gestartet wird. 
+---
+= Überprüfen Sie den Speicherstatus nach der Wiederherstellung des Storage Node-Systemlaufwerks
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Nachdem Sie das Systemlaufwerk für einen Storage Node wiederhergestellt haben, müssen Sie überprüfen, ob der gewünschte Status des Storage Node auf „Online“ eingestellt ist, und sicherstellen, dass der Status standardmäßig „Online“ ist, wenn der Storage Node-Server neu gestartet wird.
+
+.Bevor Sie beginnen
+* Sie sind beim Grid Manager angemeldet mit einemlink:../admin/web-browser-requirements.html["unterstützter Webbrowser"] .
+* Der Speicherknoten wurde wiederhergestellt und die Datenwiederherstellung ist abgeschlossen.
+
+
+.Schritte
+. Wählen Sie *SUPPORT* > *Tools* > *Gittertopologie*.
+. Überprüfen Sie die Werte von *Wiederhergestellter Speicherknoten* > *LDR* > *Speicher* > *Speicherstatus – Gewünscht* und *Speicherstatus – Aktuell*.
++
+Der Wert beider Attribute sollte „Online“ sein.
+
+. Wenn „Speicherstatus – Gewünscht“ auf „Schreibgeschützt“ eingestellt ist, führen Sie die folgenden Schritte aus:
++
+.. Klicken Sie auf die Registerkarte *Konfiguration*.
+.. Wählen Sie aus der Dropdown-Liste *Speicherstatus – Gewünscht* die Option *Online* aus.
+.. Klicken Sie auf *Änderungen übernehmen*.
+.. Klicken Sie auf die Registerkarte *Übersicht* und bestätigen Sie, dass die Werte von *Speicherstatus – Gewünscht* und *Speicherstatus – Aktuell* auf „Online“ aktualisiert wurden.
+
+
+

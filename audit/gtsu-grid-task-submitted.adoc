@@ -1,0 +1,114 @@
+---
+permalink: audit/gtsu-grid-task-submitted.html 
+sidebar: sidebar 
+keywords: storagegrid, audit, message, GTSU, Grid Task Submitted 
+summary: Diese Prüfnachricht zeigt an, dass eine Rasteraufgabe an den CMN-Dienst übermittelt wurde. 
+---
+= GTSU: Grid-Aufgabe übermittelt
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Diese Prüfnachricht zeigt an, dass eine Rasteraufgabe an den CMN-Dienst übermittelt wurde.
+
+[cols="1a,1a,4a"]
+|===
+| Code | Feld | Beschreibung 
+
+
+ a| 
+TSID
+ a| 
+Aufgaben-ID
+ a| 
+Identifiziert eine generierte Rasteraufgabe eindeutig und ermöglicht die Verwaltung der Aufgabe über ihren Lebenszyklus.
+
+*Hinweis:* Die Aufgaben-ID wird zum Zeitpunkt der Generierung einer Rasteraufgabe zugewiesen, nicht zum Zeitpunkt der Übermittlung.  Es ist möglich, dass eine bestimmte Rasteraufgabe mehrmals übermittelt wird. In diesem Fall reicht das Feld „Aufgaben-ID“ nicht aus, um die Prüfmeldungen „Übermittelt“, „Gestartet“ und „Beendet“ eindeutig zu verknüpfen.
+
+
+
+ a| 
+TTYP
+ a| 
+Aufgabentyp
+ a| 
+Der Typ der Rasteraufgabe.
+
+
+
+ a| 
+TWER
+ a| 
+Aufgabenversion
+ a| 
+Eine Zahl, die die Version der Rasteraufgabe angibt.
+
+
+
+ a| 
+TDSC
+ a| 
+Aufgabenbeschreibung
+ a| 
+Eine für Menschen lesbare Beschreibung der Rasteraufgabe.
+
+
+
+ a| 
+Mehrwertsteuer
+ a| 
+Gültig nach Zeitstempel
+ a| 
+Der früheste Zeitpunkt (UINT64 Mikrosekunden ab 1. Januar 1970 – UNIX-Zeit), zu dem die Grid-Aufgabe gültig ist.
+
+
+
+ a| 
+VBTS
+ a| 
+Gültig vor Zeitstempel
+ a| 
+Der späteste Zeitpunkt (UINT64 Mikrosekunden ab 1. Januar 1970 – UNIX-Zeit), zu dem die Grid-Aufgabe gültig ist.
+
+
+
+ a| 
+TSRC
+ a| 
+Quelle
+ a| 
+Die Quelle der Aufgabe:
+
+* TXTB: Die Grid-Aufgabe wurde über das StorageGRID -System als signierter Textblock übermittelt.
+* GRID: Die Grid-Aufgabe wurde über den internen Grid Task Submission Service übermittelt.
+
+
+
+
+ a| 
+ACTV
+ a| 
+Aktivierungstyp
+ a| 
+Die Art der Aktivierung:
+
+* AUTO: Die Rasteraufgabe wurde zur automatischen Aktivierung übermittelt.
+* PEND: Die Rasteraufgabe wurde in die ausstehende Tabelle übermittelt.  Dies ist die einzige Möglichkeit für die TXTB-Quelle.
+
+
+
+
+ a| 
+RSLT
+ a| 
+Ergebnis
+ a| 
+Das Ergebnis der Einreichung:
+
+* SUCS: Die Rasteraufgabe wurde erfolgreich übermittelt.
+* FEHLGESCHLAGEN: Die Aufgabe wurde direkt in die Verlaufstabelle verschoben.
+
+
+|===

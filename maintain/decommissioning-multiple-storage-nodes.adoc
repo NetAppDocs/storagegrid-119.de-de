@@ -1,0 +1,21 @@
+---
+permalink: maintain/decommissioning-multiple-storage-nodes.html 
+sidebar: sidebar 
+keywords: storagegrid, decommission nodes, storage node, multiple storage nodes 
+summary: Wenn Sie mehr als einen Speicherknoten entfernen müssen, können Sie diese entweder nacheinander oder parallel außer Betrieb nehmen. 
+---
+= Mehrere Speicherknoten außer Betrieb nehmen
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Wenn Sie mehr als einen Speicherknoten entfernen müssen, können Sie diese entweder nacheinander oder parallel außer Betrieb nehmen.
+
+
+CAUTION: Seien Sie vorsichtig, wenn Sie Speicherknoten in einem Grid außer Betrieb nehmen, das softwarebasierte Knoten enthält, die nur Metadaten enthalten.  Wenn Sie alle Knoten außer Betrieb nehmen, die zum Speichern von _sowohl_ Objekten als auch Metadaten konfiguriert sind, wird die Möglichkeit zum Speichern von Objekten aus dem Raster entfernt.  Sehenlink:../primer/what-storage-node-is.html#types-of-storage-nodes["Arten von Speicherknoten"] Weitere Informationen zu reinen Metadaten-Speicherknoten.
+
+* Wenn Sie Speicherknoten nacheinander außer Betrieb nehmen, müssen Sie warten, bis die Außerbetriebnahme des ersten Speicherknotens abgeschlossen ist, bevor Sie mit der Außerbetriebnahme des nächsten Speicherknotens beginnen.
+* Wenn Sie Speicherknoten parallel außer Betrieb nehmen, verarbeiten die Speicherknoten gleichzeitig die Außerbetriebnahmeaufgaben für alle außer Betrieb genommenen Speicherknoten.  Dies kann dazu führen, dass alle permanenten Kopien einer Datei als „schreibgeschützt“ gekennzeichnet werden, wodurch das Löschen in Rastern, in denen diese Funktion aktiviert ist, vorübergehend deaktiviert wird.
+

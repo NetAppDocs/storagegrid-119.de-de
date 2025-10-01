@@ -1,0 +1,31 @@
+= 
+:allow-uri-read: 
+
+
+.Schritte
+. Führen Sie auf jedem Host die folgenden Befehle aus:
++
+[listing]
+----
+sudo systemctl enable storagegrid
+sudo systemctl start storagegrid
+----
+. Führen Sie den folgenden Befehl aus, um sicherzustellen, dass die Bereitstellung fortgesetzt wird:
++
+[listing]
+----
+sudo storagegrid node status node-name
+----
+. Wenn ein Knoten den Status „Nicht ausgeführt“ oder „Gestoppt“ zurückgibt, führen Sie den folgenden Befehl aus:
++
+[listing]
+----
+sudo storagegrid node start node-name
+----
+. Wenn Sie den StorageGRID Hostdienst zuvor aktiviert und gestartet haben (oder wenn Sie nicht sicher sind, ob der Dienst aktiviert und gestartet wurde), führen Sie außerdem den folgenden Befehl aus:
++
+[listing]
+----
+sudo systemctl reload-or-restart storagegrid
+----
+

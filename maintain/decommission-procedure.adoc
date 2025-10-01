@@ -1,0 +1,24 @@
+---
+permalink: maintain/decommission-procedure.html 
+sidebar: sidebar 
+keywords: how to decommission 
+summary: Sie können ein Außerbetriebnahmeverfahren durchführen, um Grid-Knoten oder einen gesamten Standort dauerhaft aus dem StorageGRID -System zu entfernen. 
+---
+= Knoten oder Site außer Betrieb nehmen
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Sie können ein Außerbetriebnahmeverfahren durchführen, um Grid-Knoten oder einen gesamten Standort dauerhaft aus dem StorageGRID -System zu entfernen.
+
+Um einen Grid-Knoten oder eine Site zu entfernen, führen Sie eines der folgenden Außerbetriebnahmeverfahren durch:
+
+* Führen Sie einenlink:grid-node-decommissioning.html["Außerbetriebnahme von Netzknoten"] um einen oder mehrere Knoten zu entfernen, die sich an einem oder mehreren Standorten befinden können.  Die Knoten, die Sie entfernen, können online und mit dem StorageGRID -System verbunden sein oder offline und getrennt.
+* Führen Sie einenlink:considerations-for-removing-site.html["Stilllegung des Standorts"] um eine Site zu entfernen.  Sie führen eine *Außerbetriebnahme der verbundenen Site* durch, wenn alle Knoten mit StorageGRID verbunden sind.  Sie führen eine *Außerbetriebnahme einer getrennten Site* durch, wenn alle Knoten von StorageGRID getrennt sind.  Wenn die Site eine Mischung aus verbundenen und getrennten Knoten enthält, müssen Sie alle Offline-Knoten wieder online bringen.
++
+
+CAUTION: Bevor Sie eine getrennte Site-Außerbetriebnahme durchführen, wenden Sie sich an Ihren NetApp Kundenbetreuer.  NetApp überprüft Ihre Anforderungen, bevor alle Schritte im Assistenten „Site außer Betrieb nehmen“ aktiviert werden.  Sie sollten nicht versuchen, eine getrennte Site außer Betrieb zu nehmen, wenn Sie glauben, dass es möglich sein könnte, die Site wiederherzustellen oder Objektdaten von der Site wiederherzustellen.
+
+

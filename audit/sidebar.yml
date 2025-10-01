@@ -1,0 +1,156 @@
+---
+section: audit
+title: Überprüfen der Überwachungsprotokolle
+entries:
+- title: Prüfmeldungen und Protokolle
+  pdf-filename: Überprüfen Sie die StorageGRID Auditprotokolle
+  url: "/audit/index.html"
+- title: Nachrichtenfluss und -aufbewahrung prüfen
+  url: "/audit/audit-message-flow-and-retention.html"
+- title: Zugriff auf die Überwachungsprotokolldatei
+  url: "/audit/accessing-audit-log-file.html"
+- title: Rotation der Überwachungsprotokolldateien
+  url: "/audit/audit-log-file-rotation.html"
+- title: Audit-Protokolldateiformat
+  entries:
+  - title: Beispiel für das Auditprotokollformat
+    pdf-filename: Audit-Protokolldateiformat
+    url: "/audit/audit-log-file-format.html"
+  - title: Verwenden Sie das Audit-Explain-Tool
+    url: "/audit/using-audit-explain-tool.html"
+  - title: Verwenden Sie das Audit-Sum-Tool
+    url: "/audit/using-audit-sum-tool.html"
+- title: Format der Prüfnachricht
+  entries:
+  - title: Beispiel einer Auditnachricht
+    pdf-filename: Format der Prüfnachricht
+    url: "/audit/audit-message-format.html"
+  - title: Datentypen
+    url: "/audit/data-types.html"
+  - title: Ereignisspezifische Daten
+    url: "/audit/event-specific-data.html"
+  - title: Gemeinsame Elemente in Prüfmeldungen
+    url: "/audit/common-elements-in-audit-messages.html"
+  - title: Beispiele für Prüfnachrichten
+    url: "/audit/audit-message-examples.html"
+- title: Prüfmeldungen und der Objektlebenszyklus
+  entries:
+  - title: Wann werden Prüfmeldungen generiert?
+    url: "/audit/audit-messages-and-object-lifecycle.html"
+  - title: Objektaufnahmetransaktionen
+    url: "/audit/object-ingest-transactions.html"
+  - title: Objektlöschtransaktionen
+    url: "/audit/object-delete-transactions.html"
+  - title: Objektabruftransaktionen
+    url: "/audit/object-retrieve-transactions.html"
+  - title: Metadaten-Update-Nachrichten
+    url: "/audit/metadata-update-messages.html"
+- title: Prüfmeldungen
+  entries:
+  - title: Nachrichtenbeschreibungen
+    pdf-filename: Prüfmeldungen
+    url: "/audit/audit-messages-main.html"
+  - title: Kategorien von Überwachungsnachrichten
+    entries:
+    - title: System-Audit-Meldungen
+      url: "/audit/system-audit-messages.html"
+    - title: Objektspeicher-Auditmeldungen
+      url: "/audit/object-storage-audit-messages.html"
+    - title: Client liest Audit-Nachrichten
+      url: "/audit/client-read-audit-messages.html"
+    - title: Client schreibt Prüfmeldungen
+      url: "/audit/client-write-audit-messages.html"
+    - title: Management-Audit-Nachricht
+      url: "/audit/management-audit-message.html"
+    - title: ILM-Audit-Meldungen
+      url: "/audit/ilm-audit-messages.html"
+  - title: Prüfnachrichtenreferenz
+    entries:
+    - title: 'BROR: Bucket-Nur-Lese-Anforderung'
+      url: "/audit/bror-bucket-read-only-request.html"
+    - title: 'CBRB: Objektempfang beginnt'
+      url: "/audit/cbrb-object-receive-begin.html"
+    - title: 'CBRE: Objektempfangsende'
+      url: "/audit/cbre-object-receive-end.html"
+    - title: 'CBSB: Objekt senden beginnen'
+      url: "/audit/cbsb-object-send-begin.html"
+    - title: 'CBSE: Objekt senden Ende'
+      url: "/audit/cbse-object-send-end.html"
+    - title: 'CGRR: Cross-Grid-Replikationsanforderung'
+      url: "/audit/cgrr-cross-grid-replication-request.html"
+    - title: 'EBDL: Leeren Bucket löschen'
+      url: "/audit/ebdl-empty-bucket-delete.html"
+    - title: 'EBKR: Leere Bucket-Anforderung'
+      url: "/audit/ebkr-empty-bucket-request.html"
+    - title: 'ECMC: Fehlendes Erasure-Coded-Datenfragment'
+      url: "/audit/ecmc-missing-erasure-coded-data-fragment.html"
+    - title: 'ECOC: Beschädigtes Erasure-Coded-Datenfragment'
+      url: "/audit/ecoc-corrupt-erasure-coded-data-fragment.html"
+    - title: 'ETAF: Sicherheitsauthentifizierung fehlgeschlagen'
+      url: "/audit/etaf-security-authentication-failed.html"
+    - title: 'GNRG: GNDS-Registrierung'
+      url: "/audit/gnrg-gnds-registration.html"
+    - title: 'GNUR: GNDS-Abmeldung'
+      url: "/audit/gnur-gnds-unregistration.html"
+    - title: 'GTED: Grid-Aufgabe beendet'
+      url: "/audit/gted-grid-task-ended.html"
+    - title: 'GTST: Grid-Aufgabe gestartet'
+      url: "/audit/gtst-grid-task-started.html"
+    - title: 'GTSU: Grid-Aufgabe übermittelt'
+      url: "/audit/gtsu-grid-task-submitted.html"
+    - title: 'IDEL: Von ILM initiiertes Löschen'
+      url: "/audit/idel-ilm-initiated-delete.html"
+    - title: 'LKCU: Bereinigung überschriebener Objekte'
+      url: "/audit/lkcu-overwritten-object-cleanup.html"
+    - title: 'LKDM: Bereinigung durchgesickerter Objekte'
+      url: "/audit/lkdm-leaked-object-cleanup.html"
+    - title: 'LLST: Standort verloren'
+      url: "/audit/llst-location-lost.html"
+    - title: 'MGAU: Management-Audit-Nachricht'
+      url: "/audit/mgau-management-audit-message.html"
+    - title: 'OLST: System hat verlorenes Objekt erkannt'
+      url: "/audit/olst-system-detected-lost-object.html"
+    - title: 'ORLM: Objektregeln erfüllt'
+      url: "/audit/orlm-object-rules-met.html"
+    - title: 'OVWR: Objektüberschreiben'
+      url: "/audit/ovwr-object-overwrite.html"
+    - title: 'S3SL: S3-Auswahlanforderung'
+      url: "/audit/s3-select-request.html"
+    - title: 'SADD: Sicherheitsüberprüfung deaktivieren'
+      url: "/audit/sadd-security-audit-disable.html"
+    - title: 'SADE: Sicherheitsaudit aktivieren'
+      url: "/audit/sade-security-audit-enable.html"
+    - title: 'SCMT: Objektspeicher-Commit'
+      url: "/audit/scmt-object-store-commit.html"
+    - title: 'SDEL: S3 LÖSCHEN'
+      url: "/audit/sdel-s3-delete.html"
+    - title: 'SGET: S3 GET'
+      url: "/audit/sget-s3-get.html"
+    - title: 'SHEA: S3 KOPF'
+      url: "/audit/shea-s3-head.html"
+    - title: 'SPOS: S3 POST'
+      url: "/audit/spos-s3-post.html"
+    - title: 'SPUT: S3 PUT'
+      url: "/audit/sput-s3-put.html"
+    - title: 'SREM: Objektspeicher entfernen'
+      url: "/audit/srem-object-store-remove.html"
+    - title: 'SUPD: S3-Metadaten aktualisiert'
+      url: "/audit/supd-s3-metadata-updated.html"
+    - title: 'SVRF: Objektspeicherüberprüfung fehlgeschlagen'
+      url: "/audit/svrf-object-store-verify-fail.html"
+    - title: 'SVRU: Object Store Verify Unbekannt'
+      url: "/audit/svru-object-store-verify-unknown.html"
+    - title: 'SYSD: Knotenstopp'
+      url: "/audit/sysd-node-stop.html"
+    - title: 'SYST: Knoten wird gestoppt'
+      url: "/audit/syst-node-stopping.html"
+    - title: 'SYSU: Knotenstart'
+      url: "/audit/sysu-node-start.html"
+    - title: 'WDEL: Schnelles LÖSCHEN'
+      url: "/audit/wdel-swift-delete.html"
+    - title: 'WGET: Schnelles GET'
+      url: "/audit/wget-swift-get.html"
+    - title: 'WHEA: Schneller Kopf'
+      url: "/audit/whea-swift-head.html"
+    - title: 'WPUT: Schnelles PUT'
+      url: "/audit/wput-swift-put.html"

@@ -1,0 +1,73 @@
+---
+permalink: expand/adding-metadata-capacity.html 
+sidebar: sidebar 
+keywords: metadata capacity, add, adding, expand, expansion, guidelines, Storage Nodes, metadata storage 
+summary: Um sicherzustellen, dass ausreichend Speicherplatz für Objektmetadaten zur Verfügung steht, müssen Sie möglicherweise einen Erweiterungsvorgang durchführen, um an jedem Standort neue Speicherknoten hinzuzufügen. 
+---
+= Metadatenkapazität hinzufügen
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Um sicherzustellen, dass ausreichend Speicherplatz für Objektmetadaten zur Verfügung steht, müssen Sie möglicherweise einen Erweiterungsvorgang durchführen, um an jedem Standort neue Speicherknoten hinzuzufügen.
+
+StorageGRID reserviert Speicherplatz für Objektmetadaten auf Volume 0 jedes Speicherknotens.  An jedem Standort werden drei Kopien aller Objektmetadaten verwaltet, gleichmäßig verteilt auf alle Speicherknoten.
+
+Mit dem Grid Manager können Sie die Metadatenkapazität von Speicherknoten überwachen und abschätzen, wie schnell die Metadatenkapazität verbraucht wird.  Darüber hinaus wird für einen Speicherknoten die Warnung *Geringer Metadatenspeicher* ausgelöst, wenn der verwendete Metadatenspeicher bestimmte Schwellenwerte erreicht.
+
+Beachten Sie, dass die Objektmetadatenkapazität eines Grids je nach Verwendung des Grids möglicherweise schneller verbraucht wird als seine Objektspeicherkapazität.  Wenn Sie beispielsweise normalerweise eine große Anzahl kleiner Objekte aufnehmen oder Objekten große Mengen an Benutzermetadaten oder Tags hinzufügen, müssen Sie möglicherweise Speicherknoten hinzufügen, um die Metadatenkapazität zu erhöhen, obwohl noch ausreichend Objektspeicherkapazität vorhanden ist.
+
+Weitere Informationen finden Sie unter:
+
+* link:../admin/managing-object-metadata-storage.html["Verwalten des Objektmetadatenspeichers"]
+* link:../monitor/monitoring-storage-capacity.html#monitor-object-metadata-capacity-for-each-storage-node["Überwachen Sie die Objektmetadatenkapazität für jeden Speicherknoten"]
+
+
+
+
+== Richtlinien zur Erhöhung der Metadatenkapazität
+
+Bevor Sie Speicherknoten hinzufügen, um die Metadatenkapazität zu erhöhen, lesen Sie die folgenden Richtlinien und Einschränkungen:
+
+* Vorausgesetzt, es steht ausreichend Objektspeicherkapazität zur Verfügung, erhöht mehr Speicherplatz für Objektmetadaten die Anzahl der Objekte, die Sie in Ihrem StorageGRID System speichern können.
+* Sie können die Metadatenkapazität eines Grids erhöhen, indem Sie jedem Standort einen oder mehrere Speicherknoten hinzufügen.
+* Der tatsächliche Speicherplatz, der für Objektmetadaten auf einem bestimmten Speicherknoten reserviert ist, hängt von der Speicheroption „Reservierter Speicherplatz für Metadaten“ (systemweite Einstellung), der dem Knoten zugewiesenen RAM-Menge und der Größe des Volumes 0 des Knotens ab.
+* Sie können die Metadatenkapazität nicht erhöhen, indem Sie Speichervolumes zu vorhandenen Speicherknoten hinzufügen, da Metadaten nur auf Volume 0 gespeichert werden.
+* Sie können die Metadatenkapazität nicht durch Hinzufügen einer neuen Site erhöhen.
+* StorageGRID speichert an jedem Standort drei Kopien aller Objektmetadaten.  Aus diesem Grund ist die Metadatenkapazität Ihres Systems durch die Metadatenkapazität Ihrer kleinsten Site begrenzt.
+* Wenn Sie die Metadatenkapazität erweitern, sollten Sie jeder Site die gleiche Anzahl von Speicherknoten hinzufügen.
+
+
+Für reine Metadaten-Speicherknoten gelten bestimmte Hardwareanforderungen:
+
+* Bei Verwendung von StorageGRID -Geräten können reine Metadatenknoten nur auf SGF6112-Geräten mit zwölf 1,9-TB- oder zwölf 3,8-TB-Laufwerken konfiguriert werden.
+* Bei der Verwendung softwarebasierter Knoten müssen die Knotenressourcen, die nur Metadaten enthalten, mit den vorhandenen Speicherknotenressourcen übereinstimmen. Beispiel:
++
+** Wenn die vorhandene StorageGRID Site SG6000- oder SG6100-Geräte verwendet, müssen die softwarebasierten Nur-Metadaten-Knoten die folgenden Mindestanforderungen erfüllen:
++
+*** 128 GB RAM
+*** 8-Kern-CPU
+*** 8 TB SSD oder gleichwertiger Speicher für die Cassandra-Datenbank (rangedb/0)
+
+
+** Wenn die vorhandene StorageGRID Site virtuelle Speicherknoten mit 24 GB RAM, 8-Kern-CPU und 3 TB oder 4 TB Metadatenspeicher verwendet, sollten die softwarebasierten Nur-Metadaten-Knoten ähnliche Ressourcen verwenden (24 GB RAM, 8-Kern-CPU und 4 TB Metadatenspeicher (rangedb/0).
+
+
+* Beim Hinzufügen einer neuen StorageGRID Site sollte die Gesamtmetadatenkapazität der neuen Site mindestens der vorhandenen StorageGRID Sites entsprechen und die neuen Site-Ressourcen sollten den Speicherknoten an vorhandenen StorageGRID Sites entsprechen.
+
+
+Siehe dielink:../admin/managing-object-metadata-storage.html["Beschreibung, was Metadata Reserved Space ist"] .
+
+
+
+== So werden Metadaten neu verteilt, wenn Sie Speicherknoten hinzufügen
+
+Wenn Sie in einer Erweiterung Speicherknoten hinzufügen, verteilt StorageGRID die vorhandenen Objektmetadaten an die neuen Knoten an jedem Standort neu, wodurch die Gesamtmetadatenkapazität des Grids erhöht wird.  Es ist keine Benutzeraktion erforderlich.
+
+Die folgende Abbildung zeigt, wie StorageGRID Objektmetadaten neu verteilt, wenn Sie Storage Nodes in einer Erweiterung hinzufügen.  Die linke Seite der Abbildung stellt Volume 0 von drei Speicherknoten vor einer Erweiterung dar.  Metadaten belegen einen relativ großen Teil des verfügbaren Metadatenspeichers jedes Knotens und die Warnung *Geringer Metadatenspeicher* wurde ausgelöst.
+
+Die rechte Seite der Abbildung zeigt, wie die vorhandenen Metadaten neu verteilt werden, nachdem der Site zwei Speicherknoten hinzugefügt wurden.  Die Menge der Metadaten auf jedem Knoten hat abgenommen, die Warnung „Geringer Metadatenspeicher“ wird nicht mehr ausgelöst und der für Metadaten verfügbare Speicherplatz hat zugenommen.
+
+image::../media/metadata_space_after_expansion.png[Diagramm der neu verteilten Metadaten nach dem Hinzufügen von zwei Speicherknoten]

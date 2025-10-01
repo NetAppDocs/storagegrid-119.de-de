@@ -1,0 +1,43 @@
+---
+section: troubleshoot
+title: Fehlerbehebung beim StorageGRID -System
+entries:
+- title: Richtlinien zur Fehlerbehebung
+  pdf-filename: Fehlerbehebung beim StorageGRID -System
+  url: "/troubleshoot/index.html"
+- title: Beheben von Objekt- und Speicherproblemen
+  entries:
+  - title: Bestätigen Sie die Speicherorte der Objektdaten
+    url: "/troubleshoot/confirming-object-data-locations.html"
+  - title: Objektspeicherfehler
+    url: "/troubleshoot/object-store-storage-volume-failures.html"
+  - title: Überprüfen der Objektintegrität
+    url: "/troubleshoot/verifying-object-integrity.html"
+  - title: Fehlerbehebung bei der Warnung „S3 PUT-Objektgröße zu groß“
+    url: "/troubleshoot/troubleshoot-s3-put-object-size-too-large-alert.html"
+  - title: Fehlerbehebung bei verlorenen und fehlenden Objektdaten
+    entries:
+    - title: Methoden zum Abrufen von Objekten
+      pdf-filename: Fehlerbehebung bei verlorenen und fehlenden Objektdaten
+      url: "/troubleshoot/troubleshooting-lost-and-missing-object-data.html"
+    - title: Untersuchen Sie verlorene Gegenstände
+      url: "/troubleshoot/investigating-lost-objects.html"
+    - title: Suchen und Wiederherstellen potenziell verlorener Objekte
+      url: "/troubleshoot/searching-for-and-restoring-potentially-lost-objects.html"
+    - title: Zurücksetzen der Anzahl verlorener und fehlender Objekte
+      url: "/troubleshoot/resetting-lost-and-missing-object-counts.html"
+  - title: Fehlerbehebung bei der Warnung „Niedriger Objektdatenspeicher“
+    url: "/troubleshoot/troubleshooting-low-object-data-storage-alert.html"
+  - title: Fehlerbehebung bei Warnungen zum Überschreiben des schreibgeschützten Wasserzeichens
+      „Niedrig“
+    url: "/troubleshoot/troubleshoot-low-watermark-alert.html"
+- title: Beheben von Metadatenproblemen
+  url: "/troubleshoot/troubleshooting-metadata-issues.html"
+- title: Beheben von Zertifikatsfehlern
+  url: "/troubleshoot/troubleshooting-certificate-errors.html"
+- title: Beheben von Problemen mit dem Admin-Knoten und der Benutzeroberfläche
+  url: "/troubleshoot/troubleshooting-admin-node-and-user-interface-issues.html"
+- title: Beheben von Netzwerk-, Hardware- und Plattformproblemen
+  url: "/troubleshoot/troubleshooting-network-hardware-and-platform-issues.html"
+- title: Fehlerbehebung beim externen Syslog-Server
+  url: "/troubleshoot/troubleshooting-syslog-server.html"

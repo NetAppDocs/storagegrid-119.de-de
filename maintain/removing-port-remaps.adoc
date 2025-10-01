@@ -1,0 +1,46 @@
+---
+permalink: maintain/removing-port-remaps.html 
+sidebar: sidebar 
+keywords: storagegrid, recover, remove port remap, removing port remap, port remap 
+summary: Wenn Sie einen Endpunkt für den Load Balancer-Dienst konfigurieren und einen Port verwenden möchten, der bereits als Mapped-To-Port einer Port-Neuzuordnung konfiguriert wurde, müssen Sie zuerst die vorhandene Port-Neuzuordnung entfernen, da der Endpunkt sonst nicht wirksam ist.  Sie müssen auf jedem Admin-Knoten und Gateway-Knoten mit widersprüchlichen neu zugeordneten Ports ein Skript ausführen, um alle Port-Neuzuordnungen des Knotens zu entfernen. 
+---
+= Port-Neuzuordnungen entfernen
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Wenn Sie einen Endpunkt für den Load Balancer-Dienst konfigurieren und einen Port verwenden möchten, der bereits als Mapped-To-Port einer Port-Neuzuordnung konfiguriert wurde, müssen Sie zuerst die vorhandene Port-Neuzuordnung entfernen, da der Endpunkt sonst nicht wirksam ist.  Sie müssen auf jedem Admin-Knoten und Gateway-Knoten mit widersprüchlichen neu zugeordneten Ports ein Skript ausführen, um alle Port-Neuzuordnungen des Knotens zu entfernen.
+
+.Informationen zu diesem Vorgang
+Durch dieses Verfahren werden alle Port-Neuzuordnungen entfernt.  Wenn Sie einige der Neuzuordnungen behalten müssen, wenden Sie sich an den technischen Support.
+
+Informationen zum Konfigurieren von Load Balancer-Endpunkten finden Sie unterlink:../admin/configuring-load-balancer-endpoints.html["Konfigurieren von Load Balancer-Endpunkten"] .
+
+
+NOTE: Wenn die Portneuzuordnung Clientzugriff ermöglicht, konfigurieren Sie den Client neu, sodass er einen anderen Port als Endpunkt des Lastenausgleichs verwendet, um einen Dienstverlust zu vermeiden.  Andernfalls führt das Entfernen der Portzuordnung zum Verlust des Clientzugriffs und sollte entsprechend geplant werden.
+
+
+NOTE: Dieses Verfahren funktioniert nicht für ein StorageGRID -System, das als Container auf Bare-Metal-Hosts bereitgestellt wird. Siehe die Anweisungen fürlink:removing-port-remaps-on-bare-metal-hosts.html["Entfernen von Port-Neuzuordnungen auf Bare-Metal-Hosts"] .
+
+.Schritte
+. Melden Sie sich beim Knoten an.
++
+.. Geben Sie den folgenden Befehl ein: `ssh -p 8022 admin@node_IP`
++
+Port 8022 ist der SSH-Port des Basisbetriebssystems, während Port 22 der SSH-Port der Container-Engine ist, auf der StorageGRID ausgeführt wird.
+
+.. Geben Sie das Passwort ein, das in der `Passwords.txt` Datei.
+.. Geben Sie den folgenden Befehl ein, um zum Root zu wechseln: `su -`
+.. Geben Sie das Passwort ein, das in der `Passwords.txt` Datei.
++
+Wenn Sie als Root angemeldet sind, ändert sich die Eingabeaufforderung von `$` Zu `#` .
+
+
+
+. Führen Sie das folgende Skript aus: `remove-port-remap.sh`
+. Starten Sie den Knoten neu: `reboot`
+. Melden Sie sich von der Befehlsshell ab: `exit`
+. Wiederholen Sie diese Schritte auf jedem Admin-Knoten und Gateway-Knoten, bei dem es zu Konflikten bei der Neuzuordnung der Ports kommt.
+

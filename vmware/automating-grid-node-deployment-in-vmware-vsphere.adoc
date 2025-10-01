@@ -1,0 +1,671 @@
+---
+permalink: vmware/automating-grid-node-deployment-in-vmware-vsphere.html 
+sidebar: sidebar 
+keywords: how to automate installation 
+summary: Sie können das VMware OVF-Tool verwenden, um die Bereitstellung von Grid-Knoten zu automatisieren.  Sie können die Konfiguration von StorageGRID auch automatisieren. 
+---
+= Automatisieren Sie die Installation (VMware)
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Sie können das VMware OVF-Tool verwenden, um die Bereitstellung von Grid-Knoten zu automatisieren.  Sie können die Konfiguration von StorageGRID auch automatisieren.
+
+
+
+== Automatisieren Sie die Bereitstellung von Grid-Knoten
+
+Verwenden Sie das VMware OVF-Tool, um die Bereitstellung von Grid-Knoten zu automatisieren.
+
+.Bevor Sie beginnen
+* Sie haben Zugriff auf ein Linux/Unix-System mit Bash 3.2 oder höher.
+* Sie verfügen über VMware vSphere mit vCenter
+* Sie haben VMware OVF Tool 4.1 installiert und richtig konfiguriert.
+* Sie kennen den Benutzernamen und das Kennwort für den Zugriff auf VMware vSphere mithilfe des OVF-Tools
+* Sie verfügen über ausreichende Berechtigungen, um VMs aus OVF-Dateien bereitzustellen und einzuschalten, sowie über die Berechtigung, zusätzliche Volumes zum Anhängen an die VMs zu erstellen.  Siehe die `ovftool` Einzelheiten finden Sie in der Dokumentation.
+* Sie kennen die URL der virtuellen Infrastruktur (VI) für den Speicherort in vSphere, an dem Sie die virtuellen StorageGRID -Maschinen bereitstellen möchten.  Bei dieser URL handelt es sich normalerweise um eine vApp oder einen Ressourcenpool. Beispiel:  `vi://vcenter.example.com/vi/sgws`
++
+
+NOTE: Sie können die VMware `ovftool` Dienstprogramm, um diesen Wert zu bestimmen (siehe `ovftool` Einzelheiten finden Sie in der Dokumentation).
+
++
+
+NOTE: Wenn Sie die Bereitstellung in einer vApp durchführen, werden die virtuellen Maschinen beim ersten Mal nicht automatisch gestartet und Sie müssen sie manuell einschalten.
+
+* Sie haben alle erforderlichen Informationen für die Bereitstellungskonfigurationsdatei gesammelt.  Sehenlink:collecting-information-about-your-deployment-environment.html["Sammeln Sie Informationen zu Ihrer Bereitstellungsumgebung"] für weitere Informationen.
+* Sie haben Zugriff auf die folgenden Dateien aus dem VMware-Installationsarchiv für StorageGRID:
+
+
+[cols="1a,1a"]
+|===
+| Dateiname | Beschreibung 
+
+
+| NetApp-SG-version-SHA.vmdk  a| 
+Die Festplattendatei der virtuellen Maschine, die als Vorlage zum Erstellen virtueller Grid-Knotenmaschinen verwendet wird.
+
+*Hinweis:* Diese Datei muss sich im selben Ordner befinden wie die `.ovf` Und `.mf` Dateien.
+
+
+
+| vsphere-primary-admin.ovf vsphere-primary-admin.mf  a| 
+Die Open Virtualization Format-Vorlagendatei(`.ovf` ) und Manifestdatei(`.mf` ) zum Bereitstellen des primären Admin-Knotens.
+
+
+
+| vsphere-non-primary-admin.ovf vsphere-non-primary-admin.mf  a| 
+Die Vorlagendatei(`.ovf` ) und Manifestdatei(`.mf` ) zum Bereitstellen nicht primärer Admin-Knoten.
+
+
+
+| vsphere-gateway.ovf vsphere-gateway.mf  a| 
+Die Vorlagendatei(`.ovf` ) und Manifestdatei(`.mf` ) zum Bereitstellen von Gateway-Knoten.
+
+
+
+| vsphere-storage.ovf vsphere-storage.mf  a| 
+Die Vorlagendatei(`.ovf` ) und Manifestdatei(`.mf` ) zum Bereitstellen von Speicherknoten auf Basis virtueller Maschinen.
+
+
+
+| deploy-vsphere-ovftool.sh  a| 
+Das Bash-Shell-Skript wird zur Automatisierung der Bereitstellung virtueller Grid-Knoten verwendet.
+
+
+
+| Deploy-vsphere-ovftool-sample.ini  a| 
+Die Beispielkonfigurationsdatei zur Verwendung mit dem `deploy-vsphere-ovftool.sh` Skript.
+
+|===
+
+
+=== Definieren Sie die Konfigurationsdatei für Ihre Bereitstellung
+
+Sie geben die Informationen an, die zum Bereitstellen virtueller Grid-Knoten für StorageGRID erforderlich sind, in einer Konfigurationsdatei, die von der `deploy-vsphere-ovftool.sh` Bash-Skript.  Sie können eine Beispielkonfigurationsdatei ändern, sodass Sie die Datei nicht von Grund auf neu erstellen müssen.
+
+.Schritte
+. Erstellen Sie eine Kopie der Beispielkonfigurationsdatei(`deploy-vsphere-ovftool.sample.ini` ).  Speichern Sie die neue Datei unter `deploy-vsphere-ovftool.ini` im selben Verzeichnis wie `deploy-vsphere-ovftool.sh` .
+. Offen `deploy-vsphere-ovftool.ini` .
+. Geben Sie alle Informationen ein, die zum Bereitstellen virtueller VMware-Grid-Knoten erforderlich sind.
++
+Sehen<<configuration-file-settings,Einstellungen der Konfigurationsdatei>> für weitere Informationen.
+
+. Wenn Sie alle erforderlichen Informationen eingegeben und überprüft haben, speichern und schließen Sie die Datei.
+
+
+
+
+=== Einstellungen der Konfigurationsdatei
+
+Der `deploy-vsphere-ovftool.ini` Die Konfigurationsdatei enthält die Einstellungen, die zum Bereitstellen virtueller Grid-Knoten erforderlich sind.
+
+Die Konfigurationsdatei listet zunächst globale Parameter auf und listet dann knotenspezifische Parameter in Abschnitten auf, die durch den Knotennamen definiert sind.  Wenn die Datei verwendet wird:
+
+* _Globale Parameter_ werden auf alle Rasterknoten angewendet.
+* _Knotenspezifische Parameter_ überschreiben globale Parameter.
+
+
+
+
+==== Globale Parameter
+
+Globale Parameter werden auf alle Rasterknoten angewendet, sofern sie nicht durch Einstellungen in einzelnen Abschnitten überschrieben werden.  Platzieren Sie die Parameter, die für mehrere Knoten gelten, im Abschnitt „Globale Parameter“ und überschreiben Sie diese Einstellungen dann nach Bedarf in den Abschnitten für einzelne Knoten.
+
+* *OVFTOOL_ARGUMENTS*: Sie können OVFTOOL_ARGUMENTS als globale Einstellungen angeben oder Argumente einzeln auf bestimmte Knoten anwenden. Beispiel:
++
+[listing, subs="specialcharacters,quotes"]
+----
+OVFTOOL_ARGUMENTS = --powerOn --noSSLVerify --diskMode=eagerZeroedThick --datastore='_datastore_name_'
+----
++
+Sie können die `--powerOffTarget` Und `--overwrite` Optionen zum Herunterfahren und Ersetzen vorhandener virtueller Maschinen.
+
++
+
+CAUTION: Sie sollten Knoten in verschiedenen Datenspeichern bereitstellen und OVFTOOL_ARGUMENTS für jeden Knoten angeben, anstatt global.
+
+* *QUELLE*: Der Pfad zur StorageGRID -Vorlage für virtuelle Maschinen(`.vmdk` ) Datei und die `.ovf` Und `.mf` Dateien für einzelne Grid-Knoten.  Standardmäßig ist dies das aktuelle Verzeichnis.
++
+[listing, subs="specialcharacters,quotes"]
+----
+SOURCE = /downloads/StorageGRID-Webscale-_version_/vsphere
+----
+* *ZIEL*: Die URL der virtuellen VMware vSphere-Infrastruktur (vi) für den Speicherort, an dem StorageGRID bereitgestellt wird. Beispiel:
++
+[listing]
+----
+TARGET = vi://vcenter.example.com/vm/sgws
+----
+* *GRID_NETWORK_CONFIG*: Die zum Abrufen von IP-Adressen verwendete Methode, entweder STATIC oder DHCP.  Der Standardwert ist STATIC.  Wenn alle oder die meisten Knoten dieselbe Methode zum Abrufen von IP-Adressen verwenden, können Sie diese Methode hier angeben.  Sie können die globale Einstellung dann überschreiben, indem Sie für einen oder mehrere einzelne Knoten unterschiedliche Einstellungen angeben. Beispiel:
++
+[listing]
+----
+GRID_NETWORK_CONFIG = STATIC
+----
+* *GRID_NETWORK_TARGET*: Der Name eines vorhandenen VMware-Netzwerks, das für das Grid-Netzwerk verwendet werden soll.  Wenn alle oder die meisten Knoten denselben Netzwerknamen verwenden, können Sie ihn hier angeben.  Sie können die globale Einstellung dann überschreiben, indem Sie für einen oder mehrere einzelne Knoten unterschiedliche Einstellungen angeben. Beispiel:
++
+[listing]
+----
+GRID_NETWORK_TARGET = SG Admin Network
+----
+* *GRID_NETWORK_MASK*: Die Netzwerkmaske für das Grid-Netzwerk.  Wenn alle oder die meisten Knoten dieselbe Netzwerkmaske verwenden, können Sie diese hier angeben.  Sie können die globale Einstellung dann überschreiben, indem Sie für einen oder mehrere einzelne Knoten unterschiedliche Einstellungen angeben. Beispiel:
++
+[listing]
+----
+GRID_NETWORK_MASK = 255.255.255.0
+----
+* *GRID_NETWORK_GATEWAY*: Das Netzwerk-Gateway für das Grid-Netzwerk.  Wenn alle oder die meisten Knoten dasselbe Netzwerk-Gateway verwenden, können Sie es hier angeben.  Sie können die globale Einstellung dann überschreiben, indem Sie für einen oder mehrere einzelne Knoten unterschiedliche Einstellungen angeben. Beispiel:
++
+[listing]
+----
+GRID_NETWORK_GATEWAY = 10.1.0.1
+----
+* *GRID_NETWORK_MTU*: Optional.  Die maximale Übertragungseinheit (MTU) im Grid-Netzwerk.  Falls angegeben, muss der Wert zwischen 1280 und 9216 liegen. Beispiel:
++
+[listing]
+----
+GRID_NETWORK_MTU = 9000
+----
++
+Wenn es weggelassen wird, wird 1400 verwendet.
+
++
+Wenn Sie Jumbo-Frames verwenden möchten, legen Sie die MTU auf einen für Jumbo-Frames geeigneten Wert fest, beispielsweise 9000.  Andernfalls behalten Sie den Standardwert bei.
+
++
+
+NOTE: Der MTU-Wert des Netzwerks muss mit dem Wert übereinstimmen, der auf dem virtuellen Switch-Port in vSphere konfiguriert ist, mit dem der Knoten verbunden ist.  Andernfalls kann es zu Problemen mit der Netzwerkleistung oder zu Paketverlusten kommen.
+
++
+
+NOTE: Für eine optimale Netzwerkleistung sollten alle Knoten mit ähnlichen MTU-Werten auf ihren Grid-Netzwerkschnittstellen konfiguriert werden.  Die Warnung *MTU-Fehlanpassung des Grid-Netzwerks* wird ausgelöst, wenn es bei den MTU-Einstellungen für das Grid-Netzwerk auf einzelnen Knoten einen signifikanten Unterschied gibt.  Die MTU-Werte müssen nicht für alle Netzwerktypen gleich sein.
+
+* *ADMIN_NETWORK_CONFIG*: Die zum Abrufen von IP-Adressen verwendete Methode, entweder DEAKTIVIERT, STATISCH oder DHCP.  Die Standardeinstellung ist DEAKTIVIERT.  Wenn alle oder die meisten Knoten dieselbe Methode zum Abrufen von IP-Adressen verwenden, können Sie diese Methode hier angeben.  Sie können die globale Einstellung dann überschreiben, indem Sie für einen oder mehrere einzelne Knoten unterschiedliche Einstellungen angeben. Beispiel:
++
+[listing]
+----
+ADMIN_NETWORK_CONFIG = STATIC
+----
+* *ADMIN_NETWORK_TARGET*: Der Name eines vorhandenen VMware-Netzwerks, das für das Admin-Netzwerk verwendet werden soll.  Diese Einstellung ist erforderlich, sofern das Admin-Netzwerk nicht deaktiviert ist.  Wenn alle oder die meisten Knoten denselben Netzwerknamen verwenden, können Sie ihn hier angeben.  Anders als beim Grid-Netzwerk müssen nicht alle Knoten mit demselben Admin-Netzwerk verbunden sein.  Sie können die globale Einstellung dann überschreiben, indem Sie für einen oder mehrere einzelne Knoten unterschiedliche Einstellungen angeben. Beispiel:
++
+[listing]
+----
+ADMIN_NETWORK_TARGET = SG Admin Network
+----
+* *ADMIN_NETWORK_MASK*: Die Netzwerkmaske für das Admin-Netzwerk.  Diese Einstellung ist erforderlich, wenn Sie eine statische IP-Adressierung verwenden.  Wenn alle oder die meisten Knoten dieselbe Netzwerkmaske verwenden, können Sie diese hier angeben.  Sie können die globale Einstellung dann überschreiben, indem Sie für einen oder mehrere einzelne Knoten unterschiedliche Einstellungen angeben. Beispiel:
++
+[listing]
+----
+ADMIN_NETWORK_MASK = 255.255.255.0
+----
+* *ADMIN_NETWORK_GATEWAY*: Das Netzwerk-Gateway für das Admin-Netzwerk.  Diese Einstellung ist erforderlich, wenn Sie eine statische IP-Adressierung verwenden und in der Einstellung ADMIN_NETWORK_ESL externe Subnetze angeben.  (Das heißt, es ist nicht erforderlich, wenn ADMIN_NETWORK_ESL leer ist.)  Wenn alle oder die meisten Knoten dasselbe Netzwerk-Gateway verwenden, können Sie es hier angeben.  Sie können die globale Einstellung dann überschreiben, indem Sie für einen oder mehrere einzelne Knoten unterschiedliche Einstellungen angeben. Beispiel:
++
+[listing]
+----
+ADMIN_NETWORK_GATEWAY = 10.3.0.1
+----
+* *ADMIN_NETWORK_ESL*: Die externe Subnetzliste (Routen) für das Admin-Netzwerk, angegeben als durch Kommas getrennte Liste von CIDR-Routenzielen.  Wenn alle oder die meisten Knoten dieselbe externe Subnetzliste verwenden, können Sie dies hier angeben.  Sie können die globale Einstellung dann überschreiben, indem Sie für einen oder mehrere einzelne Knoten unterschiedliche Einstellungen angeben. Beispiel:
++
+[listing]
+----
+ADMIN_NETWORK_ESL = 172.16.0.0/21,172.17.0.0/21
+----
+* *ADMIN_NETWORK_MTU*: Optional.  Die maximale Übertragungseinheit (MTU) im Admin-Netzwerk.  Nicht angeben, wenn ADMIN_NETWORK_CONFIG = DHCP.  Falls angegeben, muss der Wert zwischen 1280 und 9216 liegen.  Wenn es weggelassen wird, wird 1400 verwendet.  Wenn Sie Jumbo-Frames verwenden möchten, legen Sie die MTU auf einen für Jumbo-Frames geeigneten Wert fest, beispielsweise 9000.  Andernfalls behalten Sie den Standardwert bei.  Wenn alle oder die meisten Knoten dieselbe MTU für das Admin-Netzwerk verwenden, können Sie sie hier angeben.  Sie können die globale Einstellung dann überschreiben, indem Sie für einen oder mehrere einzelne Knoten unterschiedliche Einstellungen angeben. Beispiel:
++
+[listing]
+----
+ADMIN_NETWORK_MTU = 8192
+----
+* *CLIENT_NETWORK_CONFIG*: Die zum Abrufen von IP-Adressen verwendete Methode, entweder DEAKTIVIERT, STATISCH oder DHCP.  Die Standardeinstellung ist DEAKTIVIERT.  Wenn alle oder die meisten Knoten dieselbe Methode zum Abrufen von IP-Adressen verwenden, können Sie diese Methode hier angeben.  Sie können die globale Einstellung dann überschreiben, indem Sie für einen oder mehrere einzelne Knoten unterschiedliche Einstellungen angeben. Beispiel:
++
+[listing]
+----
+CLIENT_NETWORK_CONFIG = STATIC
+----
+* *CLIENT_NETWORK_TARGET*: Der Name eines vorhandenen VMware-Netzwerks, das für das Client-Netzwerk verwendet werden soll.  Diese Einstellung ist erforderlich, sofern das Client-Netzwerk nicht deaktiviert ist.  Wenn alle oder die meisten Knoten denselben Netzwerknamen verwenden, können Sie ihn hier angeben.  Anders als beim Grid-Netzwerk müssen nicht alle Knoten mit demselben Client-Netzwerk verbunden sein.  Sie können die globale Einstellung dann überschreiben, indem Sie für einen oder mehrere einzelne Knoten unterschiedliche Einstellungen angeben. Beispiel:
++
+[listing]
+----
+CLIENT_NETWORK_TARGET = SG Client Network
+----
+* *CLIENT_NETWORK_MASK*: Die Netzwerkmaske für das Client-Netzwerk.  Diese Einstellung ist erforderlich, wenn Sie eine statische IP-Adressierung verwenden.  Wenn alle oder die meisten Knoten dieselbe Netzwerkmaske verwenden, können Sie diese hier angeben.  Sie können die globale Einstellung dann überschreiben, indem Sie für einen oder mehrere einzelne Knoten unterschiedliche Einstellungen angeben. Beispiel:
++
+[listing]
+----
+CLIENT_NETWORK_MASK = 255.255.255.0
+----
+* *CLIENT_NETWORK_GATEWAY*: Das Netzwerk-Gateway für das Client-Netzwerk.  Diese Einstellung ist erforderlich, wenn Sie eine statische IP-Adressierung verwenden.  Wenn alle oder die meisten Knoten dasselbe Netzwerk-Gateway verwenden, können Sie es hier angeben.  Sie können die globale Einstellung dann überschreiben, indem Sie für einen oder mehrere einzelne Knoten unterschiedliche Einstellungen angeben. Beispiel:
++
+[listing]
+----
+CLIENT_NETWORK_GATEWAY = 10.4.0.1
+----
+* *CLIENT_NETWORK_MTU*: Optional.  Die maximale Übertragungseinheit (MTU) im Client-Netzwerk.  Nicht angeben, wenn CLIENT_NETWORK_CONFIG = DHCP.  Falls angegeben, muss der Wert zwischen 1280 und 9216 liegen.  Wenn es weggelassen wird, wird 1400 verwendet.  Wenn Sie Jumbo-Frames verwenden möchten, legen Sie die MTU auf einen für Jumbo-Frames geeigneten Wert fest, beispielsweise 9000.  Andernfalls behalten Sie den Standardwert bei.  Wenn alle oder die meisten Knoten dieselbe MTU für das Client-Netzwerk verwenden, können Sie sie hier angeben.  Sie können die globale Einstellung dann überschreiben, indem Sie für einen oder mehrere einzelne Knoten unterschiedliche Einstellungen angeben. Beispiel:
++
+[listing]
+----
+CLIENT_NETWORK_MTU = 8192
+----
+* *PORT_REMAP*: Ordnet jeden Port neu zu, der von einem Knoten für die interne oder externe Kommunikation des Grid-Knotens verwendet wird.  Eine Neuzuordnung der Ports ist erforderlich, wenn die Netzwerkrichtlinien des Unternehmens einen oder mehrere von StorageGRID verwendete Ports einschränken.  Eine Liste der von StorageGRID verwendeten Ports finden Sie unter „Interne Grid-Knotenkommunikation“ und „Externe Kommunikation“ inlink:../network/index.html["Netzwerkrichtlinien"] .
++
+
+NOTE: Ordnen Sie die Ports, die Sie zum Konfigurieren der Endpunkte des Lastenausgleichs verwenden möchten, nicht neu zu.
+
++
+
+NOTE: Wenn nur PORT_REMAP festgelegt ist, wird die von Ihnen angegebene Zuordnung sowohl für eingehende als auch für ausgehende Kommunikation verwendet.  Wenn auch PORT_REMAP_INBOUND angegeben ist, gilt PORT_REMAP nur für ausgehende Kommunikation.
+
++
+Das verwendete Format ist: `_network type/protocol/default port used by grid node/new port_` , wobei der Netzwerktyp Grid, Admin oder Client und das Protokoll TCP oder UDP ist.
+
++
+Beispiel:
+
++
+[listing]
+----
+PORT_REMAP = client/tcp/18082/443
+----
++
+Bei alleiniger Verwendung ordnet diese Beispieleinstellung sowohl eingehende als auch ausgehende Kommunikationen für den Grid-Knoten symmetrisch von Port 18082 auf Port 443 zu.  Bei Verwendung in Verbindung mit PORT_REMAP_INBOUND ordnet diese Beispieleinstellung ausgehende Kommunikationen von Port 18082 Port 443 zu.
+
++
+Sie können auch mehrere Ports mithilfe einer durch Kommas getrennten Liste neu zuordnen.
+
++
+Beispiel:
+
++
+[listing]
+----
+PORT_REMAP = client/tcp/18082/443, client/tcp/18083/80
+----
+* *PORT_REMAP_INBOUND*: Ordnet eingehende Kommunikationen für den angegebenen Port neu zu.  Wenn Sie PORT_REMAP_INBOUND angeben, aber keinen Wert für PORT_REMAP angeben, bleibt die ausgehende Kommunikation für den Port unverändert.
++
+
+NOTE: Ordnen Sie die Ports, die Sie zum Konfigurieren der Endpunkte des Lastenausgleichs verwenden möchten, nicht neu zu.
+
++
+Das verwendete Format ist: `_network type_/_protocol/_default port used by grid node_/_new port_` , wobei der Netzwerktyp Grid, Admin oder Client und das Protokoll TCP oder UDP ist.
+
++
+Beispiel:
+
++
+[listing]
+----
+PORT_REMAP_INBOUND = client/tcp/443/18082
+----
++
+In diesem Beispiel wird der an Port 443 gesendete Datenverkehr durch eine interne Firewall geleitet und an Port 18082 weitergeleitet, wo der Grid-Knoten auf S3-Anfragen wartet.
+
++
+Sie können auch mehrere eingehende Ports mithilfe einer durch Kommas getrennten Liste neu zuordnen.
+
++
+Beispiel:
+
++
+[listing]
+----
+PORT_REMAP_INBOUND = grid/tcp/3022/22, admin/tcp/3022/22
+----
+* *TEMPORARY_PASSWORD_TYPE*: Der Typ des temporären Installationskennworts, das beim Zugriff auf die VM-Konsole oder die StorageGRID -Installations-API oder bei Verwendung von SSH verwendet werden soll, bevor der Knoten dem Grid beitritt.
++
+
+TIP: Wenn alle oder die meisten Knoten denselben Typ eines temporären Installationskennworts verwenden, geben Sie den Typ im Abschnitt mit den globalen Parametern an.  Verwenden Sie dann optional eine andere Einstellung für einen einzelnen Knoten.  Wenn Sie beispielsweise global *Benutzerdefiniertes Kennwort verwenden* auswählen, können Sie *CUSTOM_TEMPORARY_PASSWORD=<Kennwort>* verwenden, um das Kennwort für jeden Knoten festzulegen.
+
++
+*TEMPORARY_PASSWORD_TYPE* kann einer der folgenden sein:
+
++
+** *Knotennamen verwenden*: Der Knotenname wird als temporäres Installationskennwort verwendet und bietet Zugriff auf die VM-Konsole, die StorageGRID -Installations-API und SSH.
+** *Passwort deaktivieren*: Es wird kein temporäres Installationspasswort verwendet.  Wenn Sie auf die VM zugreifen müssen, um Installationsprobleme zu beheben, lesen Sielink:troubleshooting-installation-issues.html["Beheben von Installationsproblemen"] .
+** *Benutzerdefiniertes Passwort verwenden*: Der mit *CUSTOM_TEMPORARY_PASSWORD=<Passwort>* angegebene Wert wird als temporäres Installationspasswort verwendet und bietet Zugriff auf die VM-Konsole, die StorageGRID -Installations-API und SSH.
++
+
+TIP: Optional können Sie den Parameter *TEMPORARY_PASSWORD_TYPE* weglassen und nur *CUSTOM_TEMPORARY_PASSWORD=<Passwort>* angeben.
+
+
+
+* *CUSTOM_TEMPORARY_PASSWORD=<Passwort>* Optional.  Das temporäre Kennwort, das während der Installation beim Zugriff auf die VM-Konsole, die StorageGRID -Installations-API und SSH verwendet werden soll.  Wird ignoriert, wenn *TEMPORARY_PASSWORD_TYPE* ​​auf *Knotennamen verwenden* oder *Passwort deaktivieren* gesetzt ist.
+
+
+
+
+==== Knotenspezifische Parameter
+
+Jeder Knoten befindet sich in seinem eigenen Abschnitt der Konfigurationsdatei.  Jeder Knoten erfordert die folgenden Einstellungen:
+
+* Der Abschnittskopf definiert den Knotennamen, der im Grid Manager angezeigt wird.  Sie können diesen Wert überschreiben, indem Sie den optionalen NODE_NAME-Parameter für den Knoten angeben.
+* *NODE_TYPE*: VM_Admin_Node, VM_Storage_Node oder VM_API_Gateway_Node
+* *STORAGE_TYPE*: kombiniert, Daten oder Metadaten.  Dieser optionale Parameter für Speicherknoten wird standardmäßig auf „Kombiniert (Daten und Metadaten)“ gesetzt, wenn er nicht angegeben wird. Weitere Informationen finden Sie unter link:../primer/what-storage-node-is.html#types-of-storage-nodes["Arten von Speicherknoten"] .
+* *GRID_NETWORK_IP*: Die IP-Adresse für den Knoten im Grid-Netzwerk.
+* *ADMIN_NETWORK_IP*: Die IP-Adresse für den Knoten im Admin-Netzwerk.  Nur erforderlich, wenn der Knoten an das Admin-Netzwerk angeschlossen ist und ADMIN_NETWORK_CONFIG auf STATIC gesetzt ist.
+* *CLIENT_NETWORK_IP*: Die IP-Adresse für den Knoten im Client-Netzwerk.  Nur erforderlich, wenn der Knoten an das Client-Netzwerk angeschlossen ist und CLIENT_NETWORK_CONFIG für diesen Knoten auf STATIC gesetzt ist.
+* *ADMIN_IP*: Die IP-Adresse für den primären Admin-Knoten im Grid-Netzwerk.  Verwenden Sie den Wert, den Sie als GRID_NETWORK_IP für den primären Admin-Knoten angeben.  Wenn Sie diesen Parameter weglassen, versucht der Knoten, die primäre Admin-Knoten-IP mithilfe von mDNS zu ermitteln. Weitere Informationen finden Sie unter link:how-grid-nodes-discover-primary-admin-node.html["So erkennen Grid-Knoten den primären Admin-Knoten"] .
++
+
+NOTE: Der ADMIN_IP-Parameter wird für den primären Admin-Knoten ignoriert.
+
+* Alle Parameter, die nicht global festgelegt wurden.  Wenn beispielsweise ein Knoten an das Admin-Netzwerk angeschlossen ist und Sie die ADMIN_NETWORK-Parameter nicht global angegeben haben, müssen Sie sie für den Knoten angeben.
+
+
+.Primärer Admin-Knoten
+Für den primären Admin-Knoten sind folgende zusätzliche Einstellungen erforderlich:
+
+* *KNOTENTYP*: VM_Admin_Knoten
+* *ADMIN_ROLE*: Primär
+
+
+Dieser Beispieleintrag gilt für einen primären Admin-Knoten, der sich in allen drei Netzwerken befindet:
+
+[listing]
+----
+[DC1-ADM1]
+  ADMIN_ROLE = Primary
+  NODE_TYPE = VM_Admin_Node
+  TEMPORARY_PASSWORD_TYPE = Use custom password
+  CUSTOM_TEMPORARY_PASSWORD = Passw0rd
+
+  GRID_NETWORK_IP = 10.1.0.2
+  ADMIN_NETWORK_IP = 10.3.0.2
+  CLIENT_NETWORK_IP = 10.4.0.2
+----
+Die folgende zusätzliche Einstellung ist für den primären Admin-Knoten optional:
+
+* *DISK*: Standardmäßig werden Admin-Knoten zwei zusätzliche 200-GB-Festplatten für die Prüfung und Datenbanknutzung zugewiesen.  Sie können diese Einstellungen mit dem DISK-Parameter erhöhen. Beispiel:
++
+[listing]
+----
+DISK = INSTANCES=2, CAPACITY=300
+----
+
+
+
+NOTE: Für Admin-Knoten muss INSTANCES immer gleich 2 sein.
+
+.Speicherknoten
+Für Storage Nodes ist folgende zusätzliche Einstellung erforderlich:
+
+* *KNOTENTYP*: VM_Speicherknoten
++
+Dieser Beispieleintrag gilt für einen Speicherknoten, der sich im Grid- und Admin-Netzwerk, aber nicht im Client-Netzwerk befindet.  Dieser Knoten verwendet die ADMIN_IP-Einstellung, um die IP-Adresse des primären Admin-Knotens im Grid-Netzwerk anzugeben.
+
++
+[listing]
+----
+[DC1-S1]
+  NODE_TYPE = VM_Storage_Node
+
+  GRID_NETWORK_IP = 10.1.0.3
+  ADMIN_NETWORK_IP = 10.3.0.3
+
+  ADMIN_IP = 10.1.0.2
+----
++
+Dieser zweite Beispieleintrag gilt für einen Speicherknoten in einem Clientnetzwerk, bei dem die Unternehmensnetzwerkrichtlinie des Kunden besagt, dass eine S3-Clientanwendung nur über Port 80 oder 443 auf den Speicherknoten zugreifen darf.  Die Beispielkonfigurationsdatei verwendet PORT_REMAP, um dem Speicherknoten das Senden und Empfangen von S3-Nachrichten über Port 443 zu ermöglichen.
+
++
+[listing]
+----
+[DC2-S1]
+  NODE_TYPE = VM_Storage_Node
+
+  GRID_NETWORK_IP = 10.1.1.3
+  CLIENT_NETWORK_IP = 10.4.1.3
+  PORT_REMAP = client/tcp/18082/443
+
+  ADMIN_IP = 10.1.0.2
+----
++
+Das letzte Beispiel erstellt eine symmetrische Neuzuordnung für SSH-Verkehr von Port 22 zu Port 3022, legt die Werte jedoch explizit für eingehenden und ausgehenden Verkehr fest.
+
++
+[listing]
+----
+[DC1-S3]
+  NODE_TYPE = VM_Storage_Node
+
+  GRID_NETWORK_IP = 10.1.1.3
+
+  PORT_REMAP = grid/tcp/22/3022
+  PORT_REMAP_INBOUND = grid/tcp/3022/22
+
+  ADMIN_IP = 10.1.0.2
+----
+
+
+Die folgenden zusätzlichen Einstellungen sind für Speicherknoten optional:
+
+* *DISK*: Standardmäßig werden Speicherknoten drei 4-TB-Festplatten für die RangeDB-Nutzung zugewiesen.  Sie können diese Einstellungen mit dem DISK-Parameter erhöhen. Beispiel:
++
+[listing]
+----
+DISK = INSTANCES=16, CAPACITY=4096
+----
+* *STORAGE_TYPE*: Standardmäßig sind alle neuen Speicherknoten so konfiguriert, dass sie sowohl Objektdaten als auch Metadaten speichern. Dies wird als _kombinierter_ Speicherknoten bezeichnet.  Sie können den Speicherknotentyp mit dem Parameter STORAGE_TYPE so ändern, dass nur Daten oder Metadaten gespeichert werden. Beispiel:
++
+[listing]
+----
+STORAGE_TYPE = data
+----
+
+
+.Gateway-Knoten
+Für Gateway-Knoten ist folgende zusätzliche Einstellung erforderlich:
+
+* *NODE_TYPE*: VM_API_Gateway
+
+
+Dieser Beispieleintrag gilt für einen Beispiel-Gateway-Knoten in allen drei Netzwerken.  In diesem Beispiel wurden im globalen Abschnitt der Konfigurationsdatei keine Client-Netzwerkparameter angegeben, daher müssen sie für den Knoten angegeben werden:
+
+[listing]
+----
+[DC1-G1]
+  NODE_TYPE = VM_API_Gateway
+
+  GRID_NETWORK_IP = 10.1.0.5
+  ADMIN_NETWORK_IP = 10.3.0.5
+
+  CLIENT_NETWORK_CONFIG = STATIC
+  CLIENT_NETWORK_TARGET = SG Client Network
+  CLIENT_NETWORK_MASK = 255.255.255.0
+  CLIENT_NETWORK_GATEWAY = 10.4.0.1
+  CLIENT_NETWORK_IP = 10.4.0.5
+
+  ADMIN_IP = 10.1.0.2
+----
+.Nicht-primärer Admin-Knoten
+Für nicht primäre Admin-Knoten sind die folgenden zusätzlichen Einstellungen erforderlich:
+
+* *KNOTENTYP*: VM_Admin_Knoten
+* *ADMIN_ROLE*: Nicht primär
+
+
+Dieser Beispieleintrag gilt für einen nicht primären Admin-Knoten, der sich nicht im Client-Netzwerk befindet:
+
+[listing]
+----
+[DC2-ADM1]
+  ADMIN_ROLE = Non-Primary
+  NODE_TYPE = VM_Admin_Node
+
+  GRID_NETWORK_TARGET = SG Grid Network
+  GRID_NETWORK_IP = 10.1.0.6
+  ADMIN_NETWORK_IP = 10.3.0.6
+
+  ADMIN_IP = 10.1.0.2
+----
+Die folgende zusätzliche Einstellung ist für nicht primäre Admin-Knoten optional:
+
+* *DISK*: Standardmäßig werden Admin-Knoten zwei zusätzliche 200-GB-Festplatten für die Prüfung und Datenbanknutzung zugewiesen.  Sie können diese Einstellungen mit dem DISK-Parameter erhöhen. Beispiel:
++
+[listing]
+----
+DISK = INSTANCES=2, CAPACITY=300
+----
+
+
+
+NOTE: Für Admin-Knoten muss INSTANCES immer gleich 2 sein.
+
+
+
+== Führen Sie das Bash-Skript aus
+
+Sie können die `deploy-vsphere-ovftool.sh` Bash-Skript und die von Ihnen geänderte Konfigurationsdatei deploy-vsphere-ovftool.ini, um die Bereitstellung von StorageGRID Knoten in VMware vSphere zu automatisieren.
+
+.Bevor Sie beginnen
+Sie haben eine deploy-vsphere-ovftool.ini-Konfigurationsdatei für Ihre Umgebung erstellt.
+
+Sie können die mit dem Bash-Skript verfügbare Hilfe verwenden, indem Sie die Hilfebefehle eingeben(`-h/--help` ). Beispiel:
+
+[listing]
+----
+./deploy-vsphere-ovftool.sh -h
+----
+oder
+
+[listing]
+----
+./deploy-vsphere-ovftool.sh --help
+----
+.Schritte
+. Melden Sie sich bei dem Linux-Computer an, den Sie zum Ausführen des Bash-Skripts verwenden.
+. Wechseln Sie in das Verzeichnis, in das Sie das Installationsarchiv extrahiert haben.
++
+Beispiel:
+
++
+[listing]
+----
+cd StorageGRID-Webscale-version/vsphere
+----
+. Um alle Grid-Knoten bereitzustellen, führen Sie das Bash-Skript mit den entsprechenden Optionen für Ihre Umgebung aus.
++
+Beispiel:
+
++
+[listing]
+----
+./deploy-vsphere-ovftool.sh --username=user --password=pwd ./deploy-vsphere-ovftool.ini
+----
+. Wenn die Bereitstellung eines Grid-Knotens aufgrund eines Fehlers fehlgeschlagen ist, beheben Sie den Fehler und führen Sie das Bash-Skript nur für diesen Knoten erneut aus.
++
+Beispiel:
+
++
+[listing]
+----
+./deploy-vsphere-ovftool.sh --username=user --password=pwd --single-node="DC1-S3" ./deploy-vsphere-ovftool.ini
+----
+
+
+Die Bereitstellung ist abgeschlossen, wenn der Status für jeden Knoten „Bestanden“ lautet.
+
+[listing]
+----
+Deployment Summary
++-----------------------------+----------+----------------------+
+| node                        | attempts | status               |
++-----------------------------+----------+----------------------+
+| DC1-ADM1                    |        1 | Passed               |
+| DC1-G1                      |        1 | Passed               |
+| DC1-S1                      |        1 | Passed               |
+| DC1-S2                      |        1 | Passed               |
+| DC1-S3                      |        1 | Passed               |
++-----------------------------+----------+----------------------+
+----
+
+
+== Automatisieren Sie die Konfiguration von StorageGRID
+
+Nach der Bereitstellung der Grid-Knoten können Sie die Konfiguration des StorageGRID Systems automatisieren.
+
+.Bevor Sie beginnen
+* Den Speicherort der folgenden Dateien kennen Sie aus dem Installationsarchiv.
++
+[cols="1a,1a"]
+|===
+| Dateiname | Beschreibung 
+
+
+| configure-storagegrid.py  a| 
+Python-Skript zur Automatisierung der Konfiguration
+
+
+
+| configure-storagegrid.sample.json  a| 
+Beispielkonfigurationsdatei zur Verwendung mit dem Skript
+
+
+
+| configure-storagegrid.blank.json  a| 
+Leere Konfigurationsdatei zur Verwendung mit dem Skript
+
+|===
+* Sie haben eine `configure-storagegrid.json` Konfigurationsdatei.  Um diese Datei zu erstellen, können Sie die Beispielkonfigurationsdatei ändern(`configure-storagegrid.sample.json` ) oder die leere Konfigurationsdatei(`configure-storagegrid.blank.json` ).
++
+Sie können die `configure-storagegrid.py` Python-Skript und das `configure-storagegrid.json` Grid-Konfigurationsdatei zur Automatisierung der Konfiguration Ihres StorageGRID -Systems.
+
++
+
+NOTE: Sie können das System auch mit dem Grid Manager oder der Installations-API konfigurieren.
+
+
+
+.Schritte
+. Melden Sie sich bei dem Linux-Computer an, den Sie zum Ausführen des Python-Skripts verwenden.
+. Wechseln Sie in das Verzeichnis, in das Sie das Installationsarchiv extrahiert haben.
++
+Beispiel:
+
++
+[listing]
+----
+cd StorageGRID-Webscale-version/platform
+----
++
+Wo `platform` ist debs, rpms oder vsphere.
+
+. Führen Sie das Python-Skript aus und verwenden Sie die von Ihnen erstellte Konfigurationsdatei.
++
+Beispiel:
+
++
+[listing]
+----
+./configure-storagegrid.py ./configure-storagegrid.json --start-install
+----
+
+
+.Ergebnis
+Ein Wiederherstellungspaket `.zip` Die Datei wird während des Konfigurationsprozesses generiert und in das Verzeichnis heruntergeladen, in dem Sie den Installations- und Konfigurationsprozess ausführen.  Sie müssen die Wiederherstellungspaketdatei sichern, damit Sie das StorageGRID -System wiederherstellen können, wenn ein oder mehrere Grid-Knoten ausfallen.  Kopieren Sie es beispielsweise an einen sicheren, gesicherten Netzwerkspeicherort und an einen sicheren Cloud-Speicherort.
+
+
+CAUTION: Die Datei des Wiederherstellungspakets muss gesichert werden, da sie Verschlüsselungsschlüssel und Passwörter enthält, mit denen Daten aus dem StorageGRID -System abgerufen werden können.
+
+Wenn Sie angegeben haben, dass zufällige Passwörter generiert werden sollen, öffnen Sie das `Passwords.txt` und suchen Sie nach den Passwörtern, die für den Zugriff auf Ihr StorageGRID -System erforderlich sind.
+
+[listing]
+----
+######################################################################
+##### The StorageGRID "Recovery Package" has been downloaded as: #####
+#####           ./sgws-recovery-package-994078-rev1.zip          #####
+#####   Safeguard this file as it will be needed in case of a    #####
+#####                 StorageGRID node recovery.                 #####
+######################################################################
+----
+Ihr StorageGRID -System ist installiert und konfiguriert, wenn eine Bestätigungsmeldung angezeigt wird.
+
+[listing]
+----
+StorageGRID has been configured and installed.
+----
+.Ähnliche Informationen
+* link:navigating-to-grid-manager.html["Navigieren Sie zum Grid Manager"]
+* link:overview-of-installation-rest-api.html["Installation der REST-API"]
+

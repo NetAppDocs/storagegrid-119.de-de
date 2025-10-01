@@ -1,0 +1,395 @@
+---
+permalink: admin/configuring-administrator-client-certificates.html 
+sidebar: sidebar 
+keywords: client certificates, prometheus 
+summary: Client-Zertifikate ermöglichen autorisierten externen Clients den Zugriff auf die StorageGRID Prometheus-Datenbank und bieten externen Tools eine sichere Möglichkeit, StorageGRID zu überwachen. 
+---
+= Konfigurieren von Clientzertifikaten
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Client-Zertifikate ermöglichen autorisierten externen Clients den Zugriff auf die StorageGRID Prometheus-Datenbank und bieten externen Tools eine sichere Möglichkeit, StorageGRID zu überwachen.
+
+Wenn Sie über ein externes Überwachungstool auf StorageGRID zugreifen müssen, müssen Sie mithilfe des Grid Managers ein Client-Zertifikat hochladen oder generieren und die Zertifikatsinformationen in das externe Tool kopieren.
+
+Sehenlink:using-storagegrid-security-certificates.html["Sicherheitszertifikate verwalten"] Undlink:configuring-custom-server-certificate-for-grid-manager-tenant-manager.html["Konfigurieren benutzerdefinierter Serverzertifikate"] .
+
+
+NOTE: Um sicherzustellen, dass der Betrieb nicht durch ein fehlerhaftes Serverzertifikat unterbrochen wird, wird die Warnung *Ablauf der auf der Seite „Zertifikate“ konfigurierten Clientzertifikate* ausgelöst, wenn dieses Serverzertifikat bald abläuft. Bei Bedarf können Sie das Ablaufdatum des aktuellen Zertifikats anzeigen, indem Sie *KONFIGURATION* > *Sicherheit* > *Zertifikate* auswählen und auf der Registerkarte „Client“ das Ablaufdatum für das Client-Zertifikat anzeigen.
+
+
+NOTE: Wenn Sie einen Schlüsselverwaltungsserver (KMS) zum Schutz der Daten auf speziell konfigurierten Appliance-Knoten verwenden, lesen Sie die spezifischen Informationen zulink:kms-adding.html["Hochladen eines KMS-Client-Zertifikats"] .
+
+.Bevor Sie beginnen
+* Sie verfügen über Root-Zugriffsberechtigung.
+* Sie sind beim Grid Manager angemeldet mit einemlink:../admin/web-browser-requirements.html["unterstützter Webbrowser"] .
+* So konfigurieren Sie ein Client-Zertifikat:
++
+** Sie haben die IP-Adresse oder den Domänennamen des Admin-Knotens.
+** Wenn Sie das Zertifikat der StorageGRID -Verwaltungsschnittstelle konfiguriert haben, verfügen Sie über die Zertifizierungsstelle, das Client-Zertifikat und den privaten Schlüssel, die zum Konfigurieren des Zertifikats der Verwaltungsschnittstelle verwendet werden.
+** Um Ihr eigenes Zertifikat hochzuladen, steht Ihnen der private Schlüssel für das Zertifikat auf Ihrem lokalen Computer zur Verfügung.
+** Der private Schlüssel muss zum Zeitpunkt seiner Erstellung gespeichert oder aufgezeichnet worden sein.  Wenn Sie nicht über den ursprünglichen privaten Schlüssel verfügen, müssen Sie einen neuen erstellen.
+
+
+* So bearbeiten Sie ein Client-Zertifikat:
++
+** Sie haben die IP-Adresse oder den Domänennamen des Admin-Knotens.
+** Um Ihr eigenes Zertifikat oder ein neues Zertifikat hochzuladen, stehen Ihnen der private Schlüssel, das Client-Zertifikat und die CA (sofern verwendet) auf Ihrem lokalen Computer zur Verfügung.
+
+
+
+
+
+
+== Client-Zertifikate hinzufügen
+
+Um das Client-Zertifikat hinzuzufügen, verwenden Sie eines der folgenden Verfahren:
+
+* <<Management-Schnittstellenzertifikat bereits konfiguriert>>
+* <<Von der Zertifizierungsstelle ausgestelltes Client-Zertifikat>>
+* <<Generiertes Zertifikat vom Grid Manager>>
+
+
+
+
+=== Management-Schnittstellenzertifikat bereits konfiguriert
+
+Verwenden Sie dieses Verfahren, um ein Client-Zertifikat hinzuzufügen, wenn bereits ein Management-Schnittstellenzertifikat mit einer vom Kunden bereitgestellten Zertifizierungsstelle, einem Client-Zertifikat und einem privaten Schlüssel konfiguriert ist.
+
+.Schritte
+. Wählen Sie im Grid Manager *KONFIGURATION* > *Sicherheit* > *Zertifikate* und dann die Registerkarte *Client*.
+. Wählen Sie *Hinzufügen*.
+. Geben Sie einen Zertifikatsnamen ein.
+. Um mit Ihrem externen Überwachungstool auf Prometheus-Metriken zuzugreifen, wählen Sie *Prometheus zulassen*.
+. Wählen Sie *Weiter*.
+. Laden Sie für den Schritt *Zertifikate anhängen* das Verwaltungsschnittstellenzertifikat hoch.
++
+.. Wählen Sie *Zertifikat hochladen*.
+.. Wählen Sie *Durchsuchen* und wählen Sie die Zertifikatsdatei der Verwaltungsschnittstelle aus(`.pem` ).
++
+*** Wählen Sie *Client-Zertifikatdetails* aus, um die Zertifikatmetadaten und das Zertifikat-PEM anzuzeigen.
+*** Wählen Sie *Zertifikat PEM kopieren*, um den Zertifikatsinhalt zum Einfügen an anderer Stelle zu kopieren.
+
+
+.. Wählen Sie *Erstellen*, um das Zertifikat im Grid Manager zu speichern.
++
+Das neue Zertifikat wird auf der Registerkarte „Client“ angezeigt.
+
+
+
+. <<configure-external-monitoring-tool,Konfigurieren eines externen Überwachungstools>>, wie Grafana.
+
+
+
+
+=== Von der Zertifizierungsstelle ausgestelltes Client-Zertifikat
+
+Verwenden Sie dieses Verfahren, um ein Administrator-Client-Zertifikat hinzuzufügen, wenn kein Management-Schnittstellenzertifikat konfiguriert wurde und Sie ein Client-Zertifikat für Prometheus hinzufügen möchten, das ein von einer Zertifizierungsstelle ausgestelltes Client-Zertifikat und einen privaten Schlüssel verwendet.
+
+.Schritte
+. Führen Sie die Schritte aus, umlink:configuring-custom-server-certificate-for-grid-manager-tenant-manager.html["Konfigurieren eines Management-Schnittstellenzertifikats"] .
+. Wählen Sie im Grid Manager *KONFIGURATION* > *Sicherheit* > *Zertifikate* und dann die Registerkarte *Client*.
+. Wählen Sie *Hinzufügen*.
+. Geben Sie einen Zertifikatsnamen ein.
+. Um mit Ihrem externen Überwachungstool auf Prometheus-Metriken zuzugreifen, wählen Sie *Prometheus zulassen*.
+. Wählen Sie *Weiter*.
+. Laden Sie für den Schritt *Zertifikate anhängen* das Client-Zertifikat, den privaten Schlüssel und die CA-Bundle-Dateien hoch:
++
+.. Wählen Sie *Zertifikat hochladen*.
+.. Wählen Sie *Durchsuchen* und wählen Sie das Client-Zertifikat, den privaten Schlüssel und die CA-Bundle-Dateien aus(`.pem` ).
++
+*** Wählen Sie *Client-Zertifikatdetails* aus, um die Zertifikatmetadaten und das Zertifikat-PEM anzuzeigen.
+*** Wählen Sie *Zertifikat PEM kopieren*, um den Zertifikatsinhalt zum Einfügen an anderer Stelle zu kopieren.
+
+
+.. Wählen Sie *Erstellen*, um das Zertifikat im Grid Manager zu speichern.
++
+Die neuen Zertifikate werden auf der Registerkarte „Client“ angezeigt.
+
+
+
+. <<configure-external-monitoring-tool,Konfigurieren eines externen Überwachungstools>>, wie Grafana.
+
+
+
+
+=== Generiertes Zertifikat vom Grid Manager
+
+Verwenden Sie dieses Verfahren, um ein Administrator-Client-Zertifikat hinzuzufügen, wenn kein Management-Schnittstellenzertifikat konfiguriert wurde und Sie ein Client-Zertifikat für Prometheus hinzufügen möchten, das die Funktion zum Generieren von Zertifikaten in Grid Manager verwendet.
+
+.Schritte
+. Wählen Sie im Grid Manager *KONFIGURATION* > *Sicherheit* > *Zertifikate* und dann die Registerkarte *Client*.
+. Wählen Sie *Hinzufügen*.
+. Geben Sie einen Zertifikatsnamen ein.
+. Um mit Ihrem externen Überwachungstool auf Prometheus-Metriken zuzugreifen, wählen Sie *Prometheus zulassen*.
+. Wählen Sie *Weiter*.
+. Wählen Sie für den Schritt *Zertifikate anhängen* die Option *Zertifikat generieren* aus.
+. Geben Sie die Zertifikatsinformationen an:
++
+** *Betreff* (optional): X.509-Betreff oder Distinguished Name (DN) des Zertifikatsinhabers.
+** *Gültigkeitstage*: Die Anzahl der Tage, die das generierte Zertifikat gültig ist, beginnend mit dem Zeitpunkt der Generierung.
+** *Schlüsselverwendungserweiterungen hinzufügen*: Wenn ausgewählt (Standard und empfohlen), werden dem generierten Zertifikat Schlüsselverwendungs- und erweiterte Schlüsselverwendungserweiterungen hinzugefügt.
++
+Diese Erweiterungen definieren den Zweck des im Zertifikat enthaltenen Schlüssels.
+
++
+
+NOTE: Lassen Sie dieses Kontrollkästchen aktiviert, es sei denn, Sie haben Verbindungsprobleme mit älteren Clients, wenn die Zertifikate diese Erweiterungen enthalten.
+
+
+
+. Wählen Sie *Generieren*.
+. [[client_cert_details]] Wählen Sie *Client-Zertifikatdetails*, um die Zertifikatmetadaten und das Zertifikat-PEM anzuzeigen.
++
+
+TIP: Nachdem Sie das Dialogfeld geschlossen haben, können Sie den privaten Schlüssel des Zertifikats nicht mehr anzeigen.  Kopieren oder laden Sie den Schlüssel an einen sicheren Ort herunter.
+
++
+** Wählen Sie *Zertifikat PEM kopieren*, um den Zertifikatsinhalt zum Einfügen an anderer Stelle zu kopieren.
+** Wählen Sie *Zertifikat herunterladen*, um die Zertifikatsdatei zu speichern.
++
+Geben Sie den Namen der Zertifikatsdatei und den Download-Speicherort an.  Speichern Sie die Datei mit der Erweiterung `.pem` .
+
++
+Beispiel:  `storagegrid_certificate.pem`
+
+** Wählen Sie *Privaten Schlüssel kopieren*, um den privaten Schlüssel des Zertifikats zum Einfügen an anderer Stelle zu kopieren.
+** Wählen Sie *Privaten Schlüssel herunterladen*, um den privaten Schlüssel als Datei zu speichern.
++
+Geben Sie den Dateinamen des privaten Schlüssels und den Download-Speicherort an.
+
+
+
+. Wählen Sie *Erstellen*, um das Zertifikat im Grid Manager zu speichern.
++
+Das neue Zertifikat wird auf der Registerkarte „Client“ angezeigt.
+
+. Wählen Sie im Grid Manager *KONFIGURATION* > *Sicherheit* > *Zertifikate* und dann die Registerkarte *Global*.
+. Wählen Sie *Management Interface-Zertifikat*.
+. Wählen Sie *Benutzerdefiniertes Zertifikat verwenden*.
+. Laden Sie die Dateien certificate.pem und private_key.pem von der<<client_cert_details,Client-Zertifikatdetails>> Schritt.  Es ist nicht erforderlich, ein CA-Paket hochzuladen.
++
+.. Wählen Sie *Zertifikat hochladen* und dann *Weiter*.
+.. Laden Sie jede Zertifikatsdatei hoch(`.pem` ).
+.. Wählen Sie *Speichern*, um das Zertifikat im Grid Manager zu speichern.
++
+Das neue Zertifikat wird auf der Zertifikatsseite der Verwaltungsschnittstelle angezeigt.
+
+
+
+. <<configure-external-monitoring-tool,Konfigurieren eines externen Überwachungstools>>, wie Grafana.
+
+
+
+
+=== [[configure-external-monitoring-tool]]Konfigurieren Sie ein externes Überwachungstool
+
+.Schritte
+. Konfigurieren Sie die folgenden Einstellungen in Ihrem externen Überwachungstool, z. B. Grafana.
++
+.. *Name*: Geben Sie einen Namen für die Verbindung ein.
++
+StorageGRID benötigt diese Informationen nicht, Sie müssen jedoch einen Namen angeben, um die Verbindung zu testen.
+
+.. *URL*: Geben Sie den Domänennamen oder die IP-Adresse für den Admin-Knoten ein.  Geben Sie HTTPS und Port 9091 an.
++
+Beispiel:  `+https://admin-node.example.com:9091+`
+
+.. Aktivieren Sie *TLS-Client-Authentifizierung* und *Mit CA-Zertifikat*.
+.. Kopieren und fügen Sie unter TLS/SSL-Authentifizierungsdetails Folgendes ein: +
++
+*** Das CA-Zertifikat der Verwaltungsschnittstelle an **CA Cert**
+*** Das Client-Zertifikat an **Client Cert**
+*** Der private Schlüssel zum **Client-Schlüssel**
+
+
+.. *Servername*: Geben Sie den Domänennamen des Admin-Knotens ein.
++
+Der Servername muss mit dem Domänennamen übereinstimmen, der im Zertifikat der Verwaltungsschnittstelle angezeigt wird.
+
+
+
+. Speichern und testen Sie das Zertifikat und den privaten Schlüssel, die Sie aus StorageGRID oder einer lokalen Datei kopiert haben.
++
+Sie können jetzt mit Ihrem externen Überwachungstool auf die Prometheus-Metriken von StorageGRID zugreifen.
+
++
+Informationen zu den Metriken finden Sie imlink:../monitor/index.html["Anleitung zur Überwachung von StorageGRID"] .
+
+
+
+
+
+== Client-Zertifikate bearbeiten
+
+Sie können ein Administrator-Client-Zertifikat bearbeiten, um seinen Namen zu ändern, den Prometheus-Zugriff zu aktivieren oder zu deaktivieren oder ein neues Zertifikat hochzuladen, wenn das aktuelle abgelaufen ist.
+
+.Schritte
+. Wählen Sie *KONFIGURATION* > *Sicherheit* > *Zertifikate* und dann die Registerkarte *Client*.
++
+Ablaufdaten der Zertifikate und Zugriffsberechtigungen für Prometheus sind in der Tabelle aufgeführt.  Läuft ein Zertifikat bald ab oder ist es bereits abgelaufen, erscheint in der Tabelle eine Meldung und es wird ein Alarm ausgelöst.
+
+. Wählen Sie das Zertifikat aus, das Sie bearbeiten möchten.
+. Wählen Sie *Bearbeiten* und dann *Name und Berechtigung bearbeiten*
+. Geben Sie einen Zertifikatsnamen ein.
+. Um mit Ihrem externen Überwachungstool auf Prometheus-Metriken zuzugreifen, wählen Sie *Prometheus zulassen*.
+. Wählen Sie *Weiter*, um das Zertifikat im Grid Manager zu speichern.
++
+Das aktualisierte Zertifikat wird auf der Registerkarte „Client“ angezeigt.
+
+
+
+
+
+== Neues Client-Zertifikat anhängen
+
+Sie können ein neues Zertifikat hochladen, wenn das aktuelle abgelaufen ist.
+
+.Schritte
+. Wählen Sie *KONFIGURATION* > *Sicherheit* > *Zertifikate* und dann die Registerkarte *Client*.
++
+Ablaufdaten der Zertifikate und Zugriffsberechtigungen für Prometheus sind in der Tabelle aufgeführt.  Läuft ein Zertifikat bald ab oder ist es bereits abgelaufen, erscheint in der Tabelle eine Meldung und es wird ein Alarm ausgelöst.
+
+. Wählen Sie das Zertifikat aus, das Sie bearbeiten möchten.
+. Wählen Sie *Bearbeiten* und dann eine Bearbeitungsoption.
++
+[role="tabbed-block"]
+====
+.Zertifikat hochladen
+--
+Kopieren Sie den Zertifikatstext, um ihn an anderer Stelle einzufügen.
+
+.. Wählen Sie *Zertifikat hochladen* und dann *Weiter*.
+.. Laden Sie den Namen des Client-Zertifikats hoch(`.pem` ).
++
+Wählen Sie *Client-Zertifikatdetails* aus, um die Zertifikatmetadaten und das Zertifikat-PEM anzuzeigen.
+
++
+*** Wählen Sie *Zertifikat herunterladen*, um die Zertifikatsdatei zu speichern.
++
+Geben Sie den Namen der Zertifikatsdatei und den Download-Speicherort an.  Speichern Sie die Datei mit der Erweiterung `.pem` .
+
++
+Beispiel:  `storagegrid_certificate.pem`
+
+*** Wählen Sie *Zertifikat PEM kopieren*, um den Zertifikatsinhalt zum Einfügen an anderer Stelle zu kopieren.
+
+
+.. Wählen Sie *Erstellen*, um das Zertifikat im Grid Manager zu speichern.
++
+Das aktualisierte Zertifikat wird auf der Registerkarte „Client“ angezeigt.
+
+
+
+--
+.Zertifikat generieren
+--
+Generieren Sie den Zertifikatstext, um ihn an anderer Stelle einzufügen.
+
+.. Wählen Sie *Zertifikat generieren*.
+.. Geben Sie die Zertifikatsinformationen an:
++
+*** *Betreff* (optional): X.509-Betreff oder Distinguished Name (DN) des Zertifikatsinhabers.
+*** *Gültigkeitstage*: Die Anzahl der Tage, die das generierte Zertifikat gültig ist, beginnend mit dem Zeitpunkt der Generierung.
+*** *Schlüsselverwendungserweiterungen hinzufügen*: Wenn ausgewählt (Standard und empfohlen), werden dem generierten Zertifikat Schlüsselverwendungs- und erweiterte Schlüsselverwendungserweiterungen hinzugefügt.
++
+Diese Erweiterungen definieren den Zweck des im Zertifikat enthaltenen Schlüssels.
+
++
+
+NOTE: Lassen Sie dieses Kontrollkästchen aktiviert, es sei denn, Sie haben Verbindungsprobleme mit älteren Clients, wenn die Zertifikate diese Erweiterungen enthalten.
+
+
+
+.. Wählen Sie *Generieren*.
+.. Wählen Sie *Client-Zertifikatdetails* aus, um die Zertifikatmetadaten und das Zertifikat-PEM anzuzeigen.
++
+
+TIP: Nachdem Sie das Dialogfeld geschlossen haben, können Sie den privaten Schlüssel des Zertifikats nicht mehr anzeigen.  Kopieren oder laden Sie den Schlüssel an einen sicheren Ort herunter.
+
++
+*** Wählen Sie *Zertifikat PEM kopieren*, um den Zertifikatsinhalt zum Einfügen an anderer Stelle zu kopieren.
+*** Wählen Sie *Zertifikat herunterladen*, um die Zertifikatsdatei zu speichern.
++
+Geben Sie den Namen der Zertifikatsdatei und den Download-Speicherort an.  Speichern Sie die Datei mit der Erweiterung `.pem` .
+
++
+Beispiel:  `storagegrid_certificate.pem`
+
+*** Wählen Sie *Privaten Schlüssel kopieren*, um den privaten Schlüssel des Zertifikats zum Einfügen an anderer Stelle zu kopieren.
+*** Wählen Sie *Privaten Schlüssel herunterladen*, um den privaten Schlüssel als Datei zu speichern.
++
+Geben Sie den Dateinamen des privaten Schlüssels und den Download-Speicherort an.
+
+
+
+.. Wählen Sie *Erstellen*, um das Zertifikat im Grid Manager zu speichern.
++
+Das neue Zertifikat wird auf der Registerkarte „Client“ angezeigt.
+
+
+
+--
+====
+
+
+
+
+== Herunterladen oder Kopieren von Client-Zertifikaten
+
+Sie können ein Client-Zertifikat zur Verwendung an anderer Stelle herunterladen oder kopieren.
+
+.Schritte
+. Wählen Sie *KONFIGURATION* > *Sicherheit* > *Zertifikate* und dann die Registerkarte *Client*.
+. Wählen Sie das Zertifikat aus, das Sie kopieren oder herunterladen möchten.
+. Laden Sie das Zertifikat herunter oder kopieren Sie es.
++
+[role="tabbed-block"]
+====
+.Zertifikatsdatei herunterladen
+--
+Laden Sie das Zertifikat herunter `.pem` Datei.
+
+.. Wählen Sie *Zertifikat herunterladen*.
+.. Geben Sie den Namen der Zertifikatsdatei und den Download-Speicherort an.  Speichern Sie die Datei mit der Erweiterung `.pem` .
++
+Beispiel:  `storagegrid_certificate.pem`
+
+
+
+--
+.Zertifikat kopieren
+--
+Kopieren Sie den Zertifikatstext, um ihn an anderer Stelle einzufügen.
+
+.. Wählen Sie *Zertifikat PEM kopieren*.
+.. Fügen Sie das kopierte Zertifikat in einen Texteditor ein.
+.. Speichern Sie die Textdatei mit der Erweiterung `.pem` .
++
+Beispiel:  `storagegrid_certificate.pem`
+
+
+
+--
+====
+
+
+
+
+== Client-Zertifikate entfernen
+
+Wenn Sie ein Administrator-Client-Zertifikat nicht mehr benötigen, können Sie es entfernen.
+
+.Schritte
+. Wählen Sie *KONFIGURATION* > *Sicherheit* > *Zertifikate* und dann die Registerkarte *Client*.
+. Wählen Sie das Zertifikat aus, das Sie entfernen möchten.
+. Wählen Sie *Löschen* und bestätigen Sie anschließend.
+
+
+
+NOTE: Um bis zu 10 Zertifikate zu entfernen, wählen Sie jedes zu entfernende Zertifikat auf der Registerkarte „Client“ aus und wählen Sie dann *Aktionen* > *Löschen*.
+
+Nachdem ein Zertifikat entfernt wurde, müssen Clients, die das Zertifikat verwendet haben, ein neues Client-Zertifikat angeben, um auf die StorageGRID Prometheus-Datenbank zugreifen zu können.

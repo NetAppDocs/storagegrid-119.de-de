@@ -1,0 +1,49 @@
+---
+permalink: monitor/disabling-alert-rules.html 
+sidebar: sidebar 
+keywords: how to disable alert rules, how to remove a custom alert rule 
+summary: Sie können den aktivierten/deaktivierten Status für eine Standard- oder benutzerdefinierte Warnregel ändern. 
+---
+= Warnregeln deaktivieren
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Sie können den aktivierten/deaktivierten Status für eine Standard- oder benutzerdefinierte Warnregel ändern.
+
+.Bevor Sie beginnen
+* Sie sind beim Grid Manager angemeldet mit einemlink:../admin/web-browser-requirements.html["unterstützter Webbrowser"] .
+* Sie haben dielink:../admin/admin-group-permissions.html["Verwalten von Warnungen oder Root-Zugriffsberechtigungen"] .
+
+
+.Informationen zu diesem Vorgang
+Wenn eine Warnregel deaktiviert ist, werden ihre Ausdrücke nicht ausgewertet und es werden keine Warnmeldungen ausgelöst.
+
+
+CAUTION: Im Allgemeinen wird das Deaktivieren einer Standardwarnregel nicht empfohlen.  Wenn eine Warnregel deaktiviert ist, erkennen Sie ein zugrunde liegendes Problem möglicherweise erst, wenn es die Ausführung eines kritischen Vorgangs verhindert.
+
+.Schritte
+. Wählen Sie *WARNUNGEN* > *Regeln*.
++
+Die Seite „Warnregeln“ wird angezeigt.
+
+. Wählen Sie das Optionsfeld für die Warnregel aus, die Sie deaktivieren oder aktivieren möchten.
+. Wählen Sie *Regel bearbeiten*.
++
+Das Dialogfeld „Regel bearbeiten“ wird angezeigt.
+
+. Aktivieren oder deaktivieren Sie das Kontrollkästchen *Aktiviert*, um festzustellen, ob diese Warnregel derzeit aktiviert ist.
++
+Wenn eine Warnregel deaktiviert ist, werden ihre Ausdrücke nicht ausgewertet und es werden keine Warnmeldungen ausgelöst.
+
++
+
+NOTE: Wenn Sie die Warnregel für eine aktuelle Warnmeldung deaktivieren, müssen Sie einige Minuten warten, bis die Warnmeldung nicht mehr als aktive Warnmeldung angezeigt wird.
+
+. Wählen Sie *Speichern*.
++
+*Deaktiviert* wird in der Spalte *Status* angezeigt.
+
+

@@ -1,0 +1,87 @@
+---
+permalink: tenant/configuring-cross-origin-resource-sharing-cors.html 
+sidebar: sidebar 
+keywords: how to configure cross-origin resource sharing, cors 
+summary: 'Sie können Cross-Origin Resource Sharing (CORS) für einen S3-Bucket konfigurieren, wenn dieser Bucket und die darin enthaltenen Objekte für Webanwendungen in anderen Domänen zugänglich sein sollen.' 
+---
+= Konfigurieren Sie Cross-Origin Resource Sharing (CORS)
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Sie können Cross-Origin Resource Sharing (CORS) für einen S3-Bucket konfigurieren, wenn dieser Bucket und die darin enthaltenen Objekte für Webanwendungen in anderen Domänen zugänglich sein sollen.
+
+.Bevor Sie beginnen
+* Sie sind beim Tenant Manager angemeldet mit einemlink:../admin/web-browser-requirements.html["unterstützter Webbrowser"] .
+* Für GET CORS-Konfigurationsanfragen gehören Sie zu einer Benutzergruppe, die über dielink:tenant-management-permissions.html["Berechtigung „Alle Buckets verwalten“ oder „Alle Buckets anzeigen“"] . Diese Berechtigungen überschreiben die Berechtigungseinstellungen in Gruppen- oder Bucket-Richtlinien.
+* Für PUT CORS-Konfigurationsanfragen gehören Sie zu einer Benutzergruppe, die über dielink:tenant-management-permissions.html["Berechtigung „Alle Buckets verwalten“"] .  Diese Berechtigung überschreibt die Berechtigungseinstellungen in Gruppen- oder Bucket-Richtlinien.
+* Derlink:tenant-management-permissions.html["Root-Zugriffsberechtigung"] bietet Zugriff auf alle CORS-Konfigurationsanforderungen.
+
+
+.Informationen zu diesem Vorgang
+Cross-Origin Resource Sharing (CORS) ist ein Sicherheitsmechanismus, der es Client-Webanwendungen in einer Domäne ermöglicht, auf Ressourcen in einer anderen Domäne zuzugreifen.  Angenommen, Sie verwenden einen S3-Bucket namens `Images` zum Speichern von Grafiken.  Durch die Konfiguration von CORS für die `Images` Bucket, können Sie die Anzeige der Bilder in diesem Bucket auf der Website zulassen `+http://www.example.com+` .
+
+
+
+== CORS für einen Bucket aktivieren
+
+.Schritte
+. Verwenden Sie einen Texteditor, um das erforderliche XML zu erstellen.  Dieses Beispiel zeigt das XML, das zum Aktivieren von CORS für einen S3-Bucket verwendet wird.  Speziell:
++
+** Ermöglicht jeder Domäne, GET-Anfragen an den Bucket zu senden
+** Erlaubt nur die `+http://www.example.com+` Domäne zum Senden von GET-, POST- und DELETE-Anfragen
+** Alle Anforderungsheader sind zulässig
++
+[listing]
+----
+<CORSConfiguration
+    xmlns="http://s3.amazonaws.com/doc/2020-10-22/">
+    <CORSRule>
+        <AllowedOrigin>*</AllowedOrigin>
+        <AllowedMethod>GET</AllowedMethod>
+        <AllowedHeader>*</AllowedHeader>
+    </CORSRule>
+    <CORSRule>
+        <AllowedOrigin>http://www.example.com</AllowedOrigin>
+        <AllowedMethod>GET</AllowedMethod>
+        <AllowedMethod>POST</AllowedMethod>
+        <AllowedMethod>DELETE</AllowedMethod>
+        <AllowedHeader>*</AllowedHeader>
+    </CORSRule>
+</CORSConfiguration>
+----
++
+Weitere Informationen zur CORS-Konfigurations-XML finden Sie unter http://docs.aws.amazon.com/AmazonS3/latest/dev/Welcome.html["Amazon Web Services (AWS)-Dokumentation: Amazon Simple Storage Service-Benutzerhandbuch"^] .
+
+
+
+. Wählen Sie im Dashboard *Buckets anzeigen* oder wählen Sie *STORAGE (S3)* > *Buckets*.
+. Wählen Sie den Bucket-Namen aus der Tabelle aus.
++
+Die Bucket-Detailseite wird angezeigt.
+
+. Wählen Sie auf der Registerkarte *Bucket-Zugriff* das Akkordeon *Cross-Origin Resource Sharing (CORS)* aus.
+. Aktivieren Sie das Kontrollkästchen *CORS aktivieren*.
+. Fügen Sie die CORS-Konfigurations-XML in das Textfeld ein.
+. Wählen Sie *Änderungen speichern*.
+
+
+
+
+== CORS-Einstellung ändern
+
+.Schritte
+. Aktualisieren Sie die CORS-Konfigurations-XML im Textfeld oder wählen Sie *Löschen* aus, um von vorne zu beginnen.
+. Wählen Sie *Änderungen speichern*.
+
+
+
+
+== CORS-Einstellung deaktivieren
+
+.Schritte
+. Deaktivieren Sie das Kontrollkästchen *CORS aktivieren*.
+. Wählen Sie *Änderungen speichern*.
+

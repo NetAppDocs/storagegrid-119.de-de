@@ -1,0 +1,55 @@
+---
+permalink: maintain/how-your-system-is-affected-when-you-apply-hotfix.html 
+sidebar: sidebar 
+keywords: storagegrid, hotfix 
+summary: Sie müssen verstehen, welche Auswirkungen die Anwendung eines Hotfixes auf Ihr StorageGRID -System hat. 
+---
+= Auswirkungen auf Ihr System bei der Anwendung eines Hotfixes
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Sie müssen verstehen, welche Auswirkungen die Anwendung eines Hotfixes auf Ihr StorageGRID -System hat.
+
+
+
+== StorageGRID -Hotfixes sind unterbrechungsfrei
+
+Das StorageGRID -System kann während des gesamten Hotfix-Prozesses Daten von Client-Anwendungen aufnehmen und abrufen.  Wenn Sie für alle Knoten desselben Typs (z. B. Speicherknoten) ein Hotfix genehmigen, werden die Knoten einzeln heruntergefahren, sodass es nicht vorkommt, dass alle Grid-Knoten oder alle Grid-Knoten eines bestimmten Typs nicht verfügbar sind.
+
+Um eine kontinuierliche Verfügbarkeit zu gewährleisten, stellen Sie sicher, dass Ihre ILM-Richtlinie Regeln enthält, die das Speichern mehrerer Kopien jedes Objekts vorschreiben.  Sie müssen außerdem sicherstellen, dass alle externen S3-Clients so konfiguriert sind, dass sie Anfragen an eines der folgenden Elemente senden:
+
+* Eine virtuelle IP-Adresse einer Hochverfügbarkeitsgruppe (HA)
+* Ein hochverfügbarer Load Balancer eines Drittanbieters
+* Mehrere Gateway-Knoten für jeden Client
+* Mehrere Speicherknoten für jeden Client
+
+
+
+
+== Bei Clientanwendungen kann es zu kurzfristigen Störungen kommen
+
+Das StorageGRID -System kann während des gesamten Hotfix-Prozesses Daten von Client-Anwendungen aufnehmen und abrufen. Allerdings können Client-Verbindungen zu einzelnen Gateway-Knoten oder Speicherknoten vorübergehend unterbrochen werden, wenn der Hotfix einen Neustart der Dienste auf diesen Knoten erfordert.  Die Konnektivität wird wiederhergestellt, nachdem der Hotfix-Prozess abgeschlossen ist und die Dienste auf den einzelnen Knoten wieder aufgenommen werden.
+
+Wenn ein kurzzeitiger Verbindungsverlust nicht akzeptabel ist, müssen Sie möglicherweise eine Ausfallzeit einplanen, um einen Hotfix anzuwenden.  Mithilfe der selektiven Genehmigung können Sie planen, wann bestimmte Knoten aktualisiert werden.
+
+
+NOTE: Sie können mehrere Gateways und Hochverfügbarkeitsgruppen (HA) verwenden, um während des Hotfix-Prozesses ein automatisches Failover bereitzustellen. Siehe die Anweisungen fürlink:../admin/configure-high-availability-group.html["Konfigurieren von Hochverfügbarkeitsgruppen"] .
+
+
+
+== Es können Warnungen und SNMP-Benachrichtigungen ausgelöst werden
+
+Warnungen und SNMP-Benachrichtigungen können ausgelöst werden, wenn Dienste neu gestartet werden und wenn das StorageGRID -System als Umgebung mit gemischten Versionen betrieben wird (einige Grid-Knoten führen eine frühere Version aus, während andere auf eine neuere Version aktualisiert wurden).  Im Allgemeinen werden diese Warnungen und Benachrichtigungen gelöscht, wenn der Hotfix abgeschlossen ist.
+
+
+
+== Konfigurationsänderungen sind eingeschränkt
+
+Beim Anwenden eines Hotfixes auf StorageGRID:
+
+* Nehmen Sie keine Änderungen an der Grid-Konfiguration vor (z. B. Festlegen von Grid-Netzwerk-Subnetzen oder Genehmigen ausstehender Grid-Knoten), bis der Hotfix auf alle Knoten angewendet wurde.
+* Aktualisieren Sie die ILM-Konfiguration erst, wenn der Hotfix auf allen Knoten angewendet wurde.
+

@@ -1,0 +1,98 @@
+---
+permalink: monitor/viewing-nodes-page.html 
+sidebar: sidebar 
+keywords: nodes page 
+summary: Wenn Sie detailliertere Informationen zu Ihrem StorageGRID -System benötigen, als das Dashboard bietet, können Sie auf der Seite „Knoten“ Metriken für das gesamte Grid, jeden Standort im Grid und jeden Knoten an einem Standort anzeigen. 
+---
+= Anzeigen der Seite „Knoten“
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Wenn Sie detailliertere Informationen zu Ihrem StorageGRID -System benötigen, als das Dashboard bietet, können Sie auf der Seite „Knoten“ Metriken für das gesamte Grid, jeden Standort im Grid und jeden Knoten an einem Standort anzeigen.
+
+In der Knotentabelle sind zusammenfassende Informationen für das gesamte Raster, jeden Standort und jeden Knoten aufgeführt.  Wenn die Verbindung zu einem Knoten getrennt ist oder eine aktive Warnung vorliegt, wird neben dem Knotennamen ein Symbol angezeigt.  Wenn der Knoten verbunden ist und keine aktiven Warnungen aufweist, wird kein Symbol angezeigt.
+
+
+NOTE: Wenn ein Knoten nicht mit dem Grid verbunden ist, beispielsweise während eines Upgrades oder in einem getrennten Zustand, sind bestimmte Metriken möglicherweise nicht verfügbar oder aus den Site- und Grid-Gesamtwerten ausgeschlossen.  Nachdem ein Knoten die Verbindung zum Netz wiederhergestellt hat, warten Sie einige Minuten, bis sich die Werte stabilisiert haben.
+
+
+NOTE: Um die Einheiten für die im Grid Manager angezeigten Speicherwerte zu ändern, wählen Sie das Benutzer-Dropdown-Menü oben rechts im Grid Manager und dann *Benutzereinstellungen*.
+
+
+NOTE: Bei den gezeigten Screenshots handelt es sich um Beispiele.  Ihre Ergebnisse können je nach Ihrer StorageGRID -Version variieren.
+
+image::../media/nodes_table.png[Knotenmenü]
+
+
+
+== Verbindungsstatussymbole
+
+Wenn ein Knoten vom Netz getrennt wird, wird neben dem Knotennamen eines der folgenden Symbole angezeigt.
+
+[cols="1a,3a,3a"]
+|===
+| Symbol | Beschreibung | Handlungsbedarf 
+
+
+ a| 
+image:../media/icon_alarm_blue_unknown.png["blaues Fragezeichen-Symbol"]
+ a| 
+*Nicht verbunden – Unbekannt*
+
+Aus einem unbekannten Grund wird die Verbindung zu einem Knoten getrennt oder die Dienste auf dem Knoten fallen unerwartet aus.  Beispielsweise könnte ein Dienst auf dem Knoten gestoppt worden sein oder der Knoten könnte aufgrund eines Stromausfalls oder einer unerwarteten Störung seine Netzwerkverbindung verloren haben.
+
+Möglicherweise wird auch die Warnung *Kommunikation mit Knoten nicht möglich* ausgelöst.  Möglicherweise sind auch andere Warnungen aktiv.
+ a| 
+Erfordert sofortige Aufmerksamkeit. link:monitoring-system-health.html#view-current-and-resolved-alerts["Wählen Sie jede Warnung aus"] und befolgen Sie die empfohlenen Maßnahmen.
+
+Beispielsweise müssen Sie möglicherweise einen angehaltenen Dienst neu starten oder den Host für den Knoten neu starten.
+
+*Hinweis*: Während verwalteter Herunterfahrvorgänge kann ein Knoten als „Unbekannt“ angezeigt werden.  In diesen Fällen können Sie den Status „Unbekannt“ ignorieren.
+
+
+
+ a| 
+image:../media/icon_alarm_gray_administratively_down.png["graues Fragezeichensymbol"]
+ a| 
+*Nicht verbunden – Administrator-Ausfall*
+
+Aus einem erwarteten Grund ist der Knoten nicht mit dem Netz verbunden.
+
+Beispielsweise wurde der Knoten oder die Dienste auf dem Knoten ordnungsgemäß heruntergefahren, der Knoten wird neu gestartet oder die Software wird aktualisiert.  Möglicherweise sind auch eine oder mehrere Warnungen aktiv.
+
+Je nach zugrunde liegendem Problem gehen diese Knoten häufig ohne Eingriff wieder online.
+ a| 
+Stellen Sie fest, ob dieser Knoten von Warnungen betroffen ist.
+
+Wenn eine oder mehrere Warnungen aktiv sind,link:monitoring-system-health.html#view-current-and-resolved-alerts["Wählen Sie jede Warnung aus"] und befolgen Sie die empfohlenen Maßnahmen.
+
+|===
+Wenn ein Knoten vom Netz getrennt wird, liegt möglicherweise eine Warnung vor, es wird jedoch nur das Symbol „Nicht verbunden“ angezeigt.  Um die aktiven Warnungen für einen Knoten anzuzeigen, wählen Sie den Knoten aus.
+
+
+
+== Warnsymbole
+
+Wenn für einen Knoten eine aktive Warnung vorliegt, wird neben dem Knotennamen eines der folgenden Symbole angezeigt:
+
+image:../media/icon_alert_red_critical.png["Symbol Alarm Rot Kritisch"]*Kritisch*: Es liegt ein anormaler Zustand vor, der den normalen Betrieb eines StorageGRID Knotens oder -Dienstes gestoppt hat.  Sie müssen das zugrunde liegende Problem sofort angehen.  Wenn das Problem nicht behoben wird, kann es zu Dienstunterbrechungen und Datenverlust kommen.
+
+image:../media/icon_alert_orange_major.png["Symbol Alarm Orange Major"]*Schwerwiegend*: Es liegt ein anormaler Zustand vor, der entweder den aktuellen Betrieb beeinträchtigt oder sich dem Schwellenwert für eine kritische Warnung nähert.  Sie sollten wichtige Warnungen untersuchen und alle zugrunde liegenden Probleme beheben, um sicherzustellen, dass der anormale Zustand den normalen Betrieb eines StorageGRID Knotens oder -Dienstes nicht stoppt.
+
+image:../media/icon_alert_yellow_minor.png["Symbol Warnung Gelb Geringfügig"]*Geringfügig*: Das System funktioniert normal, es liegt jedoch ein anormaler Zustand vor, der die Funktionsfähigkeit des Systems beeinträchtigen könnte, wenn er anhält.  Sie sollten kleinere Warnungen, die nicht von selbst verschwinden, überwachen und beheben, um sicherzustellen, dass sie nicht zu einem ernsteren Problem führen.
+
+
+
+== Details zu einem System, einer Site oder einem Knoten anzeigen
+
+Um die in der Knotentabelle angezeigten Informationen zu filtern, geben Sie eine Suchzeichenfolge in das Feld *Suchen* ein.  Sie können nach Systemnamen, Anzeigenamen oder Typ suchen (geben Sie beispielsweise *gat* ein, um schnell alle Gateway-Knoten zu finden).
+
+So zeigen Sie die Informationen für das Raster, die Site oder den Knoten an:
+
+* Wählen Sie den Rasternamen aus, um eine aggregierte Zusammenfassung der Statistiken für Ihr gesamtes StorageGRID System anzuzeigen.
+* Wählen Sie einen bestimmten Rechenzentrumsstandort aus, um eine aggregierte Zusammenfassung der Statistiken für alle Knoten an diesem Standort anzuzeigen.
+* Wählen Sie einen bestimmten Knoten aus, um detaillierte Informationen zu diesem Knoten anzuzeigen.
+

@@ -1,0 +1,78 @@
+= 
+:allow-uri-read: 
+
+
+[role="tabbed-block"]
+====
+.Replizierte Daten
+--
+* Um einen geschätzten Prozentsatz der Fertigstellung der replizierten Reparatur zu erhalten, addieren Sie die `show-replicated-repair-status` Option zum Befehl „repair-data“.
++
+`repair-data show-replicated-repair-status`
+
+* So stellen Sie fest, ob die Reparaturen abgeschlossen sind:
++
+.. Wählen Sie *NODES* > *_Speicherknoten wird repariert_* > *ILM*.
+.. Überprüfen Sie die Attribute im Abschnitt „Bewertung“.  Wenn die Reparaturen abgeschlossen sind, zeigt das Attribut *Warten – Alle* 0 Objekte an.
+
+
+* So überwachen Sie die Reparatur genauer:
++
+.. Wählen Sie *SUPPORT* > *Tools* > *Gittertopologie*.
+.. Wählen Sie *_grid_* > *_Reparierter Speicherknoten_* > *LDR* > *Datenspeicher*.
+.. Verwenden Sie eine Kombination der folgenden Attribute, um so gut wie möglich zu bestimmen, ob replizierte Reparaturen abgeschlossen sind.
++
+
+NOTE: Möglicherweise liegen Cassandra-Inkonsistenzen vor und fehlgeschlagene Reparaturen werden nicht nachverfolgt.
+
++
+*** *Reparaturversuche (XRPA)*: Verwenden Sie dieses Attribut, um den Fortschritt replizierter Reparaturen zu verfolgen.  Dieses Attribut erhöht sich jedes Mal, wenn ein Speicherknoten versucht, ein Hochrisikoobjekt zu reparieren.  Wenn dieses Attribut über einen Zeitraum, der länger ist als der aktuelle Scanzeitraum (bereitgestellt durch das Attribut *Scanzeitraum – Geschätzt*), nicht ansteigt, bedeutet dies, dass beim ILM-Scan auf keinem Knoten ein Hochrisikoobjekt gefunden wurde, das repariert werden muss.
++
+
+NOTE: Hochrisikoobjekte sind Objekte, bei denen die Gefahr eines vollständigen Verlusts besteht.  Dies schließt keine Objekte ein, die ihrer ILM-Konfiguration nicht entsprechen.
+
+*** *Scan-Zeitraum – Geschätzt (XSCM)*: Verwenden Sie dieses Attribut, um abzuschätzen, wann eine Richtlinienänderung auf zuvor aufgenommene Objekte angewendet wird.  Wenn das Attribut *Reparaturversuche* über einen Zeitraum, der länger als der aktuelle Scanzeitraum ist, nicht ansteigt, ist es wahrscheinlich, dass replizierte Reparaturen durchgeführt wurden.  Beachten Sie, dass sich der Scanzeitraum ändern kann.  Das Attribut *Scan Period – Estimated (XSCM)* gilt für das gesamte Raster und ist das Maximum aller Knoten-Scan-Perioden.  Sie können den Attributverlauf *Scan-Zeitraum – Geschätzt* für das Raster abfragen, um einen geeigneten Zeitrahmen zu bestimmen.
+
+
+
+
+
+
+--
+.Löschcodierte (EC) Daten
+--
+So überwachen Sie die Reparatur von Erasure-Code-Daten und wiederholen alle möglicherweise fehlgeschlagenen Anfragen:
+
+. Bestimmen Sie den Status der Datenreparaturen mit Erasure Code:
++
+** Wählen Sie *SUPPORT* > *Tools* > *Metriken*, um die geschätzte Zeit bis zur Fertigstellung und den Fertigstellungsgrad für den aktuellen Auftrag anzuzeigen. Wählen Sie dann im Abschnitt „Grafana“ die Option „EC-Übersicht“ aus. Sehen Sie sich die Dashboards *Geschätzte Zeit bis zur Fertigstellung des Grid EC-Jobs* und *Prozentsatz der Fertigstellung des Grid EC-Jobs* an.
+** Verwenden Sie diesen Befehl, um den Status eines bestimmten `repair-data` Betrieb:
++
+`repair-data show-ec-repair-status --repair-id repair ID`
+
+** Verwenden Sie diesen Befehl, um alle Reparaturen aufzulisten:
++
+`repair-data show-ec-repair-status`
+
++
+Die Ausgabe listet Informationen auf, einschließlich `repair ID` , für alle bisherigen und laufenden Reparaturen.
+
+
+
+. Wenn die Ausgabe zeigt, dass der Reparaturvorgang fehlgeschlagen ist, verwenden Sie die `--repair-id` Option zum erneuten Versuch der Reparatur.
++
+Mit diesem Befehl wird eine fehlgeschlagene Knotenreparatur unter Verwendung der Reparatur-ID 6949309319275667690 erneut versucht:
+
++
+`repair-data start-ec-node-repair --repair-id 6949309319275667690`
+
++
+Mit diesem Befehl wird eine fehlgeschlagene Volumereparatur unter Verwendung der Reparatur-ID 6949309319275667690 erneut versucht:
+
++
+`repair-data start-ec-volume-repair --repair-id 6949309319275667690`
+
+
+
+--
+====

@@ -1,0 +1,87 @@
+---
+permalink: s3/complete-multipart-upload.html 
+sidebar: sidebar 
+keywords: multipart upload, object, object size 
+summary: Der Vorgang „CompleteMultipartUpload“ schließt einen mehrteiligen Upload eines Objekts ab, indem er die zuvor hochgeladenen Teile zusammenfügt. 
+---
+= CompleteMultipartUpload
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Der Vorgang „CompleteMultipartUpload“ schließt einen mehrteiligen Upload eines Objekts ab, indem er die zuvor hochgeladenen Teile zusammenfügt.
+
+
+NOTE: StorageGRID unterstützt nicht aufeinanderfolgende Werte in aufsteigender Reihenfolge für die `partNumber` Anforderungsparameter mit CompleteMultipartUpload.  Der Parameter kann mit einem beliebigen Wert beginnen.
+
+
+
+== Konflikte lösen
+
+Widersprüchliche Clientanforderungen, beispielsweise wenn zwei Clients auf denselben Schlüssel schreiben, werden nach dem Prinzip „Latest Wins“ gelöst.  Der Zeitpunkt für die Auswertung der „Latest Wins“ basiert darauf, wann das StorageGRID -System eine bestimmte Anfrage abschließt, und nicht darauf, wann S3-Clients einen Vorgang beginnen.
+
+
+
+== Unterstützte Anforderungsheader
+
+Die folgenden Anforderungsheader werden unterstützt:
+
+* `x-amz-checksum-sha256`
+* `x-amz-storage-class`
++
+Der `x-amz-storage-class` Der Header beeinflusst, wie viele Objektkopien StorageGRID erstellt, wenn die entsprechende ILM-Regel Folgendes angibt:link:../ilm/data-protection-options-for-ingest.html["Option für doppeltes Commit oder ausgeglichene Aufnahme"] .
+
+* `STANDARD`
++
+(Standard) Gibt einen Dual-Commit-Aufnahmevorgang an, wenn die ILM-Regel die Option „Dual Commit“ verwendet oder wenn die Option „Balanced“ auf die Erstellung von Zwischenkopien zurückgreift.
+
+* `REDUCED_REDUNDANCY`
++
+Gibt einen Single-Commit-Ingest-Vorgang an, wenn die ILM-Regel die Option „Dual Commit“ verwendet oder wenn die Option „Balanced“ auf die Erstellung von Zwischenkopien zurückgreift.
+
++
+
+NOTE: Wenn Sie ein Objekt in einen Bucket mit aktivierter S3-Objektsperre aufnehmen, wird die `REDUCED_REDUNDANCY` Option wird ignoriert.  Wenn Sie ein Objekt in einen Legacy-Compliant-Bucket aufnehmen, `REDUCED_REDUNDANCY` Option gibt einen Fehler zurück.  StorageGRID führt immer eine Dual-Commit-Aufnahme durch, um sicherzustellen, dass die Compliance-Anforderungen erfüllt werden.
+
+
+
+
+CAUTION: Wenn ein mehrteiliger Upload nicht innerhalb von 15 Tagen abgeschlossen wird, wird der Vorgang als inaktiv markiert und alle zugehörigen Daten werden aus dem System gelöscht.
+
+
+NOTE: Der `ETag` Der zurückgegebene Wert ist keine MD5-Summe der Daten, sondern folgt der Amazon S3 API-Implementierung des `ETag` Wert für mehrteilige Objekte.
+
+
+
+== Nicht unterstützte Anforderungsheader
+
+Die folgenden Anforderungsheader werden nicht unterstützt:
+
+* `x-amz-sdk-checksum-algorithm`
+* `x-amz-trailer`
+
+
+
+
+== Versionierung
+
+Dieser Vorgang schließt einen mehrteiligen Upload ab.  Wenn die Versionierung für einen Bucket aktiviert ist, wird die Objektversion nach Abschluss des mehrteiligen Uploads erstellt.
+
+Wenn die Versionierung für einen Bucket aktiviert ist, `versionId` wird automatisch für die Version des gespeicherten Objekts generiert.  Das `versionId` wird auch in der Antwort zurückgegeben, indem der `x-amz-version-id` Antwortheader.
+
+Wenn die Versionierung ausgesetzt ist, wird die Objektversion mit einem Nullwert gespeichert. `versionId` und wenn bereits eine Nullversion vorhanden ist, wird diese überschrieben.
+
+
+NOTE: Wenn die Versionsverwaltung für einen Bucket aktiviert ist, wird beim Abschließen eines mehrteiligen Uploads immer eine neue Version erstellt, auch wenn gleichzeitig mehrteilige Uploads für denselben Objektschlüssel abgeschlossen wurden.  Wenn die Versionsverwaltung für einen Bucket nicht aktiviert ist, ist es möglich, einen mehrteiligen Upload zu initiieren und dann zunächst einen weiteren mehrteiligen Upload mit demselben Objektschlüssel zu initiieren und abzuschließen.  Bei Buckets ohne Versionsangabe hat der zuletzt abgeschlossene mehrteilige Upload Vorrang.
+
+
+
+== Fehlgeschlagene Replikation, Benachrichtigung oder Metadatenbenachrichtigung
+
+Wenn der Bucket, in dem der mehrteilige Upload erfolgt, für einen Plattformdienst konfiguriert ist, ist der mehrteilige Upload auch dann erfolgreich, wenn die zugehörige Replikations- oder Benachrichtigungsaktion fehlschlägt.
+
+Ein Mandant kann die fehlgeschlagene Replikation oder Benachrichtigung auslösen, indem er die Metadaten oder Tags des Objekts aktualisiert.  Um unerwünschte Änderungen zu vermeiden, kann ein Mandant die vorhandenen Werte erneut übermitteln.
+
+Weitere Informationen finden Sie unter link:../admin/troubleshooting-platform-services.html["Fehlerbehebung bei Plattformdiensten"] .

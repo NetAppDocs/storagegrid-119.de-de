@@ -1,0 +1,29 @@
+---
+permalink: maintain/installing-services-appliance-platform-change-only.html 
+sidebar: sidebar 
+keywords: storagegrid, recover services appliance, recover appliance, recovering appliance, recovering services appliance, install services appliance, installing services appliance, services appliance 
+summary: 'Wenn Sie einen ausgefallenen Grid-Knoten wiederherstellen, der auf VMware oder einem Linux-Host gehostet wurde, und Sie eine Service-Appliance für den Ersatzknoten verwenden, müssen Sie zuerst die neue Appliance-Hardware mit demselben Knotennamen (Systemnamen) wie der ausgefallene Knoten installieren.' 
+---
+= Services-Appliance installieren (nur Plattformwechsel)
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Wenn Sie einen ausgefallenen Grid-Knoten wiederherstellen, der auf VMware oder einem Linux-Host gehostet wurde, und Sie eine Service-Appliance für den Ersatzknoten verwenden, müssen Sie zuerst die neue Appliance-Hardware mit demselben Knotennamen (Systemnamen) wie der ausgefallene Knoten installieren.
+
+.Bevor Sie beginnen
+Sie verfügen über die folgenden Informationen zum ausgefallenen Knoten:
+
+* *Knotenname*: Sie müssen die Dienst-Appliance mit demselben Knotennamen wie der ausgefallene Knoten installieren.  Der Knotenname ist der Hostname (Systemname).
+* *IP-Adressen*: Sie können der Service-Appliance dieselben IP-Adressen wie dem ausgefallenen Knoten zuweisen (was die bevorzugte Option ist) oder Sie können in jedem Netzwerk eine neue, nicht verwendete IP-Adresse auswählen.
+
+
+.Informationen zu diesem Vorgang
+Führen Sie dieses Verfahren nur aus, wenn Sie einen ausgefallenen Knoten wiederherstellen, der auf VMware oder Linux gehostet wurde, und ihn durch einen Knoten ersetzen, der auf einer Service-Appliance gehostet wird.
+
+.Schritte
+. Befolgen Sie die Anweisungen zum Installieren einer neuen Service-Appliance. Sehen https://docs.netapp.com/us-en/storagegrid-appliances/installconfig/index.html["Schnellstart für die Hardwareinstallation"^] .
+. Wenn Sie zur Eingabe eines Knotennamens aufgefordert werden, verwenden Sie den Knotennamen des ausgefallenen Knotens.
+

@@ -1,0 +1,53 @@
+---
+permalink: ilm/verifying-ilm-policy-with-object-metadata-lookup.html 
+sidebar: sidebar 
+keywords: verify ilm policy, object metadata lookup 
+summary: Nachdem Sie eine ILM-Richtlinie aktiviert haben, nehmen Sie repräsentative Testobjekte in das StorageGRID -System auf und führen Sie dann eine Objektmetadatensuche durch, um zu bestätigen, dass Kopien wie beabsichtigt erstellt und an den richtigen Speicherorten abgelegt werden. 
+---
+= Überprüfen einer ILM-Richtlinie mit der Objektmetadatensuche
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Nachdem Sie eine ILM-Richtlinie aktiviert haben, nehmen Sie repräsentative Testobjekte in das StorageGRID -System auf und führen Sie dann eine Objektmetadatensuche durch, um zu bestätigen, dass Kopien wie beabsichtigt erstellt und an den richtigen Speicherorten abgelegt werden.
+
+.Bevor Sie beginnen
+Sie haben eine Objektkennung, die eine der folgenden sein kann: * *UUID*: Die universell eindeutige Kennung des Objekts.  * *CBID*: Die eindeutige Kennung des Objekts innerhalb von StorageGRID. Sie können die CBID eines Objekts aus dem Prüfprotokoll abrufen. Geben Sie die CBID in Großbuchstaben ein.  * *S3-Bucket und Objektschlüssel*: Wenn ein Objekt über die S3-Schnittstelle aufgenommen wird, verwendet die Clientanwendung eine Kombination aus Bucket und Objektschlüssel, um das Objekt zu speichern und zu identifizieren. Wenn der S3-Bucket versioniert ist und Sie mithilfe des Bucket- und Objektschlüssels eine bestimmte Version eines S3-Objekts nachschlagen möchten, verfügen Sie über die *Versions-ID*.
+
+.Schritte
+. Nehmen Sie das Objekt auf.
+. Wählen Sie *ILM* > *Objektmetadatensuche*.
+. Geben Sie die Kennung des Objekts in das Feld *Kennung* ein. Sie können eine UUID, CBID oder einen S3-Bucket/Objektschlüssel eingeben.
+. Geben Sie optional eine Versions-ID für das Objekt ein (nur S3).
+. Wählen Sie *Nachschlagen*.
++
+Die Ergebnisse der Objektmetadatensuche werden angezeigt.  Auf dieser Seite sind die folgenden Arten von Informationen aufgeführt:
+
++
+** Systemmetadaten, wie Objekt-ID (UUID), Ergebnistyp (Objekt, Löschmarkierung, S3-Bucket) und logische Größe des Objekts.  Weitere Einzelheiten finden Sie im Beispiel-Screenshot unten.
+** Alle benutzerdefinierten Schlüssel-Wert-Paare der Benutzermetadaten, die mit dem Objekt verknüpft sind.
+** Bei S3-Objekten alle mit dem Objekt verknüpften Schlüssel-Wert-Paare des Objekt-Tags.
+** Bei replizierten Objektkopien der aktuelle Speicherort jeder Kopie.
+** Bei Erasure-Coded-Objektkopien der aktuelle Speicherort jedes Fragments.
+** Bei Objektkopien in einem Cloud Storage Pool der Speicherort des Objekts, einschließlich des Namens des externen Buckets und der eindeutigen Kennung des Objekts.
+** Für segmentierte Objekte und mehrteilige Objekte eine Liste von Objektsegmenten einschließlich Segmentkennungen und Datengrößen.  Bei Objekten mit mehr als 100 Segmenten werden nur die ersten 100 Segmente angezeigt.
+** Alle Objektmetadaten im unverarbeiteten, internen Speicherformat.  Diese Rohmetadaten umfassen interne Systemmetadaten, deren Beibehaltung von Version zu Version nicht garantiert ist.
+
+
+. Bestätigen Sie, dass das Objekt am richtigen Ort bzw. an den richtigen Orten gespeichert ist und dass es sich um den richtigen Kopietyp handelt.
++
+Wenn die Audit-Option aktiviert ist, können Sie das Audit-Protokoll auch auf die Meldung „ORLM-Objektregeln erfüllt“ überwachen.  Die ORLM-Auditnachricht kann Ihnen weitere Informationen zum Status des ILM-Bewertungsprozesses liefern, sie kann Ihnen jedoch keine Informationen zur Richtigkeit der Platzierung der Objektdaten oder zur Vollständigkeit der ILM-Richtlinie geben.  Dies müssen Sie selbst bewerten. Weitere Informationen finden Sie unter link:../audit/index.html["Überprüfen der Überwachungsprotokolle"] .
+
+
+
+Das folgende Beispiel zeigt die Ergebnisse der Objektmetadatensuche für ein S3-Testobjekt, das als zwei replizierte Kopien gespeichert ist.
+
+
+NOTE: Der folgende Screenshot ist ein Beispiel.  Ihre Ergebnisse variieren je nach Ihrer StorageGRID Version.
+
+image::../media/object_lookup_results.png[Ergebnisse der Objektsuche]
+
+.Ähnliche Informationen
+link:../s3/index.html["Verwenden Sie die S3 REST-API"]

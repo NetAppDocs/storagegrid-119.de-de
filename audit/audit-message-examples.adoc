@@ -1,0 +1,72 @@
+---
+permalink: audit/audit-message-examples.html 
+sidebar: sidebar 
+keywords: audit message examples, audit.log, atyp, sput, s3 put 
+summary: Detaillierte Informationen finden Sie in jeder Prüfmeldung.  Alle Prüfmeldungen verwenden dasselbe Format. 
+---
+= Beispiele für Prüfnachrichten
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Detaillierte Informationen finden Sie in jeder Prüfmeldung.  Alle Prüfmeldungen verwenden dasselbe Format.
+
+Nachfolgend sehen Sie ein Beispiel für eine Prüfmeldung, wie sie in der `audit.log` Datei:
+
+[listing]
+----
+2014-07-17T21:17:58.959669
+[AUDT:[RSLT(FC32):SUCS][TIME(UI64):246979][S3AI(CSTR):"bc644d
+381a87d6cc216adcd963fb6f95dd25a38aa2cb8c9a358e8c5087a6af5f"][
+S3AK(CSTR):"UJXDKKQOXB7YARDS71Q2"][S3BK(CSTR):"s3small1"][S3K
+Y(CSTR):"hello1"][CBID(UI64):0x50C4F7AC2BC8EDF7][CSIZ(UI64):0
+][AVER(UI32):10][ATIM(UI64):1405631878959669][ATYP(FC32):SPUT
+][ANID(UI32):12872812][AMID(FC32):S3RQ][ATID(UI64):1579224144
+102530435]]
+----
+Die Prüfnachricht enthält Informationen zum aufgezeichneten Ereignis sowie Informationen zur Prüfnachricht selbst.
+
+Um zu ermitteln, welches Ereignis von der Prüfnachricht aufgezeichnet wird, suchen Sie nach dem ATYP-Attribut (unten hervorgehoben):
+
+[listing, subs="specialcharacters,quotes"]
+----
+2014-07-17T21:17:58.959669
+[AUDT:[RSLT(FC32):SUCS][TIME(UI64):246979][S3AI(CSTR):"bc644d
+381a87d6cc216adcd963fb6f95dd25a38aa2cb8c9a358e8c5087a6af5f"][
+S3AK(CSTR):"UJXDKKQOXB7YARDS71Q2"][S3BK(CSTR):"s3small1"][S3K
+Y(CSTR):"hello1"][CBID(UI64):0x50C4F7AC2BC8EDF7][CSIZ(UI64):0
+][AVER(UI32):10][ATIM(UI64):1405631878959669][*ATYP(FC32):SP*
+*UT*][ANID(UI32):12872812][AMID(FC32):S3RQ][ATID(UI64):1579224
+144102530435]]
+----
+Der Wert des ATYP-Attributs ist SPUT. link:sput-s3-put.html["SPUT"] stellt eine S3 PUT-Transaktion dar, die die Aufnahme eines Objekts in einen Bucket protokolliert.
+
+Die folgende Prüfmeldung zeigt auch den Bucket an, mit dem das Objekt verknüpft ist:
+
+[listing, subs="specialcharacters,quotes"]
+----
+2014-07-17T21:17:58.959669
+[AUDT:[RSLT(FC32):SUCS][TIME(UI64):246979][S3AI(CSTR):"bc644d
+381a87d6cc216adcd963fb6f95dd25a38aa2cb8c9a358e8c5087a6af5f"][
+S3AK(CSTR):"UJXDKKQOXB7YARDS71Q2"][*S3BK\(CSTR\):"s3small1"*][S3
+KY(CSTR):"hello1"][CBID(UI64):0x50C4F7AC2BC8EDF7][CSIZ(UI64):
+0][AVER(UI32):10][ATIM(UI64):1405631878959669][ATYP(FC32):SPU
+T][ANID(UI32):12872812][AMID(FC32):S3RQ][ATID(UI64):157922414
+4102530435]]
+----
+Um herauszufinden, wann das PUT-Ereignis aufgetreten ist, notieren Sie sich den Zeitstempel „Universal Coordinated Time“ (UTC) am Anfang der Prüfnachricht.  Dieser Wert ist eine für Menschen lesbare Version des ATIM-Attributs der Prüfnachricht selbst:
+
+[listing, subs="specialcharacters,quotes"]
+----
+*2014-07-17T21:17:58.959669*
+[AUDT:[RSLT(FC32):SUCS][TIME(UI64):246979][S3AI(CSTR):"bc644d
+381a87d6cc216adcd963fb6f95dd25a38aa2cb8c9a358e8c5087a6af5f"][
+S3AK(CSTR):"UJXDKKQOXB7YARDS71Q2"][S3BK(CSTR):"s3small1"][S3K
+Y(CSTR):"hello1"][CBID(UI64):0x50C4F7AC2BC8EDF7][CSIZ(UI64):0
+][AVER(UI32):10][*ATIM\(UI64\):1405631878959669*][ATYP(FC32):SP
+UT][ANID(UI32):12872812][AMID(FC32):S3RQ][ATID(UI64):15792241
+44102530435]]
+----
+ATIM zeichnet die Zeit in Mikrosekunden seit Beginn der UNIX-Epoche auf.  Im Beispiel ist der Wert `1405631878959669` entspricht Donnerstag, 17. Juli 2014, 21:17:59 UTC.

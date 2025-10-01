@@ -1,0 +1,107 @@
+---
+permalink: maintain/step-1-select-site.html 
+sidebar: sidebar 
+keywords: storagegrid, recover, select site 
+summary: Um festzustellen, ob eine Site stillgelegt werden kann, rufen Sie zunächst den Assistenten „Site stilllegen“ auf. 
+---
+= Schritt 1: Site auswählen
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Um festzustellen, ob eine Site stillgelegt werden kann, rufen Sie zunächst den Assistenten „Site stilllegen“ auf.
+
+.Bevor Sie beginnen
+* Sie haben alle erforderlichen Materialien besorgt.
+* Sie haben die Überlegungen zum Entfernen einer Site überprüft.
+* Sie sind beim Grid Manager angemeldet mit einemlink:../admin/web-browser-requirements.html["unterstützter Webbrowser"] .
+* Sie haben dielink:../admin/admin-group-permissions.html["Root-Zugriffsberechtigung oder die Wartungs- und ILM-Berechtigungen"] .
+
+
+.Schritte
+. Wählen Sie *WARTUNG* > *Aufgaben* > *Außerbetriebnahme*.
+. Wählen Sie *Site außer Betrieb nehmen*.
++
+Schritt 1 (Standort auswählen) des Assistenten „Standort außer Betrieb nehmen“ wird angezeigt.  Dieser Schritt umfasst eine alphabetische Liste der Sites in Ihrem StorageGRID -System.
+
++
+image::../media/decommission_site_step_select_site.png[Standort außer Betrieb nehmen Schritt 1 Standort auswählen]
+
+. Sehen Sie sich die Werte in der Spalte *Verwendete Speicherkapazität* an, um zu ermitteln, wie viel Speicher derzeit an jedem Standort für Objektdaten verwendet wird.
++
+Die genutzte Speicherkapazität ist eine Schätzung.  Wenn Knoten offline sind, ist die verwendete Speicherkapazität der letzte bekannte Wert für die Site.
+
++
+** Bei der Außerbetriebnahme einer verbundenen Site gibt dieser Wert an, wie viele Objektdaten an andere Sites verschoben oder von ILM gelöscht werden müssen, bevor Sie diese Site sicher außer Betrieb nehmen können.
+** Bei der Außerbetriebnahme einer getrennten Site gibt dieser Wert an, wie viel des Datenspeichers Ihres Systems nicht mehr zugänglich ist, wenn Sie diese Site außer Betrieb nehmen.
++
+
+NOTE: Wenn Ihre ILM-Richtlinie zum Schutz vor dem Verlust einer einzelnen Site konzipiert wurde, sollten auf den verbleibenden Sites weiterhin Kopien Ihrer Objektdaten vorhanden sein.
+
+
+
+. Überprüfen Sie die Gründe in der Spalte *Stilllegung möglich*, um festzustellen, welche Sites derzeit stillgelegt werden können.
++
+
+NOTE: Wenn es mehr als einen Grund gibt, warum eine Site nicht stillgelegt werden kann, wird der schwerwiegendste Grund angezeigt.
+
++
+[cols="1a,1a,1a"]
+|===
+| Außerbetriebnahme Möglicher Grund | Beschreibung | Nächster Schritt 
+
+
+ a| 
+Grünes Häkchen (image:../media/icon_alert_green_checkmark.png["Symbol Alarm Grünes Häkchen"] )
+ a| 
+Sie können diese Site außer Betrieb nehmen.
+ a| 
+Gehe zu<<decommission_possible,der nächste Schritt>> .
+
+
+
+ a| 
+Nein. Diese Site enthält den primären Admin-Knoten.
+ a| 
+Sie können eine Site, die den primären Admin-Knoten enthält, nicht außer Betrieb nehmen.
+ a| 
+Keiner.  Sie können diesen Vorgang nicht durchführen.
+
+
+
+ a| 
+Nein. Diese Site enthält einen oder mehrere Archivknoten.
+ a| 
+Sie können eine Site, die einen Archivknoten enthält, nicht außer Betrieb nehmen.
+ a| 
+Keiner.  Sie können diesen Vorgang nicht durchführen.
+
+
+
+ a| 
+Nein. Alle Knoten an dieser Site sind getrennt.  Wenden Sie sich an Ihren NetApp -Kundenbetreuer.
+ a| 
+Sie können eine verbundene Site erst dann außer Betrieb setzen, wenn alle Knoten der Site verbunden sind (image:../media/icon_alert_green_checkmark.png["Symbol Alarm Grünes Häkchen"] ).
+ a| 
+Wenn Sie eine getrennte Site-Außerbetriebnahme durchführen möchten, müssen Sie sich an Ihren NetApp Kundenbetreuer wenden, der Ihre Anforderungen überprüft und den Rest des Assistenten zur Site-Außerbetriebnahme aktiviert.
+
+*WICHTIG*: Nehmen Sie Online-Knoten niemals offline, um eine Site zu entfernen.  Sie verlieren Daten.
+
+|===
++
+Das Beispiel zeigt ein StorageGRID -System mit drei Standorten.  Das grüne Häkchen (image:../media/icon_alert_green_checkmark.png["Symbol Alarm Grünes Häkchen"] ) für die Standorte Raleigh und Sunnyvale gibt an, dass Sie diese Standorte außer Betrieb nehmen können.  Sie können den Standort Vancouver jedoch nicht außer Betrieb nehmen, da er den primären Admin-Knoten enthält.
+
+
+
+[[decommission_possible]]
+. Wenn eine Außerbetriebnahme möglich ist, wählen Sie das Optionsfeld für die Site aus.
++
+Die Schaltfläche *Weiter* ist aktiviert.
+
+. Wählen Sie *Weiter*.
++
+Schritt 2 (Details anzeigen) wird angezeigt.
+
+

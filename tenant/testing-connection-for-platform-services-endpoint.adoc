@@ -1,0 +1,39 @@
+---
+permalink: tenant/testing-connection-for-platform-services-endpoint.html 
+sidebar: sidebar 
+keywords: how to test platform services endpoint connection 
+summary: Wenn sich die Verbindung zu einem Plattformdienst geändert hat, können Sie die Verbindung für den Endpunkt testen, um zu überprüfen, ob die Zielressource vorhanden ist und mit den von Ihnen angegebenen Anmeldeinformationen erreicht werden kann. 
+---
+= Testen Sie die Verbindung für den Plattformdienst-Endpunkt
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Wenn sich die Verbindung zu einem Plattformdienst geändert hat, können Sie die Verbindung für den Endpunkt testen, um zu überprüfen, ob die Zielressource vorhanden ist und mit den von Ihnen angegebenen Anmeldeinformationen erreicht werden kann.
+
+.Bevor Sie beginnen
+* Sie sind beim Tenant Manager angemeldet mit einemlink:../admin/web-browser-requirements.html["unterstützter Webbrowser"] .
+* Sie gehören einer Benutzergruppe an, die über dielink:tenant-management-permissions.html["Verwalten von Endpunkten oder Root-Zugriffsberechtigungen"] .
+
+
+.Informationen zu diesem Vorgang
+StorageGRID überprüft nicht, ob die Anmeldeinformationen über die richtigen Berechtigungen verfügen.
+
+.Schritte
+. Wählen Sie *STORAGE (S3)* > *Plattformdienst-Endpunkte*.
++
+Die Seite „Plattformdienst-Endpunkte“ wird angezeigt und zeigt die Liste der bereits konfigurierten Plattformdienst-Endpunkte.
+
+. Wählen Sie den Endpunkt aus, dessen Verbindung Sie testen möchten.
++
+Die Seite mit den Endpunktdetails wird angezeigt.
+
+. Wählen Sie *Verbindung testen*.
++
+** Wenn der Endpunkt mit den angegebenen Anmeldeinformationen erreicht werden kann, wird eine Erfolgsmeldung angezeigt.  Die Verbindung zum Endpunkt wird von einem Knoten an jedem Standort validiert.
+** Wenn die Endpunktvalidierung fehlschlägt, wird eine Fehlermeldung angezeigt.  Wenn Sie den Endpunkt ändern müssen, um den Fehler zu beheben, wählen Sie *Konfiguration* und aktualisieren Sie die Informationen.  Wählen Sie dann *Testen und Änderungen speichern*.
+
+
+

@@ -1,0 +1,25 @@
+---
+permalink: network/topology-for-all-three-networks.html 
+sidebar: sidebar 
+keywords: network topology for storagegrid 
+summary: Sie können alle drei Netzwerke in einer Netzwerktopologie konfigurieren, die aus einem privaten Grid-Netzwerk, begrenzten standortspezifischen Admin-Netzwerken und offenen Client-Netzwerken besteht.  Die Verwendung von Load Balancer-Endpunkten und nicht vertrauenswürdigen Client-Netzwerken kann bei Bedarf zusätzliche Sicherheit bieten. 
+---
+= Topologie für alle drei Netzwerke
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Sie können alle drei Netzwerke in einer Netzwerktopologie konfigurieren, die aus einem privaten Grid-Netzwerk, begrenzten standortspezifischen Admin-Netzwerken und offenen Client-Netzwerken besteht.  Die Verwendung von Load Balancer-Endpunkten und nicht vertrauenswürdigen Client-Netzwerken kann bei Bedarf zusätzliche Sicherheit bieten.
+
+In diesem Beispiel:
+
+* Das Grid-Netzwerk wird für den Netzwerkverkehr im Zusammenhang mit internen Objektverwaltungsvorgängen verwendet.
+* Das Admin-Netzwerk wird für den Datenverkehr im Zusammenhang mit Verwaltungsfunktionen verwendet.
+* Das Client-Netzwerk wird für den Datenverkehr im Zusammenhang mit S3-Client-Anfragen verwendet.
+
+
+*Topologiebeispiel: Grid-, Admin- und Client-Netzwerke*
+
+image::../media/grid_admin_client_networks.png[Grid Admin Client-Netzwerke]

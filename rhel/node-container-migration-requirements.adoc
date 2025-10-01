@@ -1,0 +1,66 @@
+---
+permalink: rhel/node-container-migration-requirements.html 
+sidebar: sidebar 
+keywords: how to migrate a node 
+summary: Mit der Knotenmigrationsfunktion können Sie einen Knoten manuell von einem Host auf einen anderen verschieben.  Normalerweise befinden sich beide Hosts im selben physischen Rechenzentrum. 
+---
+= Anforderungen für die Migration von Knotencontainern
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Mit der Knotenmigrationsfunktion können Sie einen Knoten manuell von einem Host auf einen anderen verschieben.  Normalerweise befinden sich beide Hosts im selben physischen Rechenzentrum.
+
+Durch die Knotenmigration können Sie die Wartung physischer Hosts durchführen, ohne den Grid-Betrieb zu unterbrechen.  Sie verschieben alle StorageGRID -Knoten einzeln auf einen anderen Host, bevor Sie den physischen Host offline nehmen.  Die Migration von Knoten erfordert nur eine kurze Ausfallzeit für jeden Knoten und sollte den Betrieb oder die Verfügbarkeit von Grid-Diensten nicht beeinträchtigen.
+
+Wenn Sie die StorageGRID -Knotenmigrationsfunktion verwenden möchten, muss Ihre Bereitstellung zusätzliche Anforderungen erfüllen:
+
+* Einheitliche Netzwerkschnittstellennamen für alle Hosts in einem einzigen physischen Rechenzentrum
+* Gemeinsam genutzter Speicher für StorageGRID -Metadaten und Objekt-Repository-Volumes, auf den alle Hosts in einem einzigen physischen Rechenzentrum zugreifen können.  Sie könnten beispielsweise Speicher-Arrays der NetApp E-Serie verwenden.
+
+
+Wenn Sie virtuelle Hosts verwenden und die zugrunde liegende Hypervisor-Schicht die VM-Migration unterstützt, möchten Sie diese Funktion möglicherweise anstelle der Knotenmigrationsfunktion in StorageGRID verwenden.  In diesem Fall können Sie diese zusätzlichen Anforderungen ignorieren.
+
+Fahren Sie die Knoten ordnungsgemäß herunter, bevor Sie eine Migration oder Hypervisor-Wartung durchführen. Siehe die Anweisungen fürlink:../maintain/shutting-down-grid-node.html["Herunterfahren eines Netzknotens"] .
+
+
+
+== VMware Live Migration wird nicht unterstützt
+
+Bei der Durchführung einer Bare-Metal-Installation auf VMware-VMs führen OpenStack Live Migration und VMware Live vMotion dazu, dass die Uhrzeit der virtuellen Maschine springt, und werden für Grid-Knoten jeglicher Art nicht unterstützt.  Obwohl es selten vorkommt, können falsche Uhrzeiten zum Verlust von Daten oder Konfigurationsaktualisierungen führen.
+
+Kaltmigration wird unterstützt.  Bei der Kaltmigration fahren Sie die StorageGRID -Knoten herunter, bevor Sie sie zwischen Hosts migrieren. Siehe die Anweisungen fürlink:../maintain/shutting-down-grid-node.html["Herunterfahren eines Netzknotens"] .
+
+
+
+== Konsistente Netzwerkschnittstellennamen
+
+Um einen Knoten von einem Host auf einen anderen zu verschieben, muss der StorageGRID Hostdienst ein gewisses Vertrauen darin haben, dass die externe Netzwerkkonnektivität, über die der Knoten an seinem aktuellen Standort verfügt, am neuen Standort dupliziert werden kann.  Diese Zuverlässigkeit wird durch die Verwendung konsistenter Netzwerkschnittstellennamen in den Hosts erreicht.
+
+Nehmen wir beispielsweise an, dass StorageGRID NodeA, das auf Host1 ausgeführt wird, mit den folgenden Schnittstellenzuordnungen konfiguriert wurde:
+
+image::../media/eth0_bond.gif[Dieses Bild wird durch den umgebenden Text erklärt.]
+
+Die linke Seite der Pfeile entspricht den herkömmlichen Schnittstellen, wie sie innerhalb eines StorageGRID Containers angezeigt werden (d. h. jeweils den Schnittstellen Grid, Admin und Client Network).  Die rechte Seite der Pfeile entspricht den tatsächlichen Hostschnittstellen, die diese Netzwerke bereitstellen. Dabei handelt es sich um drei VLAN-Schnittstellen, die derselben physischen Schnittstellenverbindung untergeordnet sind.
+
+Nehmen wir nun an, Sie möchten NodeA auf Host2 migrieren.  Wenn Host2 auch über Schnittstellen mit den Namen bond0.1001, bond0.1002 und bond0.1003 verfügt, lässt das System die Verschiebung zu, da davon ausgegangen wird, dass die gleichnamigen Schnittstellen auf Host2 dieselbe Konnektivität bieten wie auf Host1.  Wenn Host2 keine Schnittstellen mit denselben Namen hat, wird die Verschiebung nicht zugelassen.
+
+Es gibt viele Möglichkeiten, eine konsistente Benennung der Netzwerkschnittstellen über mehrere Hosts hinweg zu erreichen. Siehelink:configuring-host-network.html["Konfigurieren des Hostnetzwerks"] für einige Beispiele.
+
+
+
+== Gemeinsam genutzter Speicher
+
+Um schnelle Knotenmigrationen mit geringem Overhead zu erreichen, verschiebt die StorageGRID Knotenmigrationsfunktion die Knotendaten nicht physisch.  Stattdessen wird die Knotenmigration wie folgt als Paar von Export- und Importvorgängen durchgeführt:
+
+. Während des Vorgangs „Knotenexport“ wird eine kleine Menge persistenter Statusdaten aus dem auf HostA ausgeführten Knotencontainer extrahiert und auf dem Systemdatenvolume dieses Knotens zwischengespeichert.  Anschließend wird der Knotencontainer auf HostA deinstanziiert.
+. Während des Vorgangs „Knotenimport“ wird der Knotencontainer auf HostB instanziiert, der dieselbe Netzwerkschnittstelle und dieselben Blockspeicherzuordnungen verwendet, die auf HostA wirksam waren.  Anschließend werden die zwischengespeicherten persistenten Statusdaten in die neue Instanz eingefügt.
+
+
+Bei diesem Betriebsmodus müssen alle Systemdaten und Objektspeichervolumes des Knotens sowohl von HostA als auch von HostB aus zugänglich sein, damit die Migration zulässig ist und funktioniert.  Darüber hinaus müssen sie mit Namen in den Knoten abgebildet worden sein, die garantiert auf dieselben LUNs auf HostA und HostB verweisen.
+
+Das folgende Beispiel zeigt eine Lösung für die Blockgerätezuordnung für einen StorageGRID Speicherknoten, bei dem DM-Multipathing auf den Hosts verwendet wird und das Alias-Feld in `/etc/multipath.conf` um konsistente, benutzerfreundliche Blockgerätenamen bereitzustellen, die auf allen Hosts verfügbar sind.
+
+image::../media/block_device_mapping_rhel.gif[Dieses Bild wird durch den umgebenden Text erklärt.]

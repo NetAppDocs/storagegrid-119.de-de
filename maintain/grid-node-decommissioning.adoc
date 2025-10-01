@@ -1,0 +1,62 @@
+---
+permalink: maintain/grid-node-decommissioning.html 
+sidebar: sidebar 
+keywords: storagegrid, decommission, remove grid node 
+summary: Mit dem Verfahren zur Knoten-Außerbetriebnahme können Sie einen oder mehrere Grid-Knoten an einem oder mehreren Standorten entfernen.  Sie können den primären Admin-Knoten nicht außer Betrieb nehmen. 
+---
+= Außerbetriebnahme von Netzknoten
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Mit dem Verfahren zur Knoten-Außerbetriebnahme können Sie einen oder mehrere Grid-Knoten an einem oder mehreren Standorten entfernen.  Sie können den primären Admin-Knoten nicht außer Betrieb nehmen.
+
+
+
+== Wann sollte ein Knoten außer Betrieb genommen werden?
+
+Verwenden Sie das Verfahren zur Außerbetriebnahme von Knoten, wenn einer der folgenden Punkte zutrifft:
+
+* Sie haben in einer Erweiterung einen größeren Speicherknoten hinzugefügt und möchten einen oder mehrere kleinere Speicherknoten entfernen, dabei aber gleichzeitig Objekte beibehalten.
++
+
+TIP: Wenn Sie ein älteres Gerät durch ein neueres Gerät ersetzen möchten, bedenken Sie https://docs.netapp.com/us-en/storagegrid-appliances/commonhardware/how-appliance-node-cloning-works.html["Klonen des Appliance-Knotens"^] anstatt bei einer Erweiterung ein neues Gerät hinzuzufügen und das alte Gerät anschließend außer Betrieb zu nehmen.
+
+* Sie benötigen insgesamt weniger Speicherplatz.
+* Sie benötigen keinen Gateway-Knoten mehr.
+* Sie benötigen keinen nicht primären Admin-Knoten mehr.
+* Ihr Grid enthält einen getrennten Knoten, den Sie nicht wiederherstellen oder wieder online bringen können.
+* Ihr Raster enthält einen Archivknoten.
+
+
+
+
+== So wird ein Knoten außer Betrieb genommen
+
+Sie können verbundene oder getrennte Netzknoten außer Betrieb nehmen.
+
+Außerbetriebnahme verbundener Knoten:: Im Allgemeinen sollten Sie Grid-Knoten nur dann außer Betrieb nehmen, wenn sie mit dem StorageGRID -System verbunden sind und nur, wenn alle Knoten in einem normalen Zustand sind (grüne Symbole auf den Seiten *NODES* und auf der Seite *Decommission Nodes*).
++
+--
+Anweisungen hierzu finden Sie unterlink:decommissioning-connected-grid-nodes.html["Angeschlossene Netzknoten außer Betrieb nehmen"] .
+
+--
+Getrennte Knoten außer Betrieb nehmen:: In einigen Fällen müssen Sie möglicherweise einen Grid-Knoten außer Betrieb nehmen, der derzeit nicht mit dem Grid verbunden ist (einen Knoten, dessen Zustand unbekannt oder administrativ ausgefallen ist).
++
+--
+Anweisungen hierzu finden Sie unterlink:decommissioning-disconnected-grid-nodes.html["Abgeschaltete Netzknoten außer Betrieb nehmen"] .
+
+--
+
+
+
+
+== Was ist vor der Außerbetriebnahme eines Knotens zu beachten?
+
+Bevor Sie eines der Verfahren durchführen, überprüfen Sie die Überlegungen für jeden Knotentyp:
+
+* link:considerations-for-decommissioning-admin-or-gateway-nodes.html["Überlegungen zur Außerbetriebnahme von Admin- oder Gateway-Knoten"]
+* link:considerations-for-decommissioning-storage-nodes.html["Überlegungen zur Außerbetriebnahme von Speicherknoten"]
+

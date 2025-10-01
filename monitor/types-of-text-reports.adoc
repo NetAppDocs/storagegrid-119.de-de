@@ -1,0 +1,112 @@
+---
+permalink: monitor/types-of-text-reports.html 
+sidebar: sidebar 
+keywords: how to use text reports 
+summary: 'Textberichte zeigen eine Textdarstellung von Attributdatenwerten an, die vom NMS-Dienst verarbeitet wurden.  Abhängig vom Zeitraum, über den Sie berichten, werden zwei Arten von Berichten generiert: Rohtextberichte für Zeiträume unter einer Woche und aggregierte Textberichte für Zeiträume über einer Woche.' 
+---
+= Verwenden Sie Textberichte
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Textberichte zeigen eine Textdarstellung von Attributdatenwerten an, die vom NMS-Dienst verarbeitet wurden.  Abhängig vom Zeitraum, über den Sie berichten, werden zwei Arten von Berichten generiert: Rohtextberichte für Zeiträume unter einer Woche und aggregierte Textberichte für Zeiträume über einer Woche.
+
+
+
+== Rohtextberichte
+
+Ein Rohtextbericht zeigt Details zum ausgewählten Attribut an:
+
+* Empfangszeit: Lokales Datum und Uhrzeit, zu der ein Beispielwert der Daten eines Attributs vom NMS-Dienst verarbeitet wurde.
+* Abtastzeit: Lokales Datum und Uhrzeit, zu der ein Attributwert abgetastet oder an der Quelle geändert wurde.
+* Wert: Attributwert zum Zeitpunkt der Abtastung.
+
+
+image::../media/raw_text_report.gif[Screenshot mit dem Rohtextbericht]
+
+
+
+== Aggregierte Textberichte
+
+Ein aggregierter Textbericht zeigt Daten über einen längeren Zeitraum (normalerweise eine Woche) an als ein Rohtextbericht.  Jeder Eintrag ist das Ergebnis der Zusammenfassung mehrerer Attributwerte (eine Ansammlung von Attributwerten) durch den NMS-Dienst im Laufe der Zeit in einen einzigen Eintrag mit Durchschnitts-, Maximal- und Minimalwerten, die aus der Ansammlung abgeleitet werden.
+
+Jeder Eintrag zeigt die folgenden Informationen an:
+
+* Aggregierte Zeit: Letztes lokales Datum und Uhrzeit, zu der der NMS-Dienst eine Reihe geänderter Attributwerte aggregiert (gesammelt) hat.
+* Durchschnittswert: Der Durchschnitt des Attributwerts über den aggregierten Zeitraum.
+* Mindestwert: Der Mindestwert über den aggregierten Zeitraum.
+* Maximalwert: Der Maximalwert über den aggregierten Zeitraum.
+
+
+image::../media/aggregate_text_report.gif[Screenshot mit dem aggregierten Textbericht]
+
+
+
+== Textberichte erstellen
+
+Textberichte zeigen eine Textdarstellung von Attributdatenwerten an, die vom NMS-Dienst verarbeitet wurden.  Sie können über einen Rechenzentrumsstandort, einen Netzknoten, eine Komponente oder einen Dienst berichten.
+
+.Bevor Sie beginnen
+* Sie müssen beim Grid Manager mit einemlink:../admin/web-browser-requirements.html["unterstützter Webbrowser"] .
+* Du hastlink:../admin/admin-group-permissions.html["spezifische Zugriffsberechtigungen"] .
+
+
+.Informationen zu diesem Vorgang
+Bei Attributdaten, bei denen davon auszugehen ist, dass sie sich ständig ändern, werden diese Attributdaten vom NMS-Dienst (an der Quelle) in regelmäßigen Abständen abgetastet.  Bei Attributdaten, die sich selten ändern (z. B. Daten, die auf Ereignissen wie Zustands- oder Statusänderungen basieren), wird bei einer Wertänderung ein Attributwert an den NMS-Dienst gesendet.
+
+Die Art des angezeigten Berichts hängt vom konfigurierten Zeitraum ab.  Standardmäßig werden aggregierte Textberichte für Zeiträume von mehr als einer Woche erstellt.
+
+Grauer Text zeigt an, dass der Dienst während der Stichprobenentnahme administrativ nicht erreichbar war.  Blauer Text zeigt an, dass sich der Dienst in einem unbekannten Zustand befand.
+
+.Schritte
+. Wählen Sie *SUPPORT* > *Tools* > *Gittertopologie*.
+. Wählen Sie *_Grid-Knoten_* > *_Komponente oder Dienst_* > *Berichte* > *Text*.
+. Wählen Sie aus der Dropdown-Liste *Attribut* das Attribut aus, über das berichtet werden soll.
+. Wählen Sie die Anzahl der Ergebnisse pro Seite aus der Dropdown-Liste *Ergebnisse pro Seite* aus.
+. Um Werte auf maximal drei Dezimalstellen zu runden (beispielsweise bei Attributen, die als Prozentsätze angegeben werden), deaktivieren Sie das Kontrollkästchen *Rohdaten*.
+. Wählen Sie aus der Dropdown-Liste *Schnellabfrage* den Zeitraum aus, über den berichtet werden soll.
++
+Wählen Sie die Option „Benutzerdefinierte Abfrage“, um einen bestimmten Zeitraum auszuwählen.
+
++
+Der Bericht erscheint nach wenigen Augenblicken.  Planen Sie für die tabellarische Darstellung großer Zeiträume mehrere Minuten ein.
+
+. Wenn Sie „Benutzerdefinierte Abfrage“ ausgewählt haben, müssen Sie den Berichtszeitraum anpassen, indem Sie das *Startdatum* und das *Enddatum* eingeben.
++
+Verwenden Sie das Format `YYYY/MM/DDHH:MM:SS` in Ortszeit.  Um dem Format zu entsprechen, sind führende Nullen erforderlich.  Beispielsweise schlägt die Validierung bei 2017/4/6 7:30:00 fehl.  Das richtige Format ist: 06.04.2017 07:30:00.
+
+. Klicken Sie auf *Aktualisieren*.
++
+Nach wenigen Augenblicken wird ein Textbericht erstellt.  Planen Sie für die tabellarische Darstellung großer Zeiträume mehrere Minuten ein.  Abhängig von der für die Abfrage eingestellten Zeitdauer wird entweder ein Rohtextbericht oder ein aggregierter Textbericht angezeigt.
+
+
+
+
+
+== Textberichte exportieren
+
+Exportierte Textberichte öffnen eine neue Browser-Registerkarte, in der Sie die Daten auswählen und kopieren können.
+
+.Informationen zu diesem Vorgang
+Die kopierten Daten können dann in einem neuen Dokument (z. B. einer Tabelle) gespeichert und zur Analyse der Leistung des StorageGRID Systems verwendet werden.
+
+.Schritte
+. Wählen Sie *SUPPORT* > *Tools* > *Gittertopologie*.
+. Erstellen Sie einen Textbericht.
+. Klicken Sie auf *Exportieren*image:../media/icon_export.gif["Exportsymbol"] .
++
+image::../media/export_text_report.gif[Screenshot durch umgebenden Text beschrieben]
+
++
+Das Fenster „Textbericht exportieren“ wird geöffnet und zeigt den Bericht an.
+
++
+image::../media/export_text_report_data.gif[Screenshot mit einem Beispieltextbericht]
+
+. Wählen Sie den Inhalt des Fensters „Textbericht exportieren“ aus und kopieren Sie ihn.
++
+Diese Daten können nun in ein Drittdokument, beispielsweise eine Tabellenkalkulation, eingefügt werden.
+
+

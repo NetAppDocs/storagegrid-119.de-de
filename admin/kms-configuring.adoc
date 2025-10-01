@@ -1,0 +1,21 @@
+---
+permalink: admin/kms-configuring.html 
+sidebar: sidebar 
+keywords: configure kms, key management server, kmip, Key Management Interoperability Protocol 
+summary: 'Ein Schlüsselverwaltungsserver (KMS) ist ein externes Drittanbietersystem, das mithilfe des Key Management Interoperability Protocol (KMIP) Verschlüsselungsschlüssel für StorageGRID Geräteknoten am zugehörigen StorageGRID Standort bereitstellt.' 
+---
+= Was ist ein Schlüsselverwaltungsserver (KMS)?
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Ein Schlüsselverwaltungsserver (KMS) ist ein externes Drittanbietersystem, das mithilfe des Key Management Interoperability Protocol (KMIP) Verschlüsselungsschlüssel für StorageGRID Appliance-Knoten am zugehörigen StorageGRID Standort bereitstellt.
+
+StorageGRID unterstützt nur bestimmte Schlüsselverwaltungsserver.  Eine Liste der unterstützten Produkte und Versionen finden Sie im https://imt.netapp.com/matrix/#welcome["NetApp Interoperability Matrix Tool (IMT)"^] .
+
+Sie können einen oder mehrere Schlüsselverwaltungsserver verwenden, um die Knotenverschlüsselungsschlüssel für alle StorageGRID Appliance-Knoten zu verwalten, bei denen während der Installation die Einstellung *Knotenverschlüsselung* aktiviert wurde.  Durch die Verwendung von Schlüsselverwaltungsservern mit diesen Appliance-Knoten können Sie Ihre Daten schützen, selbst wenn eine Appliance aus dem Rechenzentrum entfernt wird.  Nachdem die Appliance-Volumes verschlüsselt wurden, können Sie auf keine Daten auf der Appliance zugreifen, es sei denn, der Knoten kann mit dem KMS kommunizieren.
+
+
+CAUTION: StorageGRID erstellt oder verwaltet die externen Schlüssel, die zum Verschlüsseln und Entschlüsseln von Appliance-Knoten verwendet werden, nicht.  Wenn Sie zum Schutz von StorageGRID -Daten einen externen Schlüsselverwaltungsserver verwenden möchten, müssen Sie wissen, wie dieser Server eingerichtet wird und wie die Verschlüsselungsschlüssel verwaltet werden.  Die Durchführung wichtiger Verwaltungsaufgaben geht über den Rahmen dieser Anweisungen hinaus.  Wenn Sie Hilfe benötigen, lesen Sie die Dokumentation zu Ihrem Schlüsselverwaltungsserver oder wenden Sie sich an den technischen Support.

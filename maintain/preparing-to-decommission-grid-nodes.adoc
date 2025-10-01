@@ -1,0 +1,14 @@
+---
+permalink: maintain/preparing-to-decommission-grid-nodes.html 
+sidebar: sidebar 
+keywords: storagegrid, decommission 
+summary: Sie müssen die Überlegungen zum Entfernen von Grid-Knoten überprüfen und bestätigen, dass keine Reparaturaufträge für löschcodierte Daten aktiv sind. 
+---
+= Vorbereitung der Außerbetriebnahme von Netzknoten
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Sie müssen die Überlegungen zum Entfernen von Grid-Knoten überprüfen und bestätigen, dass keine Reparaturaufträge für löschcodierte Daten aktiv sind.

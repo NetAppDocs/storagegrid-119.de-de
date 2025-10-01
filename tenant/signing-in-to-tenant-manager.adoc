@@ -1,0 +1,104 @@
+---
+permalink: tenant/signing-in-to-tenant-manager.html 
+sidebar: sidebar 
+keywords: how to sign in to tenant manager 
+summary: Sie greifen auf den Mandanten-Manager zu, indem Sie die URL für den Mandanten in die Adressleiste eines unterstützten Webbrowsers eingeben. 
+---
+= Sign in
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Sie erreichen den Mandantenmanager, indem Sie die URL des Mandanten in die Adressleiste eineslink:../admin/web-browser-requirements.html["unterstützter Webbrowser"] .
+
+.Bevor Sie beginnen
+* Sie haben Ihre Anmeldedaten.
+* Sie verfügen über eine URL für den Zugriff auf den Mandanten-Manager, die Sie von Ihrem Grid-Administrator erhalten haben.  Die URL sieht wie eines dieser Beispiele aus:
++
+`\https://FQDN_or_Admin_Node_IP/`
+
++
+`\https://FQDN_or_Admin_Node_IP:port/`
+
++
+`\https://FQDN_or_Admin_Node_IP/?accountId=20-digit-account-id`
+
++
+`\https://FQDN_or_Admin_Node_IP:port/?accountId=20-digit-account-id`
+
++
+Die URL enthält immer einen vollqualifizierten Domänennamen (FQDN), die IP-Adresse eines Admin-Knotens oder die virtuelle IP-Adresse einer HA-Gruppe von Admin-Knoten.  Es kann auch eine Portnummer, die 20-stellige Mandantenkonto-ID oder beides enthalten.
+
+* Wenn die URL nicht die 20-stellige Konto-ID des Mandanten enthält, verfügen Sie über diese Konto-ID.
+* Sie verwenden einelink:../admin/web-browser-requirements.html["unterstützter Webbrowser"] .
+* Cookies sind in Ihrem Webbrowser aktiviert.
+* Sie gehören zu einer Benutzergruppe, dielink:tenant-management-permissions.html["spezifische Zugriffsberechtigungen"] .
+
+
+.Schritte
+. Starten Sie einelink:../admin/web-browser-requirements.html["unterstützter Webbrowser"] .
+. Geben Sie in der Adressleiste des Browsers die URL für den Zugriff auf den Tenant Manager ein.
+. Wenn eine Sicherheitswarnung angezeigt wird, installieren Sie das Zertifikat mithilfe des Installationsassistenten des Browsers.
+. Sign in .
++
+Der angezeigte Anmeldebildschirm hängt von der eingegebenen URL ab und davon, ob Single Sign-On (SSO) für StorageGRID konfiguriert wurde.
+
++
+[role="tabbed-block"]
+====
+.Kein SSO verwenden
+--
+Wenn StorageGRID kein SSO verwendet, wird einer der folgenden Bildschirme angezeigt:
+
+** Die Anmeldeseite des Grid Managers.  Wählen Sie den Link *Mandantenanmeldung* aus.
++
+image::../media/tenant_login_link.png[Anmeldelink für Mandanten auf der Anmeldeseite des Grid Managers]
+
+** Die Anmeldeseite des Tenant Managers. Das Feld *Konto* ist möglicherweise bereits ausgefüllt, wie unten gezeigt.
++
+image::../media/tenant_user_sign_in.png[Anmeldeseite für Mietermanager]
+
++
+... Wenn die 20-stellige Konto-ID des Mandanten nicht angezeigt wird, wählen Sie den Namen des Mandantenkontos aus, wenn dieser in der Liste der letzten Konten angezeigt wird, oder geben Sie die Konto-ID ein.
+... Geben Sie Ihren Benutzernamen und Ihr Passwort ein.
+... Wählen Sie * Sign in*.
++
+Das Tenant Manager-Dashboard wird angezeigt.
+
+... Wenn Sie ein erstes Passwort von jemand anderem erhalten haben, wählen Sie *_Benutzername_* > *Passwort ändern*, um Ihr Konto zu sichern.
+
+
+
+
+--
+.Verwenden von SSO
+--
+Wenn StorageGRID SSO verwendet, wird einer der folgenden Bildschirme angezeigt:
+
+** Die SSO-Seite Ihrer Organisation. Beispiel:
++
+image::../media/sso_organization_page.gif[Beispiel einer Anmeldeseite einer Organisation für SSO]
+
++
+Geben Sie Ihre Standard-SSO-Anmeldeinformationen ein und wählen Sie * Sign in*.
+
+** Die SSO-Anmeldeseite des Tenant Managers.
++
+image::../media/sign_in_sso.png[Anmelden bei einem Mandantenkonto, wenn SSO aktiviert ist]
+
++
+... Wenn die 20-stellige Konto-ID des Mandanten nicht angezeigt wird, wählen Sie den Namen des Mandantenkontos aus, wenn dieser in der Liste der letzten Konten angezeigt wird, oder geben Sie die Konto-ID ein.
+... Wählen Sie * Sign in*.
+... Sign in mit Ihren Standard-SSO-Anmeldeinformationen auf der SSO-Anmeldeseite Ihrer Organisation an.
++
+Das Tenant Manager-Dashboard wird angezeigt.
+
+
+
+
+
+--
+====
+

@@ -1,0 +1,224 @@
+---
+permalink: admin/grid-federation-troubleshoot.html 
+sidebar: sidebar 
+keywords: troubleshoot, grid federation connection, account clone, cross-grid replication, alerts, errors 
+summary: Möglicherweise müssen Sie Warnungen und Fehler im Zusammenhang mit Grid-Föderationsverbindungen, Kontoklonen und Grid-übergreifender Replikation beheben. 
+---
+= Beheben von Grid-Föderationsfehlern
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Möglicherweise müssen Sie Warnungen und Fehler im Zusammenhang mit Grid-Föderationsverbindungen, Kontoklonen und Grid-übergreifender Replikation beheben.
+
+
+
+== [[grid-federation-errors]]Warnungen und Fehler bei der Grid-Föderation-Verbindung
+
+Möglicherweise erhalten Sie Warnmeldungen oder es treten Fehler bei Ihren Grid-Föderation-Verbindungen auf.
+
+Nachdem Sie Änderungen zur Behebung eines Verbindungsproblems vorgenommen haben, testen Sie die Verbindung, um sicherzustellen, dass der Verbindungsstatus wieder auf *Verbunden* zurückkehrt. Anweisungen hierzu finden Sie unterlink:grid-federation-manage-connection.html["Grid-Föderationsverbindungen verwalten"] .
+
+
+
+=== Warnung bei Verbindungsfehlern im Grid-Verbund
+
+.Ausgabe
+Die Warnung *Fehler bei der Grid-Föderationsverbindung* wurde ausgelöst.
+
+.Details
+Diese Warnung weist darauf hin, dass die Grid-Föderationsverbindung zwischen den Grids nicht funktioniert.
+
+.Empfohlene Maßnahmen
+. Überprüfen Sie die Einstellungen auf der Seite „Grid Federation“ für beide Grids.  Bestätigen Sie, dass alle Werte korrekt sind. Sehen link:grid-federation-manage-connection.html["Grid-Föderationsverbindungen verwalten"] .
+. Überprüfen Sie die für die Verbindung verwendeten Zertifikate.  Stellen Sie sicher, dass keine Warnungen für abgelaufene Grid-Föderation-Zertifikate vorliegen und dass die Details für jedes Zertifikat gültig sind.  Die Anweisungen zum Rotieren von Verbindungszertifikaten finden Sie inlink:grid-federation-manage-connection.html["Grid-Föderationsverbindungen verwalten"] .
+. Bestätigen Sie, dass alle Admin- und Gateway-Knoten in beiden Grids online und verfügbar sind.  Beheben Sie alle Warnungen, die diese Knoten möglicherweise betreffen, und versuchen Sie es erneut.
+. Wenn Sie einen vollqualifizierten Domänennamen (FQDN) für das lokale oder Remote-Grid angegeben haben, bestätigen Sie, dass der DNS-Server online und verfügbar ist.  Sehenlink:grid-federation-overview.html["Was ist Grid-Föderation?"] für Netzwerk-, IP-Adress- und DNS-Anforderungen.
+
+
+
+
+=== Ablaufwarnung für Grid-Föderation-Zertifikat
+
+.Ausgabe
+Die Warnung *Ablauf des Grid-Föderation-Zertifikats* wurde ausgelöst.
+
+.Details
+Diese Warnung weist darauf hin, dass ein oder mehrere Grid-Föderationszertifikate bald ablaufen.
+
+.Empfohlene Maßnahmen
+Die Anweisungen zum Rotieren von Verbindungszertifikaten finden Sie inlink:grid-federation-manage-connection.html["Grid-Föderationsverbindungen verwalten"] .
+
+
+
+=== Fehler beim Bearbeiten einer Grid-Föderation-Verbindung
+
+.Ausgabe
+Beim Bearbeiten einer Grid-Föderation-Verbindung wird die folgende Warnmeldung angezeigt, wenn Sie *Speichern und testen* auswählen: „Fehler beim Erstellen einer Kandidatenkonfigurationsdatei auf einem oder mehreren Knoten.“
+
+.Details
+Wenn Sie eine Grid-Föderationsverbindung bearbeiten, versucht StorageGRID , eine „Kandidatenkonfigurationsdatei“ auf allen Admin-Knoten im ersten Grid zu speichern.  Eine Warnmeldung wird angezeigt, wenn diese Datei nicht auf allen Admin-Knoten gespeichert werden kann, beispielsweise weil ein Admin-Knoten offline ist.
+
+.Empfohlene Maßnahmen
+. Wählen Sie im Raster, das Sie zum Bearbeiten der Verbindung verwenden, *NODES* aus.
+. Bestätigen Sie, dass alle Admin-Knoten für dieses Grid online sind.
+. Wenn Knoten offline sind, bringen Sie sie wieder online und versuchen Sie erneut, die Verbindung zu bearbeiten.
+
+
+
+
+== Fehler beim Klonen des Kontos
+
+
+
+=== Anmeldung bei einem geklonten Mandantenkonto nicht möglich
+
+.Ausgabe
+Sie können sich nicht bei einem geklonten Mandantenkonto anmelden.  Die Fehlermeldung auf der Anmeldeseite des Tenant Managers lautet: „Ihre Anmeldeinformationen für dieses Konto waren ungültig.“  Bitte versuchen Sie es erneut."
+
+.Details
+Aus Sicherheitsgründen wird das von Ihnen für den lokalen Root-Benutzer des Mandanten festgelegte Kennwort nicht geklont, wenn ein Mandantenkonto vom Quellraster des Mandanten in das Zielraster des Mandanten geklont wird.  Wenn ein Mandant lokale Benutzer in seinem Quellraster erstellt, werden die Kennwörter der lokalen Benutzer ebenfalls nicht in das Zielraster geklont.
+
+.Empfohlene Maßnahmen
+Bevor sich der Root-Benutzer beim Ziel-Grid des Mandanten anmelden kann, muss ein Grid-Administrator zunächstlink:changing-password-for-tenant-local-root-user.html["Ändern Sie das Passwort für den lokalen Root-Benutzer"] auf dem Zielraster.
+
+Bevor sich ein geklonter lokaler Benutzer beim Zielraster des Mandanten anmelden kann, muss der Root-Benutzer des geklonten Mandanten ein Kennwort für den Benutzer im Zielraster hinzufügen. Anweisungen hierzu finden Sie unterlink:../tenant/managing-local-users.html["Lokale Benutzer verwalten"] in der Anleitung zur Nutzung des Tenant Managers.
+
+
+
+=== Mandant ohne Klon erstellt
+
+.Ausgabe
+Sie sehen die Meldung „Mandant ohne Klon erstellt“, nachdem Sie einen neuen Mandanten mit der Berechtigung *Grid-Föderationsverbindung verwenden* erstellt haben.
+
+.Details
+Dieses Problem kann auftreten, wenn Aktualisierungen des Verbindungsstatus verzögert werden, was dazu führen kann, dass eine fehlerhafte Verbindung als *Verbunden* aufgeführt wird.
+
+.Empfohlene Maßnahmen
+. Überprüfen Sie den in der Fehlermeldung aufgeführten Grund und beheben Sie alle Netzwerk- oder sonstigen Probleme, die möglicherweise die Funktionsfähigkeit der Verbindung verhindern. Sehen <<grid-federation-errors,Warnungen und Fehler bei der Grid-Föderation-Verbindung>> .
+. Folgen Sie den Anweisungen, um eine Grid-Föderation-Verbindung zu testen inlink:grid-federation-manage-connection.html["Grid-Föderationsverbindungen verwalten"] um zu bestätigen, dass das Problem behoben wurde.
+. Wählen Sie im Quellraster des Mandanten *MIETER* aus.
+. Suchen Sie das Mandantenkonto, dessen Klonen fehlgeschlagen ist.
+. Wählen Sie den Mandantennamen aus, um die Detailseite anzuzeigen.
+. Wählen Sie *Kontoklon erneut versuchen*.
++
+image::../media/grid-federation-retry-account-clone.png[Screenshot mit einer Fehlermeldung und der Schaltfläche „Kontoklon erneut versuchen“]
+
++
+Wenn der Fehler behoben wurde, wird das Mandantenkonto nun in das andere Grid geklont.
+
+
+
+
+
+== Warnungen und Fehler bei der Grid-übergreifenden Replikation
+
+
+
+=== Letzter angezeigter Fehler für Verbindung oder Mandant
+
+.Ausgabe
+Wannlink:../monitor/grid-federation-monitor-connections.html["Anzeigen einer Grid-Föderation-Verbindung"] (oder wennlink:grid-federation-manage-tenants.html["Verwaltung der zugelassenen Mieter"] für eine Verbindung), bemerken Sie einen Fehler in der Spalte *Letzter Fehler* auf der Seite mit den Verbindungsdetails. Beispiel:
+
+image::../media/grid-federation-last-error.png[Screenshot einer Meldung in der Spalte „Letzter Fehler“ einer Grid-Föderation-Verbindung]
+
+.Details
+Für jede Grid-Föderationsverbindung zeigt die Spalte *Letzter Fehler* den letzten Fehler an, der ggf. beim Replizieren der Daten eines Mandanten in das andere Grid aufgetreten ist. In dieser Spalte wird nur der letzte aufgetretene Cross-Grid-Replikationsfehler angezeigt. Eventuell zuvor aufgetretene Fehler werden nicht angezeigt. Ein Fehler in dieser Spalte kann aus einem der folgenden Gründe auftreten:
+
+* Die Quellobjektversion wurde nicht gefunden.
+* Der Quell-Bucket wurde nicht gefunden.
+* Der Ziel-Bucket wurde gelöscht.
+* Der Ziel-Bucket wurde von einem anderen Konto neu erstellt.
+* Die Versionsverwaltung des Ziel-Buckets ist ausgesetzt.
+* Der Ziel-Bucket wurde vom selben Konto neu erstellt, ist jetzt aber nicht mehr versioniert.
+
+
+.Empfohlene Maßnahmen
+Wenn in der Spalte *Letzter Fehler* eine Fehlermeldung angezeigt wird, gehen Sie folgendermaßen vor:
+
+. Überprüfen Sie den Nachrichtentext.
+. Führen Sie alle empfohlenen Aktionen aus.  Wenn beispielsweise die Versionierung für den Ziel-Bucket für die Cross-Grid-Replikation ausgesetzt wurde, aktivieren Sie die Versionierung für diesen Bucket erneut.
+. Wählen Sie die Verbindung oder das Mandantenkonto aus der Tabelle aus.
+. Wählen Sie *Fehler löschen*.
+. Wählen Sie *Ja*, um die Nachricht zu löschen und den Systemstatus zu aktualisieren.
+. Warten Sie 5–6 Minuten und nehmen Sie dann einen neuen Gegenstand in den Eimer.  Vergewissern Sie sich, dass die Fehlermeldung nicht erneut angezeigt wird.
++
+
+NOTE: Um sicherzustellen, dass die Fehlermeldung gelöscht wird, warten Sie nach dem Zeitstempel in der Nachricht mindestens 5 Minuten, bevor Sie ein neues Objekt aufnehmen.
+
++
+
+TIP: Nachdem Sie den Fehler behoben haben, wird möglicherweise ein neuer *Letzter Fehler* angezeigt, wenn Objekte in einem anderen Bucket aufgenommen werden, der ebenfalls einen Fehler aufweist.
+
+. Um festzustellen, ob Objekte aufgrund des Bucket-Fehlers nicht repliziert werden konnten, siehelink:../admin/grid-federation-retry-failed-replication.html["Identifizieren und wiederholen Sie fehlgeschlagene Replikationsvorgänge"] .
+
+
+
+
+=== Dauerhafter Fehleralarm bei Cross-Grid-Replikation
+
+.Ausgabe
+Die Warnung *Dauerhafter Fehler bei der Cross-Grid-Replikation* wurde ausgelöst.
+
+.Details
+Diese Warnung weist darauf hin, dass Mandantenobjekte aus einem Grund, für dessen Lösung ein Benutzereingriff erforderlich ist, nicht zwischen den Buckets auf zwei Grids repliziert werden können.  Diese Warnung wird normalerweise durch eine Änderung am Quell- oder Ziel-Bucket verursacht.
+
+.Empfohlene Maßnahmen
+. Sign in , in dem die Warnung ausgelöst wurde.
+. Gehen Sie zu *KONFIGURATION* > *System* > *Grid-Föderation* und suchen Sie den in der Warnung aufgeführten Verbindungsnamen.
+. Sehen Sie sich auf der Registerkarte „Zulässige Mandanten“ die Spalte „Letzter Fehler“ an, um festzustellen, welche Mandantenkonten Fehler aufweisen.
+. Weitere Informationen zum Fehler finden Sie in den Anweisungen inlink:../monitor/grid-federation-monitor-connections.html["Überwachen von Grid-Föderation-Verbindungen"] um die Cross-Grid-Replikationsmetriken zu überprüfen.
+. Für jedes betroffene Mandantenkonto:
++
+.. Die Anweisungen finden Sie inlink:../monitor/monitoring-tenant-activity.html["Überwachen Sie die Mieteraktivität"] um zu bestätigen, dass der Mandant sein Kontingent im Zielgrid für die Grid-übergreifende Replikation nicht überschritten hat.
+.. Erhöhen Sie bei Bedarf das Kontingent des Mandanten im Zielraster, um das Speichern neuer Objekte zu ermöglichen.
+
+
+. Melden Sie sich für jeden betroffenen Mandanten in beiden Rastern beim Mandanten-Manager an, damit Sie die Bucket-Liste vergleichen können.
+. Bestätigen Sie für jeden Bucket, für den die Cross-Grid-Replikation aktiviert ist, Folgendes:
++
+** Für denselben Mandanten gibt es im anderen Raster einen entsprechenden Bucket (der genaue Name muss verwendet werden).
+** Für beide Buckets ist die Objektversionierung aktiviert (die Versionierung kann in keinem der Grids ausgesetzt werden).
+** Bei beiden Buckets ist die S3-Objektsperre deaktiviert.
+** Keiner der Buckets befindet sich im Status *Objekte werden gelöscht: schreibgeschützt*.
+
+
+. Um zu bestätigen, dass das Problem behoben wurde, lesen Sie die Anweisungen inlink:../monitor/grid-federation-monitor-connections.html["Überwachen von Grid-Föderation-Verbindungen"] um die Metriken der Cross-Grid-Replikation zu überprüfen, oder führen Sie diese Schritte aus:
++
+.. Gehen Sie zurück zur Grid-Föderationsseite.
+.. Wählen Sie den betroffenen Mandanten aus und wählen Sie in der Spalte *Letzter Fehler* die Option *Fehler löschen*.
+.. Wählen Sie *Ja*, um die Nachricht zu löschen und den Systemstatus zu aktualisieren.
+.. Warten Sie 5–6 Minuten und nehmen Sie dann einen neuen Gegenstand in den Eimer.  Vergewissern Sie sich, dass die Fehlermeldung nicht erneut angezeigt wird.
++
+
+NOTE: Um sicherzustellen, dass die Fehlermeldung gelöscht wird, warten Sie nach dem Zeitstempel in der Nachricht mindestens 5 Minuten, bevor Sie ein neues Objekt aufnehmen.
+
++
+
+NOTE: Nach der Lösung des Alarms kann es bis zu einem Tag dauern, bis dieser gelöscht wird.
+
+.. Gehe zulink:grid-federation-retry-failed-replication.html["Identifizieren und wiederholen Sie fehlgeschlagene Replikationsvorgänge"] um alle Objekte zu identifizieren oder Markierungen zu löschen, die nicht in das andere Raster repliziert werden konnten, und um die Replikation bei Bedarf erneut zu versuchen.
+
+
+
+
+
+
+=== Warnung: Gridübergreifende Replikationsressource nicht verfügbar
+
+.Ausgabe
+Die Warnung *Gridübergreifende Replikationsressource nicht verfügbar* wurde ausgelöst.
+
+.Details
+Diese Warnung weist darauf hin, dass Grid-übergreifende Replikationsanforderungen ausstehen, weil eine Ressource nicht verfügbar ist.  Beispielsweise könnte ein Netzwerkfehler vorliegen.
+
+.Empfohlene Maßnahmen
+. Überwachen Sie die Warnung, um zu sehen, ob sich das Problem von selbst löst.
+. Wenn das Problem weiterhin besteht, ermitteln Sie, ob für eines der Grids eine Warnung „Fehler bei der Grid-Föderationsverbindung“ für dieselbe Verbindung oder eine Warnung „Kommunikation mit Knoten nicht möglich“ für einen Knoten vorliegt.  Diese Warnung kann möglicherweise behoben werden, wenn Sie diese Warnungen beheben.
+. Weitere Informationen zum Fehler finden Sie in den Anweisungen inlink:../monitor/grid-federation-monitor-connections.html["Überwachen von Grid-Föderation-Verbindungen"] um die Cross-Grid-Replikationsmetriken zu überprüfen.
+. Wenn Sie die Warnung nicht beheben können, wenden Sie sich an den technischen Support.
+
+
+Die Cross-Grid-Replikation wird nach der Lösung des Problems wie gewohnt fortgesetzt.

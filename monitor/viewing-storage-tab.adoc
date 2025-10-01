@@ -1,0 +1,38 @@
+---
+permalink: monitor/viewing-storage-tab.html 
+sidebar: sidebar 
+keywords: storage tab 
+summary: Auf der Registerkarte „Speicher“ werden die Speicherverfügbarkeit und andere Speichermetriken zusammengefasst. 
+---
+= Registerkarte „Speicher“ anzeigen
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Auf der Registerkarte „Speicher“ werden die Speicherverfügbarkeit und andere Speichermetriken zusammengefasst.
+
+Die Registerkarte „Speicher“ wird für alle Knoten, jeden Standort und das gesamte Raster angezeigt.
+
+
+
+== Diagramme zum verwendeten Speicher
+
+Für Speicherknoten, jeden Standort und das gesamte Raster enthält die Registerkarte „Speicher“ Diagramme, die zeigen, wie viel Speicher im Laufe der Zeit von Objektdaten und Objektmetadaten verwendet wurde.
+
+
+NOTE: Wenn ein Knoten nicht mit dem Grid verbunden ist, beispielsweise während eines Upgrades oder in einem getrennten Zustand, sind bestimmte Metriken möglicherweise nicht verfügbar oder aus den Site- und Grid-Gesamtwerten ausgeschlossen.  Nachdem ein Knoten die Verbindung zum Netz wiederhergestellt hat, warten Sie einige Minuten, bis sich die Werte stabilisiert haben.
+
+image::../media/nodes_storage_node_storage_tab.png[Knoten > Speicherknoten > Registerkarte „Speicher“]
+
+
+
+== Tabellen für Festplattengeräte, Volumes und Objektspeicher
+
+Für alle Knoten enthält die Registerkarte „Speicher“ Details zu den Festplattengeräten und Volumes auf dem Knoten.  Für Speicherknoten enthält die Objektspeichertabelle Informationen zu jedem Speichervolumen.
+
+image::../media/nodes_page_storage_tables.png[Knotenseiten-Speichertabellen]
+
+.Ähnliche Informationen
+link:monitoring-storage-capacity.html["Überwachen der Speicherkapazität"]

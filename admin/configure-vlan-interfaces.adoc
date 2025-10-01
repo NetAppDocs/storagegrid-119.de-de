@@ -1,0 +1,162 @@
+---
+permalink: admin/configure-vlan-interfaces.html 
+sidebar: sidebar 
+keywords: how to configure vlan interfaces, vlan interfaces, trunk interface 
+summary: 'Sie können virtuelle LAN-Schnittstellen (VLAN) auf Admin-Knoten und Gateway-Knoten erstellen und sie in HA-Gruppen und Load Balancer-Endpunkten verwenden, um den Datenverkehr aus Sicherheits-, Flexibilitäts- und Leistungsgründen zu isolieren und zu partitionieren.' 
+---
+= Konfigurieren von VLAN-Schnittstellen
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Sie können virtuelle LAN-Schnittstellen (VLAN) auf Admin-Knoten und Gateway-Knoten erstellen und sie in HA-Gruppen und Load Balancer-Endpunkten verwenden, um den Datenverkehr aus Sicherheits-, Flexibilitäts- und Leistungsgründen zu isolieren und zu partitionieren.
+
+
+
+== Überlegungen zu VLAN-Schnittstellen
+
+* Sie erstellen eine VLAN-Schnittstelle, indem Sie eine VLAN-ID eingeben und eine übergeordnete Schnittstelle auf einem oder mehreren Knoten auswählen.
+* Eine übergeordnete Schnittstelle muss als Trunk-Schnittstelle am Switch konfiguriert werden.
+* Eine übergeordnete Schnittstelle kann das Grid-Netzwerk (eth0), das Client-Netzwerk (eth2) oder eine zusätzliche Trunk-Schnittstelle für die VM oder den Bare-Metal-Host (z. B. ens256) sein.
+* Für jede VLAN-Schnittstelle können Sie nur eine übergeordnete Schnittstelle für einen bestimmten Knoten auswählen.  Sie können beispielsweise nicht sowohl die Grid-Netzwerkschnittstelle als auch die Client-Netzwerkschnittstelle auf demselben Gateway-Knoten als übergeordnete Schnittstelle für dasselbe VLAN verwenden.
+* Wenn die VLAN-Schnittstelle für den Datenverkehr des Admin-Knotens vorgesehen ist, der den Datenverkehr im Zusammenhang mit dem Grid Manager und dem Tenant Manager umfasst, wählen Sie nur Schnittstellen auf den Admin-Knoten aus.
+* Wenn die VLAN-Schnittstelle für S3-Client-Datenverkehr vorgesehen ist, wählen Sie Schnittstellen entweder auf Admin-Knoten oder Gateway-Knoten aus.
+* Wenn Sie Trunk-Schnittstellen hinzufügen müssen, finden Sie im Folgenden weitere Einzelheiten:
++
+** *VMware (nach der Installation des Knotens)*:link:../maintain/vmware-adding-trunk-or-access-interfaces-to-node.html["VMware: Trunk- oder Zugriffsschnittstellen zu einem Knoten hinzufügen"]
+** *RHEL (vor der Installation des Knotens)*:link:../rhel/creating-node-configuration-files.html["Erstellen Sie Knotenkonfigurationsdateien"]
+** *Ubuntu oder Debian (vor der Installation des Knotens)*:link:../ubuntu/creating-node-configuration-files.html["Erstellen Sie Knotenkonfigurationsdateien"]
+** *RHEL, Ubuntu oder Debian (nach der Installation des Knotens)*:link:../maintain/linux-adding-trunk-or-access-interfaces-to-node.html["Linux: Trunk oder Zugriffsschnittstellen zu einem Knoten hinzufügen"]
+
+
+
+
+
+
+== Erstellen einer VLAN-Schnittstelle
+
+.Bevor Sie beginnen
+* Sie sind beim Grid Manager angemeldet mit einemlink:../admin/web-browser-requirements.html["unterstützter Webbrowser"] .
+* Sie haben dielink:admin-group-permissions.html["Root-Zugriffsberechtigung"] .
+* Im Netzwerk wurde eine Trunk-Schnittstelle konfiguriert und an die VM oder den Linux-Knoten angeschlossen.  Sie kennen den Namen der Trunk-Schnittstelle.
+* Sie kennen die ID des VLAN, das Sie konfigurieren.
+
+
+.Informationen zu diesem Vorgang
+Ihr Netzwerkadministrator hat möglicherweise eine oder mehrere Trunk-Schnittstellen und ein oder mehrere VLANs konfiguriert, um den Client- oder Administratorverkehr verschiedener Anwendungen oder Mandanten zu trennen.  Jedes VLAN wird durch eine numerische ID oder ein Tag identifiziert.  Beispielsweise könnte Ihr Netzwerk VLAN 100 für FabricPool -Verkehr und VLAN 200 für eine Archivierungsanwendung verwenden.
+
+Mit dem Grid Manager können Sie VLAN-Schnittstellen erstellen, die Clients den Zugriff auf StorageGRID in einem bestimmten VLAN ermöglichen.  Wenn Sie VLAN-Schnittstellen erstellen, geben Sie die VLAN-ID an und wählen übergeordnete Schnittstellen (Trunk) auf einem oder mehreren Knoten aus.
+
+
+
+=== Zugriff auf den Assistenten
+
+.Schritte
+. Wählen Sie *KONFIGURATION* > *Netzwerk* > *VLAN-Schnittstellen*.
+. Wählen Sie *Erstellen*.
+
+
+
+
+=== Geben Sie Details für die VLAN-Schnittstellen ein
+
+.Schritte
+. Geben Sie die ID des VLAN in Ihrem Netzwerk an.  Sie können einen beliebigen Wert zwischen 1 und 4094 eingeben.
++
+VLAN-IDs müssen nicht eindeutig sein.  Sie können beispielsweise die VLAN-ID 200 für den Administratorverkehr an einem Standort und dieselbe VLAN-ID für den Clientverkehr an einem anderen Standort verwenden.  Sie können an jedem Standort separate VLAN-Schnittstellen mit unterschiedlichen Sätzen übergeordneter Schnittstellen erstellen.  Allerdings können zwei VLAN-Schnittstellen mit derselben ID nicht dieselbe Schnittstelle auf einem Knoten gemeinsam nutzen.  Wenn Sie eine ID angeben, die bereits verwendet wurde, erscheint eine Meldung.
+
+. Geben Sie optional eine kurze Beschreibung für die VLAN-Schnittstelle ein.
+. Wählen Sie *Weiter*.
+
+
+
+
+=== Übergeordnete Schnittstellen auswählen
+
+Die Tabelle listet die verfügbaren Schnittstellen für alle Admin-Knoten und Gateway-Knoten an jedem Standort in Ihrem Raster auf.  Admin-Netzwerkschnittstellen (eth1) können nicht als übergeordnete Schnittstellen verwendet werden und werden nicht angezeigt.
+
+.Schritte
+. Wählen Sie eine oder mehrere übergeordnete Schnittstellen aus, an die dieses VLAN angehängt werden soll.
++
+Beispielsweise möchten Sie möglicherweise ein VLAN an die Client-Netzwerkschnittstelle (eth2) für einen Gateway-Knoten und einen Admin-Knoten anhängen.
+
++
+image::../media/vlan-create-parent-interfaces.png[Übergeordnete Schnittstellen des VLAN-Erstellungsassistenten]
+
+. Wählen Sie *Weiter*.
+
+
+
+
+=== Bestätigen Sie die Einstellungen
+
+.Schritte
+. Überprüfen Sie die Konfiguration und nehmen Sie gegebenenfalls Änderungen vor.
++
+** Wenn Sie die VLAN-ID oder -Beschreibung ändern müssen, wählen Sie oben auf der Seite *VLAN-Details eingeben* aus.
+** Wenn Sie eine übergeordnete Schnittstelle ändern müssen, wählen Sie oben auf der Seite *Übergeordnete Schnittstellen auswählen* oder wählen Sie *Zurück*.
+** Wenn Sie eine übergeordnete Schnittstelle entfernen möchten, wählen Sie den Papierkorbimage:../media/icon-trash-can.png["Papierkorbsymbol"] .
+
+
+. Wählen Sie *Speichern*.
+. Warten Sie bis zu 5 Minuten, bis die neue Schnittstelle als Auswahl auf der Seite „Hochverfügbarkeitsgruppen“ angezeigt und in der Tabelle *Netzwerkschnittstellen* für den Knoten aufgeführt wird (*KNOTEN* > *_übergeordneter Schnittstellenknoten_* > *Netzwerk*).
+
+
+
+
+== Bearbeiten einer VLAN-Schnittstelle
+
+Wenn Sie eine VLAN-Schnittstelle bearbeiten, können Sie die folgenden Arten von Änderungen vornehmen:
+
+* Ändern Sie die VLAN-ID oder -Beschreibung.
+* Übergeordnete Schnittstellen hinzufügen oder entfernen.
+
+
+Beispielsweise möchten Sie möglicherweise eine übergeordnete Schnittstelle aus einer VLAN-Schnittstelle entfernen, wenn Sie den zugehörigen Knoten außer Betrieb nehmen möchten.
+
+Beachten Sie Folgendes:
+
+* Sie können eine VLAN-ID nicht ändern, wenn die VLAN-Schnittstelle in einer HA-Gruppe verwendet wird.
+* Sie können eine übergeordnete Schnittstelle nicht entfernen, wenn diese übergeordnete Schnittstelle in einer HA-Gruppe verwendet wird.
++
+Angenommen, VLAN 200 ist an übergeordnete Schnittstellen auf Knoten A und B angeschlossen. Wenn eine HA-Gruppe die VLAN 200-Schnittstelle für Knoten A und die eth2-Schnittstelle für Knoten B verwendet, können Sie die nicht verwendete übergeordnete Schnittstelle für Knoten B entfernen, die verwendete übergeordnete Schnittstelle für Knoten A jedoch nicht.
+
+
+
+.Schritte
+. Wählen Sie *KONFIGURATION* > *Netzwerk* > *VLAN-Schnittstellen*.
+. Aktivieren Sie das Kontrollkästchen für die VLAN-Schnittstelle, die Sie bearbeiten möchten.  Wählen Sie dann *Aktionen* > *Bearbeiten*.
+. Aktualisieren Sie optional die VLAN-ID oder die Beschreibung.  Wählen Sie dann *Weiter*.
++
+Sie können eine VLAN-ID nicht aktualisieren, wenn das VLAN in einer HA-Gruppe verwendet wird.
+
+. Aktivieren oder deaktivieren Sie optional die Kontrollkästchen, um übergeordnete Schnittstellen hinzuzufügen oder nicht verwendete Schnittstellen zu entfernen.  Wählen Sie dann *Weiter*.
+. Überprüfen Sie die Konfiguration und nehmen Sie gegebenenfalls Änderungen vor.
+. Wählen Sie *Speichern*.
+
+
+
+
+== Entfernen einer VLAN-Schnittstelle
+
+Sie können eine oder mehrere VLAN-Schnittstellen entfernen.
+
+Sie können eine VLAN-Schnittstelle nicht entfernen, wenn sie derzeit in einer HA-Gruppe verwendet wird.  Sie müssen die VLAN-Schnittstelle aus der HA-Gruppe entfernen, bevor Sie sie entfernen können.
+
+Um Störungen im Client-Datenverkehr zu vermeiden, sollten Sie eine der folgenden Maßnahmen ergreifen:
+
+* Fügen Sie der HA-Gruppe eine neue VLAN-Schnittstelle hinzu, bevor Sie diese VLAN-Schnittstelle entfernen.
+* Erstellen Sie eine neue HA-Gruppe, die diese VLAN-Schnittstelle nicht verwendet.
+* Wenn die VLAN-Schnittstelle, die Sie entfernen möchten, derzeit die aktive Schnittstelle ist, bearbeiten Sie die HA-Gruppe.  Verschieben Sie die VLAN-Schnittstelle, die Sie entfernen möchten, an das Ende der Prioritätenliste.  Warten Sie, bis die Kommunikation auf der neuen primären Schnittstelle hergestellt ist, und entfernen Sie dann die alte Schnittstelle aus der HA-Gruppe.  Löschen Sie abschließend die VLAN-Schnittstelle auf diesem Knoten.
+
+
+.Schritte
+. Wählen Sie *KONFIGURATION* > *Netzwerk* > *VLAN-Schnittstellen*.
+. Aktivieren Sie das Kontrollkästchen für jede VLAN-Schnittstelle, die Sie entfernen möchten.  Wählen Sie dann *Aktionen* > *Löschen*.
+. Wählen Sie *Ja*, um Ihre Auswahl zu bestätigen.
++
+Alle von Ihnen ausgewählten VLAN-Schnittstellen werden entfernt.  Auf der Seite „VLAN-Schnittstellen“ wird ein grünes Erfolgsbanner angezeigt.
+
+

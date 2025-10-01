@@ -1,0 +1,170 @@
+---
+permalink: admin/managing-load-balancing.html 
+sidebar: sidebar 
+keywords: manage load balancing, balance workload, client ingest, client retrieval, distribute connection 
+summary: Sie können den Lastenausgleich verwenden, um die Aufnahme- und Abruf-Workloads von S3-Clients zu verarbeiten. 
+---
+= Überlegungen zum Lastenausgleich
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Sie können den Lastenausgleich verwenden, um die Aufnahme- und Abruf-Workloads von S3-Clients zu verarbeiten.
+
+
+
+== Was ist Lastenausgleich?
+
+Wenn eine Clientanwendung Daten auf einem StorageGRID -System speichert oder abruft, verwendet StorageGRID einen Load Balancer, um die Arbeitslast für Aufnahme und Abruf zu verwalten.  Durch Lastenausgleich werden Geschwindigkeit und Verbindungskapazität maximiert, indem die Arbeitslast auf mehrere Speicherknoten verteilt wird.
+
+Der StorageGRID Load Balancer-Dienst ist auf allen Admin-Knoten und allen Gateway-Knoten installiert und bietet Layer 7-Lastausgleich.  Es führt die Transport Layer Security (TLS)-Terminierung von Clientanforderungen durch, überprüft die Anforderungen und stellt neue sichere Verbindungen zu den Speicherknoten her.
+
+Der Load Balancer-Dienst auf jedem Knoten arbeitet unabhängig, wenn er Client-Datenverkehr an die Speicherknoten weiterleitet.  Durch einen Gewichtungsprozess leitet der Load Balancer-Dienst mehr Anfragen an Speicherknoten mit höherer CPU-Verfügbarkeit weiter.
+
+
+NOTE: Obwohl der StorageGRID Load Balancer-Dienst der empfohlene Lastausgleichsmechanismus ist, möchten Sie möglicherweise stattdessen einen Load Balancer eines Drittanbieters integrieren.  Weitere Informationen erhalten Sie von Ihrem NetApp Kundenbetreuer oder unter https://fieldportal.netapp.com/content/2666394["TR-4626: StorageGRID Load Balancer von Drittanbietern und globale Load Balancer"^] .
+
+
+
+== Wie viele Lastausgleichsknoten benötige ich?
+
+Als allgemeine Best Practice sollte jede Site in Ihrem StorageGRID -System zwei oder mehr Knoten mit dem Load Balancer-Dienst enthalten.  Beispielsweise kann eine Site zwei Gateway-Knoten oder sowohl einen Admin-Knoten als auch einen Gateway-Knoten enthalten.  Stellen Sie sicher, dass für jeden Lastausgleichsknoten eine angemessene Netzwerk-, Hardware- oder Virtualisierungsinfrastruktur vorhanden ist, unabhängig davon, ob Sie Service-Appliances, Bare-Metal-Knoten oder Knoten auf Basis virtueller Maschinen (VM) verwenden.
+
+
+
+== Was ist ein Load Balancer-Endpunkt?
+
+Ein Load Balancer-Endpunkt definiert den Port und das Netzwerkprotokoll (HTTPS oder HTTP), die eingehende und ausgehende Client-Anwendungsanforderungen verwenden, um auf die Knoten zuzugreifen, die den Load Balancer-Dienst enthalten.  Der Endpunkt definiert auch den Clienttyp (S3), den Bindungsmodus und optional eine Liste zulässiger oder blockierter Mandanten.
+
+Um einen Load Balancer-Endpunkt zu erstellen, wählen Sie entweder *KONFIGURATION* > *Netzwerk* > *Load Balancer-Endpunkte* oder schließen Sie den FabricPool und S3-Setup-Assistenten ab.  Anweisungen:
+
+* link:configuring-load-balancer-endpoints.html["Konfigurieren von Load Balancer-Endpunkten"]
+* link:use-s3-setup-wizard-steps.html["Verwenden Sie den S3-Setup-Assistenten"]
+* link:../fabricpool/use-fabricpool-setup-wizard-steps.html["Verwenden des FabricPool -Setup-Assistenten"]
+
+
+
+
+=== Überlegungen zum Port
+
+Der Port für einen Load Balancer-Endpunkt ist für den ersten Endpunkt, den Sie erstellen, standardmäßig 10433, Sie können jedoch jeden nicht verwendeten externen Port zwischen 1 und 65535 angeben.  Wenn Sie Port 80 oder 443 verwenden, verwendet der Endpunkt den Load Balancer-Dienst nur auf Gateway-Knoten.  Diese Ports sind auf Admin-Knoten reserviert.  Wenn Sie denselben Port für mehr als einen Endpunkt verwenden, müssen Sie für jeden Endpunkt einen anderen Bindungsmodus angeben.
+
+Von anderen Grid-Diensten verwendete Ports sind nicht zulässig. Siehe dielink:../network/network-port-reference.html["Netzwerkportreferenz"] .
+
+
+
+=== Überlegungen zum Netzwerkprotokoll
+
+In den meisten Fällen sollten die Verbindungen zwischen Clientanwendungen und StorageGRID die Transport Layer Security (TLS)-Verschlüsselung verwenden.  Die Verbindung zu StorageGRID ohne TLS-Verschlüsselung wird unterstützt, wird jedoch insbesondere in Produktionsumgebungen nicht empfohlen.  Wenn Sie das Netzwerkprotokoll für den StorageGRID Load Balancer-Endpunkt auswählen, sollten Sie *HTTPS* auswählen.
+
+
+
+=== Überlegungen zu Load Balancer-Endpunktzertifikaten
+
+Wenn Sie *HTTPS* als Netzwerkprotokoll für den Load Balancer-Endpunkt auswählen, müssen Sie ein Sicherheitszertifikat angeben.  Sie können beim Erstellen des Load Balancer-Endpunkts eine dieser drei Optionen verwenden:
+
+* *Laden Sie ein signiertes Zertifikat hoch (empfohlen)*.  Dieses Zertifikat kann entweder von einer öffentlich vertrauenswürdigen oder einer privaten Zertifizierungsstelle (CA) signiert sein.  Die beste Vorgehensweise besteht darin, zur Sicherung der Verbindung ein öffentlich vertrauenswürdiges CA-Serverzertifikat zu verwenden.  Im Gegensatz zu generierten Zertifikaten können von einer Zertifizierungsstelle signierte Zertifikate unterbrechungsfrei rotiert werden, wodurch Ablaufprobleme vermieden werden können.
++
+Sie müssen die folgenden Dateien abrufen, bevor Sie den Load Balancer-Endpunkt erstellen:
+
++
+** Die benutzerdefinierte Serverzertifikatsdatei.
+** Die private Schlüsseldatei des benutzerdefinierten Serverzertifikats.
+** Optional ein CA-Bündel der Zertifikate von jeder zwischengeschalteten ausstellenden Zertifizierungsstelle.
+
+
+* *Erstellen Sie ein selbstsigniertes Zertifikat*.
+* *Verwenden Sie das globale StorageGRID S3-Zertifikat*.  Sie müssen eine benutzerdefinierte Version dieses Zertifikats hochladen oder generieren, bevor Sie es für den Load Balancer-Endpunkt auswählen können. Sehen link:../admin/configuring-custom-server-certificate-for-storage-node.html["Konfigurieren von S3-API-Zertifikaten"] .
+
+
+
+
+==== Welche Werte benötige ich?
+
+Um das Zertifikat zu erstellen, müssen Sie alle Domänennamen und IP-Adressen kennen, die S3-Clientanwendungen für den Zugriff auf den Endpunkt verwenden.
+
+Der *Subject DN*-Eintrag (Distinguished Name) für das Zertifikat muss den vollqualifizierten Domänennamen enthalten, den die Clientanwendung für StorageGRID verwendet. Beispiel:
+
+[listing]
+----
+Subject DN: /C=Country/ST=State/O=Company,Inc./CN=s3.storagegrid.example.com
+----
+Bei Bedarf kann das Zertifikat Platzhalter verwenden, um die vollqualifizierten Domänennamen aller Admin-Knoten und Gateway-Knoten darzustellen, auf denen der Load Balancer-Dienst ausgeführt wird.  Zum Beispiel, `*.storagegrid._example_.com` verwendet das Platzhalterzeichen * zur Darstellung `adm1.storagegrid._example_.com` Und `gn1.storagegrid._example_.com` .
+
+Wenn Sie S3 Virtual Hosted-Style-Anfragen verwenden möchten, muss das Zertifikat auch einen *Alternative Name*-Eintrag für jedenlink:../admin/configuring-s3-api-endpoint-domain-names.html["S3-Endpunktdomänenname"] Sie haben alle konfigurierten Namen, einschließlich aller Platzhalternamen. Beispiel:
+
+[listing]
+----
+Alternative Name: DNS:*.s3.storagegrid.example.com
+----
+
+NOTE: Wenn Sie Platzhalter für Domänennamen verwenden, überprüfen Sie dielink:../harden/hardening-guideline-for-server-certificates.html["Härtungsrichtlinien für Serverzertifikate"] .
+
+Außerdem müssen Sie für jeden Namen im Sicherheitszertifikat einen DNS-Eintrag definieren.
+
+
+
+==== Wie verwalte ich ablaufende Zertifikate?
+
+
+CAUTION: Wenn das zum Sichern der Verbindung zwischen der S3-Anwendung und StorageGRID verwendete Zertifikat abläuft, verliert die Anwendung möglicherweise vorübergehend den Zugriff auf StorageGRID.
+
+Um Probleme mit dem Ablauf von Zertifikaten zu vermeiden, befolgen Sie diese Best Practices:
+
+* Überwachen Sie sorgfältig alle Warnungen, die vor dem nahenden Ablaufdatum von Zertifikaten warnen, wie etwa die Warnungen „Ablauf des Load Balancer-Endpunktzertifikats“ und „Ablauf des globalen Serverzertifikats für S3-API“.
+* Halten Sie die Zertifikatsversionen der StorageGRID und S3-Anwendung immer synchron.  Wenn Sie das für einen Load Balancer-Endpunkt verwendete Zertifikat ersetzen oder erneuern, müssen Sie das entsprechende Zertifikat ersetzen oder erneuern, das von der S3-Anwendung verwendet wird.
+* Verwenden Sie ein öffentlich signiertes CA-Zertifikat.  Wenn Sie ein von einer Zertifizierungsstelle signiertes Zertifikat verwenden, können Sie bald ablaufende Zertifikate unterbrechungsfrei ersetzen.
+* Wenn Sie ein selbstsigniertes StorageGRID -Zertifikat generiert haben und dieses Zertifikat bald abläuft, müssen Sie das Zertifikat sowohl in StorageGRID als auch in der S3-Anwendung manuell ersetzen, bevor das vorhandene Zertifikat abläuft.
+
+
+
+
+=== Überlegungen zum Bindungsmodus
+
+Mit dem Bindungsmodus können Sie steuern, welche IP-Adressen für den Zugriff auf einen Load Balancer-Endpunkt verwendet werden können.  Wenn ein Endpunkt einen Bindungsmodus verwendet, können Clientanwendungen nur auf den Endpunkt zugreifen, wenn sie eine zulässige IP-Adresse oder den entsprechenden vollqualifizierten Domänennamen (FQDN) verwenden.  Clientanwendungen, die eine andere IP-Adresse oder einen anderen FQDN verwenden, können nicht auf den Endpunkt zugreifen.
+
+Sie können einen der folgenden Bindungsmodi angeben:
+
+* *Global* (Standard): Clientanwendungen können über die IP-Adresse eines beliebigen Gateway-Knotens oder Admin-Knotens, die virtuelle IP-Adresse (VIP) einer beliebigen HA-Gruppe in einem beliebigen Netzwerk oder einen entsprechenden FQDN auf den Endpunkt zugreifen.  Verwenden Sie diese Einstellung, es sei denn, Sie müssen die Erreichbarkeit eines Endpunkts einschränken.
+* *Virtuelle IPs von HA-Gruppen*.  Clientanwendungen müssen eine virtuelle IP-Adresse (oder den entsprechenden FQDN) einer HA-Gruppe verwenden.
+* *Knotenschnittstellen*.  Clients müssen die IP-Adressen (oder entsprechenden FQDNs) ausgewählter Knotenschnittstellen verwenden.
+* *Knotentyp*.  Je nach ausgewähltem Knotentyp müssen Clients entweder die IP-Adresse (oder den entsprechenden FQDN) eines beliebigen Admin-Knotens oder die IP-Adresse (oder den entsprechenden FQDN) eines beliebigen Gateway-Knotens verwenden.
+
+
+
+
+=== Überlegungen zum Mandantenzugriff
+
+Der Mandantenzugriff ist eine optionale Sicherheitsfunktion, mit der Sie steuern können, welche StorageGRID Mandantenkonten einen Load Balancer-Endpunkt verwenden können, um auf ihre Buckets zuzugreifen.  Sie können allen Mandanten den Zugriff auf einen Endpunkt erlauben (Standard) oder Sie können für jeden Endpunkt eine Liste der zulässigen oder blockierten Mandanten angeben.
+
+Sie können diese Funktion verwenden, um eine bessere Sicherheitsisolierung zwischen Mandanten und ihren Endpunkten bereitzustellen.  Sie können diese Funktion beispielsweise verwenden, um sicherzustellen, dass streng geheime oder streng geheime Materialien im Besitz eines Mieters für andere Mieter völlig unzugänglich bleiben.
+
+
+NOTE: Zum Zwecke der Zugriffskontrolle wird der Mandant anhand der in der Client-Anforderung verwendeten Zugriffsschlüssel ermittelt. Wenn im Rahmen der Anforderung keine Zugriffsschlüssel bereitgestellt werden (z. B. bei anonymem Zugriff), wird der Bucket-Eigentümer zur Ermittlung des Mandanten verwendet.
+
+
+
+==== Beispiel für den Mandantenzugriff
+
+Um zu verstehen, wie diese Sicherheitsfunktion funktioniert, betrachten Sie das folgende Beispiel:
+
+. Sie haben wie folgt zwei Load Balancer-Endpunkte erstellt:
++
+** *Öffentlicher* Endpunkt: Verwendet Port 10443 und ermöglicht allen Mandanten den Zugriff.
+** *Streng geheim*-Endpunkt: Verwendet Port 10444 und ermöglicht nur dem *Streng geheim*-Mandanten Zugriff.  Allen anderen Mandanten ist der Zugriff auf diesen Endpunkt untersagt.
+
+
+. Der `top-secret.pdf` befindet sich in einem Eimer, der dem *streng geheimen* Mieter gehört.
+
+
+Um auf die `top-secret.pdf` kann ein Benutzer im Mandanten *Top secret* eine GET-Anfrage an `\https://w.x.y.z:10444/top-secret.pdf` .  Da dieser Mandant den Endpunkt 10444 verwenden darf, kann der Benutzer auf das Objekt zugreifen.  Wenn jedoch ein Benutzer eines anderen Mandanten dieselbe Anfrage an dieselbe URL sendet, erhält er sofort die Meldung „Zugriff verweigert“.  Der Zugriff wird verweigert, auch wenn die Anmeldeinformationen und die Signatur gültig sind.
+
+
+
+== CPU-Verfügbarkeit
+
+Der Load Balancer-Dienst auf jedem Admin-Knoten und Gateway-Knoten arbeitet unabhängig, wenn er S3-Verkehr an die Speicherknoten weiterleitet.  Durch einen Gewichtungsprozess leitet der Load Balancer-Dienst mehr Anfragen an Speicherknoten mit höherer CPU-Verfügbarkeit weiter.  Die Informationen zur CPU-Auslastung des Knotens werden alle paar Minuten aktualisiert, die Gewichtung kann jedoch häufiger aktualisiert werden.  Allen Speicherknoten wird ein minimaler Basisgewichtungswert zugewiesen, auch wenn ein Knoten eine Auslastung von 100 % meldet oder seine Auslastung nicht meldet.
+
+In einigen Fällen sind Informationen zur CPU-Verfügbarkeit auf den Standort beschränkt, an dem sich der Load Balancer-Dienst befindet.

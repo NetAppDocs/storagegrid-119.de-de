@@ -1,0 +1,46 @@
+---
+permalink: admin/configuring-storage-proxy-settings.html 
+sidebar: sidebar 
+keywords: storage proxy, non-transparent proxy, platform service endpoint 
+summary: Wenn Sie Plattformdienste oder Cloud-Speicherpools verwenden, können Sie einen nicht transparenten Proxy zwischen Speicherknoten und den externen S3-Endpunkten konfigurieren.  Beispielsweise benötigen Sie möglicherweise einen nicht transparenten Proxy, um das Senden von Nachrichten der Plattformdienste an externe Endpunkte, beispielsweise einen Endpunkt im Internet, zu ermöglichen. 
+---
+= Konfigurieren des Speicherproxys
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Wenn Sie Plattformdienste oder Cloud-Speicherpools verwenden, können Sie einen nicht transparenten Proxy zwischen Speicherknoten und den externen S3-Endpunkten konfigurieren.  Beispielsweise benötigen Sie möglicherweise einen nicht transparenten Proxy, um das Senden von Nachrichten der Plattformdienste an externe Endpunkte, beispielsweise einen Endpunkt im Internet, zu ermöglichen.
+
+
+NOTE: Konfigurierte Speicherproxyeinstellungen gelten nicht für Endpunkte der Kafka-Plattformdienste.
+
+.Bevor Sie beginnen
+* Du hastlink:admin-group-permissions.html["spezifische Zugriffsberechtigungen"] .
+* Sie sind beim Grid Manager angemeldet mit einemlink:../admin/web-browser-requirements.html["unterstützter Webbrowser"] .
+
+
+.Informationen zu diesem Vorgang
+Sie können die Einstellungen für einen einzelnen Speicherproxy konfigurieren.
+
+.Schritte
+. Wählen Sie *KONFIGURATION* > *Sicherheit* > *Proxy-Einstellungen*.
+. Aktivieren Sie auf der Registerkarte *Speicher* das Kontrollkästchen *Speicherproxy aktivieren*.
+. Wählen Sie das Protokoll für den Speicherproxy aus.
+. Geben Sie den Hostnamen oder die IP-Adresse des Proxyservers ein.
+. Geben Sie optional den Port ein, der für die Verbindung mit dem Proxyserver verwendet wird.
++
+Lassen Sie dieses Feld leer, um den Standardport für das Protokoll zu verwenden: 80 für HTTP oder 1080 für SOCKS5.
+
+. Wählen Sie *Speichern*.
++
+Nachdem der Speicherproxy gespeichert wurde, können neue Endpunkte für Plattformdienste oder Cloud-Speicherpools konfiguriert und getestet werden.
+
++
+
+NOTE: Es kann bis zu 10 Minuten dauern, bis Proxy-Änderungen wirksam werden.
+
+. Überprüfen Sie die Einstellungen Ihres Proxyservers, um sicherzustellen, dass plattformdienstbezogene Nachrichten von StorageGRID nicht blockiert werden.
+. Wenn Sie einen Speicherproxy deaktivieren müssen, deaktivieren Sie das Kontrollkästchen und wählen Sie *Speichern*.
+

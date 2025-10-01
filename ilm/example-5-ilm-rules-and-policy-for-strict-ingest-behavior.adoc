@@ -1,0 +1,166 @@
+---
+permalink: ilm/example-5-ilm-rules-and-policy-for-strict-ingest-behavior.html 
+sidebar: sidebar 
+keywords: strict ingest example, example ILM rule, information lifecycle rule examples 
+summary: Sie können einen Standortfilter und das strikte Aufnahmeverhalten in einer Regel verwenden, um zu verhindern, dass Objekte an einem bestimmten Rechenzentrumsstandort gespeichert werden. 
+---
+= Beispiel 5: ILM-Regeln und -Richtlinien für striktes Aufnahmeverhalten
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Sie können einen Standortfilter und das strikte Aufnahmeverhalten in einer Regel verwenden, um zu verhindern, dass Objekte an einem bestimmten Rechenzentrumsstandort gespeichert werden.
+
+In diesem Beispiel möchte ein in Paris ansässiger Mieter einige Objekte aus rechtlichen Gründen nicht außerhalb der EU lagern.  Andere Objekte, einschließlich aller Objekte aus anderen Mandantenkonten, können entweder im Pariser Rechenzentrum oder im US-Rechenzentrum gespeichert werden.
+
+
+CAUTION: Die folgenden ILM-Regeln und -Richtlinien sind nur Beispiele.  Es gibt viele Möglichkeiten, ILM-Regeln zu konfigurieren.  Bevor Sie eine neue Richtlinie aktivieren, simulieren Sie sie, um sicherzustellen, dass sie wie vorgesehen funktioniert und Inhalte vor Verlust schützt.
+
+.Ähnliche Informationen
+* link:data-protection-options-for-ingest.html["Aufnahmeoptionen"]
+* link:create-ilm-rule-select-ingest-behavior.html["ILM-Regel erstellen: Aufnahmeverhalten auswählen"]
+
+
+
+
+== ILM-Regel 1 für Beispiel 5: Strikte Aufnahme zur Gewährleistung des Pariser Rechenzentrums
+
+Dieses Beispiel einer ILM-Regel verwendet das strikte Aufnahmeverhalten, um zu gewährleisten, dass Objekte, die von einem in Paris ansässigen Mandanten in S3-Buckets mit der auf die Region „eu-west-3“ (Paris) eingestellten Region gespeichert werden, niemals im US-Rechenzentrum gespeichert werden.
+
+Diese Regel gilt für Objekte, die zum Pariser Mandanten gehören und deren S3-Bucket-Region auf eu-west-3 (Paris) eingestellt ist.
+
+[cols="1a,2a"]
+|===
+| Regeldefinition | Beispielwert 
+
+
+ a| 
+Mieterkonto
+ a| 
+Pariser Mieter
+
+
+
+ a| 
+Erweiterter Filter
+ a| 
+Standortbeschränkung entspricht eu-west-3
+
+
+
+ a| 
+Speicherpools
+ a| 
+Standort 1 (Paris)
+
+
+
+ a| 
+Regelname
+ a| 
+Strenge Aufnahme zur Gewährleistung des Pariser Rechenzentrums
+
+
+
+ a| 
+Referenzzeit
+ a| 
+Aufnahmezeit
+
+
+
+ a| 
+Platzierungen
+ a| 
+Behalten Sie am Tag 0 zwei replizierte Kopien für immer an Standort 1 (Paris).
+
+
+
+ a| 
+Aufnahmeverhalten
+ a| 
+Strikt.  Verwenden Sie beim Aufnehmen immer die Platzierungen dieser Regel.  Die Aufnahme schlägt fehl, wenn es nicht möglich ist, zwei Kopien des Objekts im Pariser Rechenzentrum zu speichern.
+
+|===
+image::../media/ilm_rule_1_example_5_strict_ingest.png[ILM-Regel 1, Beispiel 5, strikte Aufnahme]
+
+
+
+== ILM-Regel 2 für Beispiel 5: Ausgewogene Aufnahme für andere Objekte
+
+Dieses Beispiel einer ILM-Regel verwendet das ausgewogene Aufnahmeverhalten, um optimale ILM-Effizienz für alle Objekte bereitzustellen, die nicht der ersten Regel entsprechen.  Von allen Objekten, die dieser Regel entsprechen, werden zwei Kopien gespeichert – eine im US-Rechenzentrum und eine im Pariser Rechenzentrum.  Kann die Regel nicht sofort erfüllt werden, werden Zwischenkopien an einem beliebigen verfügbaren Ort gespeichert.
+
+Diese Regel gilt für Objekte, die zu einem beliebigen Mandanten und einer beliebigen Region gehören.
+
+[cols="1a,2a"]
+|===
+| Regeldefinition | Beispielwert 
+
+
+ a| 
+Mieterkonto
+ a| 
+Ignorieren
+
+
+
+ a| 
+Erweiterter Filter
+ a| 
+_Nicht angegeben_
+
+
+
+ a| 
+Speicherpools
+ a| 
+Standort 1 (Paris) und Standort 2 (USA)
+
+
+
+ a| 
+Regelname
+ a| 
+2 Kopien 2 Rechenzentren
+
+
+
+ a| 
+Referenzzeit
+ a| 
+Aufnahmezeit
+
+
+
+ a| 
+Platzierungen
+ a| 
+Bewahren Sie am Tag 0 zwei replizierte Kopien für immer in zwei Rechenzentren auf
+
+
+
+ a| 
+Aufnahmeverhalten
+ a| 
+Ausgewogen.  Objekte, die dieser Regel entsprechen, werden nach Möglichkeit entsprechend den Platzierungsanweisungen der Regel platziert.  Andernfalls werden Zwischenkopien an jedem verfügbaren Ort erstellt.
+
+|===
+
+
+== ILM-Richtlinie für Beispiel 5: Kombinieren von Aufnahmeverhalten
+
+Die beispielhafte ILM-Richtlinie umfasst zwei Regeln mit unterschiedlichem Aufnahmeverhalten.
+
+Eine ILM-Richtlinie, die zwei verschiedene Aufnahmeverhalten verwendet, kann ILM-Regeln wie die folgenden enthalten:
+
+* Speichern Sie Objekte, die zum Pariser Mandanten gehören und deren S3-Bucket-Region auf eu-west-3 (Paris) eingestellt ist, nur im Pariser Rechenzentrum.  Die Aufnahme schlägt fehl, wenn das Pariser Rechenzentrum nicht verfügbar ist.
+* Speichern Sie alle anderen Objekte (einschließlich derjenigen, die zum Pariser Mandanten gehören, aber eine andere Bucket-Region haben) sowohl im US-Rechenzentrum als auch im Pariser Rechenzentrum.  Erstellen Sie Zwischenkopien an einem beliebigen verfügbaren Ort, wenn die Platzierungsanweisung nicht erfüllt werden kann.
+
+
+Wenn Sie die Beispielrichtlinie simulieren, erwarten Sie, dass Testobjekte wie folgt ausgewertet werden:
+
+* Alle Objekte, die zum Pariser Mandanten gehören und deren S3-Bucket-Region auf „eu-west-3“ eingestellt ist, werden mit der ersten Regel abgeglichen und im Pariser Rechenzentrum gespeichert.  Da die erste Regel die strikte Aufnahme verwendet, werden diese Objekte nie im US-Rechenzentrum gespeichert.  Wenn die Speicherknoten im Pariser Rechenzentrum nicht verfügbar sind, schlägt die Aufnahme fehl.
+* Alle anderen Objekte werden mit der zweiten Regel abgeglichen, einschließlich der Objekte, die zum Paris-Mandanten gehören und bei denen die S3-Bucket-Region nicht auf „eu-west-3“ eingestellt ist.  In jedem Rechenzentrum wird eine Kopie jedes Objekts gespeichert.  Da die zweite Regel jedoch eine ausgewogene Aufnahme verwendet, werden bei Nichtverfügbarkeit eines Rechenzentrums zwei Zwischenkopien an einem beliebigen verfügbaren Standort gespeichert.
+

@@ -1,0 +1,33 @@
+---
+permalink: maintain/index.html 
+sidebar: sidebar 
+keywords: maintain overview, maintenance overview, about maintain, about maintenance 
+summary: Zu den Grid-Wartungsaufgaben gehören die Außerbetriebnahme eines Knotens oder Standorts, die Umbenennung eines Grids, Knotens oder Standorts und die Wartung des Netzwerks.  Sie können auch Host- und Middleware-Prozeduren sowie Grid-Knoten-Prozeduren durchführen. 
+---
+= Netzwartung
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Zu den Grid-Wartungsaufgaben gehören die Außerbetriebnahme eines Knotens oder Standorts, die Umbenennung eines Grids, Knotens oder Standorts und die Wartung von Netzwerken.  Sie können auch Host- und Middleware-Prozeduren sowie Grid-Knoten-Prozeduren durchführen.
+
+
+NOTE: In diesen Anweisungen bezieht sich „Linux“ auf eine Bereitstellung von Red Hat® Enterprise Linux®, Ubuntu® oder Debian®. Eine Liste der unterstützten Versionen finden Sie im https://imt.netapp.com/matrix/#welcome["NetApp Interoperabilitätsmatrix-Tool"^] .
+
+
+
+== Bevor Sie beginnen
+
+* Sie verfügen über umfassende Kenntnisse des StorageGRID -Systems.
+* Sie haben die Topologie Ihres StorageGRID -Systems überprüft und verstehen die Grid-Konfiguration.
+* Sie verstehen, dass Sie alle Anweisungen genau befolgen und alle Warnungen beachten müssen.
+* Sie verstehen, dass nicht beschriebene Wartungsverfahren nicht unterstützt werden oder die Inanspruchnahme eines Dienstes erfordern.
+
+
+
+
+== Wartungsverfahren für Geräte
+
+Informationen zu Hardwareverfahren finden Sie im https://docs.netapp.com/us-en/storagegrid-appliances/commonhardware/index.html["Wartungsanweisungen für Ihr StorageGRID -Gerät"^] .

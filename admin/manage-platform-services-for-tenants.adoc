@@ -1,0 +1,71 @@
+---
+permalink: admin/manage-platform-services-for-tenants.html 
+sidebar: sidebar 
+keywords: platform service, cloudmirror replication, event notification, search integration service 
+summary: Zu den Plattformdiensten gehören CloudMirror-Replikation, Ereignisbenachrichtigungen und der Suchintegrationsdienst. 
+---
+= Was sind Plattformdienste?
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Zu den Plattformdiensten gehören CloudMirror-Replikation, Ereignisbenachrichtigungen und der Suchintegrationsdienst.
+
+Wenn Sie Plattformdienste für S3-Mandantenkonten aktivieren, müssen Sie Ihr Grid so konfigurieren, dass Mandanten auf die externen Ressourcen zugreifen können, die zur Verwendung dieser Dienste erforderlich sind.
+
+
+
+== CloudMirror-Replikation
+
+Der StorageGRID CloudMirror-Replikationsdienst wird verwendet, um bestimmte Objekte aus einem StorageGRID Bucket an ein angegebenes externes Ziel zu spiegeln.
+
+Sie können beispielsweise die CloudMirror-Replikation verwenden, um bestimmte Kundendatensätze in Amazon S3 zu spiegeln und dann AWS-Dienste nutzen, um Analysen Ihrer Daten durchzuführen.
+
+
+NOTE: Die CloudMirror-Replikation weist einige wichtige Ähnlichkeiten und Unterschiede zur Cross-Grid-Replikationsfunktion auf.  Weitere Informationen finden Sie unterlink:../admin/grid-federation-compare-cgr-to-cloudmirror.html["Vergleichen Sie Cross-Grid-Replikation und CloudMirror-Replikation"] .
+
+
+NOTE: Die CloudMirror-Replikation wird nicht unterstützt, wenn im Quell-Bucket S3 Object Lock aktiviert ist.
+
+
+
+== Benachrichtigungen
+
+Bucket-spezifische Ereignisbenachrichtigungen werden verwendet, um Benachrichtigungen über bestimmte an Objekten ausgeführte Aktionen an einen angegebenen externen Kafka-Cluster oder Amazon Simple Notification Service zu senden.
+
+Sie können beispielsweise Warnmeldungen konfigurieren, die an Administratoren gesendet werden, wenn ein Objekt zu einem Bucket hinzugefügt wird, wobei die Objekte Protokolldateien darstellen, die mit einem kritischen Systemereignis verknüpft sind.
+
+
+NOTE: Obwohl die Ereignisbenachrichtigung für einen Bucket mit aktivierter S3-Objektsperre konfiguriert werden kann, werden die S3-Objektsperre-Metadaten (einschließlich „Aufbewahrungsdatum“ und „Legal Hold“-Status) der Objekte nicht in die Benachrichtigungsnachrichten aufgenommen.
+
+
+
+== Suchintegrationsdienst
+
+Der Suchintegrationsdienst wird verwendet, um S3-Objektmetadaten an einen angegebenen Elasticsearch-Index zu senden, wo die Metadaten mithilfe des externen Dienstes gesucht oder analysiert werden können.
+
+Sie können Ihre Buckets beispielsweise so konfigurieren, dass S3-Objektmetadaten an einen Remote-Elasticsearch-Dienst gesendet werden.  Anschließend können Sie Elasticsearch verwenden, um Bucket-übergreifende Suchen durchzuführen und anspruchsvolle Analysen der in Ihren Objektmetadaten vorhandenen Muster durchzuführen.
+
+
+NOTE: Obwohl die Elasticsearch-Integration für einen Bucket mit aktivierter S3 Object Lock konfiguriert werden kann, werden die S3 Object Lock-Metadaten (einschließlich „Retain Until Date“ und „Legal Hold“-Status) der Objekte nicht in die Benachrichtigungsnachrichten aufgenommen.
+
+Plattformdienste geben Mietern die Möglichkeit, externe Speicherressourcen, Benachrichtigungsdienste sowie Such- oder Analysedienste mit ihren Daten zu verwenden.  Da sich der Zielspeicherort für Plattformdienste normalerweise außerhalb Ihrer StorageGRID -Bereitstellung befindet, müssen Sie entscheiden, ob Sie Mandanten die Nutzung dieser Dienste gestatten möchten.  In diesem Fall müssen Sie die Verwendung von Plattformdiensten aktivieren, wenn Sie Mandantenkonten erstellen oder bearbeiten.  Sie müssen Ihr Netzwerk außerdem so konfigurieren, dass die von den Mandanten generierten Plattformdienstnachrichten ihre Ziele erreichen können.
+
+
+
+== Empfehlungen zur Nutzung von Plattformdiensten
+
+Beachten Sie vor der Verwendung von Plattformdiensten die folgenden Empfehlungen:
+
+* Wenn für einen S3-Bucket im StorageGRID -System sowohl die Versionierung als auch die CloudMirror-Replikation aktiviert ist, sollten Sie auch die S3-Bucket-Versionierung für den Zielendpunkt aktivieren.  Dadurch kann die CloudMirror-Replikation ähnliche Objektversionen auf dem Endpunkt generieren.
+* Sie sollten nicht mehr als 100 aktive Mandanten mit S3-Anfragen verwenden, die CloudMirror-Replikation, Benachrichtigungen und Suchintegration erfordern.  Mehr als 100 aktive Mandanten können zu einer langsameren Leistung des S3-Clients führen.
+* Anfragen an einen Endpunkt, die nicht abgeschlossen werden können, werden auf maximal 500.000 Anfragen in die Warteschlange gestellt.  Dieses Limit wird gleichmäßig unter den aktiven Mietern aufgeteilt.  Damit neu hinzukommende Mieter nicht ungerechterweise benachteiligt werden, ist es neuen Mietern gestattet, diese Grenze von 500.000 vorübergehend zu überschreiten.
+
+
+.Ähnliche Informationen
+* link:../tenant/what-platform-services-are.html["Plattformdienste verwalten"]
+* link:configuring-storage-proxy-settings.html["Konfigurieren der Speicherproxyeinstellungen"]
+* link:../monitor/index.html["StorageGRID überwachen"]
+

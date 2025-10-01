@@ -1,0 +1,268 @@
+---
+permalink: s3/use-s3-api-for-s3-object-lock.html 
+sidebar: sidebar 
+keywords: how to configure S3 object lock, object lock, default bucket retention, governance, compliance, retain-until-date, legal hold 
+summary: Wenn die globale S3-Objektsperre-Einstellung für Ihr StorageGRID System aktiviert ist, können Sie Buckets mit aktivierter S3-Objektsperre erstellen.  Sie können die Standardaufbewahrung für jeden Bucket oder Aufbewahrungseinstellungen für jede Objektversion angeben. 
+---
+= Verwenden Sie die S3 REST API, um S3 Object Lock zu konfigurieren
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Wenn die globale S3-Objektsperre-Einstellung für Ihr StorageGRID System aktiviert ist, können Sie Buckets mit aktivierter S3-Objektsperre erstellen.  Sie können die Standardaufbewahrung für jeden Bucket oder Aufbewahrungseinstellungen für jede Objektversion angeben.
+
+
+
+== So aktivieren Sie die S3-Objektsperre für einen Bucket
+
+Wenn die globale S3-Objektsperre-Einstellung für Ihr StorageGRID System aktiviert ist, können Sie die S3-Objektsperre optional aktivieren, wenn Sie jeden Bucket erstellen.
+
+S3 Object Lock ist eine permanente Einstellung, die nur aktiviert werden kann, wenn Sie einen Bucket erstellen.  Sie können die S3-Objektsperre nicht hinzufügen oder deaktivieren, nachdem ein Bucket erstellt wurde.
+
+Um die S3-Objektsperre für einen Bucket zu aktivieren, verwenden Sie eine der folgenden Methoden:
+
+* Erstellen Sie den Bucket mit dem Tenant Manager. Sehen link:../tenant/creating-s3-bucket.html["S3-Bucket erstellen"] .
+* Erstellen Sie den Bucket mithilfe einer CreateBucket-Anforderung mit dem `x-amz-bucket-object-lock-enabled` Anforderungsheader. Sehen link:operations-on-buckets.html["Operationen an Buckets"] .
+
+
+S3 Object Lock erfordert eine Bucket-Versionierung, die beim Erstellen des Buckets automatisch aktiviert wird.  Sie können die Versionsverwaltung für den Bucket nicht aussetzen. Sehen link:object-versioning.html["Objektversionierung"] .
+
+
+
+== Standardaufbewahrungseinstellungen für einen Bucket
+
+Wenn S3 Object Lock für einen Bucket aktiviert ist, können Sie optional die Standardaufbewahrung für den Bucket aktivieren und einen Standardaufbewahrungsmodus und eine Standardaufbewahrungsdauer angeben.
+
+
+
+=== Standardaufbewahrungsmodus
+
+* Im COMPLIANCE-Modus:
++
+** Das Objekt kann erst gelöscht werden, wenn sein Aufbewahrungsdatum erreicht ist.
+** Das Aufbewahrungsdatum des Objekts kann erhöht, aber nicht verringert werden.
+** Das Aufbewahrungsdatum des Objekts kann erst entfernt werden, wenn dieses Datum erreicht ist.
+
+
+* Im GOVERNANCE-Modus:
++
+** Benutzer mit der `s3:BypassGovernanceRetention` Berechtigung kann die `x-amz-bypass-governance-retention: true` Anforderungsheader zum Umgehen der Aufbewahrungseinstellungen.
+** Diese Benutzer können eine Objektversion löschen, bevor ihr Aufbewahrungsdatum erreicht ist.
+** Diese Benutzer können das Aufbewahrungsdatum eines Objekts erhöhen, verringern oder entfernen.
+
+
+
+
+
+
+=== Standardaufbewahrungsdauer
+
+Für jeden Bucket kann eine Standardaufbewahrungsdauer in Jahren oder Tagen angegeben werden.
+
+
+
+== So legen Sie die Standardaufbewahrung für einen Bucket fest
+
+Um die Standardaufbewahrung für einen Bucket festzulegen, verwenden Sie eine der folgenden Methoden:
+
+* Verwalten Sie die Bucket-Einstellungen über den Tenant Manager. Sehenlink:../tenant/creating-s3-bucket.html["Erstellen eines S3-Buckets"] Undlink:../tenant/update-default-retention-settings.html["Standardaufbewahrung für S3 Object Lock aktualisieren"] .
+* Geben Sie eine PutObjectLockConfiguration-Anforderung für den Bucket aus, um den Standardmodus und die Standardanzahl von Tagen oder Jahren anzugeben.
+
+
+
+
+=== PutObjectLockConfiguration
+
+Mit der PutObjectLockConfiguration-Anforderung können Sie den Standardaufbewahrungsmodus und die Standardaufbewahrungsdauer für einen Bucket festlegen und ändern, bei dem S3 Object Lock aktiviert ist.  Sie können auch zuvor konfigurierte Standardaufbewahrungseinstellungen entfernen.
+
+Wenn neue Objektversionen in den Bucket aufgenommen werden, wird der Standardaufbewahrungsmodus angewendet, wenn `x-amz-object-lock-mode` Und `x-amz-object-lock-retain-until-date` sind nicht angegeben.  Die Standardaufbewahrungsfrist wird zur Berechnung des Aufbewahrungs-bis-Datums verwendet, wenn `x-amz-object-lock-retain-until-date` ist nicht angegeben.
+
+Wenn die Standardaufbewahrungsfrist nach der Aufnahme einer Objektversion geändert wird, bleibt das Aufbewahrungsdatum der Objektversion gleich und wird nicht anhand der neuen Standardaufbewahrungsfrist neu berechnet.
+
+Sie müssen über die `s3:PutBucketObjectLockConfiguration` Berechtigung oder Root-Konto sein, um diesen Vorgang abzuschließen.
+
+Der `Content-MD5` Der Anforderungsheader muss in der PUT-Anforderung angegeben werden.
+
+
+
+==== Anforderungsbeispiel
+
+Dieses Beispiel aktiviert S3 Object Lock für einen Bucket und legt den Standardaufbewahrungsmodus auf COMPLIANCE und die Standardaufbewahrungsdauer auf 6 Jahre fest.
+
+[listing, subs="specialcharacters,quotes"]
+----
+PUT /bucket?object-lock HTTP/1.1
+Accept-Encoding: identity
+Content-Length: 308
+Host: _host_
+Content-MD5: _request header_
+User-Agent: s3sign/1.0.0 requests/2.24.0 python/3.8.2
+X-Amz-Date: _date_
+X-Amz-Content-SHA256: _authorization-string_
+Authorization: _authorization-string_
+
+<ObjectLockConfiguration>
+    <ObjectLockEnabled>Enabled</ObjectLockEnabled>
+    <Rule>
+        <DefaultRetention>
+            <Mode>COMPLIANCE</Mode>
+            <Years>6</Years>
+        </DefaultRetention>
+    </Rule>
+</ObjectLockConfiguration>
+----
+
+
+== So bestimmen Sie die Standardaufbewahrung für einen Bucket
+
+Um festzustellen, ob S3 Object Lock für einen Bucket aktiviert ist, und um den Standardaufbewahrungsmodus und die Aufbewahrungsdauer anzuzeigen, verwenden Sie eine der folgenden Methoden:
+
+* Zeigen Sie den Bucket im Mandanten-Manager an. Sehen link:../tenant/viewing-s3-bucket-details.html["S3-Buckets anzeigen"] .
+* Geben Sie eine GetObjectLockConfiguration-Anforderung aus.
+
+
+
+
+=== GetObjectLockConfiguration
+
+Mit der GetObjectLockConfiguration-Anforderung können Sie feststellen, ob die S3-Objektsperre für einen Bucket aktiviert ist. Wenn dies der Fall ist, können Sie prüfen, ob für den Bucket ein Standardaufbewahrungsmodus und eine Standardaufbewahrungsdauer konfiguriert sind.
+
+Wenn neue Objektversionen in den Bucket aufgenommen werden, wird der Standardaufbewahrungsmodus angewendet, wenn `x-amz-object-lock-mode` ist nicht angegeben.  Die Standardaufbewahrungsfrist wird zur Berechnung des Aufbewahrungs-bis-Datums verwendet, wenn `x-amz-object-lock-retain-until-date` ist nicht angegeben.
+
+Sie müssen über die `s3:GetBucketObjectLockConfiguration` Berechtigung oder Root-Konto sein, um diesen Vorgang abzuschließen.
+
+
+
+==== Anforderungsbeispiel
+
+[listing, subs="specialcharacters,quotes"]
+----
+GET /bucket?object-lock HTTP/1.1
+Host: _host_
+Accept-Encoding: identity
+User-Agent: aws-cli/1.18.106 Python/3.8.2 Linux/4.4.0-18362-Microsoft botocore/1.17.29
+x-amz-date: _date_
+x-amz-content-sha256: _authorization-string_
+Authorization: _authorization-string_
+----
+
+
+==== Antwortbeispiel
+
+[listing]
+----
+HTTP/1.1 200 OK
+x-amz-id-2: iVmcB7OXXJRkRH1FiVq1151/T24gRfpwpuZrEG11Bb9ImOMAAe98oxSpXlknabA0LTvBYJpSIXk=
+x-amz-request-id: B34E94CACB2CEF6D
+Date: Fri, 04 Sep 2020 22:47:09 GMT
+Transfer-Encoding: chunked
+Server: AmazonS3
+
+<?xml version="1.0" encoding="UTF-8"?>
+<ObjectLockConfiguration xmlns="http://s3.amazonaws.com/doc/2006-03-01/">
+    <ObjectLockEnabled>Enabled</ObjectLockEnabled>
+    <Rule>
+        <DefaultRetention>
+            <Mode>COMPLIANCE</Mode>
+            <Years>6</Years>
+        </DefaultRetention>
+    </Rule>
+</ObjectLockConfiguration>
+----
+
+
+== So legen Sie Aufbewahrungseinstellungen für ein Objekt fest
+
+Ein Bucket mit aktivierter S3 Object Lock kann eine Kombination aus Objekten mit und ohne S3 Object Lock-Aufbewahrungseinstellungen enthalten.
+
+Aufbewahrungseinstellungen auf Objektebene werden mithilfe der S3 REST-API angegeben.  Die Aufbewahrungseinstellungen für ein Objekt überschreiben alle Standardaufbewahrungseinstellungen für den Bucket.
+
+Sie können für jedes Objekt die folgenden Einstellungen festlegen:
+
+* *Aufbewahrungsmodus*: Entweder COMPLIANCE oder GOVERNANCE.
+* *Aufbewahrungsdatum*: Ein Datum, das angibt, wie lange die Objektversion von StorageGRID aufbewahrt werden muss.
++
+** Wenn das Aufbewahrungsdatum im COMPLIANCE-Modus in der Zukunft liegt, kann das Objekt zwar abgerufen, aber nicht geändert oder gelöscht werden.  Das Aufbewahrungsdatum kann verlängert werden, es kann jedoch nicht verkürzt oder entfernt werden.
+** Im GOVERNANCE-Modus können Benutzer mit Sonderberechtigung die Einstellung „Aufbewahren bis Datum“ umgehen.  Sie können eine Objektversion löschen, bevor ihre Aufbewahrungsfrist abgelaufen ist.  Sie können das Aufbewahrungsdatum auch verlängern, verkürzen oder sogar entfernen.
+
+
+* *Rechtliche Sperre*: Durch Anwenden einer rechtlichen Sperre auf eine Objektversion wird dieses Objekt sofort gesperrt.  Beispielsweise müssen Sie möglicherweise ein Objekt, das mit einer Untersuchung oder einem Rechtsstreit in Zusammenhang steht, rechtlich sperren.  Eine rechtliche Sperre hat kein Ablaufdatum, sondern bleibt bestehen, bis sie ausdrücklich aufgehoben wird.
++
+Die Einstellung für die rechtliche Aufbewahrung eines Objekts ist unabhängig vom Aufbewahrungsmodus und dem Aufbewahrungsdatum.  Wenn eine Objektversion einer rechtlichen Sperre unterliegt, kann niemand diese Version löschen.
+
+
+
+Um S3 Object Lock-Einstellungen anzugeben, wenn Sie einem Bucket eine Objektversion hinzufügen, führen Sie einenlink:put-object.html["PutObject"] ,link:put-object-copy.html["Objekt kopieren"] , oderlink:initiate-multipart-upload.html["CreateMultipartUpload"] Anfrage.
+
+Sie können Folgendes verwenden:
+
+* `x-amz-object-lock-mode`, wobei COMPLIANCE oder GOVERNANCE (Groß-/Kleinschreibung beachten) lauten kann.
++
+
+NOTE: Wenn Sie angeben `x-amz-object-lock-mode` müssen Sie außerdem angeben `x-amz-object-lock-retain-until-date` .
+
+* `x-amz-object-lock-retain-until-date`
++
+** Der Wert für das Retain-until-Datum muss das Format haben `2020-08-10T21:46:00Z` .  Sekundenbruchteile sind zulässig, es bleiben jedoch nur 3 Dezimalstellen erhalten (Millisekundengenauigkeit).  Andere ISO 8601-Formate sind nicht zulässig.
+** Das Aufbewahrungsdatum muss in der Zukunft liegen.
+
+
+* `x-amz-object-lock-legal-hold`
++
+Wenn die rechtliche Sperre aktiviert ist (Groß-/Kleinschreibung beachten), wird das Objekt einer rechtlichen Sperre unterzogen.  Wenn die rechtliche Sperre deaktiviert ist, wird keine rechtliche Sperre verhängt.  Jeder andere Wert führt zu einem 400 Bad Request (InvalidArgument)-Fehler.
+
+
+
+Wenn Sie einen dieser Anforderungsheader verwenden, beachten Sie die folgenden Einschränkungen:
+
+* Der `Content-MD5` Anforderungsheader ist erforderlich, falls vorhanden `x-amz-object-lock-*` Der Anforderungsheader ist in der PutObject-Anforderung vorhanden. `Content-MD5` ist für CopyObject oder CreateMultipartUpload nicht erforderlich.
+* Wenn für den Bucket die S3-Objektsperre nicht aktiviert ist und ein `x-amz-object-lock-*` Wenn kein Anforderungsheader vorhanden ist, wird der Fehler „400 Bad Request (InvalidRequest)“ zurückgegeben.
+* Die PutObject-Anforderung unterstützt die Verwendung von `x-amz-storage-class: REDUCED_REDUNDANCY` um dem AWS-Verhalten zu entsprechen.  Wenn jedoch ein Objekt in einen Bucket mit aktivierter S3-Objektsperre aufgenommen wird, führt StorageGRID immer eine Aufnahme mit doppeltem Commit durch.
+* Eine nachfolgende GET- oder HeadObject-Versionsantwort enthält die Header `x-amz-object-lock-mode` , `x-amz-object-lock-retain-until-date` , Und `x-amz-object-lock-legal-hold` , sofern konfiguriert und der Absender der Anfrage über die richtige `s3:Get*` Berechtigungen.
+
+
+Sie können die `s3:object-lock-remaining-retention-days` Richtlinienbedingungsschlüssel, um die minimal und maximal zulässigen Aufbewahrungsfristen für Ihre Objekte zu begrenzen.
+
+
+
+== So aktualisieren Sie die Aufbewahrungseinstellungen für ein Objekt
+
+Wenn Sie die Einstellungen für die gesetzliche Aufbewahrungspflicht oder die Aufbewahrungsdauer für eine vorhandene Objektversion aktualisieren müssen, können Sie die folgenden Vorgänge für die Objektunterressource ausführen:
+
+* `PutObjectLegalHold`
++
+Wenn der neue Wert für die rechtliche Sperre EIN ist, wird das Objekt einer rechtlichen Sperre unterzogen.  Wenn der Legal-Hold-Wert auf „AUS“ gesetzt ist, wird der Legal Hold aufgehoben.
+
+* `PutObjectRetention`
++
+** Der Moduswert kann COMPLIANCE oder GOVERNANCE sein (Groß-/Kleinschreibung beachten).
+** Der Wert für das Retain-until-Datum muss das Format haben `2020-08-10T21:46:00Z` .  Sekundenbruchteile sind zulässig, es bleiben jedoch nur 3 Dezimalstellen erhalten (Millisekundengenauigkeit).  Andere ISO 8601-Formate sind nicht zulässig.
+** Wenn für eine Objektversion ein vorhandenes Aufbewahrungsdatum vorhanden ist, können Sie dieses nur erhöhen.  Der neue Wert muss in der Zukunft liegen.
+
+
+
+
+
+
+== So verwenden Sie den GOVERNANCE-Modus
+
+Benutzer mit der `s3:BypassGovernanceRetention` Die Berechtigung kann die aktiven Aufbewahrungseinstellungen eines Objekts umgehen, das den GOVERNANCE-Modus verwendet.  Alle DELETE- oder PutObjectRetention-Vorgänge müssen Folgendes enthalten: `x-amz-bypass-governance-retention:true` Anforderungsheader.  Diese Benutzer können die folgenden zusätzlichen Vorgänge ausführen:
+
+* Führen Sie die Vorgänge „DeleteObject“ oder „DeleteObjects“ aus, um eine Objektversion zu löschen, bevor ihre Aufbewahrungsfrist abgelaufen ist.
++
+Objekte, die einer rechtlichen Sperre unterliegen, können nicht gelöscht werden.  Die rechtliche Sperre muss deaktiviert sein.
+
+* Führen Sie PutObjectRetention-Vorgänge durch, die den Modus einer Objektversion von GOVERNANCE in COMPLIANCE ändern, bevor die Aufbewahrungsfrist des Objekts abgelaufen ist.
++
+Ein Wechsel des Modus von COMPLIANCE zu GOVERNANCE ist niemals zulässig.
+
+* Führen Sie PutObjectRetention-Vorgänge durch, um die Aufbewahrungsdauer einer Objektversion zu erhöhen, zu verringern oder zu entfernen.
+
+
+.Ähnliche Informationen
+* link:../ilm/managing-objects-with-s3-object-lock.html["Verwalten von Objekten mit S3 Object Lock"]
+* link:../tenant/using-s3-object-lock.html["Verwenden Sie S3 Object Lock, um Objekte beizubehalten"]
+* https://docs.aws.amazon.com/AmazonS3/latest/userguide/object-lock.html["Amazon Simple Storage Service-Benutzerhandbuch: Sperren von Objekten"^]
+

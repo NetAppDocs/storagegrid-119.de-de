@@ -1,0 +1,51 @@
+---
+permalink: fabricpool/other-best-practices-for-storagegrid-and-fabricpool.html 
+sidebar: sidebar 
+keywords: fabricPool, best practices, audit log, encryption, compressions, tiering, ontap, consistency 
+summary: Wenn Sie ein StorageGRID -System für die Verwendung mit FabricPool konfigurieren, müssen Sie möglicherweise andere StorageGRID -Optionen ändern.  Bevor Sie eine globale Einstellung ändern, bedenken Sie, welche Auswirkungen die Änderung auf andere S3-Anwendungen hat. 
+---
+= Weitere Best Practices für StorageGRID und FabricPool
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Wenn Sie ein StorageGRID -System für die Verwendung mit FabricPool konfigurieren, müssen Sie möglicherweise andere StorageGRID -Optionen ändern.  Bevor Sie eine globale Einstellung ändern, bedenken Sie, welche Auswirkungen die Änderung auf andere S3-Anwendungen hat.
+
+
+
+== Prüfnachrichten- und Protokollziele
+
+FabricPool -Workloads weisen häufig eine hohe Rate an Lesevorgängen auf, wodurch eine große Menge an Prüfmeldungen generiert werden kann.
+
+* Wenn Sie keine Aufzeichnung der Client-Lesevorgänge für FabricPool oder eine andere S3-Anwendung benötigen, gehen Sie optional zu *KONFIGURATION* > *Überwachung* > *Audit- und Syslog-Server*. Ändern Sie die Einstellung *Client Reads* in *Error*, um die Anzahl der im Audit-Protokoll aufgezeichneten Audit-Meldungen zu verringern. Sehenlink:../monitor/configure-audit-messages.html["Konfigurieren von Überwachungsmeldungen und Protokollzielen"] für Details.
+* Wenn Sie über ein großes Grid verfügen, mehrere Arten von S3-Anwendungen verwenden oder alle Auditdaten behalten möchten, konfigurieren Sie einen externen Syslog-Server und speichern Sie Auditinformationen remote.  Durch die Verwendung eines externen Servers werden die Auswirkungen der Protokollierung von Prüfnachrichten auf die Leistung minimiert, ohne die Vollständigkeit der Prüfdaten zu beeinträchtigen. Sehenlink:../monitor/considerations-for-external-syslog-server.html["Überlegungen zum externen Syslog-Server"] für Details.
+
+
+
+
+== Objektverschlüsselung
+
+Bei der Konfiguration von StorageGRID können Sie optional dielink:../admin/changing-network-options-object-encryption.html["globale Option zur Verschlüsselung gespeicherter Objekte"] wenn für andere StorageGRID Clients eine Datenverschlüsselung erforderlich ist.  Die von FabricPool zu StorageGRID verschobenen Daten sind bereits verschlüsselt, daher ist die Aktivierung der StorageGRID Einstellung nicht erforderlich.  Clientseitige Verschlüsselungsschlüssel sind Eigentum von ONTAP.
+
+
+
+== Objektkomprimierung
+
+Aktivieren Sie beim Konfigurieren von StorageGRID nicht dielink:../admin/configuring-stored-object-compression.html["globale Option zum Komprimieren gespeicherter Objekte"] .  Die von FabricPool zu StorageGRID verschobenen Daten sind bereits komprimiert.  Durch die Verwendung der StorageGRID -Option wird die Größe eines Objekts nicht weiter reduziert.
+
+
+
+== Eimerkonsistenz
+
+Für FabricPool -Buckets ist die empfohlene Bucket-Konsistenz *Lesen nach neuem Schreiben*, was die Standardkonsistenz für einen neuen Bucket ist.  Bearbeiten Sie FabricPool Buckets nicht, um *Available* oder *Strong-site* zu verwenden.
+
+
+
+== FabricPool -Stufen
+
+Wenn ein StorageGRID Knoten Speicher verwendet, der von einem NetApp ONTAP System zugewiesen wurde, vergewissern Sie sich, dass für das Volume keine FabricPool -Tiering-Richtlinie aktiviert ist.  Wenn beispielsweise ein StorageGRID Knoten auf einem VMware-Host ausgeführt wird, stellen Sie sicher, dass für das Volume, das den Datenspeicher für den StorageGRID Knoten unterstützt, keine FabricPool -Tiering-Richtlinie aktiviert ist.  Das Deaktivieren der FabricPool Tiering-Funktion für Volumes, die mit StorageGRID -Knoten verwendet werden, vereinfacht die Fehlerbehebung und Speichervorgänge.
+
+
+CAUTION: Verwenden Sie FabricPool niemals, um Daten im Zusammenhang mit StorageGRID zurück auf StorageGRID selbst zu verschieben.  Das Zurückführen von StorageGRID -Daten in StorageGRID erhöht die Fehlerbehebung und die Betriebskomplexität.

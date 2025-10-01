@@ -1,0 +1,57 @@
+---
+permalink: tenant/understanding-search-integration-service.html 
+sidebar: sidebar 
+keywords: how to understand search integration service 
+summary: Sie können die Suchintegration für einen S3-Bucket aktivieren, wenn Sie einen externen Such- und Datenanalysedienst für Ihre Objektmetadaten verwenden möchten. 
+---
+= Verstehen Sie den Suchintegrationsdienst
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Sie können die Suchintegration für einen S3-Bucket aktivieren, wenn Sie einen externen Such- und Datenanalysedienst für Ihre Objektmetadaten verwenden möchten.
+
+Der Suchintegrationsdienst ist ein benutzerdefinierter StorageGRID Dienst, der automatisch und asynchron S3-Objektmetadaten an einen Zielendpunkt sendet, wenn ein Objekt erstellt oder gelöscht wird oder seine Metadaten oder Tags aktualisiert werden.  Sie können dann die vom Zieldienst bereitgestellten ausgefeilten Such-, Datenanalyse-, Visualisierungs- oder maschinellen Lerntools verwenden, um Ihre Objektdaten zu durchsuchen, zu analysieren und Erkenntnisse daraus zu gewinnen.
+
+Sie können Ihre Buckets beispielsweise so konfigurieren, dass S3-Objektmetadaten an einen Remote-Elasticsearch-Dienst gesendet werden.  Anschließend können Sie Elasticsearch verwenden, um Bucket-übergreifende Suchen durchzuführen und anspruchsvolle Analysen der in Ihren Objektmetadaten vorhandenen Muster durchzuführen.
+
+Obwohl die Elasticsearch-Integration für einen Bucket mit aktivierter S3-Objektsperre konfiguriert werden kann, werden die S3-Objektsperre-Metadaten (einschließlich „Aufbewahrungsdatum“ und „Legal Hold“-Status) der Objekte nicht in die an Elasticsearch gesendeten Metadaten aufgenommen.
+
+
+NOTE: Da der Suchintegrationsdienst das Senden von Objektmetadaten an ein Ziel veranlasst, wird sein Konfigurations-XML als „_Metadaten_-Benachrichtigungskonfigurations-XML“ bezeichnet.  Dieses Konfigurations-XML unterscheidet sich vom „Benachrichtigungskonfigurations-XML“, das zum Aktivieren von _Ereignis_-Benachrichtigungen verwendet wird.
+
+
+
+== Suchintegration und S3-Buckets
+
+Sie können den Suchintegrationsdienst für jeden versionierten oder nicht versionierten Bucket aktivieren.  Die Suchintegration wird konfiguriert, indem die XML-Konfigurationsdatei für Metadatenbenachrichtigungen mit dem Bucket verknüpft wird, der angibt, auf welche Objekte reagiert werden soll und das Ziel für die Objektmetadaten ist.
+
+Metadatenbenachrichtigungen werden in Form eines JSON-Dokuments generiert, das den Bucket-Namen, den Objektnamen und die Versions-ID (sofern vorhanden) enthält.  Jede Metadatenbenachrichtigung enthält zusätzlich zu allen Tags und Benutzermetadaten des Objekts einen Standardsatz von Systemmetadaten für das Objekt.
+
+
+NOTE: Für Tags und Benutzermetadaten übergibt StorageGRID Daten und Zahlen als Zeichenfolgen oder als S3-Ereignisbenachrichtigungen an Elasticsearch.  Um Elasticsearch so zu konfigurieren, dass diese Zeichenfolgen als Datumsangaben oder Zahlen interpretiert werden, befolgen Sie die Elasticsearch-Anweisungen zur dynamischen Feldzuordnung und zur Zuordnung von Datumsformaten.  Sie müssen die dynamischen Feldzuordnungen im Index aktivieren, bevor Sie den Suchintegrationsdienst konfigurieren.  Nachdem ein Dokument indiziert wurde, können Sie die Feldtypen des Dokuments im Index nicht mehr bearbeiten.
+
+
+
+== Suchbenachrichtigungen
+
+Metadatenbenachrichtigungen werden generiert und zur Zustellung in die Warteschlange gestellt, wenn:
+
+* Ein Objekt wird erstellt.
+* Ein Objekt wird gelöscht, auch wenn Objekte aufgrund der Ausführung der ILM-Richtlinie des Grids gelöscht werden.
+* Objektmetadaten oder Tags werden hinzugefügt, aktualisiert oder gelöscht.  Beim Update wird immer der komplette Satz an Metadaten und Tags gesendet – nicht nur die geänderten Werte.
+
+
+Nachdem Sie einem Bucket XML-Metadatenbenachrichtigungskonfigurations-XML hinzugefügt haben, werden Benachrichtigungen für alle neuen Objekte gesendet, die Sie erstellen, und für alle Objekte, die Sie durch Aktualisieren der Daten, Benutzermetadaten oder Tags ändern.  Es werden jedoch keine Benachrichtigungen für Objekte gesendet, die sich bereits im Bucket befanden.  Um sicherzustellen, dass die Objektmetadaten für alle Objekte im Bucket an das Ziel gesendet werden, sollten Sie einen der folgenden Schritte ausführen:
+
+* Konfigurieren Sie den Suchintegrationsdienst unmittelbar nach dem Erstellen des Buckets und vor dem Hinzufügen von Objekten.
+* Führen Sie für alle Objekte, die sich bereits im Bucket befinden, eine Aktion aus, die das Senden einer Metadatenbenachrichtigung an das Ziel auslöst.
+
+
+
+
+== Suchintegrationsdienst und Elasticsearch
+
+Der Suchintegrationsdienst StorageGRID unterstützt einen Elasticsearch-Cluster als Ziel.  Wie bei den anderen Plattformdiensten wird das Ziel im Endpunkt angegeben, dessen URN im Konfigurations-XML für den Dienst verwendet wird.  Verwenden Sie die https://imt.netapp.com/matrix/#welcome["NetApp Interoperabilitätsmatrix-Tool"^] um die unterstützten Versionen von Elasticsearch zu ermitteln.

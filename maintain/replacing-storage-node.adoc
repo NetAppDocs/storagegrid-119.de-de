@@ -1,0 +1,47 @@
+---
+permalink: maintain/replacing-storage-node.html 
+sidebar: sidebar 
+keywords: storagegrid, recover, replace storage node, replacing storage node 
+summary: Wenn das Systemlaufwerk ausgefallen ist, müssen Sie zuerst den Speicherknoten ersetzen. 
+---
+= Ersetzen des Speicherknotens
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Wenn das Systemlaufwerk ausgefallen ist, müssen Sie zuerst den Speicherknoten ersetzen.
+
+Sie müssen das Knotenaustauschverfahren für Ihre Plattform auswählen.  Die Schritte zum Ersetzen eines Knotens sind für alle Arten von Rasterknoten gleich.
+
+
+NOTE: Dieses Verfahren gilt nur für softwarebasierte Speicherknoten.  Sie müssen ein anderes Verfahren befolgen, umlink:recovering-storagegrid-appliance-storage-node.html["Wiederherstellen eines Appliance-Speicherknotens"] .
+
+*Linux:* Wenn Sie nicht sicher sind, ob Ihr Systemlaufwerk ausgefallen ist, befolgen Sie die Anweisungen zum Ersetzen des Knotens, um festzustellen, welche Wiederherstellungsschritte erforderlich sind.
+
+[cols="1a,2a"]
+|===
+| Plattform | Verfahren 
+
+
+ a| 
+VMware
+ a| 
+link:all-node-types-replacing-vmware-node.html["Ersetzen eines VMware-Knotens"]
+
+
+
+ a| 
+Linux
+ a| 
+link:all-node-types-replacing-linux-node.html["Ersetzen eines Linux-Knotens"]
+
+
+
+ a| 
+OpenStack
+ a| 
+Von NetApp bereitgestellte Festplattendateien und Skripts für virtuelle Maschinen für OpenStack werden für Wiederherstellungsvorgänge nicht mehr unterstützt.  Wenn Sie einen Knoten wiederherstellen müssen, der in einer OpenStack-Bereitstellung ausgeführt wird, laden Sie die Dateien für Ihr Linux-Betriebssystem herunter.  Befolgen Sie dann die Anweisungen fürlink:all-node-types-replacing-linux-node.html["Ersetzen eines Linux-Knotens"] .
+
+|===

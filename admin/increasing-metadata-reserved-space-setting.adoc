@@ -1,0 +1,94 @@
+---
+permalink: admin/increasing-metadata-reserved-space-setting.html 
+sidebar: sidebar 
+keywords: increase metadata reserved space setting 
+summary: Sie können die Systemeinstellung „Reservierter Speicherplatz für Metadaten“ möglicherweise erhöhen, wenn Ihre Speicherknoten bestimmte Anforderungen an RAM und verfügbaren Speicherplatz erfüllen. 
+---
+= Einstellung für reservierten Metadatenspeicher erhöhen
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Sie können die Systemeinstellung „Reservierter Speicherplatz für Metadaten“ möglicherweise erhöhen, wenn Ihre Speicherknoten bestimmte Anforderungen an RAM und verfügbaren Speicherplatz erfüllen.
+
+.Was du brauchst
+* Sie sind beim Grid Manager angemeldet mit einemlink:web-browser-requirements.html["unterstützter Webbrowser"] .
+* Sie haben dielink:admin-group-permissions.html["Root-Zugriffsberechtigung oder Berechtigungen für die Konfiguration der Grid-Topologieseite und andere Grid-Konfigurationen"] .
+
+
+
+NOTE: Die Seite „Grid-Topologie“ ist veraltet und wird in einer zukünftigen Version entfernt.
+
+.Informationen zu diesem Vorgang
+Möglicherweise können Sie die systemweite Einstellung für den reservierten Metadatenspeicher manuell auf bis zu 8 TB erhöhen.
+
+Sie können den Wert der systemweiten Einstellung „Reservierter Speicherplatz für Metadaten“ nur erhöhen, wenn beide dieser Aussagen zutreffen:
+
+* Die Speicherknoten an jedem Standort in Ihrem System verfügen jeweils über 128 GB oder mehr RAM.
+* Die Speicherknoten an jedem Standort in Ihrem System verfügen jeweils über ausreichend verfügbaren Speicherplatz auf Speichervolume 0.
+
+
+Beachten Sie, dass Sie durch Erhöhen dieser Einstellung gleichzeitig den für die Objektspeicherung verfügbaren Speicherplatz auf Speichervolume 0 aller Speicherknoten reduzieren.  Aus diesem Grund möchten Sie den reservierten Speicherplatz für Metadaten möglicherweise lieber auf einen Wert kleiner als 8 TB festlegen, basierend auf den erwarteten Anforderungen an die Objektmetadaten.
+
+
+NOTE: Im Allgemeinen ist es besser, einen höheren Wert als einen niedrigeren Wert zu verwenden.  Wenn die Einstellung „Reservierter Speicherplatz für Metadaten“ zu groß ist, können Sie sie später verringern.  Wenn Sie den Wert hingegen später erhöhen, muss das System möglicherweise Objektdaten verschieben, um Speicherplatz freizugeben.
+
+Eine ausführliche Erklärung, wie sich die Einstellung „Reservierter Speicherplatz für Metadaten“ auf den zulässigen Speicherplatz für die Speicherung von Objektmetadaten auf einem bestimmten Speicherknoten auswirkt, finden Sie unterlink:managing-object-metadata-storage.html["Verwalten des Objektmetadatenspeichers"] .
+
+.Schritte
+. Ermitteln Sie die aktuelle Einstellung für den reservierten Speicherplatz für Metadaten.
++
+.. Wählen Sie *KONFIGURATION* > *System* > *Speicheroptionen*.
+.. Beachten Sie im Abschnitt „Speicherwasserzeichen“ den Wert von „*Reservierter Speicherplatz für Metadaten*“.
+
+
+. Stellen Sie sicher, dass auf dem Speichervolume 0 jedes Speicherknotens genügend Speicherplatz verfügbar ist, um diesen Wert zu erhöhen.
++
+.. Wählen Sie *NODES*.
+.. Wählen Sie den ersten Speicherknoten im Raster aus.
+.. Wählen Sie die Registerkarte Speicher.
+.. Suchen Sie im Abschnitt „Volumes“ den Eintrag */var/local/rangedb/0*.
+.. Vergewissern Sie sich, dass der verfügbare Wert gleich oder größer als die Differenz zwischen dem neuen Wert ist, den Sie verwenden möchten, und dem aktuellen Wert für den reservierten Metadatenspeicher.
++
+Wenn beispielsweise die Einstellung „Reservierter Speicherplatz für Metadaten“ derzeit 4 TB beträgt und Sie diese auf 6 TB erhöhen möchten, muss der verfügbare Wert 2 TB oder höher sein.
+
+.. Wiederholen Sie diese Schritte für alle Speicherknoten.
++
+*** Wenn auf einem oder mehreren Speicherknoten nicht genügend Speicherplatz verfügbar ist, kann der Wert für den reservierten Speicherplatz für Metadaten nicht erhöht werden.  Fahren Sie mit diesem Vorgang nicht fort.
+*** Wenn auf jedem Speicherknoten genügend Speicherplatz auf Volume 0 verfügbar ist, fahren Sie mit dem nächsten Schritt fort.
+
+
+
+
+. Stellen Sie sicher, dass auf jedem Speicherknoten mindestens 128 GB RAM vorhanden sind.
++
+.. Wählen Sie *NODES*.
+.. Wählen Sie den ersten Speicherknoten im Raster aus.
+.. Wählen Sie die Registerkarte *Hardware*.
+.. Bewegen Sie den Cursor über das Diagramm zur Speichernutzung.  Stellen Sie sicher, dass der *Gesamtspeicher* mindestens 128 GB beträgt.
+.. Wiederholen Sie diese Schritte für alle Speicherknoten.
++
+*** Wenn ein oder mehrere Speicherknoten nicht über genügend verfügbaren Gesamtspeicher verfügen, kann der Wert für den reservierten Metadatenspeicher nicht erhöht werden.  Fahren Sie mit diesem Vorgang nicht fort.
+*** Wenn jeder Speicherknoten über mindestens 128 GB Gesamtspeicher verfügt, fahren Sie mit dem nächsten Schritt fort.
+
+
+
+
+. Aktualisieren Sie die Einstellung „Reservierter Speicherplatz für Metadaten“.
++
+.. Wählen Sie *KONFIGURATION* > *System* > *Speicheroptionen*.
+.. Wählen Sie die Registerkarte „Konfiguration“ aus.
+.. Wählen Sie im Abschnitt „Speicherwasserzeichen“ *Reservierter Speicherplatz für Metadaten* aus.
+.. Geben Sie den neuen Wert ein.
++
+Um beispielsweise 8 TB einzugeben, was der maximal unterstützte Wert ist, geben Sie *8000000000000* ein (8, gefolgt von 12 Nullen).
+
++
+image::../media/metadata_reserved_space.png[Reservierter Speicherplatz für Metadaten]
+
+.. Wählen Sie *Änderungen übernehmen*.
+
+
+

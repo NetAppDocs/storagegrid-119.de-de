@@ -1,0 +1,38 @@
+---
+indexpage:
+  title: Erste Schritte mit einem StorageGRID -System
+  summary: Nehmen Sie sich vor der Installation und Verwendung eines StorageGRID -Systems
+    etwas Zeit, um sich über StorageGRID zu informieren.
+  keywords: learn about StorageGRID, introduction to StorageGRID, get started with
+    StorageGRID
+  lead: Nehmen Sie sich vor der Installation und Verwendung eines StorageGRID -Systems
+    etwas Zeit, um sich über StorageGRID zu informieren.
+  tiles:
+  - title: Lernen und entdecken
+    links:
+    - title: Was ist StorageGRID?
+      url: "../primer/index.html"
+    - title: Architektur und Netzwerktopologie
+      url: "../primer/storagegrid-architecture-and-network-topology.html"
+    - title: Wie verwaltet StorageGRID Daten?
+      url: "../primer/how-storagegrid-manages-data.html"
+    - title: Grid Manager erkunden
+      url: "../primer/exploring-grid-manager.html"
+    - title: Entdecken Sie den Tenant Manager
+      url: "../primer/exploring-tenant-manager.html"
+  - title: Netzwerkrichtlinien
+    links:
+    - title: Netzwerktypen
+      url: "../network/storagegrid-network-types.html"
+    - title: Netzwerkanforderungen
+      url: "../network/networking-requirements-and-guidelines.html"
+    - title: Interne Grid-Knoten-Kommunikation
+      url: "../network/internal-grid-node-communications.html"
+    - title: Externe Kommunikation
+      url: "../network/external-communications.html"
+  - title: Erste Schritte
+    links:
+    - title: Schnellstart für StorageGRID
+      url: "../primer/quick-start.html"
+    - title: Anforderungen an den Webbrowser
+      url: "../admin/web-browser-requirements.html"

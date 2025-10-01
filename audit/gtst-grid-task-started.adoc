@@ -1,0 +1,42 @@
+---
+permalink: audit/gtst-grid-task-started.html 
+sidebar: sidebar 
+keywords: storagegrid, audit, message, GTST, Grid Task Started 
+summary: Diese Prüfmeldung zeigt an, dass der CMN-Dienst mit der Verarbeitung der angegebenen Grid-Aufgabe begonnen hat.  Die Prüfnachricht folgt unmittelbar auf die Nachricht „Grid Task Submitted“ für Grid-Aufgaben, die vom internen Grid Task Submission-Dienst initiiert und für die automatische Aktivierung ausgewählt wurden.  Für Rasteraufgaben, die in die Tabelle „Ausstehend“ übermittelt werden, wird diese Nachricht generiert, wenn der Benutzer die Rasteraufgabe startet. 
+---
+= GTST: Grid-Aufgabe gestartet
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Diese Prüfmeldung zeigt an, dass der CMN-Dienst mit der Verarbeitung der angegebenen Grid-Aufgabe begonnen hat.  Die Prüfnachricht folgt unmittelbar auf die Nachricht „Grid Task Submitted“ für Grid-Aufgaben, die vom internen Grid Task Submission-Dienst initiiert und für die automatische Aktivierung ausgewählt wurden.  Für Rasteraufgaben, die in die Tabelle „Ausstehend“ übermittelt werden, wird diese Nachricht generiert, wenn der Benutzer die Rasteraufgabe startet.
+
+[cols="1a,1a,4a"]
+|===
+| Code | Feld | Beschreibung 
+
+
+ a| 
+TSID
+ a| 
+Aufgaben-ID
+ a| 
+Dieses Feld identifiziert eine generierte Rasteraufgabe eindeutig und ermöglicht die Verwaltung der Aufgabe über ihren Lebenszyklus.
+
+*Hinweis:* Die Aufgaben-ID wird zum Zeitpunkt der Generierung einer Rasteraufgabe zugewiesen, nicht zum Zeitpunkt der Übermittlung.  Es ist möglich, dass eine bestimmte Rasteraufgabe mehrmals übermittelt wird. In diesem Fall reicht das Feld „Aufgaben-ID“ nicht aus, um die Prüfmeldungen „Übermittelt“, „Gestartet“ und „Beendet“ eindeutig zu verknüpfen.
+
+
+
+ a| 
+RSLT
+ a| 
+Ergebnis
+ a| 
+Das Ergebnis.  Dieses Feld hat nur einen Wert:
+
+* SUCS: Die Grid-Task wurde erfolgreich gestartet.
+
+
+|===

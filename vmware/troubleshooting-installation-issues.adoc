@@ -1,0 +1,81 @@
+---
+permalink: vmware/troubleshooting-installation-issues.html 
+sidebar: sidebar 
+keywords: how to troubleshoot installation issues 
+summary: Wenn bei der Installation Ihres StorageGRID -Systems Probleme auftreten, können Sie auf die Installationsprotokolldateien zugreifen. 
+---
+= Beheben von Installationsproblemen
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Wenn bei der Installation Ihres StorageGRID -Systems Probleme auftreten, können Sie auf die Installationsprotokolldateien zugreifen.
+
+Nachfolgend sind die wichtigsten Installationsprotokolldateien aufgeführt, die der technische Support möglicherweise zur Lösung von Problemen benötigt.
+
+* `/var/local/log/install.log`(auf allen Grid-Knoten zu finden)
+* `/var/local/log/gdu-server.log`(auf dem primären Admin-Knoten zu finden)
+
+
+.Ähnliche Informationen
+Informationen zum Zugriff auf die Protokolldateien finden Sie unterlink:../monitor/logs-files-reference.html["Referenz zu Protokolldateien"] .
+
+Wenn Sie weitere Hilfe benötigen, wenden Sie sich an https://mysupport.netapp.com/site/global/dashboard["NetApp Support"^] .
+
+
+
+== Die Ressourcenreservierung virtueller Maschinen muss angepasst werden
+
+OVF-Dateien enthalten eine Ressourcenreservierung, die sicherstellen soll, dass jeder Grid-Knoten über ausreichend RAM und CPU verfügt, um effizient zu arbeiten.  Wenn Sie virtuelle Maschinen erstellen, indem Sie diese OVF-Dateien auf VMware bereitstellen, und die vordefinierte Anzahl an Ressourcen nicht verfügbar ist, werden die virtuellen Maschinen nicht gestartet.
+
+.Informationen zu diesem Vorgang
+Wenn Sie sicher sind, dass der VM-Host über ausreichend Ressourcen für jeden Grid-Knoten verfügt, passen Sie die den einzelnen virtuellen Maschinen zugewiesenen Ressourcen manuell an und versuchen Sie dann, die virtuellen Maschinen zu starten.
+
+.Schritte
+. Wählen Sie in der VMware vSphere Hypervisor-Clientstruktur die virtuelle Maschine aus, die nicht gestartet ist.
+. Klicken Sie mit der rechten Maustaste auf die virtuelle Maschine und wählen Sie *Einstellungen bearbeiten*.
+. Wählen Sie im Eigenschaftenfenster der virtuellen Maschine die Registerkarte *Ressourcen* aus.
+. Passen Sie die der virtuellen Maschine zugewiesenen Ressourcen an:
++
+.. Wählen Sie *CPU* aus und passen Sie dann mit dem Reservierungsschieberegler die für diese virtuelle Maschine reservierte MHz-Zahl an.
+.. Wählen Sie *Speicher* aus und passen Sie dann mit dem Reservierungsregler die für diese virtuelle Maschine reservierte MB-Zahl an.
+
+
+. Klicken Sie auf *OK*.
+. Wiederholen Sie den Vorgang nach Bedarf für andere virtuelle Maschinen, die auf demselben VM-Host gehostet werden.
+
+
+
+
+== Das temporäre Installationskennwort wurde deaktiviert
+
+Wenn Sie einen VMware-Knoten bereitstellen, können Sie optional ein temporäres Installationskennwort angeben.  Sie müssen über dieses Kennwort verfügen, um auf die VM-Konsole zuzugreifen oder SSH zu verwenden, bevor der neue Knoten dem Grid beitritt.
+
+Wenn Sie sich für die Deaktivierung des temporären Installationskennworts entschieden haben, müssen Sie zusätzliche Schritte ausführen, um Installationsprobleme zu beheben.
+
+Sie können einen der folgenden Schritte ausführen:
+
+* Stellen Sie die VM erneut bereit, geben Sie jedoch ein temporäres Installationskennwort an, damit Sie auf die Konsole zugreifen oder SSH zum Debuggen von Installationsproblemen verwenden können.
+* Verwenden Sie vCenter, um das Kennwort festzulegen:
++
+.. Schalten Sie die VM aus.
+.. Gehen Sie zu *VM*, wählen Sie die Registerkarte *Konfigurieren* und wählen Sie *vApp-Optionen*.
+.. Geben Sie den Typ des temporären Installationskennworts an, das festgelegt werden soll:
++
+*** Wählen Sie *CUSTOM_TEMPORARY_PASSWORD*, um ein benutzerdefiniertes temporäres Passwort festzulegen.
+*** Wählen Sie *TEMPORARY_PASSWORD_TYPE*, um den Knotennamen als temporäres Passwort zu verwenden.
+
+
+.. Wählen Sie *Wert festlegen*.
+.. Legen Sie das temporäre Passwort fest:
++
+*** Ändern Sie *CUSTOM_TEMPORARY_PASSWORD* in einen benutzerdefinierten Kennwortwert.
+*** Aktualisieren Sie *TEMPORARY_PASSWORD_TYPE* mit dem Wert *Knotennamen verwenden*.
+
+
+.. Starten Sie die VM neu, um das neue Kennwort anzuwenden.
+
+
+

@@ -1,0 +1,46 @@
+---
+permalink: maintain/pausing-and-resuming-decommission-process-for-storage-nodes.html 
+sidebar: sidebar 
+keywords: how to pause decommission 
+summary: Wenn Sie einen zweiten Wartungsvorgang durchführen müssen, können Sie den Außerbetriebnahmevorgang für einen Speicherknoten während bestimmter Phasen anhalten.  Nachdem die anderen Schritte abgeschlossen sind, können Sie mit der Außerbetriebnahme fortfahren. 
+---
+= Außerbetriebnahmeprozess für Speicherknoten anhalten und fortsetzen
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Wenn Sie einen zweiten Wartungsvorgang durchführen müssen, können Sie den Außerbetriebnahmevorgang für einen Speicherknoten während bestimmter Phasen anhalten.  Nachdem die anderen Schritte abgeschlossen sind, können Sie mit der Außerbetriebnahme fortfahren.
+
+
+NOTE: Die Schaltfläche *Pause* ist nur aktiviert, wenn die Phasen der ILM-Auswertung oder der Außerbetriebnahme von Erasure-Coded-Daten erreicht sind. Die ILM-Auswertung (Datenmigration) wird jedoch weiterhin im Hintergrund ausgeführt.
+
+.Bevor Sie beginnen
+* Sie sind beim Grid Manager angemeldet mit einemlink:../admin/web-browser-requirements.html["unterstützter Webbrowser"] .
+* Sie haben dielink:../admin/admin-group-permissions.html["Wartungs- oder Root-Zugriffsberechtigung"] .
+
+
+.Schritte
+. Wählen Sie *WARTUNG* > *Aufgaben* > *Außerbetriebnahme*.
++
+Die Seite „Außerbetriebnahme“ wird angezeigt.
+
+. Wählen Sie *Knoten außer Betrieb nehmen*.
++
+Die Seite „Knoten außer Betrieb nehmen“ wird angezeigt.  Wenn der Außerbetriebnahmevorgang eine der folgenden Phasen erreicht, wird die Schaltfläche *Pause* aktiviert.
+
++
+** Evaluierung von ILM
+** Außerbetriebnahme von Erasure-Coded-Daten
+
+
+. Wählen Sie *Pause*, um den Vorgang anzuhalten.
++
+Die aktuelle Phase wird angehalten und die Schaltfläche *Fortsetzen* wird aktiviert.
+
++
+image::../media/decommission_nodes_procedure_paused.png[Verfahren zur Außerbetriebnahme von Knoten angehalten]
+
+. Nachdem die anderen Wartungsvorgänge abgeschlossen sind, wählen Sie *Fortsetzen*, um mit der Außerbetriebnahme fortzufahren.
+

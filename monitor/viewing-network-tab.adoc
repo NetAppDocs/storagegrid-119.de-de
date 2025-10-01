@@ -1,0 +1,25 @@
+---
+permalink: monitor/viewing-network-tab.html 
+sidebar: sidebar 
+keywords: network tab 
+summary: Auf der Registerkarte „Netzwerk“ wird ein Diagramm angezeigt, das den über alle Netzwerkschnittstellen auf dem Knoten, der Site oder dem Grid empfangenen und gesendeten Netzwerkverkehr darstellt. 
+---
+= Anzeigen der Registerkarte „Netzwerk“
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Auf der Registerkarte „Netzwerk“ wird ein Diagramm angezeigt, das den über alle Netzwerkschnittstellen auf dem Knoten, der Site oder dem Grid empfangenen und gesendeten Netzwerkverkehr darstellt.
+
+Die Registerkarte „Netzwerk“ wird für alle Knoten, jeden Standort und das gesamte Raster angezeigt.
+
+Um ein anderes Zeitintervall anzuzeigen, wählen Sie eines der Steuerelemente über dem Diagramm oder der Grafik aus.  Sie können die verfügbaren Informationen für Intervalle von 1 Stunde, 1 Tag, 1 Woche oder 1 Monat anzeigen.  Sie können auch ein benutzerdefiniertes Intervall festlegen, in dem Sie Datums- und Zeitbereiche angeben können.
+
+Für Knoten enthält die Tabelle „Netzwerkschnittstellen“ Informationen zu den physischen Netzwerkports jedes Knotens.  Die Netzwerkkommunikationstabelle enthält Einzelheiten zu den Empfangs- und Sendevorgängen jedes Knotens und zu allen vom Treiber gemeldeten Fehlerzählern.
+
+image::../media/nodes_page_network_tab.png[Knotenseite Registerkarte „Netzwerk“]
+
+.Ähnliche Informationen
+link:monitoring-network-connections-and-performance.html["Überwachen Sie Netzwerkverbindungen und Leistung"]

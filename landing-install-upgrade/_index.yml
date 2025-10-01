@@ -1,0 +1,69 @@
+---
+indexpage:
+  title: Installieren, Aktualisieren und Hotfixen von StorageGRID
+  summary: Ein StorageGRID -System besteht aus einzelnen hardware- und softwarebasierten
+    Knoten.  Sie installieren zunächst die Hardware für jeden Appliance-Knoten und
+    konfigurieren jeden Linux- oder VMware-Host.  Anschließend installieren Sie die
+    StorageGRID -Software auf jedem Gerät oder Softwarehost und verbinden die Knoten
+    zu einem Grid.
+  keywords: install, upgrade, hotfix
+  lead: Ein StorageGRID -System besteht aus einzelnen hardware- und softwarebasierten
+    Knoten.  Sie installieren zunächst die Hardware für jeden Appliance-Knoten und
+    konfigurieren jeden Linux- oder VMware-Host.  Anschließend installieren Sie die
+    StorageGRID -Software auf jedem Gerät oder Softwarehost und verbinden die Knoten
+    zu einem Grid.
+  tiles:
+  - title: Schnellstart
+    links:
+    - title: Gerätehardware
+      url: https://docs.netapp.com/us-en/storagegrid-appliances/installconfig/index.html
+    - title: Red Hat Enterprise Linux
+      url: "../rhel/index.html"
+    - title: Ubuntu oder Debian
+      url: "../ubuntu/index.html"
+    - title: VMware
+      url: "../vmware/index.html"
+  - title: Materialien vorbereiten
+    links:
+    - title: Red Hat Enterprise Linux
+      url: "../rhel/required-materials.html"
+    - title: Ubuntu oder Debian
+      url: "../ubuntu/required-materials.html"
+    - title: VMware
+      url: "../vmware/required-materials.html"
+  - title: Automatisieren Sie die Installation
+    links:
+    - title: Red Hat Enterprise Linux
+      url: "../rhel/automating-installation.html"
+    - title: Ubuntu oder Debian
+      url: "../ubuntu/automating-installation.html"
+    - title: VMware
+      url: "../vmware/automating-grid-node-deployment-in-vmware-vsphere.html"
+  - title: Knoten bereitstellen
+    links:
+    - title: Red Hat Enterprise Linux
+      url: "../rhel/creating-node-configuration-files.html"
+    - title: Ubuntu oder Debian
+      url: "../ubuntu/creating-node-configuration-files.html"
+    - title: VMware
+      url: "../vmware/collecting-information-about-your-deployment-environment.html"
+  - title: Vollständige Knoteninstallation
+    links:
+    - title: Red Hat Enterprise Linux
+      url: "../rhel/navigating-to-grid-manager.html"
+    - title: Ubuntu oder Debian
+      url: "../ubuntu/navigating-to-grid-manager.html"
+    - title: VMware
+      url: "../vmware/navigating-to-grid-manager.html"
+  - title: Upgrade oder Hotfix
+    links:
+    - title: Was ist neu
+      url: "../upgrade/whats-new.html"
+    - title: Geschätzte Zeit bis zur Fertigstellung
+      url: "../upgrade/estimating-time-to-complete-upgrade.html"
+    - title: Auswirkungen des Upgrades auf Ihr System
+      url: "../upgrade/how-your-system-is-affected-during-upgrade.html"
+    - title: Upgrade-Schnellstart
+      url: "../upgrade/upgrade-workflow.html"
+    - title: Hotfix anwenden
+      url: "../maintain/storagegrid-hotfix-procedure.html"

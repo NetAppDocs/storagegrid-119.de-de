@@ -1,0 +1,94 @@
+---
+permalink: maintain/using-donotstart-file.html 
+sidebar: sidebar 
+keywords: storagegrid, recover, donotstart, do not start, donotstart file, do not start file 
+summary: Wenn Sie unter Anleitung des technischen Supports verschiedene Wartungs- oder Konfigurationsverfahren durchführen, werden Sie möglicherweise aufgefordert, eine DoNotStart-Datei zu verwenden, um zu verhindern, dass Dienste gestartet werden, wenn Server Manager gestartet oder neu gestartet wird. 
+---
+= Verwenden Sie eine DoNotStart-Datei
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Wenn Sie unter Anleitung des technischen Supports verschiedene Wartungs- oder Konfigurationsverfahren durchführen, werden Sie möglicherweise aufgefordert, eine DoNotStart-Datei zu verwenden, um zu verhindern, dass Dienste gestartet werden, wenn Server Manager gestartet oder neu gestartet wird.
+
+
+CAUTION: Sie sollten eine DoNotStart-Datei nur hinzufügen oder entfernen, wenn Sie vom technischen Support dazu aufgefordert werden.
+
+Um den Start eines Dienstes zu verhindern, platzieren Sie eine DoNotStart-Datei im Verzeichnis des Dienstes, dessen Start Sie verhindern möchten.  Beim Start sucht der Server Manager nach der DoNotStart-Datei.  Wenn die Datei vorhanden ist, wird der Start des Dienstes (und aller davon abhängigen Dienste) verhindert.  Wenn die DoNotStart-Datei entfernt wird, wird der zuvor gestoppte Dienst beim nächsten Start oder Neustart von Server Manager gestartet.  Dienste werden nicht automatisch gestartet, wenn die DoNotStart-Datei entfernt wird.
+
+Der effizienteste Weg, den Neustart aller Dienste zu verhindern, besteht darin, den Start des NTP-Dienstes zu verhindern.  Alle Dienste sind vom NTP-Dienst abhängig und können nicht ausgeführt werden, wenn der NTP-Dienst nicht ausgeführt wird.
+
+
+
+== DoNotStart-Datei für den Dienst hinzufügen
+
+Sie können den Start eines einzelnen Dienstes verhindern, indem Sie dem Verzeichnis dieses Dienstes auf einem Grid-Knoten eine DoNotStart-Datei hinzufügen.
+
+.Bevor Sie beginnen
+Sie haben die `Passwords.txt` Datei.
+
+.Schritte
+. Melden Sie sich beim Grid-Knoten an:
++
+.. Geben Sie den folgenden Befehl ein: `ssh admin@_grid_node_IP_`
+.. Geben Sie das Passwort ein, das in der `Passwords.txt` Datei.
+.. Geben Sie den folgenden Befehl ein, um zum Root zu wechseln: `su -`
+.. Geben Sie das Passwort ein, das in der `Passwords.txt` Datei.
+
+
++
+Wenn Sie als Root angemeldet sind, ändert sich die Eingabeaufforderung von `$` Zu `#` .
+
+. Fügen Sie eine DoNotStart-Datei hinzu: `touch /etc/sv/_service_/DoNotStart`
++
+Wo `service` ist der Name des Dienstes, dessen Start verhindert werden soll. Zum Beispiel,
+
++
+[listing]
+----
+touch /etc/sv/ldr/DoNotStart
+----
++
+Es wird eine DoNotStart-Datei erstellt.  Es wird kein Dateiinhalt benötigt.
+
++
+Wenn Server Manager oder der Grid-Knoten neu gestartet wird, wird Server Manager neu gestartet, der Dienst jedoch nicht.
+
+. Melden Sie sich von der Befehlsshell ab: `exit`
+
+
+
+
+== DoNotStart-Datei für den Dienst entfernen
+
+Wenn Sie eine DoNotStart-Datei entfernen, die den Start eines Dienstes verhindert, müssen Sie diesen Dienst starten.
+
+.Bevor Sie beginnen
+Sie haben die `Passwords.txt` Datei.
+
+.Schritte
+. Melden Sie sich beim Grid-Knoten an:
++
+.. Geben Sie den folgenden Befehl ein: `ssh admin@_grid_node_IP_`
+.. Geben Sie das Passwort ein, das in der `Passwords.txt` Datei.
+.. Geben Sie den folgenden Befehl ein, um zum Root zu wechseln: `su -`
+.. Geben Sie das Passwort ein, das in der `Passwords.txt` Datei.
+
+
++
+Wenn Sie als Root angemeldet sind, ändert sich die Eingabeaufforderung von `$` Zu `#` .
+
+. Entfernen Sie die DoNotStart-Datei aus dem Serviceverzeichnis: `rm /etc/sv/_service_/DoNotStart`
++
+Wo `service` ist der Name des Dienstes. Zum Beispiel,
+
++
+[listing]
+----
+rm /etc/sv/ldr/DoNotStart
+----
+. Starten Sie den Dienst: `service _servicename_ start`
+. Melden Sie sich von der Befehlsshell ab: `exit`
+

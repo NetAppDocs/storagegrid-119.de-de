@@ -1,0 +1,109 @@
+---
+permalink: admin/managing-traffic-classification-policies.html 
+sidebar: sidebar 
+keywords: QoS, quality of service, traffic classification, best practices, limit traffic, monitor traffic 
+summary: 'Mithilfe von Richtlinien zur Verkehrsklassifizierung können Sie verschiedene Arten von Netzwerkverkehr identifizieren und überwachen.  Diese Richtlinien können bei der Verkehrsbegrenzung und -überwachung helfen, um Ihre Quality-of-Service-Angebote (QoS) zu verbessern.' 
+---
+= Was sind Verkehrsklassifizierungsrichtlinien?
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Mithilfe von Richtlinien zur Verkehrsklassifizierung können Sie verschiedene Arten von Netzwerkverkehr identifizieren und überwachen.  Diese Richtlinien können bei der Verkehrsbegrenzung und -überwachung helfen, um Ihre Quality-of-Service-Angebote (QoS) zu verbessern.
+
+Richtlinien zur Verkehrsklassifizierung werden auf Endpunkte des StorageGRID Load Balancer-Dienstes für Gateway-Knoten und Admin-Knoten angewendet.  Um Richtlinien zur Verkehrsklassifizierung zu erstellen, müssen Sie bereits Load Balancer-Endpunkte erstellt haben.
+
+
+
+== Übereinstimmungsregeln
+
+Jede Datenverkehrsklassifizierungsrichtlinie enthält eine oder mehrere Übereinstimmungsregeln zur Identifizierung des Netzwerkverkehrs, der mit einer oder mehreren der folgenden Entitäten in Zusammenhang steht:
+
+* Eimer
+* Subnetz
+* Mieter
+* Load Balancer-Endpunkte
+
+
+StorageGRID überwacht den Datenverkehr, der einer beliebigen Regel innerhalb der Richtlinie entspricht, entsprechend den Zielen der Regel.  Jeglicher Datenverkehr, der einer Regel einer Richtlinie entspricht, wird von dieser Richtlinie behandelt.  Umgekehrt können Sie Regeln festlegen, die auf den gesamten Datenverkehr mit Ausnahme einer bestimmten Entität angewendet werden.
+
+
+
+== Verkehrsbeschränkung
+
+Optional können Sie einer Richtlinie die folgenden Limittypen hinzufügen:
+
+* Gesamtbandbreite
+* Bandbreite pro Anfrage
+* Gleichzeitige Anfragen
+* Anfragerate
+
+
+Grenzwerte werden pro Load Balancer erzwungen.  Wenn der Datenverkehr gleichzeitig auf mehrere Load Balancer verteilt wird, beträgt die maximale Gesamtrate ein Vielfaches der von Ihnen angegebenen Ratenbegrenzungen.
+
+
+NOTE: Sie können Richtlinien erstellen, um die Gesamtbandbreite oder die Bandbreite pro Anfrage zu begrenzen.  StorageGRID kann jedoch nicht beide Bandbreitenarten gleichzeitig begrenzen.  Die aggregierten Bandbreitenbeschränkungen können bei nicht beschränktem Datenverkehr zusätzliche geringfügige Auswirkungen auf die Leistung haben.
+
+Bei aggregierten oder pro Anfrage geltenden Bandbreitenbeschränkungen werden die Anfragen mit der von Ihnen festgelegten Rate ein- oder ausgehend gestreamt.  StorageGRID kann nur eine Geschwindigkeit erzwingen, daher wird die spezifischste Richtlinienübereinstimmung nach Matcher-Typ erzwungen.  Die von der Anfrage verbrauchte Bandbreite wird nicht auf andere, weniger spezifische Übereinstimmungsrichtlinien angerechnet, die Richtlinien zur aggregierten Bandbreitenbegrenzung enthalten.  Bei allen anderen Grenzwerttypen werden Clientanforderungen um 250 Millisekunden verzögert und erhalten eine 503 Slow Down-Antwort für Anforderungen, die einen entsprechenden Richtliniengrenzwert überschreiten.
+
+Im Grid Manager können Sie Verkehrsdiagramme anzeigen und überprüfen, ob die Richtlinien die von Ihnen erwarteten Verkehrsbeschränkungen durchsetzen.
+
+
+
+== Verwenden Sie Verkehrsklassifizierungsrichtlinien mit SLAs
+
+Sie können Richtlinien zur Verkehrsklassifizierung in Verbindung mit Kapazitätsgrenzen und Datenschutz verwenden, um Service-Level-Agreements (SLAs) durchzusetzen, die Einzelheiten zu Kapazität, Datenschutz und Leistung enthalten.
+
+Das folgende Beispiel zeigt drei Ebenen eines SLA.  Sie können Richtlinien zur Verkehrsklassifizierung erstellen, um die Leistungsziele jeder SLA-Stufe zu erreichen.
+
+[cols="1a,1a,1a,1a,1a"]
+|===
+| Service-Level-Stufe | Kapazität | Datensicherung | Maximal zulässige Leistung | Kosten 
+
+
+ a| 
+Gold
+ a| 
+1 PB Speicher zulässig
+ a| 
+3-Kopien-ILM-Regel
+ a| 
+25.000 Anfragen/Sek.
+
+5 GB/s (40 Gbit/s) Bandbreite
+ a| 
+$$$ pro Monat
+
+
+
+ a| 
+Silber
+ a| 
+250 TB Speicher erlaubt
+ a| 
+2 ILM-Kopienregel
+ a| 
+10.000 Anfragen/Sek.
+
+1,25 GB/s (10 Gbit/s) Bandbreite
+ a| 
+$$ pro Monat
+
+
+
+ a| 
+Bronze
+ a| 
+100 TB Speicher erlaubt
+ a| 
+2 ILM-Kopienregel
+ a| 
+5.000 Anfragen/Sek.
+
+1 GB/s (8 Gbit/s) Bandbreite
+ a| 
+$ pro Monat
+
+|===

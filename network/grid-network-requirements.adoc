@@ -1,0 +1,23 @@
+---
+permalink: network/grid-network-requirements.html 
+sidebar: sidebar 
+keywords: grid network requirements 
+summary: Befolgen Sie diese Anforderungen und Richtlinien für das Grid-Netzwerk. 
+---
+= Netzanforderungen
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Befolgen Sie diese Anforderungen und Richtlinien für das Grid-Netzwerk.
+
+* Zum Zeitpunkt der Bereitstellung muss jeder Grid-Knoten an das Grid-Netzwerk angeschlossen sein und über die Netzwerkkonfiguration, die Sie bei der Bereitstellung des Knotens angeben, mit dem primären Admin-Knoten kommunizieren können.
+* Während des normalen Netzbetriebs muss jeder Netzknoten in der Lage sein, über das Netznetzwerk mit allen anderen Netzknoten zu kommunizieren.
++
+
+NOTE: Das Grid-Netzwerk muss zwischen den einzelnen Knoten direkt routebar sein.  Die Netzwerkadressübersetzung (NAT) zwischen Knoten wird nicht unterstützt.
+
+* Wenn das Grid-Netzwerk aus mehreren Subnetzen besteht, fügen Sie diese der Grid-Netzwerk-Subnetzliste (GNSL) hinzu.  Für jedes Subnetz im GNSL werden auf allen Knoten statische Routen erstellt.
+

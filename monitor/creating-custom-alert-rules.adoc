@@ -1,0 +1,115 @@
+---
+permalink: monitor/creating-custom-alert-rules.html 
+sidebar: sidebar 
+keywords: how to create custom alert rules 
+summary: Sie können benutzerdefinierte Warnregeln erstellen, um Ihre eigenen Bedingungen zum Auslösen von Warnmeldungen festzulegen. 
+---
+= Erstellen Sie benutzerdefinierte Warnregeln
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Sie können benutzerdefinierte Warnregeln erstellen, um Ihre eigenen Bedingungen zum Auslösen von Warnmeldungen festzulegen.
+
+.Bevor Sie beginnen
+* Sie sind beim Grid Manager angemeldet mit einemlink:../admin/web-browser-requirements.html["unterstützter Webbrowser"] .
+* Sie haben dielink:../admin/admin-group-permissions.html["Verwalten von Warnungen oder Root-Zugriffsberechtigungen"] .
+* Sie kennen dielink:commonly-used-prometheus-metrics.html["häufig verwendete Prometheus-Metriken"] .
+* Sie verstehen die https://prometheus.io/docs/prometheus/latest/querying/basics/["Syntax von Prometheus-Abfragen"^] .
+* Optional haben Sie das Video angesehen: https://netapp.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=54af90c4-9a38-4136-9621-b1ff008604a3["Video: Benutzerdefinierte Benachrichtigungen"^] .
++
+[link=https://netapp.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=54af90c4-9a38-4136-9621-b1ff008604a3]
+image::../media/video-screenshot-alert-create-custom-118.png[Video: Benutzerdefinierte Benachrichtigungen]
+
+
+
+.Informationen zu diesem Vorgang
+StorageGRID validiert keine benutzerdefinierten Warnungen.  Wenn Sie benutzerdefinierte Warnregeln erstellen möchten, befolgen Sie diese allgemeinen Richtlinien:
+
+* Sehen Sie sich die Bedingungen für die Standardwarnregeln an und verwenden Sie sie als Beispiele für Ihre benutzerdefinierten Warnregeln.
+* Wenn Sie mehr als eine Bedingung für eine Warnregel definieren, verwenden Sie für alle Bedingungen denselben Ausdruck.  Ändern Sie dann den Schwellenwert für jede Bedingung.
+* Überprüfen Sie jede Bedingung sorgfältig auf Tipp- und Logikfehler.
+* Verwenden Sie nur die in der Grid Management API aufgeführten Metriken.
+* Beachten Sie beim Testen eines Ausdrucks mithilfe der Grid Management API, dass eine „erfolgreiche“ Antwort ein leerer Antworttext sein kann (keine Warnung ausgelöst).  Um zu sehen, ob der Alarm tatsächlich ausgelöst wird, können Sie vorübergehend einen Schwellenwert auf einen Wert festlegen, von dem Sie derzeit erwarten, dass er zutrifft.
++
+Um beispielsweise den Ausdruck zu testen `node_memory_MemTotal_bytes < 24000000000` , führen Sie zuerst `node_memory_MemTotal_bytes >= 0` und stellen Sie sicher, dass Sie die erwarteten Ergebnisse erhalten (alle Knoten geben einen Wert zurück).  Ändern Sie dann den Operator und den Schwellenwert wieder auf die beabsichtigten Werte und führen Sie die Ausführung erneut aus.  Keine Ergebnisse zeigen an, dass für diesen Ausdruck keine aktuellen Warnungen vorliegen.
+
+* Gehen Sie nicht davon aus, dass eine benutzerdefinierte Warnung funktioniert, es sei denn, Sie haben überprüft, dass die Warnung zum erwarteten Zeitpunkt ausgelöst wird.
+
+
+.Schritte
+. Wählen Sie *WARNUNGEN* > *Regeln*.
++
+Die Seite „Warnregeln“ wird angezeigt.
+
+. Wählen Sie *Benutzerdefinierte Regel erstellen*.
++
+Das Dialogfeld „Benutzerdefinierte Regel erstellen“ wird angezeigt.
+
++
+image::../media/alerts_create_custom_rule.png[Warnungen > Benutzerdefinierte Regel erstellen]
+
+. Aktivieren oder deaktivieren Sie das Kontrollkästchen *Aktiviert*, um festzustellen, ob diese Warnregel derzeit aktiviert ist.
++
+Wenn eine Warnregel deaktiviert ist, werden ihre Ausdrücke nicht ausgewertet und es werden keine Warnmeldungen ausgelöst.
+
+. Geben Sie die folgenden Informationen ein:
++
+[cols="1a,2a"]
+|===
+| Feld | Beschreibung 
+
+
+ a| 
+Eindeutiger Name
+ a| 
+Ein eindeutiger Name für diese Regel.  Der Name der Warnregel wird auf der Seite „Warnungen“ angezeigt und ist auch der Betreff für E-Mail-Benachrichtigungen.  Namen für Warnregeln können zwischen 1 und 64 Zeichen lang sein.
+
+
+
+ a| 
+Beschreibung
+ a| 
+Eine Beschreibung des auftretenden Problems.  Die Beschreibung ist die Warnmeldung, die auf der Warnseite und in E-Mail-Benachrichtigungen angezeigt wird.  Beschreibungen für Warnregeln können zwischen 1 und 128 Zeichen lang sein.
+
+
+
+ a| 
+Empfohlene Maßnahmen
+ a| 
+Optional die empfohlenen Maßnahmen, die ergriffen werden sollen, wenn diese Warnung ausgelöst wird.  Geben Sie empfohlene Aktionen als einfachen Text ein (keine Formatierungscodes).  Empfohlene Aktionen für Warnregeln können zwischen 0 und 1.024 Zeichen lang sein.
+
+|===
+. Geben Sie im Abschnitt „Bedingungen“ einen Prometheus-Ausdruck für einen oder mehrere Schweregrade der Warnung ein.
++
+Ein einfacher Ausdruck hat normalerweise die Form:
+
++
+`[metric] [operator] [value]`
+
++
+Ausdrücke können beliebig lang sein, werden in der Benutzeroberfläche jedoch in einer einzigen Zeile angezeigt.  Mindestens ein Ausdruck ist erforderlich.
+
++
+Dieser Ausdruck bewirkt, dass eine Warnung ausgelöst wird, wenn die Menge des installierten RAM für einen Knoten weniger als 24.000.000.000 Byte (24 GB) beträgt.
+
++
+`node_memory_MemTotal_bytes < 24000000000`
+
++
+Um verfügbare Metriken anzuzeigen und Prometheus-Ausdrücke zu testen, wählen Sie das Hilfesymbolimage:../media/icon_nms_question.png["Fragezeichensymbol"] und folgen Sie dem Link zum Abschnitt „Metriken“ der Grid Management API.
+
+. Geben Sie im Feld *Dauer* die Zeitspanne ein, die eine Bedingung kontinuierlich wirksam bleiben muss, bevor der Alarm ausgelöst wird, und wählen Sie eine Zeiteinheit aus.
++
+Um sofort einen Alarm auszulösen, wenn eine Bedingung erfüllt wird, geben Sie *0* ein.  Erhöhen Sie diesen Wert, um zu verhindern, dass vorübergehende Bedingungen Warnungen auslösen.
+
++
+Der Standardwert beträgt 5 Minuten.
+
+. Wählen Sie *Speichern*.
++
+Das Dialogfeld wird geschlossen und die neue benutzerdefinierte Warnregel wird in der Tabelle „Warnregeln“ angezeigt.
+
+

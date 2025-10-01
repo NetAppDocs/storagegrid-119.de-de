@@ -1,0 +1,39 @@
+---
+permalink: audit/sysu-node-start.html 
+sidebar: sidebar 
+keywords: storagegrid, audit, message, SYSU, Node Start 
+summary: 'Beim Neustart eines Dienstes wird diese Meldung generiert, um anzuzeigen, ob das vorherige Herunterfahren sauber (befohlen) oder ungeordnet (unerwartet) war.' 
+---
+= SYSU: Knotenstart
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Wenn ein Dienst neu gestartet wird, wird diese Meldung generiert, um anzuzeigen, ob das vorherige Herunterfahren sauber (befohlen) oder ungeordnet (unerwartet) war.
+
+[cols="1a,1a,4a"]
+|===
+| Code | Feld | Beschreibung 
+
+
+ a| 
+RSLT
+ a| 
+Sauberes Herunterfahren
+ a| 
+Die Art der Abschaltung:
+
+SUCS: Das System wurde ordnungsgemäß heruntergefahren.
+
+DSDN: Das System wurde nicht sauber heruntergefahren.
+
+VRGN: Das System wurde nach der Serverinstallation (oder Neuinstallation) zum ersten Mal gestartet.
+
+|===
+Die Meldung gibt nicht an, ob der Hostserver gestartet wurde, sondern nur, ob der Berichtsdienst gestartet wurde.  Diese Nachricht kann verwendet werden, um:
+
+* Erkennen Sie Diskontinuitäten im Prüfpfad.
+* Stellen Sie fest, ob ein Dienst während des Betriebs ausfällt (da die verteilte Natur des StorageGRID -Systems diese Ausfälle maskieren kann).  Der Server Manager startet einen ausgefallenen Dienst automatisch neu.
+

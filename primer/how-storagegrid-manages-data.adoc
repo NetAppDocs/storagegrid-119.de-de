@@ -1,0 +1,74 @@
+---
+permalink: primer/how-storagegrid-manages-data.html 
+sidebar: sidebar 
+keywords: how storagegrid manages data, what an object is, how object data is protected 
+summary: Bei der Objektspeicherung ist die Speichereinheit ein Objekt und keine Datei oder ein Block.  Im Gegensatz zur baumartigen Hierarchie eines Dateisystems oder Blockspeichers organisiert der Objektspeicher Daten in einem flachen, unstrukturierten Layout. 
+---
+= Was ist ein Objekt
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Bei der Objektspeicherung ist die Speichereinheit ein Objekt und keine Datei oder ein Block.  Im Gegensatz zur baumartigen Hierarchie eines Dateisystems oder Blockspeichers organisiert der Objektspeicher Daten in einem flachen, unstrukturierten Layout.
+
+Durch die Objektspeicherung wird der physische Speicherort der Daten von der Methode entkoppelt, die zum Speichern und Abrufen dieser Daten verwendet wird.
+
+Jedes Objekt in einem objektbasierten Speichersystem besteht aus zwei Teilen: Objektdaten und Objektmetadaten.
+
+image::../media/object_conceptual_drawing.png[Objekt]
+
+
+
+== Was sind Objektdaten?
+
+Objektdaten können alles Mögliche sein, beispielsweise ein Foto, ein Film oder eine Krankenakte.
+
+
+
+== Was sind Objektmetadaten?
+
+Objektmetadaten sind alle Informationen, die ein Objekt beschreiben.  StorageGRID verwendet Objektmetadaten, um die Standorte aller Objekte im gesamten Grid zu verfolgen und den Lebenszyklus jedes Objekts im Laufe der Zeit zu verwalten.
+
+Zu den Objektmetadaten gehören beispielsweise die folgenden Informationen:
+
+* Systemmetadaten, einschließlich einer eindeutigen ID für jedes Objekt (UUID), des Objektnamens, des Namens des S3-Buckets oder Swift-Containers, des Mandantenkontonamens oder der ID, der logischen Größe des Objekts, des Datums und der Uhrzeit der ersten Erstellung des Objekts sowie des Datums und der Uhrzeit der letzten Änderung des Objekts.
+* Der aktuelle Speicherort jeder Objektkopie oder jedes Erasure-Coded-Fragments.
+* Alle mit dem Objekt verknüpften Benutzermetadaten.
+
+
+Objektmetadaten sind anpassbar und erweiterbar, sodass sie für Anwendungen flexibel nutzbar sind.
+
+Ausführliche Informationen dazu, wie und wo StorageGRID Objektmetadaten speichert, finden Sie unterlink:../admin/managing-object-metadata-storage.html["Verwalten des Objektmetadatenspeichers"] .
+
+
+
+== Wie werden Objektdaten geschützt?
+
+Das StorageGRID -System bietet Ihnen zwei Mechanismen zum Schutz von Objektdaten vor Verlust: Replikation und Erasure Coding.
+
+
+
+=== Replikation
+
+Wenn StorageGRID Objekte einer ILM-Regel (Information Lifecycle Management) zuordnet, die für die Erstellung replizierter Kopien konfiguriert ist, erstellt das System exakte Kopien der Objektdaten und speichert sie auf Speicherknoten oder Cloud-Speicherpools.  ILM-Regeln bestimmen die Anzahl der erstellten Kopien, den Speicherort dieser Kopien und die Dauer ihrer Aufbewahrung durch das System.  Wenn eine Kopie verloren geht, beispielsweise durch den Verlust eines Speicherknotens, ist das Objekt weiterhin verfügbar, wenn an anderer Stelle im StorageGRID -System eine Kopie davon vorhanden ist.
+
+Im folgenden Beispiel gibt die Regel „2 Kopien erstellen“ an, dass zwei replizierte Kopien jedes Objekts in einem Speicherpool abgelegt werden, der drei Speicherknoten enthält.
+
+image::../media/ilm_replication_make_2_copies.png[Regel „2 Kopien erstellen“]
+
+
+
+=== Löschcodierung
+
+Wenn StorageGRID Objekte einer ILM-Regel zuordnet, die zum Erstellen von Erasure-Coded-Kopien konfiguriert ist, zerlegt es die Objektdaten in Datenfragmente, berechnet zusätzliche Paritätsfragmente und speichert jedes Fragment auf einem anderen Speicherknoten.  Beim Zugriff auf ein Objekt wird es anhand der gespeicherten Fragmente wieder zusammengesetzt.  Wenn Daten oder ein Paritätsfragment beschädigt werden oder verloren gehen, kann der Erasure-Coding-Algorithmus dieses Fragment mithilfe einer Teilmenge der verbleibenden Daten und Paritätsfragmente wiederherstellen.  ILM-Regeln und Erasure-Coding-Profile bestimmen das verwendete Erasure-Coding-Schema.
+
+Das folgende Beispiel veranschaulicht die Verwendung von Erasure Coding auf die Daten eines Objekts.  In diesem Beispiel verwendet die ILM-Regel ein 4+2-Erasure-Coding-Schema.  Jedes Objekt wird in vier gleiche Datenfragmente aufgeteilt und aus den Objektdaten werden zwei Paritätsfragmente berechnet.  Jedes der sechs Fragmente wird auf einem anderen Speicherknoten in drei Rechenzentren gespeichert, um Datenschutz bei Knotenausfällen oder Standortverlusten zu gewährleisten.
+
+image::../media/ec_three_sites_4_plus_2.png[Erasure Coded Drei Sites 4 Plus 2]
+
+.Ähnliche Informationen
+* link:../ilm/index.html["Objekte mit ILM verwalten"]
+* link:using-information-lifecycle-management.html["Nutzen Sie Information Lifecycle Management"]
+
