@@ -11,9 +11,7 @@ summary: 'Sie verwenden Information Lifecycle Management (ILM), um die Platzieru
 
 
 [role="lead"]
-Sie verwenden Information Lifecycle Management (ILM), um die Platzierung, Dauer und das Aufnahmeverhalten aller Objekte in Ihrem StorageGRID System zu steuern. ILM-Regeln bestimmen, wie StorageGRID Objekte im Laufe der Zeit speichert. Sie konfigurieren eine oder mehrere ILM-Regeln und fügen sie dann einer ILM-Richtlinie hinzu.
-
-In einem Grid ist jeweils nur eine Richtlinie aktiv.  Eine Richtlinie kann mehrere Regeln enthalten.
+Sie verwenden Information Lifecycle Management (ILM), um die Platzierung, Dauer und das Aufnahmeverhalten aller Objekte in Ihrem StorageGRID System zu steuern. ILM-Regeln bestimmen, wie StorageGRID Objekte im Laufe der Zeit speichert. Sie konfigurieren eine oder mehrere ILM-Regeln und fügen sie dann einer ILM-Richtlinie hinzu. Ein Grid kann gleichzeitig über mehrere aktive Richtlinien verfügen.
 
 ILM-Regeln definieren:
 

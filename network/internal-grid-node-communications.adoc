@@ -234,6 +234,19 @@ Metadaten des internen Datenverkehrs.
 
 
  a| 
+5353
+ a| 
+UDP
+ a| 
+Alle Knoten
+ a| 
+Alle Knoten
+ a| 
+Stellt den Multicast-DNS-Dienst (mDNS) bereit, der für Full-Grid-IP-Änderungen und für die Erkennung des primären Admin-Knotens während der Installation, Erweiterung und Wiederherstellung verwendet wird.
+
+
+
+ a| 
 7001
  a| 
 TCP
@@ -407,11 +420,11 @@ Interner Datenverkehr des Data Mover-Dienstes für Cloud Storage Pools.
  a| 
 TCP
  a| 
-Speicherknoten
+Alle Knoten
  a| 
-Speicherknoten
+Alle Knoten
  a| 
-Interner Datenverkehr des Chunk-Dienstes für Erasure Coding.
+Interner Datenverkehr des Chunk-Dienstes für Erasure Coding und Replikation
 
 
 
@@ -446,9 +459,9 @@ Swift-bezogener interner Verkehr.
  a| 
 TCP
  a| 
-Alle Grid-Knoten
+Alle Knoten
  a| 
-Alle Speicherknoten
+Speicherknoten
  a| 
 Interner Verkehr im Zusammenhang mit dem LDR-Dienst.
 
