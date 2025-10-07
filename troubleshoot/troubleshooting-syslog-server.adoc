@@ -13,6 +13,10 @@ summary: In der folgenden Tabelle werden die Fehlermeldungen beschrieben, die be
 [role="lead"]
 In der folgenden Tabelle werden die Fehlermeldungen beschrieben, die bei der Verwendung eines externen Syslog-Servers auftreten können, und es werden Korrekturmaßnahmen aufgelistet.
 
+Diese Fehler werden vom Assistenten „Externen Syslog-Server konfigurieren“ angezeigt, wenn beim Senden von Testnachrichten zur Überprüfung der korrekten Konfiguration des externen Syslog-Servers Probleme auftreten.
+
+Probleme zur Laufzeit können gemeldet werden durchlink:../monitor/alerts-reference.html#audit-and-syslog-alerts["Fehler bei der Weiterleitung des externen Syslog-Servers"] Alarm. Wenn Sie diese Warnung erhalten, befolgen Sie die Anweisungen in der Warnung, um die Testnachrichten erneut zu senden, damit Sie detaillierte Fehlermeldungen erhalten.
+
 Weitere Informationen zum Senden von Audit-Informationen an einen externen Syslog-Server finden Sie unter:
 
 * link:../monitor/considerations-for-external-syslog-server.html["Überlegungen zur Verwendung eines externen Syslog-Servers"]

@@ -558,7 +558,7 @@ Ein grünes Banner zeigt an, dass die Konfiguration gespeichert wurde.
 +
 Die Testergebnisse werden kontinuierlich auf der Seite angezeigt, bis Sie den Test beenden.  Während der Test läuft, werden Ihre Prüfnachrichten weiterhin an Ihre zuvor konfigurierten Ziele gesendet.
 
-. Sollten Sie Fehler erhalten, korrigieren Sie diese und wählen Sie erneut *Testnachrichten senden*.
+. Wenn Sie während der Syslog-Serverkonfiguration oder zur Laufzeit Fehler erhalten, korrigieren Sie diese und wählen Sie erneut *Testnachrichten senden*.
 +
 Sehenlink:../troubleshoot/troubleshooting-syslog-server.html["Fehlerbehebung bei einem externen Syslog-Server"] um Ihnen bei der Behebung etwaiger Fehler zu helfen.
 
