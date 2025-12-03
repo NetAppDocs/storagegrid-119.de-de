@@ -2,7 +2,7 @@
 permalink: troubleshoot/troubleshooting-low-object-data-storage-alert.html 
 sidebar: sidebar 
 keywords: how to troubleshoot the Low object data storage alert 
-summary: Die Warnung *Geringer Objektdatenspeicher* überwacht, wie viel Speicherplatz zum Speichern von Objektdaten auf jedem Speicherknoten verfügbar ist. 
+summary: Die Warnung „Niedriger Speicherplatz für Objektdaten“ überwacht, wie viel Speicherplatz auf den einzelnen Speicherknoten für die Speicherung von Objektdaten zur Verfügung steht. 
 ---
 = Fehlerbehebung bei der Warnung „Niedriger Objektdatenspeicher“
 :allow-uri-read: 
