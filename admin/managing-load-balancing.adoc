@@ -24,7 +24,7 @@ Der StorageGRID Load Balancer-Dienst ist auf allen Admin-Knoten und allen Gatewa
 Der Load Balancer-Dienst auf jedem Knoten arbeitet unabhängig, wenn er Client-Datenverkehr an die Speicherknoten weiterleitet.  Durch einen Gewichtungsprozess leitet der Load Balancer-Dienst mehr Anfragen an Speicherknoten mit höherer CPU-Verfügbarkeit weiter.
 
 
-NOTE: Obwohl der StorageGRID Load Balancer-Dienst der empfohlene Lastausgleichsmechanismus ist, möchten Sie möglicherweise stattdessen einen Load Balancer eines Drittanbieters integrieren.  Weitere Informationen erhalten Sie von Ihrem NetApp Kundenbetreuer oder unter https://fieldportal.netapp.com/content/2666394["TR-4626: StorageGRID Load Balancer von Drittanbietern und globale Load Balancer"^] .
+NOTE: Obwohl der StorageGRID Load Balancer-Dienst die empfohlene Methode zum Lastausgleich ist, können Sie alternativ auch einen Load Balancer eines Drittanbieters integrieren. Weitere Informationen erhalten Sie von Ihrem NetApp Account Representative oder unter  https://docs.netapp.com/us-en/storagegrid-enable/technical-reports/load-balancer-index.html["Verwenden Sie Load Balancer von Drittanbietern mit StorageGRID"^].
 
 
 
