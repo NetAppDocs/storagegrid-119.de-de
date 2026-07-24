@@ -19,12 +19,14 @@ Weitere Informationen zur StorageGRID -Netzwerktopologie, den Anforderungen und 
 
 
 
+[[deployment-topologies]]
 == Bereitstellungstopologien
 
 Das StorageGRID -System kann an einem einzelnen oder an mehreren Rechenzentrumsstandorten bereitgestellt werden.
 
 
 
+[[single-site]]
 === Einzelne Site
 
 Bei einer Bereitstellung mit einem einzelnen Standort sind die Infrastruktur und der Betrieb des StorageGRID -Systems zentralisiert.
@@ -33,6 +35,7 @@ image::../media/data_center_site_single.png[Einzelner Rechenzentrumsstandort]
 
 
 
+[[multiple-sites]]
 === Mehrere Standorte
 
 Bei einer Bereitstellung mit mehreren Standorten können an jedem Standort unterschiedliche Typen und Anzahlen von StorageGRID -Ressourcen installiert werden.  Beispielsweise kann in einem Rechenzentrum mehr Speicherplatz erforderlich sein als in einem anderen.
@@ -45,12 +48,14 @@ Innerhalb eines einzigen Rechenzentrums können auch mehrere logische Standorte 
 
 
 
+[[grid-node-redundancy]]
 === Netzknotenredundanz
 
 Bei einer Bereitstellung an einem oder mehreren Standorten können Sie aus Redundanzgründen optional mehr als einen Admin-Knoten oder Gateway-Knoten einschließen.  Sie können beispielsweise mehr als einen Admin-Knoten an einem einzelnen Standort oder an mehreren Standorten installieren.  Allerdings kann jedes StorageGRID -System nur einen primären Admin-Knoten haben.
 
 
 
+[[system-architecture]]
 == Systemarchitektur
 
 Dieses Diagramm zeigt, wie Grid-Knoten innerhalb eines StorageGRID Systems angeordnet sind.

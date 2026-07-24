@@ -15,6 +15,7 @@ Wenn Sielink:../admin/configuring-sso.html["Single Sign-On (SSO) konfiguriert un
 
 
 
+[[sign-in-to-the-api-if-azure-single-sign-on-is-enabled]]
 == Sign in , wenn Azure Single Sign-On aktiviert ist.
 
 Diese Anweisungen gelten, wenn Sie Azure als SSO-Identitätsanbieter verwenden.

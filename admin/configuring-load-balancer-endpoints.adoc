@@ -39,12 +39,15 @@ NOTE: Es kann bis zu 15 Minuten dauern, bis Änderungen an einem Endpunktzertifi
 
 
 
+[[create-a-load-balancer-endpoint]]
+[[create-lb-endpoint]]
 == Erstellen eines Load Balancer-Endpunkts
 
 Jeder S3-Client-Load-Balancer-Endpunkt gibt einen Port, einen Clienttyp (S3) und ein Netzwerkprotokoll (HTTP oder HTTPS) an. Die Endpunkte des Lastenausgleichsmoduls der Verwaltungsschnittstelle geben einen Port, einen Schnittstellentyp und ein nicht vertrauenswürdiges Clientnetzwerk an.
 
 
 
+[[access-the-wizard]]
 === Zugriff auf den Assistenten
 
 .Schritte
@@ -56,6 +59,7 @@ Jeder S3-Client-Load-Balancer-Endpunkt gibt einen Port, einen Clienttyp (S3) und
 
 
 
+[[enter-endpoint-details]]
 === Geben Sie die Endpunktdetails ein
 
 .Schritte
@@ -157,6 +161,7 @@ Wenn Sie *Ja* auswählen, ist der Port in allen nicht vertrauenswürdigen Client
 
 
 
+[[select-a-binding-mode]]
 === Auswählen eines Bindungsmodus
 
 .Schritte
@@ -224,6 +229,7 @@ Wenn Sie Endpunkte der Verwaltungsschnittstelle erstellen, wählen Sie VIPs aus,
 
 
 
+[[control-tenant-access]]
 === Steuern des Mandantenzugriffs
 
 
@@ -264,6 +270,7 @@ Die ausgewählten Mandantenkonten können diesen Endpunkt nicht verwenden, um au
 
 
 
+[[attach-certificate]]
 === Zertifikat anhängen
 
 .Schritte
@@ -390,6 +397,7 @@ Der Load Balancer-Endpunkt wird erstellt.  Das benutzerdefinierte Zertifikat wir
 
 
 
+[[after-you-finish]]
 === Nach Abschluss
 
 .Schritte
@@ -416,6 +424,7 @@ Sie müssen außerdem sicherstellen, dass der DNS-Eintrag auf alle erforderliche
 
 
 
+[[view-and-edit-load-balancer-endpoints]]
 == Anzeigen und Bearbeiten von Load Balancer-Endpunkten
 
 Sie können Details zu vorhandenen Load Balancer-Endpunkten anzeigen, einschließlich der Zertifikatmetadaten für einen gesicherten Endpunkt.  Sie können bestimmte Einstellungen für einen Endpunkt ändern.
@@ -526,6 +535,7 @@ Mandantenzugriff bearbeiten
 
 
 
+[[remove-load-balancer-endpoints]]
 == Entfernen von Load Balancer-Endpunkten
 
 Sie können einen oder mehrere Endpunkte über das Menü *Aktionen* entfernen oder einen einzelnen Endpunkt von der Detailseite entfernen.

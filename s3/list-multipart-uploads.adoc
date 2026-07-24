@@ -27,6 +27,7 @@ Die folgenden Anforderungsparameter werden unterstützt:
 
 
 
+[[versioning]]
 == Versionierung
 
 Der mehrteilige Upload besteht aus separaten Vorgängen zum Starten des Uploads, Auflisten der Uploads, Hochladen von Teilen, Zusammenstellen der hochgeladenen Teile und Abschließen des Uploads.  Objekte werden erstellt (und gegebenenfalls versioniert), wenn der Vorgang CompleteMultipartUpload ausgeführt wird.

@@ -15,6 +15,7 @@ Die Regeln für das Information Lifecycle Management (ILM) in einer ILM-Richtlin
 
 
 
+[[about-these-instructions]]
 == Zu dieser Anleitung
 
 Das Entwerfen und Implementieren von ILM-Regeln und -Richtlinien erfordert eine sorgfältige Planung.  Sie müssen Ihre Betriebsanforderungen, die Topologie Ihres StorageGRID -Systems, Ihren Bedarf an Objektschutz und die verfügbaren Speichertypen verstehen.  Anschließend müssen Sie festlegen, wie die verschiedenen Objekttypen kopiert, verteilt und gespeichert werden sollen.
@@ -29,6 +30,7 @@ Verwenden Sie diese Anweisungen, um:
 
 
 
+[[learn-more]]
 == Mehr erfahren
 
 Um mehr zu erfahren, sehen Sie sich diese Videos an:

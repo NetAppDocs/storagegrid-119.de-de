@@ -28,6 +28,7 @@ Wenn die Aktualisierung der letzten Zugriffszeit für einen Bucket deaktiviert i
 
 
 
+[[request-examples]]
 == Anforderungsbeispiele
 
 Dieses Beispiel aktiviert die letzte Zugriffszeit für einen Bucket.

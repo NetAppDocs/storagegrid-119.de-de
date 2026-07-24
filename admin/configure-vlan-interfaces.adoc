@@ -15,6 +15,7 @@ Sie können virtuelle LAN-Schnittstellen (VLAN) auf Admin-Knoten und Gateway-Kno
 
 
 
+[[considerations-for-vlan-interfaces]]
 == Überlegungen zu VLAN-Schnittstellen
 
 * Sie erstellen eine VLAN-Schnittstelle, indem Sie eine VLAN-ID eingeben und eine übergeordnete Schnittstelle auf einem oder mehreren Knoten auswählen.
@@ -35,6 +36,7 @@ Sie können virtuelle LAN-Schnittstellen (VLAN) auf Admin-Knoten und Gateway-Kno
 
 
 
+[[create-a-vlan-interface]]
 == Erstellen einer VLAN-Schnittstelle
 
 .Bevor Sie beginnen
@@ -51,6 +53,7 @@ Mit dem Grid Manager können Sie VLAN-Schnittstellen erstellen, die Clients den 
 
 
 
+[[access-the-wizard]]
 === Zugriff auf den Assistenten
 
 .Schritte
@@ -60,6 +63,7 @@ Mit dem Grid Manager können Sie VLAN-Schnittstellen erstellen, die Clients den 
 
 
 
+[[enter-details-for-the-vlan-interfaces]]
 === Geben Sie Details für die VLAN-Schnittstellen ein
 
 .Schritte
@@ -73,6 +77,7 @@ VLAN-IDs müssen nicht eindeutig sein.  Sie können beispielsweise die VLAN-ID 2
 
 
 
+[[choose-parent-interfaces]]
 === Übergeordnete Schnittstellen auswählen
 
 Die Tabelle listet die verfügbaren Schnittstellen für alle Admin-Knoten und Gateway-Knoten an jedem Standort in Ihrem Raster auf.  Admin-Netzwerkschnittstellen (eth1) können nicht als übergeordnete Schnittstellen verwendet werden und werden nicht angezeigt.
@@ -90,6 +95,7 @@ image::../media/vlan-create-parent-interfaces.png[Übergeordnete Schnittstellen 
 
 
 
+[[confirm-the-settings]]
 === Bestätigen Sie die Einstellungen
 
 .Schritte
@@ -106,6 +112,7 @@ image::../media/vlan-create-parent-interfaces.png[Übergeordnete Schnittstellen 
 
 
 
+[[edit-a-vlan-interface]]
 == Bearbeiten einer VLAN-Schnittstelle
 
 Wenn Sie eine VLAN-Schnittstelle bearbeiten, können Sie die folgenden Arten von Änderungen vornehmen:
@@ -139,6 +146,7 @@ Sie können eine VLAN-ID nicht aktualisieren, wenn das VLAN in einer HA-Gruppe v
 
 
 
+[[remove-a-vlan-interface]]
 == Entfernen einer VLAN-Schnittstelle
 
 Sie können eine oder mehrere VLAN-Schnittstellen entfernen.

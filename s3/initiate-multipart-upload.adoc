@@ -49,6 +49,7 @@ NOTE: Wenn Sie ein Objekt in einen Bucket mit aktivierter S3-Objektsperre aufneh
 
 
 
+[[supported-request-headers]]
 == Unterstützte Anforderungsheader
 
 Die folgenden Anforderungsheader werden unterstützt:
@@ -114,6 +115,7 @@ NOTE: Informationen zur Verarbeitung von UTF-8-Zeichen durch StorageGRID finden 
 
 
 
+[[request-headers-for-server-side-encryption]]
 == Anforderungsheader für serverseitige Verschlüsselung
 
 Sie können die folgenden Anforderungsheader verwenden, um ein mehrteiliges Objekt mit serverseitiger Verschlüsselung zu verschlüsseln.  Die Optionen SSE und SSE-C schließen sich gegenseitig aus.
@@ -137,6 +139,7 @@ CAUTION: Die von Ihnen bereitgestellten Verschlüsselungsschlüssel werden niema
 
 
 
+[[unsupported-request-headers]]
 == Nicht unterstützte Anforderungsheader
 
 Der folgende Anforderungsheader wird nicht unterstützt:
@@ -149,6 +152,7 @@ Der `x-amz-website-redirect-location` Header-Returns `XNotImplemented` .
 
 
 
+[[versioning]]
 == Versionierung
 
 Der mehrteilige Upload besteht aus separaten Vorgängen zum Starten des Uploads, Auflisten der Uploads, Hochladen von Teilen, Zusammenstellen der hochgeladenen Teile und Abschließen des Uploads.  Objekte werden erstellt (und gegebenenfalls versioniert), wenn der Vorgang CompleteMultipartUpload ausgeführt wird.

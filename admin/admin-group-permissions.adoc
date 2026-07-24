@@ -27,6 +27,7 @@ Standardmäßig kann jeder Benutzer, der zu einer Gruppe gehört, die über mind
 
 
 
+[[interaction-between-permissions-and-access-mode]]
 == Interaktion zwischen Berechtigungen und Zugriffsmodus
 
 Bei allen Berechtigungen bestimmt die Einstellung *Zugriffsmodus* der Gruppe, ob Benutzer Einstellungen ändern und Vorgänge ausführen können oder ob sie die zugehörigen Einstellungen und Funktionen nur anzeigen können.  Wenn ein Benutzer mehreren Gruppen angehört und eine der Gruppen auf *Schreibgeschützt* eingestellt ist, hat der Benutzer nur Lesezugriff auf alle ausgewählten Einstellungen und Funktionen.
@@ -35,12 +36,14 @@ In den folgenden Abschnitten werden die Berechtigungen beschrieben, die Sie beim
 
 
 
+[[root-access]]
 == Root-Zugriff
 
 Diese Berechtigung bietet Zugriff auf alle Grid-Verwaltungsfunktionen.
 
 
 
+[[change-tenant-root-password]]
 == Ändern des Root-Passworts des Mandanten
 
 Diese Berechtigung bietet Zugriff auf die Option *Root-Passwort ändern* auf der Seite „Mandanten“, sodass Sie steuern können, wer das Passwort für den lokalen Root-Benutzer des Mandanten ändern kann.  Diese Berechtigung wird auch zum Migrieren von S3-Schlüsseln verwendet, wenn die Funktion zum Importieren von S3-Schlüsseln aktiviert ist.  Benutzer ohne diese Berechtigung können die Option *Root-Passwort ändern* nicht sehen.
@@ -50,6 +53,7 @@ NOTE: Um Zugriff auf die Seite „Mandanten“ zu gewähren, die die Option „R
 
 
 
+[[grid-topology-page-configuration]]
 == Konfiguration der Grid-Topologieseite
 
 Diese Berechtigung bietet Zugriff auf die Konfigurationsregisterkarten auf der Seite *SUPPORT* > *Tools* > *Grid-Topologie*.
@@ -59,6 +63,7 @@ NOTE: Die Seite „Grid-Topologie“ ist veraltet und wird in einer zukünftigen
 
 
 
+[[ilm]]
 == ILM
 
 Diese Berechtigung bietet Zugriff auf die folgenden *ILM*-Menüoptionen:
@@ -77,6 +82,7 @@ NOTE: Benutzer müssen über die Berechtigungen *Andere Rasterkonfiguration* und
 
 
 
+[[maintenance]]
 == Wartung
 
 Benutzer müssen über die Berechtigung „Wartung“ verfügen, um diese Optionen verwenden zu können:
@@ -145,12 +151,14 @@ Benutzer ohne Wartungsberechtigung können die folgenden Seiten anzeigen, aber n
 
 
 
+[[manage-alerts]]
 == Verwalten von Warnungen
 
 Diese Berechtigung bietet Zugriff auf Optionen zum Verwalten von Warnungen.  Benutzer müssen über diese Berechtigung verfügen, um Stummschaltungen, Warnbenachrichtigungen und Warnregeln zu verwalten.
 
 
 
+[[metrics-query]]
 == Metrikabfrage
 
 Diese Berechtigung bietet Zugriff auf:
@@ -162,12 +170,14 @@ Diese Berechtigung bietet Zugriff auf:
 
 
 
+[[object-metadata-lookup]]
 == Objektmetadatensuche
 
 Diese Berechtigung bietet Zugriff auf die Seite *ILM* > *Objektmetadatensuche*.
 
 
 
+[[other-grid-configuration]]
 == Andere Netzkonfiguration
 
 Diese Berechtigung bietet Zugriff auf zusätzliche Rasterkonfigurationsoptionen.
@@ -190,6 +200,7 @@ TIP: Um diese zusätzlichen Optionen anzuzeigen, müssen Benutzer auch über die
 
 
 
+[[storage-appliance-administrator]]
 == Speichergeräteadministrator
 
 Diese Berechtigung bietet:
@@ -200,6 +211,7 @@ Diese Berechtigung bietet:
 
 
 
+[[tenant-accounts]]
 == Mandantenkonten
 
 Diese Berechtigung bietet die Möglichkeit:

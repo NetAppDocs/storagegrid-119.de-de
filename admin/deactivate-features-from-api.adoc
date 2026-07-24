@@ -36,6 +36,7 @@ Wenn die Anfrage abgeschlossen ist, wird die Funktion „Stammkennwort des Manda
 
 
 
+[[reactivate-deactivated-features]]
 == Deaktivierte Funktionen reaktivieren
 
 Standardmäßig können Sie die Grid Management API verwenden, um eine deaktivierte Funktion wieder zu aktivieren.  Wenn Sie jedoch verhindern möchten, dass deaktivierte Funktionen jemals wieder aktiviert werden, können Sie die Funktion *activateFeatures* selbst deaktivieren.

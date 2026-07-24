@@ -26,6 +26,7 @@ CAUTION: Die folgenden ILM-Regeln und -Richtlinien sind nur Beispiele.  Es gibt 
 
 
 
+[[bucket-and-objects-for-s3-object-lock-example]]
 == Bucket und Objekte für S3 Object Lock-Beispiel
 
 In diesem Beispiel hat ein S3-Mandantenkonto mit dem Namen Bank of ABC den Mandantenmanager verwendet, um einen Bucket mit aktivierter S3-Objektsperre zum Speichern wichtiger Bankdaten zu erstellen.
@@ -81,6 +82,7 @@ Eine rechtliche Sperre kann für jede Objektversion jederzeit während der Aufbe
 |===
 
 
+[[ilm-rule-1-for-s3-object-lock-example-erasure-coding-profile-with-bucket-matching]]
 == ILM-Regel 1 für S3 Object Lock-Beispiel: Erasure-Coding-Profil mit Bucket-Matching
 
 Diese beispielhafte ILM-Regel gilt nur für das S3-Mandantenkonto mit dem Namen Bank of ABC.  Es passt zu jedem Objekt in der `bank-records` Bucket und verwendet dann Erasure Coding, um das Objekt auf Speicherknoten an drei Rechenzentrumsstandorten unter Verwendung eines 6+3-Erasure-Coding-Profils zu speichern.  Diese Regel erfüllt die Anforderungen von Buckets mit aktivierter S3-Objektsperre: Eine Kopie wird vom Tag 0 bis in alle Ewigkeit auf den Speicherknoten aufbewahrt, wobei die Aufnahmezeit als Referenzzeit verwendet wird.
@@ -148,6 +150,7 @@ Erasure-Coding-Profil
 |===
 
 
+[[ilm-rule-2-for-s3-object-lock-example-non-compliant-rule]]
 == ILM-Regel 2 für S3 Object Lock-Beispiel: Nicht konforme Regel
 
 Diese beispielhafte ILM-Regel speichert zunächst zwei replizierte Objektkopien auf Speicherknoten.  Nach einem Jahr wird eine Kopie dauerhaft in einem Cloud-Speicherpool gespeichert.  Da diese Regel einen Cloud-Speicherpool verwendet, ist sie nicht konform und gilt nicht für Objekte in Buckets mit aktivierter S3-Objektsperre.
@@ -206,6 +209,7 @@ Platzierungen
 |===
 
 
+[[ilm-rule-3-for-s3-object-lock-example-default-rule]]
 == ILM-Regel 3 für S3 Object Lock-Beispiel: Standardregel
 
 Diese beispielhafte ILM-Regel kopiert Objektdaten in Speicherpools in zwei Rechenzentren.  Diese konforme Regel ist als Standardregel in der ILM-Richtlinie konzipiert.  Es enthält keine Filter, verwendet nicht die nicht aktuelle Referenzzeit und erfüllt die Anforderungen von Buckets mit aktivierter S3-Objektsperre: Zwei Objektkopien werden von Tag 0 bis auf unbestimmte Zeit auf Speicherknoten aufbewahrt, wobei Ingest als Referenzzeit verwendet wird.
@@ -262,12 +266,14 @@ Bewahren Sie von Tag 0 bis in alle Ewigkeit zwei replizierte Kopien auf – eine
 |===
 
 
+[[compliant-ilm-policy-for-s3-object-lock-example]]
 == Konforme ILM-Richtlinie für S3 Object Lock-Beispiel
 
 Um eine ILM-Richtlinie zu erstellen, die alle Objekte in Ihrem System wirksam schützt, einschließlich der Objekte in Buckets mit aktivierter S3-Objektsperre, müssen Sie ILM-Regeln auswählen, die die Speicheranforderungen für alle Objekte erfüllen.  Anschließend müssen Sie die Richtlinie simulieren und aktivieren.
 
 
 
+[[add-rules-to-the-policy]]
 === Regeln zur Richtlinie hinzufügen
 
 In diesem Beispiel enthält die ILM-Richtlinie drei ILM-Regeln in der folgenden Reihenfolge:
@@ -279,6 +285,7 @@ In diesem Beispiel enthält die ILM-Richtlinie drei ILM-Regeln in der folgenden 
 
 
 
+[[simulate-the-policy]]
 === Simulieren Sie die Richtlinie
 
 Nachdem Sie Ihrer Richtlinie Regeln hinzugefügt, eine standardmäßige konforme Regel ausgewählt und die anderen Regeln angeordnet haben, sollten Sie die Richtlinie simulieren, indem Sie Objekte aus dem Bucket mit aktivierter S3-Objektsperre und aus anderen Buckets testen.  Wenn Sie beispielsweise die Beispielrichtlinie simulieren, würden Sie erwarten, dass Testobjekte wie folgt ausgewertet werden:
@@ -295,6 +302,7 @@ Nachdem Sie Ihrer Richtlinie Regeln hinzugefügt, eine standardmäßige konforme
 
 
 
+[[activate-the-policy]]
 === Aktivieren der Richtlinie
 
 Wenn Sie vollständig davon überzeugt sind, dass die neue Richtlinie die Objektdaten wie erwartet schützt, können Sie sie aktivieren.

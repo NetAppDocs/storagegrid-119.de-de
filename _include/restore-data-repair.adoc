@@ -4,6 +4,7 @@
 
 
 
+[[find-hostname-for-storage-node]]
 == Hostnamen für Speicherknoten suchen
 
 . Melden Sie sich beim primären Admin-Knoten an:
@@ -22,6 +23,7 @@ Wenn Sie als Root angemeldet sind, ändert sich die Eingabeaufforderung von `$` 
 
 
 
+[[repair-data-if-all-volumes-have-failed]]
 == Reparieren Sie Daten, wenn alle Volumes ausgefallen sind
 
 Wenn alle Speichervolumes ausgefallen sind, reparieren Sie den gesamten Knoten.  Befolgen Sie die Anweisungen für *replizierte Daten*, *löschcodierte (EC) Daten* oder beides, je nachdem, ob Sie replizierte Daten, löschcodierte (EC) Daten oder beides verwenden.
@@ -61,6 +63,7 @@ Die Reparatur von Daten mit Löschcode kann beginnen, während einige Speicherkn
 ====
 
 
+[[repair-data-if-only-some-volumes-have-failed]]
 == Reparieren Sie Daten, wenn nur einige Volumes ausgefallen sind
 
 Wenn nur einige der Volumes ausgefallen sind, reparieren Sie die betroffenen Volumes.  Befolgen Sie die Anweisungen für *replizierte Daten*, *löschcodierte (EC) Daten* oder beides, je nachdem, ob Sie replizierte Daten, löschcodierte (EC) Daten oder beides verwenden.

@@ -27,6 +27,7 @@ So greifen Sie auf die Swagger-Dokumentation für die Tenant Management API zu:
 
 
 
+[[api-operations]]
 == API-Operationen
 
 Die Tenant Management API organisiert die verfügbaren API-Operationen in den folgenden Abschnitten:
@@ -59,6 +60,7 @@ NOTE: Wenn Single Sign-On (SSO) für das StorageGRID System aktiviert ist, müss
 
 
 
+[[operation-details]]
 == Details zum Vorgang
 
 Wenn Sie die einzelnen API-Vorgänge erweitern, können Sie deren HTTP-Aktion, Endpunkt-URL, eine Liste aller erforderlichen oder optionalen Parameter, ein Beispiel für den Anforderungstext (falls erforderlich) und die möglichen Antworten sehen.
@@ -67,6 +69,7 @@ image::../media/tenant_api_swagger_example.gif[Beispiel, das die GET-Gruppenoper
 
 
 
+[[issue-api-requests]]
 == API-Anfragen stellen
 
 

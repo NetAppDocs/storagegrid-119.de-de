@@ -24,6 +24,7 @@ NOTE: Die Versionierung kann nur für Buckets aktiviert werden, die mit StorageG
 
 
 
+[[ilm-and-versioning]]
 == ILM und Versionierung
 
 ILM-Richtlinien werden auf jede Version eines Objekts angewendet.  Ein ILM-Scanprozess scannt kontinuierlich alle Objekte und wertet sie anhand der aktuellen ILM-Richtlinie neu aus.  Alle Änderungen, die Sie an ILM-Richtlinien vornehmen, werden auf alle zuvor aufgenommenen Objekte angewendet.  Dies schließt zuvor aufgenommene Versionen ein, wenn die Versionierung aktiviert ist.  Beim ILM-Scannen werden neue ILM-Änderungen auf zuvor aufgenommene Objekte angewendet.

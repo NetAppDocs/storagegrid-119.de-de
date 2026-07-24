@@ -15,6 +15,7 @@ Erfahren Sie, welche Auswirkungen das Upgrade auf Ihr StorageGRID -System hat.
 
 
 
+[[storagegrid-upgrades-are-non-disruptive]]
 == StorageGRID -Upgrades sind unterbrechungsfrei
 
 Das StorageGRID -System kann während des gesamten Upgrade-Prozesses Daten von Client-Anwendungen aufnehmen und abrufen.  Wenn Sie die Aktualisierung aller Knoten desselben Typs genehmigen (z. B. Speicherknoten), werden die Knoten einzeln heruntergefahren, sodass es nicht vorkommt, dass alle Grid-Knoten oder alle Grid-Knoten eines bestimmten Typs nicht verfügbar sind.
@@ -29,6 +30,7 @@ Um eine kontinuierliche Verfügbarkeit zu gewährleisten, stellen Sie sicher, da
 
 
 
+[[client-applications-might-experience-short-term-disruptions]]
 == Bei Clientanwendungen kann es zu kurzfristigen Störungen kommen
 
 Das StorageGRID -System kann während des gesamten Upgrade-Prozesses Daten von Client-Anwendungen aufnehmen und abrufen. Allerdings können Client-Verbindungen zu einzelnen Gateway-Knoten oder Speicherknoten vorübergehend unterbrochen werden, wenn für das Upgrade ein Neustart der Dienste auf diesen Knoten erforderlich ist.  Die Konnektivität wird wiederhergestellt, nachdem der Upgrade-Prozess abgeschlossen ist und die Dienste auf den einzelnen Knoten wieder aufgenommen werden.
@@ -40,6 +42,7 @@ NOTE: Sie können mehrere Gateways und Hochverfügbarkeitsgruppen (HA) verwenden
 
 
 
+[[appliance-firmware-is-upgraded]]
 == Die Appliance-Firmware wird aktualisiert
 
 Während des StorageGRID 11.9-Upgrades:
@@ -52,6 +55,7 @@ Während des StorageGRID 11.9-Upgrades:
 
 
 
+[[ilm-policies-are-handled-differently-according-to-their-status]]
 == ILM-Richtlinien werden je nach Status unterschiedlich behandelt
 
 * Die aktive Richtlinie bleibt nach dem Upgrade unverändert.
@@ -61,6 +65,7 @@ Während des StorageGRID 11.9-Upgrades:
 
 
 
+[[alerts-might-be-triggered]]
 == Es können Warnungen ausgelöst werden
 
 Warnungen können ausgelöst werden, wenn Dienste gestartet und gestoppt werden und wenn das StorageGRID -System als Umgebung mit gemischten Versionen betrieben wird (einige Grid-Knoten führen eine frühere Version aus, während andere auf eine neuere Version aktualisiert wurden).  Nach Abschluss des Upgrades können weitere Warnungen ausgelöst werden.
@@ -73,12 +78,14 @@ Nach Abschluss des Upgrades können Sie alle Upgrade-bezogenen Warnungen überpr
 
 
 
+[[many-snmp-notifications-are-generated]]
 == Viele SNMP-Benachrichtigungen werden generiert
 
 Beachten Sie, dass beim Anhalten und Neustarten von Grid-Knoten während des Upgrades möglicherweise eine große Anzahl von SNMP-Benachrichtigungen generiert wird.  Um übermäßige Benachrichtigungen zu vermeiden, deaktivieren Sie das Kontrollkästchen *SNMP-Agent-Benachrichtigungen aktivieren* (*KONFIGURATION* > *Überwachung* > *SNMP-Agent*), um SNMP-Benachrichtigungen zu deaktivieren, bevor Sie mit dem Upgrade beginnen.  Aktivieren Sie die Benachrichtigungen dann erneut, nachdem das Upgrade abgeschlossen ist.
 
 
 
+[[configuration-changes-are-restricted]]
 == Konfigurationsänderungen sind eingeschränkt
 
 
@@ -106,6 +113,7 @@ Bis die Aufgabe *Letzte Upgrade-Schritte* abgeschlossen ist:
 
 
 
+[[you-cant-view-bucket-details-or-manage-buckets-from-the-tenant-manager]]
 == Sie können Bucket-Details nicht anzeigen oder Buckets vom Tenant Manager aus verwalten.
 
 Während des Upgrades auf StorageGRID 11.9 (d. h. während das System als Umgebung mit gemischten Versionen betrieben wird) können Sie mit dem Tenant Manager keine Bucket-Details anzeigen oder Buckets verwalten.  Auf der Buckets-Seite im Tenant Manager wird einer der folgenden Fehler angezeigt:

@@ -17,6 +17,7 @@ Wenn Sie Plattformdienste für S3-Mandantenkonten aktivieren, müssen Sie Ihr Gr
 
 
 
+[[cloudmirror-replication]]
 == CloudMirror-Replikation
 
 Der StorageGRID CloudMirror-Replikationsdienst wird verwendet, um bestimmte Objekte aus einem StorageGRID Bucket an ein angegebenes externes Ziel zu spiegeln.
@@ -31,6 +32,7 @@ NOTE: Die CloudMirror-Replikation wird nicht unterstützt, wenn im Quell-Bucket 
 
 
 
+[[notifications]]
 == Benachrichtigungen
 
 Bucket-spezifische Ereignisbenachrichtigungen werden verwendet, um Benachrichtigungen über bestimmte an Objekten ausgeführte Aktionen an einen angegebenen externen Kafka-Cluster oder Amazon Simple Notification Service zu senden.
@@ -42,6 +44,7 @@ NOTE: Obwohl die Ereignisbenachrichtigung für einen Bucket mit aktivierter S3-O
 
 
 
+[[search-integration-service]]
 == Suchintegrationsdienst
 
 Der Suchintegrationsdienst wird verwendet, um S3-Objektmetadaten an einen angegebenen Elasticsearch-Index zu senden, wo die Metadaten mithilfe des externen Dienstes gesucht oder analysiert werden können.
@@ -55,6 +58,7 @@ Plattformdienste geben Mietern die Möglichkeit, externe Speicherressourcen, Ben
 
 
 
+[[recommendations-for-using-platform-services]]
 == Empfehlungen zur Nutzung von Plattformdiensten
 
 Beachten Sie vor der Verwendung von Plattformdiensten die folgenden Empfehlungen:

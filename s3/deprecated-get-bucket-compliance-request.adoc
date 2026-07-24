@@ -26,6 +26,7 @@ Sie müssen über die Berechtigung s3:GetBucketCompliance verfügen oder Root-Ko
 
 
 
+[[request-example]]
 == Anforderungsbeispiel
 
 Mit dieser Beispielanfrage können Sie die Compliance-Einstellungen für den Bucket mit dem Namen ermitteln. `mybucket` .
@@ -39,6 +40,7 @@ Host: _host_
 ----
 
 
+[[response-example]]
 == Antwortbeispiel
 
 In der Antwort-XML `<SGCompliance>` listet die für den Bucket geltenden Compliance-Einstellungen auf.  Diese Beispielantwort zeigt die Compliance-Einstellungen für einen Bucket, in dem jedes Objekt ab dem Zeitpunkt der Aufnahme des Objekts in das Grid ein Jahr lang (525.600 Minuten) aufbewahrt wird.  Für diesen Bucket besteht derzeit keine rechtliche Sperre.  Jedes Objekt wird nach einem Jahr automatisch gelöscht.
@@ -90,6 +92,7 @@ AutoDelete
 |===
 
 
+[[error-responses]]
 == Fehlerantworten
 
 Wenn der Bucket nicht konform erstellt wurde, lautet der HTTP-Statuscode für die Antwort `404 Not Found` , mit einem S3-Fehlercode von `XNoSuchBucketCompliance` .

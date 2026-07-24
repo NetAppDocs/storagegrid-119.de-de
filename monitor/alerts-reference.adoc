@@ -19,6 +19,7 @@ Einige der Standardwarnungen verwendenlink:commonly-used-prometheus-metrics.html
 
 
 
+[[appliance-alerts]]
 == Gerätewarnungen
 
 [cols="1a,2a"]
@@ -356,6 +357,7 @@ Auf ein Speichergerät kann nicht zugegriffen werden.
 |===
 
 
+[[audit-and-syslog-alerts]]
 == Audit- und Syslog-Warnmeldungen
 
 [cols="1a,2a"]
@@ -392,6 +394,7 @@ Der Knoten kann keine Protokolle an den externen Syslog-Server weiterleiten und 
 |===
 
 
+[[bucket-alerts]]
 == Bucket-Benachrichtigungen
 
 [cols="1a,2a"]
@@ -414,6 +417,7 @@ Für einen FabricPool Bucket sind Versionierung oder S3 Object Lock aktiviert, d
 |===
 
 
+[[cassandra-alerts]]
 == Cassandra-Warnungen
 
 [cols="1a,2a"]
@@ -485,6 +489,7 @@ Cassandra hat eine Tabellenbeschädigung festgestellt.  Cassandra wird automatis
 |===
 
 
+[[cloud-storage-pool-alerts]]
 == Cloud Storage Pool-Warnungen
 
 [cols="1a,2a"]
@@ -507,6 +512,7 @@ Das Endentitätszertifikat von IAM Roles Anywhere läuft bald ab.
 |===
 
 
+[[cross-grid-replication-alerts]]
 == Warnungen zur Grid-übergreifenden Replikation
 
 [cols="1a,2a"]
@@ -529,6 +535,7 @@ Gridübergreifende Replikationsanforderungen stehen aus, weil eine Ressource nic
 |===
 
 
+[[dhcp-alerts]]
 == DHCP-Warnmeldungen
 
 [cols="1a,2a"]
@@ -558,6 +565,7 @@ Der DHCP-Server ist nicht verfügbar.
 |===
 
 
+[[debug-and-trace-alerts]]
 == Debug- und Trace-Warnungen
 
 [cols="1a,2a"]
@@ -580,6 +588,7 @@ Wenn die Trace-Konfiguration aktiviert ist, kann die Systemleistung negativ beei
 |===
 
 
+[[email-and-autosupport-alerts]]
 == E-Mail- und AutoSupport Benachrichtigungen
 
 [cols="1a,2a"]
@@ -623,6 +632,7 @@ In den letzten 24 Stunden hat sich ein Benutzer mit der Webkonsole oder SSH ange
 |===
 
 
+[[erasure-coding-ec-alerts]]
 == Erasure Coding (EC)-Warnungen
 
 [cols="1a,2a"]
@@ -659,6 +669,7 @@ Erasure-Coded-Fragmente können nicht mehr verifiziert werden.  Beschädigte Fra
 |===
 
 
+[[expiration-of-certificates-alerts]]
 == Warnungen zum Ablauf von Zertifikaten
 
 [cols="1a,2a"]
@@ -723,6 +734,7 @@ Das vom externen Syslog-Server vorgelegte Serverzertifikat läuft bald ab.
 |===
 
 
+[[grid-network-alerts]]
 == Grid-Netzwerkwarnungen
 
 [cols="1a,2a"]
@@ -738,6 +750,7 @@ Die MTU-Einstellung für die Grid-Netzwerkschnittstelle (eth0) unterscheidet sic
 |===
 
 
+[[grid-federation-alerts]]
 == Grid-Föderationswarnungen
 
 [cols="1a,2a"]
@@ -760,6 +773,7 @@ Die Grid-Föderation-Verbindung zwischen dem lokalen und dem Remote-Grid funktio
 |===
 
 
+[[high-usage-or-high-latency-alerts]]
 == Warnungen bei hoher Auslastung oder hoher Latenz
 
 [cols="1a,2a"]
@@ -782,6 +796,7 @@ Die durchschnittliche Zeit für Cassandra-Metadatenabfragen ist zu lang.
 |===
 
 
+[[identity-federation-alerts]]
 == Identitätsföderationswarnungen
 
 [cols="1a,2a"]
@@ -804,6 +819,7 @@ Föderierte Gruppen und Benutzer können nicht aus der von einem Mandanten konfi
 |===
 
 
+[[information-lifecycle-management-ilm-alerts]]
 == Warnungen zum Information Lifecycle Management (ILM)
 
 [cols="1a,2a"]
@@ -826,6 +842,7 @@ Die ILM-Scanrate ist auf weniger als 100 Objekte/Sekunde eingestellt.
 |===
 
 
+[[key-management-server-kms-alerts]]
 == Warnungen des Schlüsselverwaltungsservers (KMS)
 
 [cols="1a,2a"]
@@ -904,6 +921,7 @@ Ein Appliance-Knoten konnte keine Verbindung zu einem oder mehreren Servern im S
 |===
 
 
+[[load-balancer-alerts]]
 == Load Balancer-Warnungen
 
 [cols="1a,2a"]
@@ -919,6 +937,7 @@ Ein erhöhter Prozentsatz der Verbindungen zu Load Balancer-Endpunkten wurde get
 |===
 
 
+[[local-clock-offset-alerts]]
 == Warnungen bei lokalem Zeitversatz
 
 [cols="1a,2a"]
@@ -934,6 +953,7 @@ Der Offset zwischen der lokalen Uhr und der Network Time Protocol (NTP)-Zeit ist
 |===
 
 
+[[low-memory-or-low-space-alerts]]
 == Warnungen bei zu wenig Arbeitsspeicher oder Speicherplatz
 
 [cols="1a,2a"]
@@ -1019,6 +1039,7 @@ Im Verzeichnis /tmp ist nur noch wenig Speicherplatz verfügbar.
 |===
 
 
+[[node-or-node-network-alerts]]
 == Knoten- oder Knotennetzwerkwarnungen
 
 [cols="1a,2a"]
@@ -1216,6 +1237,7 @@ Ein Knoten wurde innerhalb der letzten 24 Stunden unerwartet neu gestartet.
 |===
 
 
+[[object-alerts]]
 == Objektwarnungen
 
 [cols="1a,2a"]
@@ -1259,6 +1281,7 @@ Im replizierten Objektspeicher wurde eine Datei gefunden, die nicht als replizie
 |===
 
 
+[[platform-services-alerts]]
 == Warnungen zu Plattformdiensten
 
 [cols="1a,2a"]
@@ -1281,6 +1304,7 @@ An einem Standort sind zu wenige Speicherknoten mit dem RSM-Dienst aktiv oder ve
 |===
 
 
+[[storage-volume-alerts]]
 == Speichervolumenwarnungen
 
 [cols="1a,2a"]
@@ -1324,6 +1348,7 @@ Die Reparatur replizierter Daten für ein repariertes Volume konnte nicht automa
 |===
 
 
+[[storagegrid-services-alerts]]
 == Warnungen zu StorageGRID -Diensten
 
 [cols="1a,2a"]
@@ -1367,6 +1392,7 @@ Die Konfiguration des SSH-Dienstes ist ungültig.  Es wird nun die vorherige Kon
 |===
 
 
+[[tenant-alerts]]
 == Mieterwarnungen
 
 [cols="1a,2a"]

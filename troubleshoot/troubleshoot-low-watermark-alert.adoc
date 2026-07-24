@@ -23,6 +23,7 @@ Wenn Sie auf StorageGRID 11.6 oder höher aktualisieren, werden optimierte schre
 
 
 
+[[understand-the-alert]]
 == Verstehen Sie die Warnung
 
 Wenn Sie benutzerdefinierte Werte für Speichervolume-Wasserzeichen verwenden, wird möglicherweise für einen oder mehrere Speicherknoten die Warnung *Niedriges schreibgeschütztes Wasserzeichen außer Kraft setzen* ausgelöst.
@@ -66,6 +67,7 @@ Die Warnung *Niedriger schreibgeschützter Wasserzeichen-Override* wird für Spe
 
 
 
+[[resolve-the-alert]]
 == Beheben Sie die Warnung
 
 Führen Sie die folgenden Schritte aus, wenn eine oder mehrere Warnungen zum Überschreiben des schreibgeschützten Wasserzeichens „Niedrig“ ausgelöst wurden.  Sie können diese Anweisungen auch verwenden, wenn Sie derzeit benutzerdefinierte Wasserzeicheneinstellungen verwenden und optimierte Einstellungen verwenden möchten, auch wenn keine Warnungen ausgelöst wurden.
@@ -81,6 +83,7 @@ Sie können die Warnung *Niedriger schreibgeschützter Wasserzeichen-Override* b
 
 
 
+[[assess-object-data-usage-for-entire-grid]]
 === Bewerten Sie die Objektdatennutzung für das gesamte Raster
 
 .Schritte
@@ -100,6 +103,7 @@ image::../media/nodes_page_object_data_used_with_alert.png[Knotenseite mit den f
 
 
 
+[[view-optimized-watermarksview-optimized-storage-watermarks]]
 === [[view-optimized-watermarks]]Optimierte Speicherwasserzeichen anzeigen
 
 StorageGRID verwendet zwei Prometheus-Metriken, um die optimierten Werte anzuzeigen, die es für das Soft Read-Only-Wasserzeichen des Speichervolumes berechnet hat.  Sie können die minimalen und maximalen optimierten Werte für jeden Speicherknoten in Ihrem Raster anzeigen.
@@ -126,6 +130,7 @@ Die letzte Spalte zeigt den maximal optimierten Wert des weichen schreibgeschüt
 
 
 
+[[determine-optimized-watermarksdetermine-if-you-can-use-optimized-watermarks]]
 === [[optimierte Wasserzeichen bestimmen]]Stellen Sie fest, ob Sie optimierte Wasserzeichen verwenden können
 
 .Schritte
@@ -150,6 +155,7 @@ NOTE: Auf jedem Speichervolume auf jedem Speicherknoten werden dieselben benutze
 
 
 
+[[use-optimized-watermarksuse-optimized-watermarks]]
 === [[use-optimized-watermarks]]Verwenden Sie optimierte Wasserzeichen
 
 .Schritte

@@ -26,6 +26,7 @@ image::../media/grid-federation-create-connection.png[grafische Übersicht der S
 
 
 
+[[add-connection]]
 == Verbindung hinzufügen
 
 Führen Sie diese Schritte auf einem der beiden StorageGRID Systeme aus.
@@ -113,6 +114,7 @@ CAUTION: Diese Datei enthält Geheimnisse (maskiert als `***` ) und andere sensi
 
 
 
+[[complete-connection]]
 == Vollständige Verbindung
 
 Führen Sie diese Schritte auf dem StorageGRID -System aus, mit dem Sie eine Verbindung herstellen (dem anderen Grid).

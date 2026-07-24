@@ -15,6 +15,7 @@ Durch die Verwendung der Identitätsföderation lässt sich das Einrichten von M
 
 
 
+[[configure-identity-federation-for-tenant-manager]]
 == Konfigurieren der Identitätsföderation für den Mandantenmanager
 
 Sie können die Identitätsföderation für den Mandantenmanager konfigurieren, wenn Sie Mandantengruppen und Benutzer in einem anderen System wie Active Directory, Azure Active Directory (Azure AD), OpenLDAP oder Oracle Directory Server verwalten möchten.
@@ -38,6 +39,7 @@ image::../media/tenant_shares_identity_federation.png[Mandantenfreigaben Identit
 
 
 
+[[enter-configuration]]
 === Konfiguration eingeben
 
 Wenn Sie die Identifizierungsföderation konfigurieren, geben Sie die Werte an, die StorageGRID für die Verbindung mit einem LDAP-Dienst benötigt.
@@ -141,6 +143,7 @@ Wenn Sie diese Einstellung auswählen, kopieren Sie das benutzerdefinierte Siche
 
 
 
+[[test-the-connection-and-save-the-configuration]]
 === Testen Sie die Verbindung und speichern Sie die Konfiguration
 
 Nachdem Sie alle Werte eingegeben haben, müssen Sie die Verbindung testen, bevor Sie die Konfiguration speichern können.  StorageGRID überprüft die Verbindungseinstellungen für den LDAP-Server und das Bind-Benutzernamenformat, falls Sie eines angegeben haben.
@@ -169,6 +172,7 @@ image::../media/identity_federation_test_connection.png[Aufforderung zur Identit
 
 
 
+[[force-synchronization-with-identity-source]]
 == Synchronisierung mit Identitätsquelle erzwingen
 
 Das StorageGRID -System synchronisiert regelmäßig föderierte Gruppen und Benutzer aus der Identitätsquelle.  Sie können den Start der Synchronisierung erzwingen, wenn Sie Benutzerberechtigungen so schnell wie möglich aktivieren oder einschränken möchten.
@@ -187,6 +191,7 @@ NOTE: Die Warnung *Fehler bei der Synchronisierung der Identitätsföderation* w
 
 
 
+[[disable-identity-federation]]
 == Identitätsföderation deaktivieren
 
 Sie können die Identitätsföderation für Gruppen und Benutzer vorübergehend oder dauerhaft deaktivieren. Wenn die Identitätsföderation deaktiviert ist, findet keine Kommunikation zwischen StorageGRID und der Identitätsquelle statt. Alle von Ihnen konfigurierten Einstellungen bleiben jedoch erhalten, sodass Sie die Identitätsföderation in Zukunft problemlos wieder aktivieren können.
@@ -207,6 +212,7 @@ Bevor Sie die Identitätsföderation deaktivieren, sollten Sie Folgendes beachte
 
 
 
+[[guidelines-for-configuring-openldap-server]]
 == Richtlinien zum Konfigurieren des OpenLDAP-Servers
 
 Wenn Sie einen OpenLDAP-Server für die Identitätsföderation verwenden möchten, müssen Sie bestimmte Einstellungen auf dem OpenLDAP-Server konfigurieren.
@@ -216,12 +222,14 @@ CAUTION: Bei Identitätsquellen, die nicht ActiveDirectory oder Azure sind, bloc
 
 
 
+[[memberof-and-refint-overlays]]
 === Memberof- und Refint-Overlays
 
 Die Memberof- und Refint-Overlays sollten aktiviert sein.  Weitere Informationen finden Sie in den Anweisungen zur umgekehrten Pflege von Gruppenmitgliedschaften imhttp://www.openldap.org/doc/admin24/index.html["OpenLDAP-Dokumentation: Administratorhandbuch Version 2.4"^] .
 
 
 
+[[indexing]]
 === Indizierung
 
 Sie müssen die folgenden OpenLDAP-Attribute mit den angegebenen Indexschlüsselwörtern konfigurieren:

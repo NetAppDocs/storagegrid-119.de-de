@@ -15,6 +15,7 @@ Die Objektmetadatenkapazität eines StorageGRID -Systems steuert die maximale An
 
 
 
+[[what-is-object-metadata]]
 == Was sind Objektmetadaten?
 
 Objektmetadaten sind alle Informationen, die ein Objekt beschreiben.  StorageGRID verwendet Objektmetadaten, um die Standorte aller Objekte im gesamten Grid zu verfolgen und den Lebenszyklus jedes Objekts im Laufe der Zeit zu verwalten.
@@ -32,6 +33,7 @@ Für ein Objekt in StorageGRID umfassen die Objektmetadaten die folgenden Arten 
 
 
 
+[[how-is-object-metadata-stored]]
 == Wie werden Objektmetadaten gespeichert?
 
 StorageGRID verwaltet Objektmetadaten in einer Cassandra-Datenbank, die unabhängig von Objektdaten gespeichert wird.  Um Redundanz zu gewährleisten und Objektmetadaten vor Verlust zu schützen, speichert StorageGRID an jedem Standort drei Kopien der Metadaten für alle Objekte im System.
@@ -42,6 +44,7 @@ image::../media/metadata_space_across_sites.png[Metadatenbereich über mehrere S
 
 
 
+[[where-is-object-metadata-stored]]
 == Wo werden Objektmetadaten gespeichert?
 
 Diese Abbildung stellt die Speichervolumina für einen einzelnen Speicherknoten dar.
@@ -54,6 +57,7 @@ Die Menge an Speicherplatz, die für Objektmetadaten auf einem bestimmten Speich
 
 
 
+[[metadata-reserved-space-setting]]
 == Einstellung für reservierten Speicherplatz für Metadaten
 
 Der _Reservierte Speicherplatz für Metadaten_ ist eine systemweite Einstellung, die die Speicherplatzmenge darstellt, die auf Volume 0 jedes Speicherknotens für Metadaten reserviert wird.  Wie in der Tabelle gezeigt, basiert der Standardwert dieser Einstellung auf:
@@ -111,6 +115,7 @@ Beliebiger Betrag
 |===
 
 
+[[view-metadata-reserved-space-setting]]
 === Einstellung für reservierten Speicherplatz für Metadaten anzeigen
 
 Befolgen Sie diese Schritte, um die Einstellung für reservierten Speicherplatz für Metadaten für Ihr StorageGRID System anzuzeigen.
@@ -126,6 +131,7 @@ Die Standardeinstellung für eine neue Installation von StorageGRID 11.6 oder h�
 
 
 
+[[actual-reserved-space-for-metadata]]
 == Tatsächlich reservierter Speicherplatz für Metadaten
 
 Im Gegensatz zur systemweiten Einstellung für reservierten Speicherplatz für Metadaten wird der _tatsächlich reservierte Speicherplatz_ für Objektmetadaten für jeden Speicherknoten bestimmt.  Für jeden Speicherknoten hängt der tatsächlich reservierte Speicherplatz für Metadaten von der Größe des Volumes 0 für den Knoten und der systemweiten Einstellung für den reservierten Speicherplatz für Metadaten ab.
@@ -156,6 +162,7 @@ Der kleinere dieser Werte:
 |===
 
 
+[[view-actual-reserved-space-for-metadata]]
 === Tatsächlich reservierten Speicherplatz für Metadaten anzeigen
 
 Befolgen Sie diese Schritte, um den tatsächlich reservierten Speicherplatz für Metadaten auf einem bestimmten Speicherknoten anzuzeigen.
@@ -173,6 +180,7 @@ Im Screenshot beträgt der *tatsächlich reservierte* Wert 8 TB.  Dieser Screens
 
 
 
+[[example-for-actual-reserved-metadata-space]]
 == Beispiel für tatsächlich reservierten Metadatenspeicherplatz
 
 Angenommen, Sie installieren ein neues StorageGRID System mit Version 11.7 oder höher.  Gehen Sie für dieses Beispiel davon aus, dass jeder Speicherknoten über mehr als 128 GB RAM verfügt und dass Volume 0 von Speicherknoten 1 (SN1) 6 TB groß ist.  Basierend auf diesen Werten:
@@ -183,6 +191,7 @@ Angenommen, Sie installieren ein neues StorageGRID System mit Version 11.7 oder 
 
 
 
+[[allowed-metadata-space]]
 == Zulässiger Metadatenspeicherplatz
 
 Der tatsächlich für Metadaten reservierte Speicherplatz jedes Speicherknotens ist unterteilt in den für Objektmetadaten verfügbaren Speicherplatz (den _zulässigen Metadatenspeicherplatz_) und den für wichtige Datenbankvorgänge (wie Komprimierung und Reparatur) sowie zukünftige Hardware- und Software-Upgrades erforderlichen Speicherplatz.  Der zulässige Metadatenspeicherplatz bestimmt die Gesamtobjektkapazität.
@@ -191,6 +200,7 @@ image::../media/metadata_allowed_space_volume_0.png[Für Metadaten zulässiger S
 
 Die folgende Tabelle zeigt, wie StorageGRID den *zulässigen Metadatenspeicherplatz* für verschiedene Speicherknoten berechnet, basierend auf der Speichermenge für den Knoten und dem tatsächlich reservierten Speicherplatz für Metadaten.
 
+[[table-allowed-space-for-metadata]]
 [cols="1a,1a,2a,2a"]
 |===
 
@@ -232,6 +242,7 @@ Die folgende Tabelle zeigt, wie StorageGRID den *zulässigen Metadatenspeicherpl
 |===
 
 
+[[view-allowed-metadata-space]]
 === Zugelassenen Metadatenspeicherplatz anzeigen
 
 Befolgen Sie diese Schritte, um den zulässigen Metadatenspeicherplatz für einen Speicherknoten anzuzeigen.
@@ -254,6 +265,7 @@ Der *Zulässige* Wert entspricht dieser Prometheus-Metrik:
 
 
 
+[[example-for-allowed-metadata-space]]
 == Beispiel für zulässigen Metadatenspeicherplatz
 
 Angenommen, Sie installieren ein StorageGRID -System mit Version 11.6.  Gehen Sie für dieses Beispiel davon aus, dass jeder Speicherknoten über mehr als 128 GB RAM verfügt und dass Volume 0 von Speicherknoten 1 (SN1) 6 TB groß ist.  Basierend auf diesen Werten:
@@ -265,6 +277,7 @@ Angenommen, Sie installieren ein StorageGRID -System mit Version 11.6.  Gehen Si
 
 
 
+[[how-storage-nodes-of-different-sizes-affect-object-capacity]]
 == Wie sich Speicherknoten unterschiedlicher Größe auf die Objektkapazität auswirken
 
 Wie oben beschrieben, verteilt StorageGRID die Objektmetadaten gleichmäßig auf die Speicherknoten an jedem Standort.  Wenn eine Site Speicherknoten unterschiedlicher Größe enthält, bestimmt daher der kleinste Knoten an der Site die Metadatenkapazität der Site.

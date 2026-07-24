@@ -121,6 +121,7 @@ Generell dauert die Aktualisierung von Appliance-Knoten länger als die von soft
 
 
 
+[[example-estimated-time-to-upgrade-to-storagegrid-11-9]]
 == Beispiel: Geschätzte Zeit für das Upgrade auf StorageGRID 11.9
 
 Angenommen, Ihr System verfügt über 14 Grid-Knoten, von denen 8 Linux-Knoten sind.

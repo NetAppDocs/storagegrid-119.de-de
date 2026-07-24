@@ -28,6 +28,7 @@ Beachten Sie, dass Objektmetadaten nicht durch ILM-Regeln verwaltet werden.  Sta
 
 
 
+[[example-ilm-rule]]
 == Beispiel einer ILM-Regel
 
 Beispielsweise könnte eine ILM-Regel Folgendes festlegen:
@@ -43,6 +44,7 @@ Wenn beispielsweise Site 2 nicht erreichbar ist, wenn Mandant A ein Objekt speic
 
 
 
+[[how-an-ilm-policy-evaluates-objects]]
 == So bewertet eine ILM-Richtlinie Objekte
 
 Die aktiven ILM-Richtlinien für Ihr StorageGRID -System steuern die Platzierung, Dauer und das Aufnahmeverhalten aller Objekte.
@@ -56,6 +58,7 @@ Wenn Clients Objekte in StorageGRID speichern, werden die Objekte anhand des geo
 
 
 
+[[example-ilm-policy]]
 == Beispiel einer ILM-Richtlinie
 
 Beispielsweise könnte eine ILM-Richtlinie drei ILM-Regeln enthalten, die Folgendes festlegen:

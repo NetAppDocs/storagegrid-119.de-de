@@ -24,6 +24,7 @@ NOTE: Da der Suchintegrationsdienst das Senden von Objektmetadaten an ein Ziel v
 
 
 
+[[search-integration-and-s3-buckets]]
 == Suchintegration und S3-Buckets
 
 Sie können den Suchintegrationsdienst für jeden versionierten oder nicht versionierten Bucket aktivieren.  Die Suchintegration wird konfiguriert, indem die XML-Konfigurationsdatei für Metadatenbenachrichtigungen mit dem Bucket verknüpft wird, der angibt, auf welche Objekte reagiert werden soll und das Ziel für die Objektmetadaten ist.
@@ -35,6 +36,7 @@ NOTE: Für Tags und Benutzermetadaten übergibt StorageGRID Daten und Zahlen als
 
 
 
+[[search-notifications]]
 == Suchbenachrichtigungen
 
 Metadatenbenachrichtigungen werden generiert und zur Zustellung in die Warteschlange gestellt, wenn:
@@ -52,6 +54,7 @@ Nachdem Sie einem Bucket XML-Metadatenbenachrichtigungskonfigurations-XML hinzug
 
 
 
+[[search-integration-service-and-elasticsearch]]
 == Suchintegrationsdienst und Elasticsearch
 
 Der Suchintegrationsdienst StorageGRID unterstützt einen Elasticsearch-Cluster als Ziel.  Wie bei den anderen Plattformdiensten wird das Ziel im Endpunkt angegeben, dessen URN im Konfigurations-XML für den Dienst verwendet wird.  Verwenden Sie die https://imt.netapp.com/matrix/#welcome["NetApp Interoperabilitätsmatrix-Tool"^] um die unterstützten Versionen von Elasticsearch zu ermitteln.

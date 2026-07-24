@@ -18,6 +18,7 @@ NOTE: Der Grid Manager wird mit jeder Version aktualisiert und stimmt möglicher
 
 
 
+[[types-of-charts]]
 == Diagrammtypen
 
 Diagramme und Grafiken fassen die Werte bestimmter StorageGRID -Metriken und -Attribute zusammen.
@@ -73,6 +74,7 @@ image::../media/state_graph.gif[Zustandsgraph]
 
 
 
+[[chart-legend]]
 == Diagrammlegende
 
 Die zum Zeichnen von Diagrammen verwendeten Linien und Farben haben eine bestimmte Bedeutung.
@@ -125,6 +127,7 @@ Eine Mischung aus grauer und blauer Schattierung weist darauf hin, dass einige d
 |===
 
 
+[[display-charts-and-graphs]]
 == Diagramme und Grafiken anzeigen
 
 Die Seite „Knoten“ enthält die Diagramme und Grafiken, auf die Sie regelmäßig zugreifen sollten, um Attribute wie Speicherkapazität und Durchsatz zu überwachen.  In einigen Fällen, insbesondere bei der Zusammenarbeit mit dem technischen Support, können Sie über die Seite *SUPPORT* > *Tools* > *Grid-Topologie* auf zusätzliche Diagramme zugreifen.
@@ -181,6 +184,7 @@ Die Anzeige wechselt automatisch zur Seite *Berichte* > *Diagramme*.  Das Diagra
 
 
 
+[[generate-charts]]
 == Diagramme erstellen
 
 Diagramme zeigen eine grafische Darstellung von Attributdatenwerten.  Sie können über einen Rechenzentrumsstandort, einen Netzknoten, eine Komponente oder einen Dienst berichten.

@@ -79,6 +79,7 @@ Informationen zu unterstützten Versionen finden Sie im https://imt.netapp.com/m
 |===
 
 
+[[download-and-extract-the-storagegrid-installation-files]]
 == Laden Sie die StorageGRID Installationsdateien herunter und extrahieren Sie sie
 
 .[[Installationsdateien herunterladen und extrahieren]]
@@ -413,6 +414,7 @@ NOTE: Für die Installation der Appliance sind diese Dateien nur erforderlich, w
 
 
 
+[[verify-hardware-and-networking]]
 == Überprüfen der Hardware und des Netzwerks
 
 Bevor Sie mit der Erweiterung Ihres StorageGRID -Systems beginnen, stellen Sie Folgendes sicher:

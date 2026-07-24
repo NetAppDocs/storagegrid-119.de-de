@@ -20,6 +20,7 @@ Alle S3-Client-Aktivitäten sind mit StorageGRID Mandantenkonten verknüpft.  Mi
 
 
 
+[[view-all-tenants]]
 == Alle Mieter anzeigen
 
 Auf der Seite „Mieter“ werden grundlegende Informationen zu allen aktuellen Mieterkonten angezeigt.
@@ -60,6 +61,7 @@ Sie können ein Mandantenkonto nicht entfernen, wenn das Konto Buckets oder Cont
 
 
 
+[[view-a-specific-tenant]]
 == Einen bestimmten Mandanten anzeigen
 
 Sie können Details zu einem bestimmten Mieter anzeigen.
@@ -124,6 +126,7 @@ Sehenlink:../admin/grid-federation-overview.html["Was ist Grid-Föderation?"] Un
 
 
 
+[[view-network-traffic]]
 == Netzwerkverkehr anzeigen
 
 Wenn für einen Mandanten Richtlinien zur Verkehrsklassifizierung gelten, überprüfen Sie den Netzwerkverkehr für diesen Mandanten.
@@ -142,6 +145,7 @@ Sehen link:../admin/managing-traffic-classification-policies.html["Verwalten von
 
 
 
+[[use-the-audit-log]]
 == Verwenden des Überwachungsprotokolls
 
 Optional können Sie das Überwachungsprotokoll für eine detailliertere Überwachung der Aktivitäten eines Mandanten verwenden.
@@ -160,6 +164,7 @@ Sehen link:../audit/index.html["Überprüfen der Überwachungsprotokolle"] für 
 
 
 
+[[use-prometheus-metrics]]
 == Verwenden Sie Prometheus-Metriken
 
 Verwenden Sie optional Prometheus-Metriken, um Berichte zur Mieteraktivität zu erstellen.

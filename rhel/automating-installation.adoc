@@ -31,6 +31,7 @@ StorageGRID bietet optionale Python-Skripte zur Automatisierung der Konfiguratio
 
 
 
+[[automate-the-installation-and-configuration-of-the-storagegrid-host-service]]
 == Automatisieren Sie die Installation und Konfiguration des StorageGRID Hostdienstes
 
 Sie können die Installation des StorageGRID Hostdienstes mithilfe von Standard-Orchestrierungsframeworks wie Ansible, Puppet, Chef, Fabric oder SaltStack automatisieren.
@@ -46,6 +47,7 @@ Sie können alle Schritte zur Vorbereitung der Hosts und Bereitstellung virtuell
 
 
 
+[[example-ansible-role-and-playbook]]
 === Beispiel für eine Ansible-Rolle und ein Playbook
 
 Beispielhafte Ansible-Rolle und Playbook werden mit dem Installationsarchiv im `/extras` Ordner.  Das Ansible Playbook zeigt, wie die `storagegrid` Die Rolle bereitet die Hosts vor und installiert StorageGRID auf den Zielservern.  Sie können die Rolle oder das Playbook nach Bedarf anpassen.
@@ -58,6 +60,7 @@ Die Installationsaufgaben in der bereitgestellten `storagegrid` Rollenbeispiel v
 
 
 
+[[automate-the-configuration-of-storagegrid]]
 == Automatisieren Sie die Konfiguration von StorageGRID
 
 Nach der Bereitstellung der Grid-Knoten können Sie die Konfiguration des StorageGRID Systems automatisieren.

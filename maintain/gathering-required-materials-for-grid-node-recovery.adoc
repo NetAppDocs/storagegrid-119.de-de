@@ -77,6 +77,7 @@ Die aktuell unterstützten Versionen Ihrer Plattform finden Sie im https://imt.n
 |===
 
 
+[[download-and-extract-storagegrid-installation-files]]
 == Laden Sie die StorageGRID Installationsdateien herunter und extrahieren Sie sie
 
 .[[Download-and-Extract-Install-Files-Recover]]

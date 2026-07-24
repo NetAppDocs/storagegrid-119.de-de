@@ -20,6 +20,7 @@ Verwalten Sie Ihre Mandantengruppen nach Bedarf, um eine Gruppe anzuzeigen, zu b
 
 
 
+[[view-or-edit-group]]
 == Gruppe anzeigen oder bearbeiten
 
 Sie können die grundlegenden Informationen und Details für jede Gruppe anzeigen und bearbeiten.
@@ -106,6 +107,7 @@ Oben rechts erscheint eine Erfolgsmeldung.
 
 
 
+[[duplicate-group]]
 == Gruppe duplizieren
 
 Sie können eine vorhandene Gruppe duplizieren, um schneller neue Gruppen zu erstellen.
@@ -123,6 +125,7 @@ NOTE: Wenn Ihr Mandantenkonto über die Berechtigung *Grid-Föderationsverbindun
 
 
 
+[[clone-groupsretry-group-clone]]
 == [[clone-groups]]Gruppenklon erneut versuchen
 
 So wiederholen Sie einen fehlgeschlagenen Klonvorgang:
@@ -136,6 +139,7 @@ Weitere Informationen finden Sie unterlink:grid-federation-account-clone.html["M
 
 
 
+[[delete-one-or-more-groups]]
 == Löschen einer oder mehrerer Gruppen
 
 Sie können eine oder mehrere Gruppen löschen.  Alle Benutzer, die nur zu einer gelöschten Gruppe gehören, können sich nicht mehr beim Mandanten-Manager anmelden oder das Mandantenkonto verwenden.

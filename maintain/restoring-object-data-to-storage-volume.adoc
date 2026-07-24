@@ -15,6 +15,7 @@ Nachdem Sie Speichervolumes für einen Speicherknoten wiederhergestellt haben, d
 
 
 
+[[which-procedure-should-i-use]]
 == Welches Verfahren soll ich anwenden?
 
 Stellen Sie Objektdaten nach Möglichkeit mithilfe der Seite *Volume-Wiederherstellung* im Grid Manager wieder her.
@@ -31,6 +32,7 @@ NOTE: Das Skript „repair-data“ ist veraltet und wird in einer zukünftigen V
 
 
 
+[[use-the-repair-data-script-to-restore-object-data]]
 == Verwenden Sie die `repair-data` Skript zum Wiederherstellen von Objektdaten
 
 .Bevor Sie beginnen
@@ -48,6 +50,7 @@ Beachten Sie Folgendes:
 
 
 
+[[about-the-repair-data-script]]
 == Über die `repair-data` Skript
 
 Um Objektdaten wiederherzustellen, führen Sie den `repair-data` Skript.  Dieses Skript startet den Prozess der Wiederherstellung von Objektdaten und arbeitet mit ILM-Scans, um sicherzustellen, dass die ILM-Regeln eingehalten werden.
@@ -97,6 +100,7 @@ NOTE: Der EC-Reparaturauftrag reserviert vorübergehend viel Speicherplatz.  Mö
 ====
 
 
+[[find-hostname-for-storage-node]]
 == Hostnamen für Speicherknoten suchen
 
 . Melden Sie sich beim primären Admin-Knoten an:
@@ -115,6 +119,7 @@ Wenn Sie als Root angemeldet sind, ändert sich die Eingabeaufforderung von `$` 
 
 
 
+[[repair-data-if-all-volumes-have-failed]]
 == Reparieren Sie Daten, wenn alle Volumes ausgefallen sind
 
 Wenn alle Speichervolumes ausgefallen sind, reparieren Sie den gesamten Knoten.  Befolgen Sie die Anweisungen für *replizierte Daten*, *löschcodierte (EC) Daten* oder beides, je nachdem, ob Sie replizierte Daten, löschcodierte (EC) Daten oder beides verwenden.
@@ -154,6 +159,7 @@ Die Reparatur von Daten mit Löschcode kann beginnen, während einige Speicherkn
 ====
 
 
+[[repair-data-if-only-some-volumes-have-failed]]
 == Reparieren Sie Daten, wenn nur einige Volumes ausgefallen sind
 
 Wenn nur einige der Volumes ausgefallen sind, reparieren Sie die betroffenen Volumes.  Befolgen Sie die Anweisungen für *replizierte Daten*, *löschcodierte (EC) Daten* oder beides, je nachdem, ob Sie replizierte Daten, löschcodierte (EC) Daten oder beides verwenden.
@@ -211,6 +217,7 @@ NOTE: Die Reparatur von Daten mit Löschcode kann beginnen, während einige Spei
 ====
 
 
+[[monitor-repairs]]
 == Monitorreparaturen
 
 Überwachen Sie den Status der Reparaturaufträge, je nachdem, ob Sie *replizierte Daten*, *löschcodierte (EC) Daten* oder beides verwenden.

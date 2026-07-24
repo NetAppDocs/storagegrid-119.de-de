@@ -22,6 +22,8 @@ Wenn Blockspeichervolumes vom vorherigen Host beibehalten wurden, müssen Sie m�
 
 
 
+[[restore-and-validate-grid-nodes]]
+[[restore-validate-grid-nodes]]
 == Wiederherstellen und Validieren von Grid-Knoten
 
 Sie müssen die Grid-Konfigurationsdateien für alle ausgefallenen Grid-Knoten wiederherstellen und dann die Grid-Konfigurationsdateien validieren und alle Fehler beheben.
@@ -105,6 +107,7 @@ Sie müssen alle Fehler oder Warnungen beheben, bevor Sie den StorageGRID Hostdi
 
 
 
+[[fix-missing-network-interface-errors]]
 === Beheben Sie Fehler bei fehlenden Netzwerkschnittstellen
 
 Wenn das Host-Netzwerk nicht richtig konfiguriert ist oder ein Name falsch geschrieben ist, tritt ein Fehler auf, wenn StorageGRID die im `/etc/storagegrid/nodes/_node-name_.conf` Datei.
@@ -127,6 +130,8 @@ Stellen Sie sicher, dass die Hostschnittstelle Zugriff auf den entsprechenden ph
 
 
 
+[[fix-missing-block-device-errors]]
+[[fix-block-errors]]
 === Beheben Sie Fehler beim Fehlen eines Blockgeräts
 
 Das System prüft, ob jeder wiederhergestellte Knoten einer gültigen speziellen Blockgerätedatei oder einem gültigen Softlink zu einer speziellen Blockgerätedatei zugeordnet ist.  Wenn StorageGRID eine ungültige Zuordnung in der `/etc/storagegrid/nodes/_node-name_.conf` Datei wird ein Fehler mit dem Namen „fehlendes Blockgerät“ angezeigt.
@@ -169,6 +174,7 @@ Führen Sie den folgenden Befehl nur für neue Blockspeichergeräte aus.  Führe
 ====
 
 
+[[start-storagegrid-host-service]]
 == Starten Sie den StorageGRID -Hostdienst
 
 Um Ihre StorageGRID -Knoten zu starten und sicherzustellen, dass sie nach einem Host-Neustart neu gestartet werden, müssen Sie den StorageGRID Hostdienst aktivieren und starten.
@@ -203,6 +209,8 @@ sudo systemctl reload-or-restart storagegrid
 
 
 
+[[recover-nodes-that-fail-to-start-normally]]
+[[recover-nodes-fail-start]]
 == Wiederherstellen von Knoten, die nicht normal gestartet werden können
 
 Wenn ein StorageGRID -Knoten nicht normal wieder dem Grid beitritt und nicht als wiederherstellbar angezeigt wird, ist er möglicherweise beschädigt.  Sie können den Knoten in den Wiederherstellungsmodus zwingen.

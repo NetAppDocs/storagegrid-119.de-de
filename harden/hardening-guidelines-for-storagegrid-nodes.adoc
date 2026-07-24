@@ -15,6 +15,7 @@ StorageGRID -Knoten können auf virtuellen VMware-Maschinen, innerhalb einer Con
 
 
 
+[[control-remote-ipmi-access-to-bmc]]
 == Steuern Sie den Remote-IPMI-Zugriff auf BMC
 
 Sie können den Remote-IPMI-Zugriff für alle Appliances mit einem BMC aktivieren oder deaktivieren. Die Remote-IPMI-Schnittstelle ermöglicht jedem mit einem BMC -Konto und Kennwort den Low-Level-Hardwarezugriff auf Ihre StorageGRID -Geräte. Wenn Sie keinen Remote-IPMI-Zugriff auf den BMC benötigen, deaktivieren Sie diese Option.
@@ -29,6 +30,7 @@ Sie können den Remote-IPMI-Zugriff für alle Appliances mit einem BMC aktiviere
 
 
 
+[[firewall-configuration]]
 == Firewall-Konfiguration
 
 Im Rahmen der Systemhärtung müssen Sie die Konfigurationen externer Firewalls überprüfen und so ändern, dass Datenverkehr nur von den IP-Adressen und Ports akzeptiert wird, von denen er unbedingt benötigt wird.
@@ -48,24 +50,28 @@ Eine Liste aller von StorageGRID verwendeten internen und externen Ports finden 
 
 
 
+[[disable-unused-services]]
 == Deaktivieren Sie nicht verwendete Dienste
 
 Für alle StorageGRID -Knoten sollten Sie den Zugriff auf nicht verwendete Dienste deaktivieren oder blockieren. Wenn Sie beispielsweise DHCP nicht verwenden möchten, schließen Sie Port 68 mit dem Grid Manager. Wählen Sie *KONFIGURATION* > *Firewall-Steuerung* > *Externen Zugriff verwalten*. Ändern Sie dann den Statusschalter für Port 68 von *Offen* auf *Geschlossen*.
 
 
 
+[[virtualization-containers-and-shared-hardware]]
 == Virtualisierung, Container und gemeinsam genutzte Hardware
 
 Vermeiden Sie bei allen StorageGRID -Knoten, StorageGRID auf derselben physischen Hardware wie nicht vertrauenswürdige Software auszuführen.  Gehen Sie nicht davon aus, dass der Hypervisor-Schutz Schadsoftware daran hindert, auf durch StorageGRID geschützte Daten zuzugreifen, wenn sich sowohl StorageGRID als auch die Schadsoftware auf derselben physischen Hardware befinden.  Beispielsweise nutzen die Meltdown- und Spectre-Angriffe kritische Schwachstellen in modernen Prozessoren aus und ermöglichen es Programmen, Daten im Speicher desselben Computers zu stehlen.
 
 
 
+[[protect-nodes-during-installation]]
 == Schützen Sie Knoten während der Installation
 
 Erlauben Sie nicht vertrauenswürdigen Benutzern nicht, über das Netzwerk auf StorageGRID -Knoten zuzugreifen, wenn die Knoten installiert werden.  Knoten sind erst dann vollständig sicher, wenn sie dem Netz beigetreten sind.
 
 
 
+[[guidelines-for-admin-nodes]]
 == Richtlinien für Admin-Knoten
 
 Admin-Knoten bieten Verwaltungsdienste wie Systemkonfiguration, Überwachung und Protokollierung. Wenn Sie sich beim Grid Manager oder Tenant Manager anmelden, stellen Sie eine Verbindung zu einem Admin-Knoten her.
@@ -85,6 +91,7 @@ Weitere Informationen finden Sie in der Anleitung fürlink:../admin/index.html["
 
 
 
+[[guidelines-for-storage-nodes]]
 == Richtlinien für Speicherknoten
 
 Speicherknoten verwalten und speichern Objektdaten und Metadaten.  Befolgen Sie diese Richtlinien, um die Speicherknoten in Ihrem StorageGRID -System zu sichern.
@@ -98,6 +105,7 @@ Speicherknoten verwalten und speichern Objektdaten und Metadaten.  Befolgen Sie 
 
 
 
+[[guidelines-for-gateway-nodes]]
 == Richtlinien für Gateway-Knoten
 
 Gateway-Knoten bieten eine optionale Lastausgleichsschnittstelle, die Clientanwendungen zur Verbindung mit StorageGRID verwenden können.  Befolgen Sie diese Richtlinien, um alle Gateway-Knoten in Ihrem StorageGRID System zu sichern:
@@ -109,6 +117,7 @@ Gateway-Knoten bieten eine optionale Lastausgleichsschnittstelle, die Clientanwe
 
 
 
+[[guidelines-for-hardware-appliance-nodes]]
 == Richtlinien für Hardware-Appliance-Knoten
 
 StorageGRID Hardwaregeräte sind speziell für die Verwendung in einem StorageGRID -System konzipiert.  Einige Geräte können als Speicherknoten verwendet werden.  Andere Appliances können als Admin-Knoten oder Gateway-Knoten verwendet werden.  Sie können Appliance-Knoten mit softwarebasierten Knoten kombinieren oder vollständig entwickelte Grids mit ausschließlich Appliances bereitstellen.

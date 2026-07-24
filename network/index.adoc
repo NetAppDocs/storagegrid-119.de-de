@@ -15,6 +15,7 @@ Verwenden Sie diese Richtlinien, um mehr über die Architektur und Netzwerktopol
 
 
 
+[[about-these-instructions]]
 == Zu dieser Anleitung
 
 Diese Richtlinien enthalten Informationen, die Sie zum Erstellen der StorageGRID Netzwerkinfrastruktur verwenden können, bevor Sie StorageGRID -Knoten bereitstellen und konfigurieren.  Verwenden Sie diese Richtlinien, um sicherzustellen, dass die Kommunikation zwischen allen Knoten im Grid und zwischen dem Grid und externen Clients und Diensten stattfinden kann.
@@ -38,6 +39,7 @@ Das StorageGRID -Netzwerk muss entsprechend konfiguriert werden, um den Datenver
 
 
 
+[[before-you-begin]]
 == Bevor Sie beginnen
 
 Die Netzwerkkonfiguration für ein StorageGRID -System erfordert ein hohes Maß an Erfahrung mit Ethernet-Switching, TCP/IP-Netzwerken, Subnetzen, Netzwerkrouting und Firewalls.

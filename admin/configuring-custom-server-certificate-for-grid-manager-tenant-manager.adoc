@@ -34,6 +34,7 @@ Wenn Sie auf den Grid Manager oder Tenant Manager über einen Domänennamen stat
 ====
 
 
+[[add-a-custom-management-interface-certificate]]
 == Hinzufügen eines benutzerdefinierten Verwaltungsschnittstellenzertifikats
 
 Um ein benutzerdefiniertes Verwaltungsschnittstellenzertifikat hinzuzufügen, können Sie Ihr eigenes Zertifikat bereitstellen oder mithilfe des Grid Managers eines generieren.
@@ -161,6 +162,7 @@ NOTE: Warten Sie nach dem Hochladen oder Generieren eines neuen Zertifikats bis 
 
 
 
+[[restore-the-default-management-interface-certificate]]
 == Wiederherstellen des Standardzertifikats der Verwaltungsschnittstelle
 
 Sie können für Grid Manager- und Tenant Manager-Verbindungen wieder das Standardzertifikat der Verwaltungsschnittstelle verwenden.
@@ -177,6 +179,7 @@ Wenn Sie das Standardzertifikat der Verwaltungsschnittstelle wiederherstellen, w
 
 
 
+[[use-a-script-to-generate-a-new-self-signed-management-interface-certificate]]
 == Verwenden Sie ein Skript, um ein neues selbstsigniertes Management-Schnittstellenzertifikat zu generieren
 
 Wenn eine strenge Hostnamenvalidierung erforderlich ist, können Sie ein Skript zum Generieren des Verwaltungsschnittstellenzertifikats verwenden.
@@ -238,6 +241,7 @@ Schließen Sie die Tags BEGIN und END in Ihre Auswahl ein.
 
 
 
+[[download-or-copy-the-management-interface-certificate]]
 == Laden Sie das Management-Interface-Zertifikat herunter oder kopieren Sie es
 
 Sie können den Inhalt des Management-Schnittstellenzertifikats zur Verwendung an anderer Stelle speichern oder kopieren.

@@ -25,6 +25,7 @@ NOTE: Die für jeden Protokolltyp bereitgestellten Details dienen nur als Refere
 
 
 
+[[access-the-logs]]
 == Zugriff auf die Protokolle
 
 Um auf die Protokolle zuzugreifen, können Sielink:collecting-log-files-and-system-data.html["Sammeln von Protokolldateien und Systemdaten"] von einem oder mehreren Knoten als einzelnes Protokolldateiarchiv. Oder wenn der primäre Admin-Knoten nicht verfügbar ist oder einen bestimmten Knoten nicht erreichen kann, können Sie wie folgt auf einzelne Protokolldateien für jeden Grid-Knoten zugreifen:
@@ -37,6 +38,7 @@ Um auf die Protokolle zuzugreifen, können Sielink:collecting-log-files-and-syst
 
 
 
+[[export-logs-to-the-syslog-server]]
 == Exportieren Sie Protokolle auf den Syslog-Server
 
 Das Exportieren der Protokolle auf den Syslog-Server bietet folgende Möglichkeiten:
@@ -51,6 +53,7 @@ Informationen zum Exportieren der Protokolle finden Sie unterlink:../monitor/con
 
 
 
+[[log-file-categories]]
 == Protokolldateikategorien
 
 Das StorageGRID Protokolldateiarchiv enthält die für jede Kategorie beschriebenen Protokolle und zusätzliche Dateien, die Metriken und die Ausgabe von Debugbefehlen enthalten.

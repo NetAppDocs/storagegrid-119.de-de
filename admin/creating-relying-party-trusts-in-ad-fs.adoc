@@ -31,6 +31,7 @@ Diese Anweisungen gelten für Windows Server 2016 AD FS.  Wenn Sie eine andere V
 
 
 
+[[create-a-relying-party-trust-using-windows-powershell]]
 == Erstellen einer Vertrauensstellung der vertrauenden Seite mithilfe von Windows PowerShell
 
 Sie können Windows PowerShell verwenden, um schnell eine oder mehrere Vertrauensstellungen der vertrauenden Seite zu erstellen.
@@ -93,6 +94,7 @@ Wenn die Metadaten fehlen, bestätigen Sie, dass die Federation-Metadatenadresse
 
 
 
+[[create-a-relying-party-trust-by-importing-federation-metadata]]
 == Erstellen einer Vertrauensstellung der vertrauenden Seite durch Importieren von Verbundmetadaten
 
 Sie können die Werte für jede Vertrauensstellung der vertrauenden Partei importieren, indem Sie auf die SAML-Metadaten für jeden Admin-Knoten zugreifen.
@@ -144,6 +146,7 @@ Wenn die Metadaten fehlen, bestätigen Sie, dass die Federation-Metadatenadresse
 
 
 
+[[create-a-relying-party-trust-manually]]
 == Manuelles Erstellen einer Vertrauensstellung der vertrauenden Seite
 
 Wenn Sie die Daten für die Vertrauensstellungen des vertrauenden Teils nicht importieren möchten, können Sie die Werte manuell eingeben.

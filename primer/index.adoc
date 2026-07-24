@@ -24,6 +24,7 @@ NOTE: Die Unterstützung für Archivknoten wurde entfernt.  Das Verschieben von 
 
 
 
+[[storagegrid-benefits]]
 == Vorteile von StorageGRID
 
 Zu den Vorteilen des StorageGRID -Systems gehören:

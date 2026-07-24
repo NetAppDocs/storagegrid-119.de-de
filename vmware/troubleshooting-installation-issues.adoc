@@ -26,6 +26,7 @@ Wenn Sie weitere Hilfe benötigen, wenden Sie sich an https://mysupport.netapp.c
 
 
 
+[[virtual-machine-resource-reservation-requires-adjustment]]
 == Die Ressourcenreservierung virtueller Maschinen muss angepasst werden
 
 OVF-Dateien enthalten eine Ressourcenreservierung, die sicherstellen soll, dass jeder Grid-Knoten über ausreichend RAM und CPU verfügt, um effizient zu arbeiten.  Wenn Sie virtuelle Maschinen erstellen, indem Sie diese OVF-Dateien auf VMware bereitstellen, und die vordefinierte Anzahl an Ressourcen nicht verfügbar ist, werden die virtuellen Maschinen nicht gestartet.
@@ -49,6 +50,7 @@ Wenn Sie sicher sind, dass der VM-Host über ausreichend Ressourcen für jeden G
 
 
 
+[[temporary-installation-password-was-disabled]]
 == Das temporäre Installationskennwort wurde deaktiviert
 
 Wenn Sie einen VMware-Knoten bereitstellen, können Sie optional ein temporäres Installationskennwort angeben.  Sie müssen über dieses Kennwort verfügen, um auf die VM-Konsole zuzugreifen oder SSH zu verwenden, bevor der neue Knoten dem Grid beitritt.

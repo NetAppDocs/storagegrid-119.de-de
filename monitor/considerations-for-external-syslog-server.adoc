@@ -22,6 +22,7 @@ Zu den Arten von Prüfinformationen, die Sie an den externen Syslog-Server sende
 
 
 
+[[when-to-use-an-external-syslog-server]]
 == Wann Sie einen externen Syslog-Server verwenden sollten
 
 Ein externer Syslog-Server ist besonders nützlich, wenn Sie über ein großes Grid verfügen, mehrere Arten von S3-Anwendungen verwenden oder alle Auditdaten behalten möchten. Durch das Senden von Auditinformationen an einen externen Syslog-Server können Sie:
@@ -40,6 +41,7 @@ NOTE: Um die Möglichkeiten zur vollständigen Datenwiederherstellung im Falle e
 
 
 
+[[how-to-configure-an-external-syslog-server]]
 == So konfigurieren Sie einen externen Syslog-Server
 
 Informationen zum Konfigurieren eines externen Syslog-Servers finden Sie unterlink:../monitor/configure-audit-messages.html["Konfigurieren Sie Audit-Meldungen und einen externen Syslog-Server"] .
@@ -57,6 +59,7 @@ NOTE: Wenn Sie ein Client-Zertifikat verwenden, müssen Sie auch einen privaten 
 
 
 
+[[how-to-estimate-the-size-of-the-external-syslog-server]]
 == So schätzen Sie die Größe des externen Syslog-Servers
 
 Normalerweise ist Ihr Grid so dimensioniert, dass ein erforderlicher Durchsatz erreicht wird, der in S3-Operationen pro Sekunde oder Bytes pro Sekunde definiert ist.  Beispielsweise besteht möglicherweise die Anforderung, dass Ihr Grid 1.000 S3-Operationen pro Sekunde oder 2.000 MB pro Sekunde an Objektaufnahmen und -abrufen verarbeiten muss.  Sie sollten die Größe Ihres externen Syslog-Servers entsprechend den Datenanforderungen Ihres Grids anpassen.
@@ -65,6 +68,7 @@ Dieser Abschnitt enthält einige heuristische Formeln, mit deren Hilfe Sie die R
 
 
 
+[[use-s3-operations-per-second-in-estimation-formulas]]
 === Verwenden Sie S3-Operationen pro Sekunde in Schätzformeln
 
 Wenn Ihr Grid für einen Durchsatz in Bytes pro Sekunde ausgelegt ist, müssen Sie diese Dimensionierung in S3-Operationen pro Sekunde umrechnen, um die Schätzformeln verwenden zu können.  Um den Grid-Durchsatz zu konvertieren, müssen Sie zunächst Ihre durchschnittliche Objektgröße bestimmen. Dies können Sie mithilfe der Informationen in vorhandenen Prüfprotokollen und Metriken (sofern vorhanden) oder mithilfe Ihrer Kenntnisse über die Anwendungen tun, die StorageGRID verwenden.  Wenn Ihr Grid beispielsweise so dimensioniert ist, dass ein Durchsatz von 2.000 MB/Sekunde erreicht wird und Ihre durchschnittliche Objektgröße 2 MB beträgt, dann ist Ihr Grid so dimensioniert, dass es 1.000 S3-Operationen pro Sekunde verarbeiten kann (2.000 MB / 2 MB).
@@ -74,6 +78,7 @@ NOTE: Die Formeln zur Dimensionierung externer Syslog-Server in den folgenden Ab
 
 
 
+[[estimation-formulas-for-audit-logs]]
 === Schätzformeln für Audit-Protokolle
 
 Wenn Sie über keine anderen Informationen zu Ihrer S3-Arbeitslast verfügen als über die Anzahl der S3-Operationen pro Sekunde, die Ihr Grid voraussichtlich unterstützen wird, können Sie das Volumen der Prüfprotokolle, die Ihr externer Syslog-Server verarbeiten muss, mithilfe der folgenden Formeln schätzen, unter der Annahme, dass Sie die Prüfebenen auf den Standardwerten belassen (alle Kategorien auf „Normal“ eingestellt, außer „Speicher“, das auf „Fehler“ eingestellt ist):
@@ -142,6 +147,7 @@ Wenn Ihr Grid beispielsweise für 1.000 S3-Operationen pro Sekunde ausgelegt ist
 
 
 
+[[estimation-formulas-for-non-default-audit-levels]]
 === Schätzformeln für nicht standardmäßige Prüfstufen
 
 Die für Prüfprotokolle bereitgestellten Formeln gehen von der Verwendung der Standardeinstellungen für die Prüfebene aus (alle Kategorien sind auf „Normal“ eingestellt, mit Ausnahme von „Speicher“, das auf „Fehler“ eingestellt ist).  Detaillierte Formeln zum Schätzen der Rate und der durchschnittlichen Größe von Überwachungsnachrichten für nicht standardmäßige Überwachungsebeneneinstellungen sind nicht verfügbar.  Die folgende Tabelle kann jedoch für eine grobe Schätzung der Rate verwendet werden. Sie können die für Prüfprotokolle bereitgestellte Formel zur Berechnung der Durchschnittsgröße verwenden. Beachten Sie jedoch, dass dies wahrscheinlich zu einer Überschätzung führt, da die „zusätzlichen“ Prüfmeldungen im Durchschnitt kleiner sind als die Standardprüfmeldungen.
@@ -166,12 +172,14 @@ Verwenden Sie dieselbe Formel wie für die Standardeinstellungen
 |===
 
 
+[[estimation-formulas-for-security-events]]
 === Schätzformeln für Sicherheitsereignisse
 
 Sicherheitsereignisse korrelieren nicht mit S3-Vorgängen und erzeugen normalerweise ein vernachlässigbares Volumen an Protokollen und Daten.  Aus diesen Gründen werden keine Schätzformeln bereitgestellt.
 
 
 
+[[estimation-formulas-for-application-logs]]
 === Schätzformeln für Anwendungsprotokolle
 
 Wenn Sie über keine anderen Informationen zu Ihrer S3-Arbeitslast verfügen als über die Anzahl der S3-Operationen pro Sekunde, die Ihr Grid voraussichtlich unterstützen wird, können Sie das Volumen der Anwendungsprotokolle, die Ihr externer Syslog-Server verarbeiten muss, mithilfe der folgenden Formeln schätzen:
@@ -227,6 +235,7 @@ Der S3-Schlüsselname, ohne den Bucket-Namen.  Operationen an Buckets schließen
 |===
 
 
+[[example-sizing-estimations]]
 == Beispiele für Größenschätzungen
 
 In diesem Abschnitt werden Beispielfälle erläutert, wie die Schätzformeln für Raster mit den folgenden Datenschutzmethoden verwendet werden können:
@@ -237,6 +246,7 @@ In diesem Abschnitt werden Beispielfälle erläutert, wie die Schätzformeln fü
 
 
 
+[[if-you-use-replication-for-data-protection]]
 === Wenn Sie die Replikation zum Schutz Ihrer Daten verwenden
 
 Lassen Sie P den Prozentsatz der S3-Operationen darstellen, die PUTs sind, wobei 0 ≤ P ≤ 1 (also für eine 100 % PUT-Arbeitslast P = 1 und für eine 100 % GET-Arbeitslast P = 0).
@@ -254,6 +264,7 @@ Wenn Ihr Grid beispielsweise für 1.000 S3-Operationen pro Sekunde ausgelegt ist
 
 
 
+[[if-you-use-erasure-coding-for-data-protection]]
 === Wenn Sie Erasure Coding zum Datenschutz verwenden
 
 Lassen Sie P den Prozentsatz der S3-Operationen darstellen, die PUTs sind, wobei 0 ≤ P ≤ 1 (also für eine 100 % PUT-Arbeitslast P = 1 und für eine 100 % GET-Arbeitslast P = 0).

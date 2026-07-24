@@ -15,6 +15,7 @@ Wenn Single Sign-On (SSO) aktiviert ist, können Benutzer nur dann auf den Grid 
 
 
 
+[[how-single-sign-on-works]]
 == So funktioniert Single Sign-On
 
 Das StorageGRID -System unterstützt Single Sign-On (SSO) mithilfe des Standards Security Assertion Markup Language 2.0 (SAML 2.0).
@@ -23,6 +24,7 @@ Bevor Sie Single Sign-On (SSO) aktivieren, prüfen Sie, wie sich die Aktivierung
 
 
 
+[[sign-in-when-sso-is-enabled]]
 === Sign in, wenn SSO aktiviert ist
 
 Wenn SSO aktiviert ist und Sie sich bei StorageGRID anmelden, werden Sie zur Validierung Ihrer Anmeldeinformationen auf die SSO-Seite Ihrer Organisation weitergeleitet.
@@ -82,6 +84,7 @@ Sie müssen Ihre SSO-Anmeldeinformationen nicht erneut eingeben.
 
 
 
+[[sign-out-when-sso-is-enabled]]
 === Abmelden, wenn SSO aktiviert ist
 
 Wenn SSO für StorageGRID aktiviert ist, hängt das Geschehen beim Abmelden davon ab, bei was Sie angemeldet sind und von wo aus Sie sich abmelden.

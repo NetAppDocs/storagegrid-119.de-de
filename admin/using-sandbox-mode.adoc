@@ -55,6 +55,7 @@ Der Sandbox-Modus erleichtert die Durchführung dieser Hin- und Her-Konfiguratio
 
 
 
+[[access-sandbox-mode]]
 == Zugriff auf den Sandbox-Modus
 
 .Schritte
@@ -77,6 +78,7 @@ Der Abschnitt „Identitätsanbieter“ wird angezeigt.
 
 
 
+[[enter-identity-provider-details]]
 == Geben Sie die Details des Identitätsanbieters ein
 
 .Schritte
@@ -223,6 +225,7 @@ image::../media/save_button_green_checkmark.gif[Schaltfläche „Speichern“ mi
 
 
 
+[[configure-relying-party-trusts-enterprise-applications-or-sp-connections]]
 == Konfigurieren von Vertrauensstellungen der vertrauenden Seite, Unternehmensanwendungen oder SP Verbindungen
 
 Wenn die Konfiguration gespeichert ist, wird die Bestätigungsmeldung für den Sandbox-Modus angezeigt.  Dieser Hinweis bestätigt, dass der Sandbox-Modus jetzt aktiviert ist, und bietet eine Übersichtsanleitung.
@@ -285,6 +288,7 @@ Sie müssen für jeden in der Tabelle angezeigten Admin-Knoten eine SP Verbindun
 ====
 
 
+[[test-sso-connections]]
 == Testen Sie SSO-Verbindungen
 
 Bevor Sie die Verwendung von Single Sign-On für Ihr gesamtes StorageGRID System erzwingen, sollten Sie bestätigen, dass Single Sign-On und Single Logout für jeden Admin-Knoten richtig konfiguriert sind.
@@ -366,6 +370,7 @@ Wenn die Meldung „Seite abgelaufen“ angezeigt wird, wählen Sie in Ihrem Bro
 ====
 
 
+[[enable-single-sign-on]]
 == Aktivieren der einmaligen Anmeldung
 
 Wenn Sie bestätigt haben, dass Sie sich mit SSO bei jedem Admin-Knoten anmelden können, können Sie SSO für Ihr gesamtes StorageGRID System aktivieren.

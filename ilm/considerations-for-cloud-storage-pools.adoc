@@ -15,6 +15,7 @@ Wenn Sie planen, einen Cloud-Speicherpool zum Verschieben von Objekten aus dem S
 
 
 
+[[general-considerations]]
 == Allgemeine Überlegungen
 
 * Im Allgemeinen ist Cloud-Archivspeicher wie Amazon S3 Glacier oder Azure Blob Storage ein kostengünstiger Ort zum Speichern von Objektdaten.  Allerdings sind die Kosten für den Abruf von Daten aus Cloud-Archivspeichern relativ hoch.  Um die Gesamtkosten so gering wie möglich zu halten, müssen Sie berücksichtigen, wann und wie oft Sie auf die Objekte im Cloud-Speicherpool zugreifen.  Die Verwendung eines Cloud-Speicherpools wird nur für Inhalte empfohlen, auf die Sie voraussichtlich nur selten zugreifen.
@@ -32,6 +33,7 @@ Wenn Sie planen, einen Cloud-Speicherpool zum Verschieben von Objekten aus dem S
 
 
 
+[[considerations-for-the-ports-used-for-cloud-storage-pools]]
 == Überlegungen zu den für Cloud Storage Pools verwendeten Ports
 
 Um sicherzustellen, dass die ILM-Regeln Objekte zum und vom angegebenen Cloud-Speicherpool verschieben können, müssen Sie das Netzwerk oder die Netzwerke konfigurieren, die die Speicherknoten Ihres Systems enthalten.  Sie müssen sicherstellen, dass die folgenden Ports mit dem Cloud-Speicherpool kommunizieren können.
@@ -48,6 +50,7 @@ Wenn Sie einen nicht-transparenten Proxy-Server verwenden, müssen Sie außerdem
 
 
 
+[[considerations-for-costs]]
 == Überlegungen zu den Kosten
 
 Der Zugriff auf Speicher in der Cloud mithilfe eines Cloud-Speicherpools erfordert eine Netzwerkverbindung zur Cloud.  Sie müssen die Kosten der Netzwerkinfrastruktur berücksichtigen, die Sie für den Zugriff auf die Cloud verwenden, und diese entsprechend bereitstellen, basierend auf der Datenmenge, die Sie voraussichtlich mithilfe des Cloud Storage Pools zwischen StorageGRID und der Cloud verschieben werden.
@@ -65,6 +68,7 @@ NOTE: Wenn Objekte aus einem Cloud Storage Pool zurück zu StorageGRID verschobe
 
 
 
+[[s3-permissions-required-for-the-cloud-storage-pool-bucket]]
 == S3: Für den Cloud Storage Pool-Bucket erforderliche Berechtigungen
 
 Die Richtlinien für den externen S3-Bucket, der für einen Cloud Storage Pool verwendet wird, müssen StorageGRID die Berechtigung erteilen, ein Objekt in den Bucket zu verschieben, den Status eines Objekts abzurufen, ein Objekt bei Bedarf aus dem Glacier-Speicher wiederherzustellen und mehr.  Idealerweise sollte StorageGRID vollen Zugriff auf den Bucket haben(`s3:*` ); wenn dies jedoch nicht möglich ist, muss die Bucket-Richtlinie StorageGRID die folgenden S3-Berechtigungen erteilen:
@@ -81,6 +85,7 @@ Die Richtlinien für den externen S3-Bucket, der für einen Cloud Storage Pool v
 
 
 
+[[s3-considerations-for-the-external-buckets-lifecycle]]
 == S3: Überlegungen zum Lebenszyklus des externen Buckets
 
 Die Bewegung von Objekten zwischen StorageGRID und dem im Cloud Storage Pool angegebenen externen S3-Bucket wird durch ILM-Regeln und die aktiven ILM-Richtlinien in StorageGRID gesteuert.  Im Gegensatz dazu wird der Übergang von Objekten aus dem im Cloud Storage Pool angegebenen externen S3-Bucket zu Amazon S3 Glacier oder S3 Glacier Deep Archive (oder zu einer Speicherlösung, die die Glacier-Speicherklasse implementiert) durch die Lebenszykluskonfiguration dieses Buckets gesteuert.
@@ -114,12 +119,14 @@ Wenn Sie Objekte im Cloud Storage Pool in das S3 Glacier Deep Archive (statt in 
 
 
 
+[[azure-considerations-for-access-tier]]
 == Azure: Überlegungen zur Zugriffsebene
 
 Wenn Sie ein Azure-Speicherkonto konfigurieren, können Sie die Standardzugriffsebene auf „Heiß“ oder „Kalt“ festlegen.  Wenn Sie ein Speicherkonto zur Verwendung mit einem Cloud-Speicherpool erstellen, sollten Sie die Hot-Tier-Ebene als Standardebene verwenden.  Obwohl StorageGRID die Stufe sofort auf „Archiv“ setzt, wenn es Objekte in den Cloud Storage Pool verschiebt, stellt die Verwendung der Standardeinstellung „Hot“ sicher, dass Ihnen für Objekte, die vor Ablauf der Mindestdauer von 30 Tagen aus der Stufe „Cool“ entfernt werden, keine Gebühr für die vorzeitige Löschung berechnet wird.
 
 
 
+[[azure-lifecycle-management-not-supported]]
 == Azure: Lebenszyklusverwaltung wird nicht unterstützt
 
 Verwenden Sie für den mit einem Cloud-Speicherpool verwendeten Container nicht die Azure Blob-Speicherlebenszyklusverwaltung.  Die Lebenszyklusvorgänge können die Vorgänge des Cloud Storage Pools beeinträchtigen.

@@ -15,6 +15,7 @@ Sie müssen die Speicher- und Leistungsanforderungen für StorageGRID -Knoten ve
 
 
 
+[[performance-requirements]]
 == Leistungsanforderungen
 
 Die Leistung des Betriebssystem-Volumes und des ersten Speicher-Volumes hat erhebliche Auswirkungen auf die Gesamtleistung des Systems.  Stellen Sie sicher, dass diese hinsichtlich Latenz, Eingabe-/Ausgabevorgängen pro Sekunde (IOPS) und Durchsatz eine ausreichende Festplattenleistung bieten.
@@ -23,6 +24,7 @@ Für alle StorageGRID -Knoten muss auf dem Betriebssystemlaufwerk und allen Spei
 
 
 
+[[requirements-for-virtual-machines-that-use-netapp-ontap-storage]]
 == Anforderungen für virtuelle Maschinen, die NetApp ONTAP -Speicher verwenden
 
 Wenn Sie einen StorageGRID -Knoten als virtuelle Maschine mit zugewiesenem Speicher aus einem NetApp ONTAP System bereitstellen, haben Sie bestätigt, dass für das Volume keine FabricPool -Tiering-Richtlinie aktiviert ist.  Wenn beispielsweise ein StorageGRID Knoten als virtuelle Maschine auf einem VMware-Host ausgeführt wird, stellen Sie sicher, dass für das Volume, das den Datenspeicher für den Knoten unterstützt, keine FabricPool -Tiering-Richtlinie aktiviert ist.  Das Deaktivieren der FabricPool Tiering-Funktion für Volumes, die mit StorageGRID -Knoten verwendet werden, vereinfacht die Fehlerbehebung und Speichervorgänge.
@@ -32,12 +34,14 @@ NOTE: Verwenden Sie FabricPool niemals, um Daten im Zusammenhang mit StorageGRID
 
 
 
+[[number-of-virtual-machines-required]]
 == Anzahl der benötigten virtuellen Maschinen
 
 Jeder StorageGRID Standort benötigt mindestens drei Speicherknoten.
 
 
 
+[[storage-requirements-by-node-type]]
 == Speicheranforderungen nach Knotentyp
 
 In einer Produktionsumgebung müssen die virtuellen Maschinen für StorageGRID -Knoten je nach Knotentyp unterschiedliche Anforderungen erfüllen.
@@ -102,6 +106,7 @@ NOTE: Abhängig von der konfigurierten Prüfebene, der Größe der Benutzereinga
 
 
 
+[[storage-requirements-for-storage-nodes]]
 == Speicheranforderungen für Speicherknoten
 
 Ein softwarebasierter Speicherknoten kann 1 bis 16 Speichervolumes haben; 3 oder mehr Speichervolumes werden empfohlen. Jedes Speichervolumen sollte mindestens 4 TB groß sein.

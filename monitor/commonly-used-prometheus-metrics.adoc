@@ -19,12 +19,14 @@ Einzelheiten zur Syntax von Prometheus-Abfragen finden Sie unter https://prometh
 
 
 
+[[what-are-prometheus-metrics]]
 == Was sind Prometheus-Metriken?
 
 Prometheus-Metriken sind Zeitreihenmessungen.  Der Prometheus-Dienst auf Admin-Knoten sammelt diese Metriken von den Diensten auf allen Knoten.  Auf jedem Admin-Knoten werden Metriken gespeichert, bis der für Prometheus-Daten reservierte Speicherplatz voll ist.  Wenn die `/var/local/mysql_ibdata/` Wenn das Volume die Kapazität erreicht, werden die ältesten Metriken zuerst gelöscht.
 
 
 
+[[where-are-prometheus-metrics-used]]
 == Wo werden Prometheus-Metriken verwendet?
 
 Die von Prometheus gesammelten Metriken werden an mehreren Stellen im Grid Manager verwendet:
@@ -48,6 +50,7 @@ NOTE: Einige Funktionen und Menüelemente auf der Seite „Metriken“ sind absi
 
 
 
+[[list-of-most-common-metrics]]
 == Liste der gängigsten Metriken
 
 Die folgende Liste enthält die am häufigsten verwendeten Prometheus-Metriken.
@@ -147,6 +150,7 @@ storagegrid_tenant_usage_quota_bytes:: Die maximale Menge an logischem Speicherp
 
 
 
+[[get-a-list-of-all-metrics]]
 == Holen Sie sich eine Liste aller Metriken
 
 [[obtain-all-metrics]]Um die vollständige Liste der Metriken zu erhalten, verwenden Sie die Grid Management API.

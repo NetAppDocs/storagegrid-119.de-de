@@ -15,6 +15,7 @@ summary: Überlegen Sie vor der Außerbetriebnahme eines Speicherknotens, ob Sie
 
 
 
+[[when-to-clone-a-node-instead-of-decommissioning-it]]
 == Wann sollte ein Knoten geklont werden, anstatt ihn außer Betrieb zu nehmen?
 
 Wenn Sie einen älteren Appliance-Speicherknoten durch eine neuere oder größere Appliance ersetzen möchten, sollten Sie das Klonen des Appliance-Knotens in Betracht ziehen, anstatt bei einer Erweiterung eine neue Appliance hinzuzufügen und die alte Appliance dann außer Betrieb zu nehmen.
@@ -33,6 +34,7 @@ Sehen https://docs.netapp.com/us-en/storagegrid-appliances/commonhardware/how-ap
 
 
 
+[[considerations-for-connected-storage-nodes]]
 == Überlegungen zu verbundenen Speicherknoten
 
 Überprüfen Sie die Überlegungen zur Außerbetriebnahme eines verbundenen Speicherknotens.
@@ -57,6 +59,8 @@ NOTE: Die Schaltfläche *Pause* ist nur aktiviert, wenn die Phasen der ILM-Auswe
 
 
 
+[[considerations-for-disconnected-storage-nodes]]
+[[considerations-disconnected-storage-nodes]]
 == Überlegungen zu getrennten Speicherknoten
 
 Überprüfen Sie die Überlegungen zur Außerbetriebnahme eines getrennten Speicherknotens.

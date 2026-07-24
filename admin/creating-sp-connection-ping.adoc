@@ -28,12 +28,14 @@ Diese Anweisungen fassen zusammen, wie PingFederate Server Version 10.3 als SSO-
 
 
 
+[[complete-prerequisites-in-pingfederate]]
 == Erfüllen Sie die Voraussetzungen in PingFederate
 
 Bevor Sie die SP Verbindungen erstellen können, die Sie für StorageGRID verwenden, müssen Sie die erforderlichen Aufgaben in PingFederate abschließen.  Sie verwenden die Informationen aus diesen Voraussetzungen, wenn Sie die SP Verbindungen konfigurieren.
 
 
 
+[[create-data-storedata-store]]
 === Datenspeicher erstellen[[data-store]]
 
 Erstellen Sie, falls noch nicht geschehen, einen Datenspeicher, um PingFederate mit dem AD FS-LDAP-Server zu verbinden.  Verwenden Sie die Werte, die Sie verwendet haben,link:../admin/using-identity-federation.html["Konfigurieren der Identitätsföderation"] im StorageGRID.
@@ -45,6 +47,7 @@ Erstellen Sie, falls noch nicht geschehen, einen Datenspeicher, um PingFederate 
 
 
 
+[[create-password-credential-validatorpassword-validator]]
 === Erstellen Sie einen Validator für Kennwortanmeldeinformationen[[password-validator]]
 
 Erstellen Sie einen Kennwort-Anmeldeinformationsvalidator, sofern Sie dies noch nicht getan haben.
@@ -58,6 +61,7 @@ Erstellen Sie einen Kennwort-Anmeldeinformationsvalidator, sofern Sie dies noch 
 
 
 
+[[create-idp-adapter-instanceadapter-instance]]
 === IdP-Adapterinstanz erstellen[[adapter-instance]]
 
 Erstellen Sie eine IdP-Adapterinstanz, falls Sie dies noch nicht getan haben.
@@ -74,6 +78,7 @@ Erstellen Sie eine IdP-Adapterinstanz, falls Sie dies noch nicht getan haben.
 
 
 
+[[create-or-import-signing-certificatesigning-certificate]]
 === Signaturzertifikat erstellen oder importieren[[signing-certificate]]
 
 Erstellen oder importieren Sie das Signaturzertifikat, sofern Sie dies noch nicht getan haben.
@@ -85,6 +90,7 @@ Erstellen oder importieren Sie das Signaturzertifikat, sofern Sie dies noch nich
 
 
 
+[[create-an-sp-connection-in-pingfederate]]
 == Erstellen einer SP Verbindung in PingFederate
 
 Wenn Sie in PingFederate eine SP Verbindung erstellen, importieren Sie die SAML-Metadaten, die Sie von StorageGRID für den Admin-Knoten heruntergeladen haben.  Die Metadatendatei enthält viele der spezifischen Werte, die Sie benötigen.
@@ -94,6 +100,7 @@ TIP: Sie müssen für jeden Admin-Knoten in Ihrem StorageGRID System eine SP Ver
 
 
 
+[[choose-sp-connection-type]]
 === Wählen Sie den SP Verbindungstyp
 
 .Schritte
@@ -105,6 +112,7 @@ TIP: Sie müssen für jeden Admin-Knoten in Ihrem StorageGRID System eine SP Ver
 
 
 
+[[import-sp-metadata]]
 === SP Metadaten importieren
 
 .Schritte
@@ -119,6 +127,7 @@ Die Entitäts-ID des Partners und der Verbindungsname werden auf die StorageGRID
 
 
 
+[[configure-idp-browser-sso]]
 === Konfigurieren des einmaligen Anmeldens im IdP-Browser
 
 .Schritte
@@ -137,6 +146,7 @@ Die Entitäts-ID des Partners und der Verbindungsname werden auf die StorageGRID
 
 
 
+[[map-adapter-instance]]
 === Adapterinstanz zuordnen
 
 .Schritte
@@ -163,6 +173,7 @@ Die Entitäts-ID des Partners und der Verbindungsname werden auf die StorageGRID
 
 
 
+[[configure-protocol-settings]]
 === Konfigurieren der Protokolleinstellungen
 
 .Schritte
@@ -178,6 +189,7 @@ Die Entitäts-ID des Partners und der Verbindungsname werden auf die StorageGRID
 
 
 
+[[configure-credentials]]
 === Konfigurieren der Anmeldeinformationen
 
 .Schritte
@@ -195,6 +207,7 @@ Die Entitäts-ID des Partners und der Verbindungsname werden auf die StorageGRID
 
 
 
+[[create-additional-sp-connections]]
 === Erstellen Sie zusätzliche SP Verbindungen
 
 Sie können die erste SP Verbindung kopieren, um die SP Verbindungen zu erstellen, die Sie für jeden Admin-Knoten in Ihrem Raster benötigen.  Sie laden für jede Kopie neue Metadaten hoch.

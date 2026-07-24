@@ -26,6 +26,7 @@ Optional können Sie einen externen Syslog-Server konfigurieren, um Audit-Inform
 
 
 
+[[change-audit-message-levels]]
 == Ändern der Überwachungsmeldungsebenen
 
 Sie können für jede der folgenden Nachrichtenkategorien im Überwachungsprotokoll eine andere Überwachungsebene festlegen:
@@ -154,6 +155,7 @@ Ein grünes Banner zeigt an, dass Ihre Konfiguration gespeichert wurde.
 
 
 
+[[define-http-request-headers]]
 == Definieren von HTTP-Anforderungsheadern
 
 Sie können optional alle HTTP-Anforderungsheader definieren, die Sie in die Prüfnachrichten zum Lesen und Schreiben des Clients aufnehmen möchten. Diese Protokollheader gelten nur für S3-Anfragen.
@@ -179,6 +181,7 @@ Ein grünes Banner zeigt an, dass Ihre Konfiguration gespeichert wurde.
 
 
 
+[[use-external-syslog-serveruse-an-external-syslog-server]]
 == [[use-external-syslog-server]]Verwenden Sie einen externen Syslog-Server
 
 Sie können optional einen externen Syslog-Server konfigurieren, um Prüfprotokolle, Anwendungsprotokolle und Sicherheitsereignisprotokolle an einem Ort außerhalb Ihres Grids zu speichern.
@@ -191,6 +194,7 @@ TIP: Wenn die in diesem Verfahren verfügbaren Konfigurationsoptionen nicht flex
 
 
 
+[[enter-syslog-information]]
 === Syslog-Informationen eingeben
 
 Greifen Sie auf den Assistenten „Externen Syslog-Server konfigurieren“ zu und geben Sie die Informationen ein, die StorageGRID für den Zugriff auf den externen Syslog-Server benötigt.
@@ -229,6 +233,7 @@ Neben dem Zertifikats- oder Schlüsseldateinamen wird ein grünes Häkchen angez
 
 
 
+[[manage-syslog-content]]
 === Syslog-Inhalte verwalten
 
 Sie können auswählen, welche Informationen an den externen Syslog-Server gesendet werden sollen.
@@ -542,6 +547,7 @@ local7
 
 
 
+[[send-test-messages]]
 === Testnachrichten senden
 
 Bevor Sie mit der Verwendung eines externen Syslog-Servers beginnen, sollten Sie alle Knoten in Ihrem Grid auffordern, Testnachrichten an den externen Syslog-Server zu senden.  Sie sollten diese Testnachrichten verwenden, um Ihre gesamte Infrastruktur zur Protokollsammlung zu validieren, bevor Sie Daten an den externen Syslog-Server senden.
@@ -580,6 +586,7 @@ NOTE: StorageGRID Auditinformationen werden erst an den externen Syslog-Server g
 
 
 
+[[select-audit-information-destinations]]
 == Auswählen von Zielen für Auditinformationen
 
 Sie können angeben, wo Überwachungsprotokolle, Sicherheitsereignisprotokolle undlink:../monitor/storagegrid-software-logs.html["StorageGRID -Softwareprotokolle"] gesendet werden.

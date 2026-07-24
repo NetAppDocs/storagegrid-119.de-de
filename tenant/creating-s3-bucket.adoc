@@ -30,6 +30,7 @@ NOTE: Jedes Raster kann maximal 100.000 Buckets enthalten.
 
 
 
+[[access-the-wizard]]
 == Zugriff auf den Assistenten
 
 .Schritte
@@ -39,6 +40,7 @@ NOTE: Jedes Raster kann maximal 100.000 Buckets enthalten.
 
 
 
+[[enter-details]]
 == Details eingeben
 
 .Schritte
@@ -82,6 +84,7 @@ Ihr StorageGRID Administrator verwaltet die verfügbaren Regionen. Die Region ei
 
 
 
+[[manage-settings]]
 == Einstellungen verwalten
 
 .Schritte

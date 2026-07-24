@@ -47,12 +47,14 @@ Wenn Sie den primären Admin-Knoten neu starten, verliert Ihr Browser vorüberge
 
 
 
+[[perform-a-rolling-reboot]]
 == Führen Sie einen Rolling Reboot durch
 
 Sie wählen die Knoten aus, die Sie neu starten möchten, überprüfen Ihre Auswahl, starten den Neustartvorgang und überwachen den Fortschritt.
 
 
 
+[[select-nodes]]
 === Knoten auswählen
 
 Rufen Sie als ersten Schritt die Seite „Rolling Reboot“ auf und wählen Sie die Knoten aus, die Sie neu starten möchten.
@@ -79,6 +81,7 @@ Sie können die Filteroptionen der Tabelle verwenden, um Teilmengen von Knoten a
 
 
 
+[[review-selection]]
 === Auswahl überprüfen
 
 In diesem Schritt können Sie bestimmen, wie lange der gesamte Neustartvorgang dauern könnte, und bestätigen, dass Sie die richtigen Knoten ausgewählt haben.
@@ -96,6 +99,7 @@ NOTE: Der primäre Admin-Knoten ist der letzte Knoten, der neu gestartet wird.  
 
 
 
+[[monitor-a-rolling-reboot]]
 === Überwachen eines rollierenden Neustarts
 
 Während der Rolling-Reboot-Vorgang ausgeführt wird, können Sie ihn vom primären Admin-Knoten aus überwachen.
@@ -124,6 +128,7 @@ Die Tabellen bieten einen Fortschrittsbalken für den Vorgang auf jedem Knoten u
 
 
 
+[[stop-the-rolling-reboot-procedure]]
 == Stoppen Sie den Rolling Reboot-Vorgang
 
 Sie können den Rolling-Reboot-Vorgang vom primären Admin-Knoten aus stoppen.  Wenn Sie den Vorgang beenden, wird der Neustartvorgang für alle Knoten mit dem Status „Dienste werden gestoppt“, „System wird neu gestartet“ oder „Dienste werden gestartet“ abgeschlossen.  Diese Knoten werden im Rahmen des Verfahrens jedoch nicht mehr verfolgt.

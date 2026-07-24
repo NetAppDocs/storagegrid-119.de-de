@@ -17,6 +17,7 @@ Sie müssen über die Berechtigung s3:GetBucketLastAccessTime verfügen oder Roo
 
 
 
+[[request-example]]
 == Anforderungsbeispiel
 
 [listing, subs="specialcharacters,quotes"]
@@ -28,6 +29,7 @@ Host: _host_
 ----
 
 
+[[response-example]]
 == Antwortbeispiel
 
 Dieses Beispiel zeigt, dass Aktualisierungen der letzten Zugriffszeit für den Bucket aktiviert sind.

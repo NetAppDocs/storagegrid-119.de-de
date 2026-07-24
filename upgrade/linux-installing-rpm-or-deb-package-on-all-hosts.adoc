@@ -15,6 +15,7 @@ Wenn StorageGRID -Knoten auf Linux-Hosts bereitgestellt werden, laden Sie vor de
 
 
 
+[[download-upgrade-linux-and-hotfix-files]]
 == Upgrade-, Linux- und Hotfix-Dateien herunterladen
 
 Wenn Sie ein StorageGRID -Upgrade vom Grid Manager aus durchführen, werden Sie im ersten Schritt aufgefordert, das Upgrade-Archiv und alle erforderlichen Hotfixes herunterzuladen.  Wenn Sie jedoch Dateien herunterladen müssen, um Linux-Hosts zu aktualisieren, können Sie Zeit sparen, indem Sie alle erforderlichen Dateien im Voraus herunterladen.
@@ -61,6 +62,7 @@ Sie werden aufgefordert, die Hotfix-Datei auf der StorageGRID Upgrade-Seite hoch
 
 
 
+[[install-archive-on-all-linux-hosts]]
 == Installieren Sie das Archiv auf allen Linux-Hosts
 
 Führen Sie diese Schritte aus, bevor Sie die StorageGRID -Software aktualisieren.
@@ -83,6 +85,7 @@ Die neuen Pakete werden als zusätzliche Pakete installiert.
 
 
 
+[[remove-installation-archives-for-previous-versions]]
 == Installationsarchive für frühere Versionen entfernen
 
 Um Speicherplatz auf Linux-Hosts freizugeben, können Sie die Installationsarchive für frühere Versionen von StorageGRID entfernen, die Sie nicht mehr benötigen.

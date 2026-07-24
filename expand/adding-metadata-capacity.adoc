@@ -27,6 +27,7 @@ Weitere Informationen finden Sie unter:
 
 
 
+[[guidelines-for-increasing-metadata-capacity]]
 == Richtlinien zur Erhöhung der Metadatenkapazität
 
 Bevor Sie Speicherknoten hinzufügen, um die Metadatenkapazität zu erhöhen, lesen Sie die folgenden Richtlinien und Einschränkungen:
@@ -62,6 +63,7 @@ Siehe dielink:../admin/managing-object-metadata-storage.html["Beschreibung, was 
 
 
 
+[[how-metadata-is-redistributed-when-you-add-storage-nodes]]
 == So werden Metadaten neu verteilt, wenn Sie Speicherknoten hinzufügen
 
 Wenn Sie in einer Erweiterung Speicherknoten hinzufügen, verteilt StorageGRID die vorhandenen Objektmetadaten an die neuen Knoten an jedem Standort neu, wodurch die Gesamtmetadatenkapazität des Grids erhöht wird.  Es ist keine Benutzeraktion erforderlich.

@@ -44,6 +44,7 @@ image::../media/events_report.gif[Veranstaltungsseite]
 
 
 
+[[create-custom-syslog-events]]
 == Erstellen Sie benutzerdefinierte Syslog-Ereignisse
 
 Mit benutzerdefinierten Ereignissen können Sie alle Kernel-, Daemon-, Fehler- und Benutzerereignisse auf kritischer Ebene verfolgen, die auf dem Syslog-Server protokolliert werden.  Ein benutzerdefiniertes Ereignis kann nützlich sein, um das Auftreten von Systemprotokollmeldungen (und somit Netzwerksicherheitsereignissen und Hardwarefehlern) zu überwachen.
@@ -83,6 +84,7 @@ image::../media/custom_events_count.png[SSM > Veranstaltungen > Übersichtsseite
 
 
 
+[[reset-the-count-of-custom-events-to-zero]]
 == Setzt die Anzahl der benutzerdefinierten Ereignisse auf Null zurück
 
 Wenn Sie den Zähler nur für benutzerdefinierte Ereignisse zurücksetzen möchten, müssen Sie die Seite „Grid-Topologie“ im Support-Menü verwenden.

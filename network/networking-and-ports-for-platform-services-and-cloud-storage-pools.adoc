@@ -15,6 +15,7 @@ Wenn Sie StorageGRID -Plattformdienste oder Cloud Storage Pools verwenden möcht
 
 
 
+[[networking-for-platform-services]]
 == Vernetzung für Plattformdienste
 
 Wie beschrieben inlink:../admin/manage-platform-services-for-tenants.html["Plattformdienste für Mandanten verwalten"] Undlink:../tenant/considerations-for-platform-services.html["Plattformdienste verwalten"] Zu den Plattformdiensten gehören externe Dienste, die Suchintegration, Ereignisbenachrichtigung und CloudMirror-Replikation bereitstellen.
@@ -27,12 +28,14 @@ Plattformdienste erfordern Zugriff von Speicherknoten, die den StorageGRID ADC-D
 
 
 
+[[networking-for-cloud-storage-pools]]
 == Vernetzung für Cloud-Speicherpools
 
 Cloud-Speicherpools erfordern außerdem Zugriff von Speicherknoten auf die Endpunkte, die vom verwendeten externen Dienst bereitgestellt werden, z. B. Amazon S3 Glacier oder Microsoft Azure Blob Storage. Weitere Informationen finden Sie unterlink:../ilm/what-cloud-storage-pool-is.html["Was ist ein Cloud-Speicherpool?"] .
 
 
 
+[[ports-for-platform-services-and-cloud-storage-pools]]
 == Ports für Plattformdienste und Cloud Storage Pools
 
 Standardmäßig verwenden Plattformdienste und die Cloud Storage Pool-Kommunikation die folgenden Ports:
@@ -47,6 +50,7 @@ Wenn Sie einen nicht-transparenten Proxy-Server verwenden, müssen Sie außerdem
 
 
 
+[[vlans-and-platform-services-and-cloud-storage-pools]]
 == VLANs und Plattformdienste und Cloud-Speicherpools
 
 Sie können keine VLAN-Netzwerke für Plattformdienste oder Cloud-Speicherpools verwenden.  Die Zielendpunkte müssen über das Grid-, Admin- oder Client-Netzwerk erreichbar sein.

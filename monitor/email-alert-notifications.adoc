@@ -161,6 +161,7 @@ Die E-Mail-Einstellungen werden gespeichert.
 
 
 
+[[information-included-in-alert-email-notifications]]
 == In E-Mail-Benachrichtigungen enthaltene Informationen
 
 Nachdem Sie den SMTP-E-Mail-Server konfiguriert haben, werden E-Mail-Benachrichtigungen an die angegebenen Empfänger gesendet, wenn eine Warnung ausgelöst wird, es sei denn, die Warnungsregel wird durch eine Stummschaltung unterdrückt. Sehen link:silencing-alert-notifications.html["Warnmeldungen stummschalten"] .
@@ -210,6 +211,7 @@ Der Hostname des Admin-Knotens, der die Benachrichtigung gesendet hat.
 |===
 
 
+[[how-alerts-are-grouped]]
 == So werden Warnungen gruppiert
 
 Um zu verhindern, dass beim Auslösen von Warnungen eine übermäßige Anzahl von E-Mail-Benachrichtigungen gesendet wird, versucht StorageGRID , mehrere Warnungen in derselben Benachrichtigung zu gruppieren.
@@ -278,6 +280,7 @@ StorageGRID sendet weiterhin alle 7 Tage E-Mail-Benachrichtigungen, bis alle Ins
 |===
 
 
+[[troubleshoot-alert-email-notifications]]
 == Fehlerbehebung bei E-Mail-Benachrichtigungen
 
 Wenn die Warnung *Fehler bei E-Mail-Benachrichtigung* ausgelöst wird oder Sie die E-Mail-Benachrichtigung zum Testalarm nicht erhalten können, führen Sie die folgenden Schritte aus, um das Problem zu beheben.

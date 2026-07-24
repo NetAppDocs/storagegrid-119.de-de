@@ -20,6 +20,8 @@ NOTE: Um die AWS-Dokumentation für jeden Vorgang anzuzeigen, wählen Sie den Li
 
 
 
+[[common-uri-query-parameters-and-request-headers]]
+[[common-params]]
 == Allgemeine URI-Abfrageparameter und Anforderungsheader
 
 Sofern nicht anders angegeben, werden die folgenden allgemeinen URI-Abfrageparameter unterstützt:
@@ -47,6 +49,7 @@ Sofern nicht anders angegeben, werden die folgenden allgemeinen Anforderungshead
 
 
 
+[[httpsdocs-aws-amazon-comamazons3latestapiapiabortmultipartupload-htmlabortmultipartupload]]
 == https://docs.aws.amazon.com/AmazonS3/latest/API/API_AbortMultipartUpload.html["AbortMultipartUpload"^]
 
 .URI-Abfrageparameter und Anforderungsheader
@@ -63,6 +66,7 @@ link:operations-for-multipart-uploads.html["Vorgänge für mehrteilige Uploads"]
 
 
 
+[[httpsdocs-aws-amazon-comamazons3latestapiapicompletemultipartupload-htmlcompletemultipartupload]]
 == https://docs.aws.amazon.com/AmazonS3/latest/API/API_CompleteMultipartUpload.html["CompleteMultipartUpload"^]
 
 .URI-Abfrageparameter und Anforderungsheader
@@ -87,6 +91,7 @@ link:complete-multipart-upload.html["CompleteMultipartUpload"]
 
 
 
+[[httpsdocs-aws-amazon-comamazons3latestapiapicopyobject-htmlcopyobject]]
 == https://docs.aws.amazon.com/AmazonS3/latest/API/API_CopyObject.html["Objekt kopieren"^]
 
 .URI-Abfrageparameter und Anforderungsheader
@@ -122,6 +127,7 @@ link:put-object-copy.html["Objekt kopieren"]
 
 
 
+[[httpsdocs-aws-amazon-comamazons3latestapiapicreatebucket-htmlcreatebucket]]
 == https://docs.aws.amazon.com/AmazonS3/latest/API/API_CreateBucket.html["Bucket erstellen"^]
 
 .URI-Abfrageparameter und Anforderungsheader
@@ -138,6 +144,7 @@ link:operations-on-buckets.html["Operationen an Buckets"]
 
 
 
+[[httpsdocs-aws-amazon-comamazons3latestapiapicreatemultipartupload-htmlcreatemultipartupload]]
 == https://docs.aws.amazon.com/AmazonS3/latest/API/API_CreateMultipartUpload.html["CreateMultipartUpload"^]
 
 .URI-Abfrageparameter und Anforderungsheader
@@ -169,6 +176,7 @@ link:initiate-multipart-upload.html["CreateMultipartUpload"]
 
 
 
+[[httpsdocs-aws-amazon-comamazons3latestapiapideletebucket-htmldeletebucket]]
 == https://docs.aws.amazon.com/AmazonS3/latest/API/API_DeleteBucket.html["Bucket löschen"^]
 
 .URI-Abfrageparameter und Anforderungsheader
@@ -179,6 +187,7 @@ link:operations-on-buckets.html["Operationen an Buckets"]
 
 
 
+[[httpsdocs-aws-amazon-comamazons3latestapiapideletebucketcors-htmldeletebucketcors]]
 == https://docs.aws.amazon.com/AmazonS3/latest/API/API_DeleteBucketCors.html["BucketCors löschen"^]
 
 .URI-Abfrageparameter und Anforderungsheader
@@ -192,6 +201,7 @@ link:operations-on-buckets.html["Operationen an Buckets"]
 
 
 
+[[httpsdocs-aws-amazon-comamazons3latestapiapideletebucketencryption-htmldeletebucketencryption]]
 == https://docs.aws.amazon.com/AmazonS3/latest/API/API_DeleteBucketEncryption.html["DeleteBucketEncryption"^]
 
 .URI-Abfrageparameter und Anforderungsheader
@@ -205,6 +215,7 @@ link:operations-on-buckets.html["Operationen an Buckets"]
 
 
 
+[[httpsdocs-aws-amazon-comamazons3latestapiapideletebucketlifecycle-htmldeletebucketlifecycle]]
 == https://docs.aws.amazon.com/AmazonS3/latest/API/API_DeleteBucketLifecycle.html["DeleteBucketLifecycle"^]
 
 .URI-Abfrageparameter und Anforderungsheader
@@ -220,6 +231,7 @@ Keine
 
 
 
+[[httpsdocs-aws-amazon-comamazons3latestapiapideletebucketpolicy-htmldeletebucketpolicy]]
 == https://docs.aws.amazon.com/AmazonS3/latest/API/API_DeleteBucketPolicy.html["DeleteBucketPolicy"^]
 
 .URI-Abfrageparameter und Anforderungsheader
@@ -233,6 +245,7 @@ link:operations-on-buckets.html["Operationen an Buckets"]
 
 
 
+[[httpsdocs-aws-amazon-comamazons3latestapiapideletebucketreplication-htmldeletebucketreplication]]
 == https://docs.aws.amazon.com/AmazonS3/latest/API/API_DeleteBucketReplication.html["DeleteBucketReplication"^]
 
 .URI-Abfrageparameter und Anforderungsheader
@@ -246,6 +259,7 @@ link:operations-on-buckets.html["Operationen an Buckets"]
 
 
 
+[[httpsdocs-aws-amazon-comamazons3latestapiapideletebuckettagging-htmldeletebuckettagging]]
 == https://docs.aws.amazon.com/AmazonS3/latest/API/API_DeleteBucketTagging.html["BucketTagging löschen"^]
 
 .URI-Abfrageparameter und Anforderungsheader
@@ -259,6 +273,7 @@ link:operations-on-buckets.html["Operationen an Buckets"]
 
 
 
+[[httpsdocs-aws-amazon-comamazons3latestapiapideleteobject-htmldeleteobject]]
 == https://docs.aws.amazon.com/AmazonS3/latest/API/API_DeleteObject.html["Objekt löschen"^]
 
 .URI-Abfrageparameter und Anforderungsheader
@@ -275,6 +290,7 @@ link:operations-on-objects.html["Operationen an Objekten"]
 
 
 
+[[httpsdocs-aws-amazon-comamazons3latestapiapideleteobjects-htmldeleteobjects]]
 == https://docs.aws.amazon.com/AmazonS3/latest/API/API_DeleteObjects.html["Objekte löschen"^]
 
 .URI-Abfrageparameter und Anforderungsheader
@@ -291,6 +307,7 @@ link:operations-on-objects.html["Operationen an Objekten"]
 
 
 
+[[httpsdocs-aws-amazon-comamazons3latestapiapideleteobjecttagging-htmldeleteobjecttagging]]
 == https://docs.aws.amazon.com/AmazonS3/latest/API/API_DeleteObjectTagging.html["DeleteObjectTagging"^]
 
 StorageGRID unterstützt alle<<common-params,allgemeine Parameter und Header>> für diese Anfrage.
@@ -303,6 +320,7 @@ link:operations-on-objects.html["Operationen an Objekten"]
 
 
 
+[[httpsdocs-aws-amazon-comamazons3latestapiapigetbucketacl-htmlgetbucketacl]]
 == https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetBucketAcl.html["GetBucketAcl"^]
 
 .URI-Abfrageparameter und Anforderungsheader
@@ -316,6 +334,7 @@ link:operations-on-buckets.html["Operationen an Buckets"]
 
 
 
+[[httpsdocs-aws-amazon-comamazons3latestapiapigetbucketcors-htmlgetbucketcors]]
 == https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetBucketCors.html["GetBucketCors"^]
 
 .URI-Abfrageparameter und Anforderungsheader
@@ -329,6 +348,7 @@ link:operations-on-buckets.html["Operationen an Buckets"]
 
 
 
+[[httpsdocs-aws-amazon-comamazons3latestapiapigetbucketencryption-htmlgetbucketencryption]]
 == https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetBucketEncryption.html["GetBucketEncryption"^]
 
 .URI-Abfrageparameter und Anforderungsheader
@@ -342,6 +362,7 @@ link:operations-on-buckets.html["Operationen an Buckets"]
 
 
 
+[[httpsdocs-aws-amazon-comamazons3latestapiapigetbucketlifecycleconfiguration-htmlgetbucketlifecycleconfiguration]]
 == https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetBucketLifecycleConfiguration.html["GetBucketLifecycleConfiguration"^]
 
 .URI-Abfrageparameter und Anforderungsheader
@@ -357,6 +378,7 @@ Keine
 
 
 
+[[httpsdocs-aws-amazon-comamazons3latestapiapigetbucketlocation-htmlgetbucketlocation]]
 == https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetBucketLocation.html["BucketLocation abrufen"^]
 
 .URI-Abfrageparameter und Anforderungsheader
@@ -370,6 +392,7 @@ link:operations-on-buckets.html["Operationen an Buckets"]
 
 
 
+[[httpsdocs-aws-amazon-comamazons3latestapiapigetbucketnotificationconfiguration-htmlgetbucketnotificationconfiguration]]
 == https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetBucketNotificationConfiguration.html["GetBucketNotificationConfiguration"^]
 
 .URI-Abfrageparameter und Anforderungsheader
@@ -383,6 +406,7 @@ link:operations-on-buckets.html["Operationen an Buckets"]
 
 
 
+[[httpsdocs-aws-amazon-comamazons3latestapiapigetbucketpolicy-htmlgetbucketpolicy]]
 == https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetBucketPolicy.html["GetBucketPolicy"^]
 
 .URI-Abfrageparameter und Anforderungsheader
@@ -396,6 +420,7 @@ link:operations-on-buckets.html["Operationen an Buckets"]
 
 
 
+[[httpsdocs-aws-amazon-comamazons3latestapiapigetbucketreplication-htmlgetbucketreplication]]
 == https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetBucketReplication.html["GetBucketReplication"^]
 
 .URI-Abfrageparameter und Anforderungsheader
@@ -409,6 +434,7 @@ link:operations-on-buckets.html["Operationen an Buckets"]
 
 
 
+[[httpsdocs-aws-amazon-comamazons3latestapiapigetbuckettagging-htmlgetbuckettagging]]
 == https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetBucketTagging.html["GetBucketTagging"^]
 
 .URI-Abfrageparameter und Anforderungsheader
@@ -422,6 +448,7 @@ link:operations-on-buckets.html["Operationen an Buckets"]
 
 
 
+[[httpsdocs-aws-amazon-comamazons3latestapiapigetbucketversioning-htmlgetbucketversioning]]
 == https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetBucketVersioning.html["GetBucketVersioning"^]
 
 .URI-Abfrageparameter und Anforderungsheader
@@ -435,6 +462,7 @@ link:operations-on-buckets.html["Operationen an Buckets"]
 
 
 
+[[httpsdocs-aws-amazon-comamazons3latestapiapigetobject-htmlgetobject]]
 == https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetObject.html["GetObject"^]
 
 .URI-Abfrageparameter und Anforderungsheader
@@ -470,6 +498,7 @@ link:get-object.html["GetObject"]
 
 
 
+[[httpsdocs-aws-amazon-comamazons3latestapiapigetobjectacl-htmlgetobjectacl]]
 == https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetObjectAcl.html["GetObjectAcl"^]
 
 .URI-Abfrageparameter und Anforderungsheader
@@ -483,6 +512,7 @@ link:operations-on-objects.html["Operationen an Objekten"]
 
 
 
+[[httpsdocs-aws-amazon-comamazons3latestapiapigetobjectlegalhold-htmlgetobjectlegalhold]]
 == https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetObjectLegalHold.html["GetObjectLegalHold"^]
 
 .URI-Abfrageparameter und Anforderungsheader
@@ -496,6 +526,7 @@ link:../s3/use-s3-api-for-s3-object-lock.html["Verwenden Sie die S3 REST API, um
 
 
 
+[[httpsdocs-aws-amazon-comamazons3latestapiapigetobjectlockconfiguration-htmlgetobjectlockconfiguration]]
 == https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetObjectLockConfiguration.html["GetObjectLockConfiguration"^]
 
 .URI-Abfrageparameter und Anforderungsheader
@@ -509,6 +540,7 @@ link:../s3/use-s3-api-for-s3-object-lock.html["Verwenden Sie die S3 REST API, um
 
 
 
+[[httpsdocs-aws-amazon-comamazons3latestapiapigetobjectretention-htmlgetobjectretention]]
 == https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetObjectRetention.html["GetObjectRetention"^]
 
 .URI-Abfrageparameter und Anforderungsheader
@@ -522,6 +554,7 @@ link:../s3/use-s3-api-for-s3-object-lock.html["Verwenden Sie die S3 REST API, um
 
 
 
+[[httpsdocs-aws-amazon-comamazons3latestapiapigetobjecttagging-htmlgetobjecttagging]]
 == https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetObjectTagging.html["GetObjectTagging"^]
 
 .URI-Abfrageparameter und Anforderungsheader
@@ -535,6 +568,7 @@ link:operations-on-objects.html["Operationen an Objekten"]
 
 
 
+[[httpsdocs-aws-amazon-comamazons3latestapiapiheadbucket-htmlheadbucket]]
 == https://docs.aws.amazon.com/AmazonS3/latest/API/API_HeadBucket.html["Kopfeimer"^]
 
 .URI-Abfrageparameter und Anforderungsheader
@@ -548,6 +582,7 @@ link:operations-on-buckets.html["Operationen an Buckets"]
 
 
 
+[[httpsdocs-aws-amazon-comamazons3latestapiapiheadobject-htmlheadobject]]
 == https://docs.aws.amazon.com/AmazonS3/latest/API/API_HeadObject.html["HeadObject"^]
 
 .URI-Abfrageparameter und Anforderungsheader
@@ -572,6 +607,7 @@ link:head-object.html["HeadObject"]
 
 
 
+[[httpsdocs-aws-amazon-comamazons3latestapiapilistbuckets-htmllistbuckets]]
 == https://docs.aws.amazon.com/AmazonS3/latest/API/API_ListBuckets.html["Buckets auflisten"^]
 
 .URI-Abfrageparameter und Anforderungsheader
@@ -585,6 +621,7 @@ link:operations-on-the-service.html["Operationen auf dem Dienst > ListBuckets"]
 
 
 
+[[httpsdocs-aws-amazon-comamazons3latestapiapilistmultipartuploads-htmllistmultipartuploads]]
 == https://docs.aws.amazon.com/AmazonS3/latest/API/API_ListMultipartUploads.html["ListMultipartUploads"^]
 
 .URI-Abfrageparameter und Anforderungsheader
@@ -605,6 +642,7 @@ link:list-multipart-uploads.html["ListMultipartUploads"]
 
 
 
+[[httpsdocs-aws-amazon-comamazons3latestapiapilistobjects-htmllistobjects]]
 == https://docs.aws.amazon.com/AmazonS3/latest/API/API_ListObjects.html["ListObjects"^]
 
 .URI-Abfrageparameter und Anforderungsheader
@@ -625,6 +663,7 @@ link:operations-on-buckets.html["Operationen an Buckets"]
 
 
 
+[[httpsdocs-aws-amazon-comamazons3latestapiapilistobjectsv2-htmllistobjectsv2]]
 == https://docs.aws.amazon.com/AmazonS3/latest/API/API_ListObjectsV2.html["ListObjectsV2"^]
 
 .URI-Abfrageparameter und Anforderungsheader
@@ -647,6 +686,7 @@ link:operations-on-buckets.html["Operationen an Buckets"]
 
 
 
+[[httpsdocs-aws-amazon-comamazons3latestapiapilistobjectversions-htmllistobjectversions]]
 == https://docs.aws.amazon.com/AmazonS3/latest/API/API_ListObjectVersions.html["ListObjectVersions"^]
 
 .URI-Abfrageparameter und Anforderungsheader
@@ -668,6 +708,7 @@ link:operations-on-buckets.html["Operationen an Buckets"]
 
 
 
+[[httpsdocs-aws-amazon-comamazons3latestapiapilistparts-htmllistparts]]
 == https://docs.aws.amazon.com/AmazonS3/latest/API/API_ListParts.html["Teileliste"^]
 
 .URI-Abfrageparameter und Anforderungsheader
@@ -686,6 +727,7 @@ link:list-multipart-uploads.html["ListMultipartUploads"]
 
 
 
+[[httpsdocs-aws-amazon-comamazons3latestapiapiputbucketcors-htmlputbucketcors]]
 == https://docs.aws.amazon.com/AmazonS3/latest/API/API_PutBucketCors.html["PutBucketCors"^]
 
 .URI-Abfrageparameter und Anforderungsheader
@@ -699,6 +741,7 @@ link:operations-on-buckets.html["Operationen an Buckets"]
 
 
 
+[[httpsdocs-aws-amazon-comamazons3latestapiapiputbucketencryption-htmlputbucketencryption]]
 == https://docs.aws.amazon.com/AmazonS3/latest/API/API_PutBucketEncryption.html["PutBucketEncryption"^]
 
 .URI-Abfrageparameter und Anforderungsheader
@@ -718,6 +761,7 @@ link:operations-on-buckets.html["Operationen an Buckets"]
 
 
 
+[[httpsdocs-aws-amazon-comamazons3latestapiapiputbucketlifecycleconfiguration-htmlputbucketlifecycleconfiguration]]
 == https://docs.aws.amazon.com/AmazonS3/latest/API/API_PutBucketLifecycleConfiguration.html["PutBucketLifecycleConfiguration"^]
 
 .URI-Abfrageparameter und Anforderungsheader
@@ -751,6 +795,7 @@ StorageGRID unterstützt die folgenden XML-Tags im Anforderungstext:
 
 
 
+[[httpsdocs-aws-amazon-comamazons3latestapiapiputbucketnotificationconfiguration-htmlputbucketnotificationconfiguration]]
 == https://docs.aws.amazon.com/AmazonS3/latest/API/API_PutBucketNotificationConfiguration.html["PutBucketNotificationConfiguration"^]
 
 .URI-Abfrageparameter und Anforderungsheader
@@ -778,6 +823,7 @@ link:operations-on-buckets.html["Operationen an Buckets"]
 
 
 
+[[httpsdocs-aws-amazon-comamazons3latestapiapiputbucketpolicy-htmlputbucketpolicy]]
 == https://docs.aws.amazon.com/AmazonS3/latest/API/API_PutBucketPolicy.html["PutBucketPolicy"^]
 
 .URI-Abfrageparameter und Anforderungsheader
@@ -788,6 +834,7 @@ Einzelheiten zu den unterstützten JSON-Body-Feldern finden Sie unterlink:bucket
 
 
 
+[[httpsdocs-aws-amazon-comamazons3latestapiapiputbucketreplication-htmlputbucketreplication]]
 == https://docs.aws.amazon.com/AmazonS3/latest/API/API_PutBucketReplication.html["PutBucketReplication"^]
 
 .URI-Abfrageparameter und Anforderungsheader
@@ -808,6 +855,7 @@ link:operations-on-buckets.html["Operationen an Buckets"]
 
 
 
+[[httpsdocs-aws-amazon-comamazons3latestapiapiputbuckettagging-htmlputbuckettagging]]
 == https://docs.aws.amazon.com/AmazonS3/latest/API/API_PutBucketTagging.html["PutBucketTagging"^]
 
 .URI-Abfrageparameter und Anforderungsheader
@@ -821,6 +869,7 @@ link:operations-on-buckets.html["Operationen an Buckets"]
 
 
 
+[[httpsdocs-aws-amazon-comamazons3latestapiapiputbucketversioning-htmlputbucketversioning]]
 == https://docs.aws.amazon.com/AmazonS3/latest/API/API_PutBucketVersioning.html["PutBucketVersioning"^]
 
 .URI-Abfrageparameter und Anforderungsheader
@@ -838,6 +887,7 @@ link:operations-on-buckets.html["Operationen an Buckets"]
 
 
 
+[[httpsdocs-aws-amazon-comamazons3latestapiapiputobject-htmlputobject]]
 == https://docs.aws.amazon.com/AmazonS3/latest/API/API_PutObject.html["PutObject"^]
 
 .URI-Abfrageparameter und Anforderungsheader
@@ -870,6 +920,7 @@ link:put-object.html["PutObject"]
 
 
 
+[[httpsdocs-aws-amazon-comamazons3latestapiapiputobjectlegalhold-htmlputobjectlegalhold]]
 == https://docs.aws.amazon.com/AmazonS3/latest/API/API_PutObjectLegalHold.html["PutObjectLegalHold"^]
 
 .URI-Abfrageparameter und Anforderungsheader
@@ -883,6 +934,7 @@ link:use-s3-api-for-s3-object-lock.html["Verwenden Sie die S3 REST API, um S3 Ob
 
 
 
+[[httpsdocs-aws-amazon-comamazons3latestapiapiputobjectlockconfiguration-htmlputobjectlockconfiguration]]
 == https://docs.aws.amazon.com/AmazonS3/latest/API/API_PutObjectLockConfiguration.html["PutObjectLockConfiguration"^]
 
 .URI-Abfrageparameter und Anforderungsheader
@@ -896,6 +948,7 @@ link:use-s3-api-for-s3-object-lock.html["Verwenden Sie die S3 REST API, um S3 Ob
 
 
 
+[[httpsdocs-aws-amazon-comamazons3latestapiapiputobjectretention-htmlputobjectretention]]
 == https://docs.aws.amazon.com/AmazonS3/latest/API/API_PutObjectRetention.html["PutObjectRetention"^]
 
 .URI-Abfrageparameter und Anforderungsheader
@@ -912,6 +965,7 @@ link:use-s3-api-for-s3-object-lock.html["Verwenden Sie die S3 REST API, um S3 Ob
 
 
 
+[[httpsdocs-aws-amazon-comamazons3latestapiapiputobjecttagging-htmlputobjecttagging]]
 == https://docs.aws.amazon.com/AmazonS3/latest/API/API_PutObjectTagging.html["PutObjectTagging"^]
 
 .URI-Abfrageparameter und Anforderungsheader
@@ -925,6 +979,7 @@ link:operations-on-objects.html["Operationen an Objekten"]
 
 
 
+[[httpsdocs-aws-amazon-comamazons3latestapiapirestoreobject-htmlrestoreobject]]
 == https://docs.aws.amazon.com/AmazonS3/latest/API/API_RestoreObject.html["RestoreObject"^]
 
 .URI-Abfrageparameter und Anforderungsheader
@@ -935,6 +990,7 @@ Einzelheiten zu den unterstützten Body-Feldern finden Sie unterlink:post-object
 
 
 
+[[httpsdocs-aws-amazon-comamazons3latestapiapiselectobjectcontent-htmlselectobjectcontent]]
 == https://docs.aws.amazon.com/AmazonS3/latest/API/API_SelectObjectContent.html["SelectObjectContent"^]
 
 .URI-Abfrageparameter und Anforderungsheader
@@ -949,6 +1005,7 @@ Einzelheiten zu den unterstützten Textfeldern finden Sie hier:
 
 
 
+[[httpsdocs-aws-amazon-comamazons3latestapiapiuploadpart-htmluploadpart]]
 == https://docs.aws.amazon.com/AmazonS3/latest/API/API_UploadPart.html["UploadPart"^]
 
 .URI-Abfrageparameter und Anforderungsheader
@@ -975,6 +1032,7 @@ link:upload-part.html["UploadPart"]
 
 
 
+[[httpsdocs-aws-amazon-comamazons3latestapiapiuploadpartcopy-htmluploadpartcopy]]
 == https://docs.aws.amazon.com/AmazonS3/latest/API/API_UploadPartCopy.html["UploadPartCopy"^]
 
 .URI-Abfrageparameter und Anforderungsheader

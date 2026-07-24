@@ -30,6 +30,7 @@ Wenn es sich bei dem Knoten um einen Appliance-Knoten handelt, enthält diese Re
 
 
 
+[[view-information-about-appliance-storage-nodes]]
 == Informationen zu Appliance-Speicherknoten anzeigen
 
 Auf der Seite „Knoten“ werden Informationen zum Dienstzustand und zu allen Rechen-, Festplatten- und Netzwerkressourcen für jeden Appliance-Speicherknoten aufgelistet.  Sie können auch Speicher, Speicherhardware, Controller-Firmware-Version, Netzwerkressourcen, Netzwerkschnittstellen, Netzwerkadressen sowie Empfangs- und Sendedaten sehen.
@@ -496,6 +497,7 @@ image::../media/nodes_page_storage_tables.png[Knotenseiten-Speichertabellen]
 
 
 
+[[view-information-about-appliance-admin-nodes-and-gateway-nodes]]
 == Informationen zu Appliance-Admin-Knoten und Gateway-Knoten anzeigen
 
 Auf der Seite „Knoten“ werden Informationen zum Dienstzustand und zu allen Rechen-, Festplatten- und Netzwerkressourcen für jede Dienst-Appliance aufgelistet, die als Admin-Knoten oder Gateway-Knoten verwendet wird.  Sie können auch Speicher, Speicherhardware, Netzwerkressourcen, Netzwerkschnittstellen, Netzwerkadressen sowie Empfangs- und Sendedaten sehen.

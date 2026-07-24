@@ -21,12 +21,14 @@ Das StorageGRID -System unterstützt zwei Authentifizierungsmethoden: HTTP `Auth
 
 
 
+[[use-the-http-authorization-header]]
 == Verwenden Sie den HTTP-Autorisierungsheader
 
 Das HTTP `Authorization` Der Header wird von allen S3-API-Operationen verwendet, außer von anonymen Anfragen, sofern dies durch die Bucket-Richtlinie zulässig ist.  Der `Authorization` Der Header enthält alle erforderlichen Signaturinformationen zur Authentifizierung einer Anfrage.
 
 
 
+[[use-query-parameters]]
 == Verwenden von Abfrageparametern
 
 Sie können Abfrageparameter verwenden, um einer URL Authentifizierungsinformationen hinzuzufügen.  Dies wird als Vorsignierung der URL bezeichnet und kann verwendet werden, um vorübergehenden Zugriff auf bestimmte Ressourcen zu gewähren.  Benutzer mit der vorsignierten URL müssen den geheimen Zugriffsschlüssel nicht kennen, um auf die Ressource zuzugreifen. Dadurch können Sie Dritten eingeschränkten Zugriff auf eine Ressource gewähren.

@@ -28,6 +28,7 @@ Verwenden Sie nach Möglichkeit DNS-Server, auf die jeder Standort lokal zugreif
 
 
 
+[[add-a-dns-server]]
 == Hinzufügen eines DNS-Servers
 
 Befolgen Sie diese Schritte, um einen DNS-Server hinzuzufügen.
@@ -40,6 +41,7 @@ Befolgen Sie diese Schritte, um einen DNS-Server hinzuzufügen.
 
 
 
+[[modify-a-dns-server]]
 == Ändern eines DNS-Servers
 
 Befolgen Sie diese Schritte, um einen DNS-Server zu ändern.
@@ -52,6 +54,7 @@ Befolgen Sie diese Schritte, um einen DNS-Server zu ändern.
 
 
 
+[[delete-a-dns-server]]
 == Löschen eines DNS-Servers
 
 Befolgen Sie diese Schritte, um eine IP-Adresse eines DNS-Servers zu löschen.

@@ -17,6 +17,7 @@ Die Registerkarte „Übersicht“ wird für alle Knoten angezeigt.
 
 
 
+[[node-information]]
 == Knoteninformationen
 
 Im Abschnitt „Knoteninformationen“ der Registerkarte „Übersicht“ werden grundlegende Informationen zum Knoten aufgeführt.
@@ -53,6 +54,7 @@ NOTE: Bei verwalteten Herunterfahrvorgängen kann ein Knoten als „Unbekannt“
 
 
 
+[[alerts]]
 == Warnungen
 
 Im Abschnitt „Warnungen“ der Registerkarte „Übersicht“ werden allelink:monitoring-system-health.html#view-current-and-resolved-alerts["Warnungen, die diesen Knoten derzeit betreffen und nicht stummgeschaltet wurden"] .  Wählen Sie den Warnungsnamen aus, um weitere Details und empfohlene Maßnahmen anzuzeigen.

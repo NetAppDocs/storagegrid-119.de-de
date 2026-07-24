@@ -20,6 +20,7 @@ Sie können grundlegende Informationen zu allenlink:../admin/grid-federation-ove
 
 
 
+[[view-all-connections]]
 == Alle Verbindungen anzeigen
 
 Auf der Seite „Grid-Föderation“ werden grundlegende Informationen zu allen Grid-Föderationsverbindungen und zu allen Mandantenkonten angezeigt, die Grid-Föderationsverbindungen verwenden dürfen.
@@ -59,6 +60,7 @@ image::../media/grid-federation-permitted-tenants-tab.png[Registerkarte „Zulä
 
 
 
+[[view-specific-connectionview-a-specific-connection]]
 == [[view-specific-connection]]Eine bestimmte Verbindung anzeigen
 
 Sie können Details zu einer bestimmten Grid-Föderation-Verbindung anzeigen.
@@ -102,6 +104,7 @@ image::../media/grid-federation-certificates-tab.png[Grid-Föderation-Zertifikat
 
 
 
+[[review-cross-grid-replication-metrics]]
 == Überprüfen der Cross-Grid-Replikationsmetriken
 
 Sie können das Cross-Grid-Replication-Dashboard in Grafana verwenden, um Prometheus-Metriken zu Cross-Grid-Replikationsvorgängen in Ihrem Grid anzuzeigen.

@@ -17,12 +17,14 @@ Allgemeine Informationen zum StorageGRID Load Balancer und dem Load Balancer-Zer
 
 
 
+[[best-practices-for-tenant-access-to-the-load-balancer-endpoint-used-for-fabricpool]]
 == Bewährte Methoden für den Mandantenzugriff auf den für FabricPool verwendeten Load Balancer-Endpunkt
 
 Sie können steuern, welche Mandanten einen bestimmten Load Balancer-Endpunkt verwenden können, um auf ihre Buckets zuzugreifen.  Sie können alle Mandanten zulassen, einige Mandanten zulassen oder einige Mandanten blockieren.  Wählen Sie beim Erstellen eines Lastenausgleichsendpunkts für die Verwendung von FabricPool *Alle Mandanten zulassen* aus.  ONTAP verschlüsselt die in StorageGRID Buckets abgelegten Daten, sodass diese zusätzliche Sicherheitsebene nur wenig zusätzliche Sicherheit bieten würde.
 
 
 
+[[best-practices-for-the-security-certificate]]
 == Best Practices für das Sicherheitszertifikat
 
 Wenn Sie einen StorageGRID Load Balancer-Endpunkt für die Verwendung mit FabricPool erstellen, stellen Sie das Sicherheitszertifikat bereit, das ONTAP die Authentifizierung bei StorageGRID ermöglicht.
@@ -38,12 +40,14 @@ So erfahren Sie mehr über das Serverzertifikat für einen Lastenausgleichsendpu
 
 
 
+[[add-certificate-to-ontap]]
 === Zertifikat zu ONTAP hinzufügen
 
 Wenn Sie StorageGRID als FabricPool Cloud-Tier hinzufügen, müssen Sie dasselbe Zertifikat auf dem ONTAP Cluster installieren, einschließlich des Stammzertifikats und aller untergeordneten Zertifikate der Zertifizierungsstelle (CA).
 
 
 
+[[manage-certificate-expiration]]
 === Ablauf des Zertifikats verwalten
 
 

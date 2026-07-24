@@ -15,6 +15,7 @@ Sie können das VMware OVF-Tool verwenden, um die Bereitstellung von Grid-Knoten
 
 
 
+[[automate-grid-node-deployment]]
 == Automatisieren Sie die Bereitstellung von Grid-Knoten
 
 Verwenden Sie das VMware OVF-Tool, um die Bereitstellung von Grid-Knoten zu automatisieren.
@@ -81,6 +82,7 @@ Die Beispielkonfigurationsdatei zur Verwendung mit dem `deploy-vsphere-ovftool.s
 |===
 
 
+[[define-the-configuration-file-for-your-deployment]]
 === Definieren Sie die Konfigurationsdatei für Ihre Bereitstellung
 
 Sie geben die Informationen an, die zum Bereitstellen virtueller Grid-Knoten für StorageGRID erforderlich sind, in einer Konfigurationsdatei, die von der `deploy-vsphere-ovftool.sh` Bash-Skript.  Sie können eine Beispielkonfigurationsdatei ändern, sodass Sie die Datei nicht von Grund auf neu erstellen müssen.
@@ -97,6 +99,7 @@ Sehen<<configuration-file-settings,Einstellungen der Konfigurationsdatei>> für 
 
 
 
+[[configuration-file-settings]]
 === Einstellungen der Konfigurationsdatei
 
 Der `deploy-vsphere-ovftool.ini` Die Konfigurationsdatei enthält die Einstellungen, die zum Bereitstellen virtueller Grid-Knoten erforderlich sind.
@@ -514,6 +517,7 @@ NOTE: Für Admin-Knoten muss INSTANCES immer gleich 2 sein.
 
 
 
+[[run-the-bash-script]]
 == Führen Sie das Bash-Skript aus
 
 Sie können die `deploy-vsphere-ovftool.sh` Bash-Skript und die von Ihnen geänderte Konfigurationsdatei deploy-vsphere-ovftool.ini, um die Bereitstellung von StorageGRID Knoten in VMware vSphere zu automatisieren.
@@ -581,6 +585,7 @@ Deployment Summary
 ----
 
 
+[[automate-the-configuration-of-storagegrid]]
 == Automatisieren Sie die Konfiguration von StorageGRID
 
 Nach der Bereitstellung der Grid-Knoten können Sie die Konfiguration des StorageGRID Systems automatisieren.

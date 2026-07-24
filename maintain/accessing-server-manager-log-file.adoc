@@ -19,6 +19,7 @@ Fehlermeldungen im Zusammenhang mit Server Manager werden in der Server Manager-
 
 
 
+[[service-with-an-error-state]]
 == Dienst mit einem Fehlerzustand
 
 Wenn Sie feststellen, dass ein Dienst in einen Fehlerzustand geraten ist, versuchen Sie, den Dienst neu zu starten.

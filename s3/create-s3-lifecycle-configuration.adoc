@@ -17,6 +17,7 @@ Das einfache Beispiel in diesem Abschnitt veranschaulicht, wie eine S3-Lebenszyk
 
 
 
+[[what-lifecycle-configuration-is]]
 == Was ist eine Lebenszykluskonfiguration?
 
 Eine Lebenszykluskonfiguration ist ein Satz von Regeln, die auf die Objekte in bestimmten S3-Buckets angewendet werden.  Jede Regel gibt an, welche Objekte betroffen sind und wann diese Objekte ablaufen (an einem bestimmten Datum oder nach einer bestimmten Anzahl von Tagen).
@@ -46,6 +47,7 @@ StorageGRID unterstützt die Verwendung der folgenden Bucket-Operationen zur Ver
 
 
 
+[[create-lifecycle-configuration]]
 == Lebenszykluskonfiguration erstellen
 
 Als ersten Schritt beim Erstellen einer Lebenszykluskonfiguration erstellen Sie eine JSON-Datei, die eine oder mehrere Regeln enthält.  Diese JSON-Datei enthält beispielsweise die folgenden drei Regeln:
@@ -106,6 +108,7 @@ CAUTION: Regeln, die eine Anzahl von Tagen angeben, beziehen sich auf den Zeitpu
 ----
 
 
+[[apply-lifecycle-configuration-to-bucket]]
 == Lebenszykluskonfiguration auf Bucket anwenden
 
 Nachdem Sie die Lebenszyklus-Konfigurationsdatei erstellt haben, wenden Sie sie auf einen Bucket an, indem Sie eine PutBucketLifecycleConfiguration-Anforderung senden.
@@ -128,6 +131,7 @@ Eine erfolgreiche Antwort listet die Lebenszykluskonfiguration auf, die Sie gera
 
 
 
+[[validate-that-bucket-lifecycle-expiration-applies-to-object]]
 == Überprüfen Sie, ob das Ablaufdatum des Bucket-Lebenszyklus für das Objekt gilt
 
 Sie können beim Ausgeben einer PutObject-, HeadObject- oder GetObject-Anforderung feststellen, ob eine Ablaufregel in der Lebenszykluskonfiguration auf ein bestimmtes Objekt zutrifft.  Wenn eine Regel zutrifft, enthält die Antwort eine `Expiration` Parameter, der angibt, wann das Objekt abläuft und welche Ablaufregel erfüllt wurde.

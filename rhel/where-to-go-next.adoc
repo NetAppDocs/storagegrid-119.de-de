@@ -15,6 +15,7 @@ Führen Sie nach Abschluss einer Installation die erforderlichen Integrations- u
 
 
 
+[[required-tasks]]
 == Erforderliche Aufgaben
 
 * link:../admin/managing-tenants.html["Erstellen Sie ein Mieterkonto"]für das S3-Clientprotokoll, das zum Speichern von Objekten auf Ihrem StorageGRID System verwendet wird.
@@ -36,6 +37,7 @@ Sehen https://docs.netapp.com/us-en/storagegrid-appliances/installconfig/configu
 
 
 
+[[optional-tasks]]
 == Optionale Aufgaben
 
 * link:../maintain/changing-ip-addresses-and-mtu-values-for-all-nodes-in-grid.html["Aktualisieren Sie die IP-Adressen der Grid-Knoten"]ob sie sich seit der Planung Ihrer Bereitstellung und der Generierung des Wiederherstellungspakets geändert haben.

@@ -15,6 +15,7 @@ Befolgen Sie die Anforderungen für jeden StorageGRID Netzwerktyp.
 
 
 
+[[network-gateways-and-routers]]
 == Netzwerk-Gateways und Router
 
 * Wenn festgelegt, muss sich das Gateway für ein bestimmtes Netzwerk innerhalb des Subnetzes des jeweiligen Netzwerks befinden.
@@ -24,6 +25,7 @@ Befolgen Sie die Anforderungen für jeden StorageGRID Netzwerktyp.
 
 
 
+[[subnets]]
 == Subnetze
 
 
@@ -60,6 +62,7 @@ Verwenden Sie beispielsweise nicht die folgenden Subnetzbereiche für das Grid-N
 
 
 
+[[grid-network]]
 == Netznetzwerk
 
 * Zum Zeitpunkt der Bereitstellung muss jeder Grid-Knoten an das Grid-Netzwerk angeschlossen sein und über die Netzwerkkonfiguration, die Sie bei der Bereitstellung des Knotens angeben, mit dem primären Admin-Knoten kommunizieren können.
@@ -74,6 +77,7 @@ NOTE: Das Grid-Netzwerk muss zwischen den einzelnen Knoten direkt routebar sein.
 
 
 
+[[admin-network]]
 == Admin-Netzwerk
 
 Das Admin-Netzwerk ist optional.  Wenn Sie ein Admin-Netzwerk konfigurieren möchten, befolgen Sie diese Anforderungen und Richtlinien.
@@ -88,6 +92,7 @@ NOTE: Sie müssen mindestens ein Subnetz im Admin-Netzwerk definieren, um eingeh
 
 
 
+[[client-network]]
 == Kundennetzwerk
 
 Das Client-Netzwerk ist optional.  Wenn Sie die Konfiguration eines Client-Netzwerks planen, beachten Sie die folgenden Überlegungen.

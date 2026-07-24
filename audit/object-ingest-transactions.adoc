@@ -17,6 +17,7 @@ In den folgenden Tabellen sind nicht alle während einer Aufnahmetransaktion gen
 
 
 
+[[s3-ingest-audit-messages]]
 == S3-Ingest-Audit-Nachrichten
 
 [cols="1a,1a,2a,1a,2a"]
@@ -51,6 +52,7 @@ link:orlm-object-rules-met.html["ORLM: Objektregeln erfüllt"]
 |===
 
 
+[[swift-ingest-audit-messages]]
 == Swift erfasst Audit-Nachrichten
 
 [cols="1a,1a,2a,1a,2a"]
@@ -85,6 +87,7 @@ link:orlm-object-rules-met.html["ORLM: Objektregeln erfüllt"]
 |===
 
 
+[[example-s3-object-ingest]]
 == Beispiel: S3-Objektaufnahme
 
 Die folgende Reihe von Prüfmeldungen ist ein Beispiel für die Prüfmeldungen, die generiert und im Prüfprotokoll gespeichert werden, wenn ein S3-Client ein Objekt in einen Speicherknoten (LDR-Dienst) einspeist.
@@ -98,6 +101,7 @@ In diesem Beispiel wird davon ausgegangen, dass zuvor ein S3-Bucket erstellt wur
 
 
 
+[[sput-s3-put]]
 === SPUT: S3 PUT
 
 Die SPUT-Nachricht wird generiert, um anzuzeigen, dass eine S3 PUT-Transaktion ausgegeben wurde, um ein Objekt in einem bestimmten Bucket zu erstellen.
@@ -108,6 +112,7 @@ Die SPUT-Nachricht wird generiert, um anzuzeigen, dass eine S3 PUT-Transaktion a
 ----
 
 
+[[orlm-object-rules-met]]
 === ORLM: Objektregeln erfüllt
 
 Die ORLM-Nachricht gibt an, dass die ILM-Richtlinie für dieses Objekt erfüllt wurde.  Die Nachricht enthält die CBID des Objekts und den Namen der angewendeten ILM-Regel.

@@ -19,6 +19,7 @@ Die Anzahl der hinzuzufügenden Knoten hängt auch davon ab, wie voll die vorhan
 
 
 
+[[general-recommendation-for-adding-storage-capacity-for-erasure-coded-objects]]
 == Allgemeine Empfehlung zum Hinzufügen von Speicherkapazität für Erasure-Coded-Objekte
 
 Wenn Sie detaillierte Berechnungen vermeiden möchten, können Sie zwei Speicherknoten pro Site hinzufügen, wenn die vorhandenen Speicherknoten 70 % ihrer Kapazität erreichen.

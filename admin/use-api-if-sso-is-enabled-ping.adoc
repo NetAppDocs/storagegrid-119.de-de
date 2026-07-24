@@ -15,6 +15,7 @@ Wenn Sielink:../admin/configuring-sso.html["Single Sign-On (SSO) konfiguriert un
 
 
 
+[[sign-in-to-the-api-if-single-sign-on-is-enabled]]
 == Sign in , wenn Single Sign-On aktiviert ist
 
 Diese Anweisungen gelten, wenn Sie PingFederate als SSO-Identitätsanbieter verwenden
@@ -204,6 +205,7 @@ Sie können jetzt `MYTOKEN` für andere Anfragen, ähnlich wie Sie die API verwe
 
 
 
+[[sign-out-of-the-api-if-single-sign-on-is-enabled]]
 == Melden Sie sich von der API ab, wenn Single Sign-On aktiviert ist
 
 Wenn Single Sign-On (SSO) aktiviert wurde, müssen Sie eine Reihe von API-Anfragen stellen, um sich von der Grid Management API oder der Tenant Management API abzumelden.  Diese Anweisungen gelten, wenn Sie PingFederate als SSO-Identitätsanbieter verwenden

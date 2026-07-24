@@ -55,6 +55,7 @@ Für jede Grid-Föderationsverbindung der letzte Fehler, der ggf. beim Replizier
 
 
 
+[[clear-last-errorclear-the-last-error]]
 == [[clear-last-error]]Lösche den letzten Fehler
 
 In der Spalte *Letzter Fehler* kann aus einem der folgenden Gründe ein Fehler angezeigt werden:

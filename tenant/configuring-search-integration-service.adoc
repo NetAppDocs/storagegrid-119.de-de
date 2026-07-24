@@ -184,6 +184,7 @@ Bei Bedarf können Sie die Suchintegration für einen Bucket mit einer der folge
 
 
 
+[[example-notification-configexample-metadata-notification-configuration-that-applies-to-all-objects]]
 == [[example-notification-config]]Beispiel: Metadaten-Benachrichtigungskonfiguration, die für alle Objekte gilt
 
 In diesem Beispiel werden die Objektmetadaten für alle Objekte an dasselbe Ziel gesendet.
@@ -203,6 +204,7 @@ In diesem Beispiel werden die Objektmetadaten für alle Objekte an dasselbe Ziel
 ----
 
 
+[[example-metadata-notification-configuration-with-two-rules]]
 == Beispiel: Konfiguration der Metadatenbenachrichtigung mit zwei Regeln
 
 In diesem Beispiel werden Objektmetadaten für Objekte verwendet, die mit dem Präfix `/images` wird an ein Ziel gesendet, während Objektmetadaten für Objekte, die dem Präfix entsprechen `/videos` wird an ein zweites Ziel gesendet.
@@ -231,6 +233,7 @@ In diesem Beispiel werden Objektmetadaten für Objekte verwendet, die mit dem Pr
 ----
 
 
+[[metadata-notification-format]]
 == Metadaten-Benachrichtigungsformat
 
 Wenn Sie den Suchintegrationsdienst für einen Bucket aktivieren, wird jedes Mal, wenn Objektmetadaten oder Tags hinzugefügt, aktualisiert oder gelöscht werden, ein JSON-Dokument generiert und an den Zielendpunkt gesendet.
@@ -257,6 +260,7 @@ Dieses Beispiel zeigt ein Beispiel des JSON, das generiert werden könnte, wenn 
 ----
 
 
+[[fields-included-in-the-json-document]]
 === Im JSON-Dokument enthaltene Felder
 
 Der Dokumentname umfasst den Bucket-Namen, den Objektnamen und die Versions-ID, falls vorhanden.
@@ -301,6 +305,7 @@ Schlagwörter::
 
 
 
+[[how-to-view-results-in-elasticsearch]]
 === So zeigen Sie Ergebnisse in Elasticsearch an
 
 Für Tags und Benutzermetadaten übergibt StorageGRID Daten und Zahlen als Zeichenfolgen oder als S3-Ereignisbenachrichtigungen an Elasticsearch.  Um Elasticsearch so zu konfigurieren, dass diese Zeichenfolgen als Datumsangaben oder Zahlen interpretiert werden, befolgen Sie die Elasticsearch-Anweisungen zur dynamischen Feldzuordnung und zur Zuordnung von Datumsformaten.  Aktivieren Sie die dynamischen Feldzuordnungen im Index, bevor Sie den Suchintegrationsdienst konfigurieren.  Nachdem ein Dokument indiziert wurde, können Sie die Feldtypen des Dokuments im Index nicht mehr bearbeiten.

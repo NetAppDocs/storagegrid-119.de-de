@@ -24,6 +24,7 @@ NOTE: Die Unterstützung für Swift-Clientanwendungen ist veraltet und wird in e
 
 
 
+[[access-the-create-group-wizard]]
 == Greifen Sie auf den Assistenten „Gruppe erstellen“ zu
 
 .Schritte
@@ -35,6 +36,7 @@ Rufen Sie als ersten Schritt den Assistenten „Gruppe erstellen“ auf.
 
 
 
+[[choose-a-group-type]]
 == Wählen Sie einen Gruppentyp
 
 Sie können eine lokale Gruppe erstellen oder eine föderierte Gruppe importieren.
@@ -55,6 +57,7 @@ Wenn Single Sign-On (SSO) für Ihr StorageGRID -System aktiviert ist, können si
 
 
 
+[[manage-group-permissions]]
 == Gruppenberechtigungen verwalten
 
 Gruppenberechtigungen steuern, welche Aufgaben Benutzer im Tenant Manager und in der Tenant Management API ausführen können.
@@ -76,6 +79,7 @@ NOTE: Wenn ein Benutzer mehreren Gruppen angehört und für eine der Gruppen der
 
 
 
+[[set-swift-group-policy]]
 == Swift-Gruppenrichtlinie festlegen
 
 Swift-Benutzer benötigen Administratorberechtigungen, um sich bei der Swift REST-API zu authentifizieren, Container zu erstellen und Objekte aufzunehmen.
@@ -86,6 +90,7 @@ Swift-Benutzer benötigen Administratorberechtigungen, um sich bei der Swift RES
 
 
 
+[[add-users-local-groups-only]]
 == Benutzer hinzufügen (nur lokale Gruppen)
 
 Sie können die Gruppe speichern, ohne Benutzer hinzuzufügen, oder Sie können optional bereits vorhandene lokale Benutzer hinzufügen.

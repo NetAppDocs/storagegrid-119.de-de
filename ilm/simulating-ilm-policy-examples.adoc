@@ -15,6 +15,7 @@ Die Beispiele für ILM-Richtliniensimulationen bieten Richtlinien zum Strukturie
 
 
 
+[[example-1-verify-rules-when-simulating-an-ilm-policy]]
 == Beispiel 1: Regeln beim Simulieren einer ILM-Richtlinie überprüfen
 
 In diesem Beispiel wird beschrieben, wie Regeln beim Simulieren einer Richtlinie überprüft werden.
@@ -39,6 +40,7 @@ In diesem Beispiel:
 
 
 
+[[example-2-reorder-rules-when-simulating-an-ilm-policy]]
 == Beispiel 2: Regeln beim Simulieren einer ILM-Richtlinie neu anordnen
 
 Dieses Beispiel zeigt, wie Sie Regeln neu anordnen können, um die Ergebnisse beim Simulieren einer Richtlinie zu ändern.
@@ -81,6 +83,7 @@ image::../media/simulate_reorder_rules_correct_result.png[Beispiel 2: Neuanordnu
 
 
 
+[[example-3-correct-a-rule-when-simulating-an-ilm-policy]]
 == Beispiel 3: Korrigieren einer Regel beim Simulieren einer ILM-Richtlinie
 
 Dieses Beispiel zeigt, wie Sie eine Richtlinie simulieren, eine Regel in der Richtlinie korrigieren und die Simulation fortsetzen.

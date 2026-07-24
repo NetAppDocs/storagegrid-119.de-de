@@ -38,6 +38,7 @@ Wenn alle Knoten bereitgestellt wurden, verwenden Sie den Grid Manager, umlink:n
 
 
 
+[[automate-the-installation]]
 == Automatisieren Sie die Installation
 
 Um Zeit zu sparen und Konsistenz zu gewährleisten, können Sie die Installation des StorageGRID Hostdienstes und die Konfiguration der Grid-Knoten automatisieren.

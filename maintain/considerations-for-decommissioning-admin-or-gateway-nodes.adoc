@@ -15,6 +15,7 @@ summary: Überprüfen Sie die Überlegungen zur Außerbetriebnahme eines Admin-K
 
 
 
+[[considerations-for-admin-node]]
 == Überlegungen zum Admin-Knoten
 
 * Sie können den primären Admin-Knoten nicht außer Betrieb nehmen.
@@ -27,6 +28,7 @@ summary: Überprüfen Sie die Überlegungen zur Außerbetriebnahme eines Admin-K
 
 
 
+[[considerations-for-gateway-node]]
 == Überlegungen zum Gateway-Knoten
 
 * Sie können einen Gateway-Knoten nicht außer Betrieb nehmen, wenn eine seiner Netzwerkschnittstellen Teil einer Hochverfügbarkeitsgruppe (HA) ist.  Sie müssen zuerst die Netzwerkschnittstellen aus der HA-Gruppe entfernen. Siehe die Anweisungen fürlink:../admin/managing-high-availability-groups.html["Verwalten von HA-Gruppen"] .

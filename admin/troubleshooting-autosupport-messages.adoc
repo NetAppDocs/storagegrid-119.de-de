@@ -20,6 +20,7 @@ NOTE: Wenn Sie einen Proxy-Server konfiguriert haben, um AutoSupport Pakete an N
 
 
 
+[[weekly-autosupport-package-failure]]
 == Wöchentlicher AutoSupport Paketfehler
 
 Wenn das Senden eines wöchentlichen AutoSupport Pakets fehlschlägt, ergreift das StorageGRID -System die folgenden Maßnahmen:
@@ -34,6 +35,7 @@ Wenn das Senden eines wöchentlichen AutoSupport Pakets fehlschlägt, ergreift d
 
 
 
+[[user-triggered-or-event-triggered-autosupport-package-failure]]
 == Vom Benutzer oder Ereignis ausgelöster AutoSupport Paketfehler
 
 Wenn das Senden eines benutzer- oder ereignisgesteuerten AutoSupport Pakets fehlschlägt, ergreift das StorageGRID -System die folgenden Maßnahmen:
@@ -49,6 +51,7 @@ Erfahren Sie, wie Sie link:../monitor/email-alert-notifications.html["Konfigurie
 
 
 
+[[correct-an-autosupport-package-failure]]
 == Korrigieren eines AutoSupport Paketfehlers
 
 Wenn ein Fehler auftritt und SMTP das ausgewählte Protokoll ist, überprüfen Sie, ob der E-Mail-Server des StorageGRID Systems richtig konfiguriert ist und ob Ihr E-Mail-Server ausgeführt wird. Auf der AutoSupport -Seite wird möglicherweise die folgende Fehlermeldung angezeigt: `AutoSupport packages cannot be sent using SMTP protocol due to incorrect settings on the E-mail Server page.`

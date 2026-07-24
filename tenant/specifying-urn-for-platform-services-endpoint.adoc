@@ -17,6 +17,7 @@ StorageGRID validiert die Endpunkte der Plattformdienste, während Sie sie erste
 
 
 
+[[urn-elements]]
 == URN-Elemente
 
 Die URN für einen Plattformdienst-Endpunkt muss mit einem der folgenden Zeichen beginnen: `arn:aws` oder `urn:mysite` , wie folgt:
@@ -88,6 +89,7 @@ Suchintegration
 |===
 
 
+[[urns-for-services-hosted-on-aws-and-gcp]]
 == URNs für auf AWS und GCP gehostete Dienste
 
 Für AWS- und GCP-Entitäten ist die vollständige URN eine gültige AWS-ARN. Beispiel:
@@ -118,6 +120,7 @@ NOTE: Für einen AWS-Suchintegrationsendpunkt ist der `domain-name` muss die Lit
 
 
 
+[[urns-for-locally-hosted-services]]
 == URNs für lokal gehostete Dienste
 
 Wenn Sie lokal gehostete Dienste anstelle von Cloud-Diensten verwenden, können Sie die URN auf jede beliebige Weise angeben, die eine gültige und eindeutige URN erstellt, solange die URN die erforderlichen Elemente an der dritten und letzten Stelle enthält.  Sie können die optional angegebenen Elemente leer lassen oder sie auf eine beliebige Weise angeben, die Ihnen bei der Identifizierung der Ressource hilft und die URN eindeutig macht. Beispiel:

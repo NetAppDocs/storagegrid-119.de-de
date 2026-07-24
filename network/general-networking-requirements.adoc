@@ -37,6 +37,7 @@ Wenn Sie während der Bereitstellung noch nicht bereit sind, die optionalen Admi
 
 
 
+[[connections-for-admin-nodes-and-gateway-nodes]]
 == Verbindungen für Admin-Knoten und Gateway-Knoten
 
 Admin-Knoten müssen immer vor nicht vertrauenswürdigen Clients, wie beispielsweise denen im offenen Internet, geschützt werden.  Sie müssen sicherstellen, dass kein nicht vertrauenswürdiger Client auf einen Admin-Knoten im Grid-Netzwerk, im Admin-Netzwerk oder im Client-Netzwerk zugreifen kann.
@@ -45,6 +46,7 @@ Admin-Knoten und Gateway-Knoten, die Sie zu Hochverfügbarkeitsgruppen hinzufüg
 
 
 
+[[using-network-address-translation-nat]]
 == Verwenden der Netzwerkadressübersetzung (NAT)
 
 Verwenden Sie keine Netzwerkadressübersetzung (NAT) im Grid-Netzwerk zwischen Grid-Knoten oder zwischen StorageGRID Sites.  Wenn Sie private IPv4-Adressen für das Grid-Netzwerk verwenden, müssen diese Adressen von jedem Grid-Knoten an jedem Standort direkt geroutet werden können.  Bei Bedarf können Sie jedoch NAT zwischen externen Clients und Grid-Knoten verwenden, beispielsweise um eine öffentliche IP-Adresse für einen Gateway-Knoten bereitzustellen.  Die Verwendung von NAT zum Überbrücken eines öffentlichen Netzwerksegments wird nur unterstützt, wenn Sie eine Tunnelanwendung verwenden, die für alle Knoten im Grid transparent ist, d. h. die Grid-Knoten benötigen keine Kenntnis der öffentlichen IP-Adressen.

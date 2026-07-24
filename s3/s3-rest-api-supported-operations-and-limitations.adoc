@@ -17,6 +17,7 @@ Das StorageGRID -System unterstützt sowohl Anfragen im virtuellen gehosteten St
 
 
 
+[[date-handling]]
 == Datumsverarbeitung
 
 Die StorageGRID -Implementierung der S3 REST API unterstützt nur gültige HTTP-Datumsformate.
@@ -25,6 +26,7 @@ Das StorageGRID -System unterstützt nur gültige HTTP-Datumsformate für Header
 
 
 
+[[common-request-headers]]
 == Allgemeine Anforderungsheader
 
 Das StorageGRID -System unterstützt die gemeinsamen Anforderungsheader, die definiert sind durch https://docs.aws.amazon.com/AmazonS3/latest/API/RESTCommonRequestHeaders.html["Amazon Simple Storage Service API-Referenz: Allgemeine Anforderungsheader"^] , mit einer Ausnahme.
@@ -54,6 +56,7 @@ Nicht implementiert.  Rückgaben `XNotImplemented` .
 |===
 
 
+[[common-response-headers]]
 == Allgemeine Antwortheader
 
 Das StorageGRID -System unterstützt alle gängigen Antwortheader, die in der _Simple Storage Service API Reference_ definiert sind, mit einer Ausnahme.

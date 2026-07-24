@@ -15,6 +15,7 @@ Wenn Sie ein StorageGRID -System für die Verwendung mit FabricPool konfiguriere
 
 
 
+[[audit-message-and-log-destinations]]
 == Prüfnachrichten- und Protokollziele
 
 FabricPool -Workloads weisen häufig eine hohe Rate an Lesevorgängen auf, wodurch eine große Menge an Prüfmeldungen generiert werden kann.
@@ -25,24 +26,28 @@ FabricPool -Workloads weisen häufig eine hohe Rate an Lesevorgängen auf, wodur
 
 
 
+[[object-encryption]]
 == Objektverschlüsselung
 
 Bei der Konfiguration von StorageGRID können Sie optional dielink:../admin/changing-network-options-object-encryption.html["globale Option zur Verschlüsselung gespeicherter Objekte"] wenn für andere StorageGRID Clients eine Datenverschlüsselung erforderlich ist.  Die von FabricPool zu StorageGRID verschobenen Daten sind bereits verschlüsselt, daher ist die Aktivierung der StorageGRID Einstellung nicht erforderlich.  Clientseitige Verschlüsselungsschlüssel sind Eigentum von ONTAP.
 
 
 
+[[object-compression]]
 == Objektkomprimierung
 
 Aktivieren Sie beim Konfigurieren von StorageGRID nicht dielink:../admin/configuring-stored-object-compression.html["globale Option zum Komprimieren gespeicherter Objekte"] .  Die von FabricPool zu StorageGRID verschobenen Daten sind bereits komprimiert.  Durch die Verwendung der StorageGRID -Option wird die Größe eines Objekts nicht weiter reduziert.
 
 
 
+[[bucket-consistency]]
 == Eimerkonsistenz
 
 Für FabricPool -Buckets ist die empfohlene Bucket-Konsistenz *Lesen nach neuem Schreiben*, was die Standardkonsistenz für einen neuen Bucket ist.  Bearbeiten Sie FabricPool Buckets nicht, um *Available* oder *Strong-site* zu verwenden.
 
 
 
+[[fabricpool-tiering]]
 == FabricPool -Stufen
 
 Wenn ein StorageGRID Knoten Speicher verwendet, der von einem NetApp ONTAP System zugewiesen wurde, vergewissern Sie sich, dass für das Volume keine FabricPool -Tiering-Richtlinie aktiviert ist.  Wenn beispielsweise ein StorageGRID Knoten auf einem VMware-Host ausgeführt wird, stellen Sie sicher, dass für das Volume, das den Datenspeicher für den StorageGRID Knoten unterstützt, keine FabricPool -Tiering-Richtlinie aktiviert ist.  Das Deaktivieren der FabricPool Tiering-Funktion für Volumes, die mit StorageGRID -Knoten verwendet werden, vereinfacht die Fehlerbehebung und Speichervorgänge.

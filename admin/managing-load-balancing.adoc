@@ -15,6 +15,7 @@ Sie können den Lastenausgleich verwenden, um die Aufnahme- und Abruf-Workloads 
 
 
 
+[[what-is-load-balancing]]
 == Was ist Lastenausgleich?
 
 Wenn eine Clientanwendung Daten auf einem StorageGRID -System speichert oder abruft, verwendet StorageGRID einen Load Balancer, um die Arbeitslast für Aufnahme und Abruf zu verwalten.  Durch Lastenausgleich werden Geschwindigkeit und Verbindungskapazität maximiert, indem die Arbeitslast auf mehrere Speicherknoten verteilt wird.
@@ -28,12 +29,14 @@ NOTE: Obwohl der StorageGRID Load Balancer-Dienst die empfohlene Methode zum Las
 
 
 
+[[how-many-load-balancing-nodes-do-i-need]]
 == Wie viele Lastausgleichsknoten benötige ich?
 
 Als allgemeine Best Practice sollte jede Site in Ihrem StorageGRID -System zwei oder mehr Knoten mit dem Load Balancer-Dienst enthalten.  Beispielsweise kann eine Site zwei Gateway-Knoten oder sowohl einen Admin-Knoten als auch einen Gateway-Knoten enthalten.  Stellen Sie sicher, dass für jeden Lastausgleichsknoten eine angemessene Netzwerk-, Hardware- oder Virtualisierungsinfrastruktur vorhanden ist, unabhängig davon, ob Sie Service-Appliances, Bare-Metal-Knoten oder Knoten auf Basis virtueller Maschinen (VM) verwenden.
 
 
 
+[[what-is-a-load-balancer-endpoint]]
 == Was ist ein Load Balancer-Endpunkt?
 
 Ein Load Balancer-Endpunkt definiert den Port und das Netzwerkprotokoll (HTTPS oder HTTP), die eingehende und ausgehende Client-Anwendungsanforderungen verwenden, um auf die Knoten zuzugreifen, die den Load Balancer-Dienst enthalten.  Der Endpunkt definiert auch den Clienttyp (S3), den Bindungsmodus und optional eine Liste zulässiger oder blockierter Mandanten.
@@ -47,6 +50,7 @@ Um einen Load Balancer-Endpunkt zu erstellen, wählen Sie entweder *KONFIGURATIO
 
 
 
+[[considerations-for-the-port]]
 === Überlegungen zum Port
 
 Der Port für einen Load Balancer-Endpunkt ist für den ersten Endpunkt, den Sie erstellen, standardmäßig 10433, Sie können jedoch jeden nicht verwendeten externen Port zwischen 1 und 65535 angeben.  Wenn Sie Port 80 oder 443 verwenden, verwendet der Endpunkt den Load Balancer-Dienst nur auf Gateway-Knoten.  Diese Ports sind auf Admin-Knoten reserviert.  Wenn Sie denselben Port für mehr als einen Endpunkt verwenden, müssen Sie für jeden Endpunkt einen anderen Bindungsmodus angeben.
@@ -55,12 +59,14 @@ Von anderen Grid-Diensten verwendete Ports sind nicht zulässig. Siehe dielink:.
 
 
 
+[[considerations-for-the-network-protocol]]
 === Überlegungen zum Netzwerkprotokoll
 
 In den meisten Fällen sollten die Verbindungen zwischen Clientanwendungen und StorageGRID die Transport Layer Security (TLS)-Verschlüsselung verwenden.  Die Verbindung zu StorageGRID ohne TLS-Verschlüsselung wird unterstützt, wird jedoch insbesondere in Produktionsumgebungen nicht empfohlen.  Wenn Sie das Netzwerkprotokoll für den StorageGRID Load Balancer-Endpunkt auswählen, sollten Sie *HTTPS* auswählen.
 
 
 
+[[considerations-for-load-balancer-endpoint-certificates]]
 === Überlegungen zu Load Balancer-Endpunktzertifikaten
 
 Wenn Sie *HTTPS* als Netzwerkprotokoll für den Load Balancer-Endpunkt auswählen, müssen Sie ein Sicherheitszertifikat angeben.  Sie können beim Erstellen des Load Balancer-Endpunkts eine dieser drei Optionen verwenden:
@@ -121,6 +127,7 @@ Um Probleme mit dem Ablauf von Zertifikaten zu vermeiden, befolgen Sie diese Bes
 
 
 
+[[considerations-for-the-binding-mode]]
 === Überlegungen zum Bindungsmodus
 
 Mit dem Bindungsmodus können Sie steuern, welche IP-Adressen für den Zugriff auf einen Load Balancer-Endpunkt verwendet werden können.  Wenn ein Endpunkt einen Bindungsmodus verwendet, können Clientanwendungen nur auf den Endpunkt zugreifen, wenn sie eine zulässige IP-Adresse oder den entsprechenden vollqualifizierten Domänennamen (FQDN) verwenden.  Clientanwendungen, die eine andere IP-Adresse oder einen anderen FQDN verwenden, können nicht auf den Endpunkt zugreifen.
@@ -135,6 +142,7 @@ Sie können einen der folgenden Bindungsmodi angeben:
 
 
 
+[[considerations-for-tenant-access]]
 === Überlegungen zum Mandantenzugriff
 
 Der Mandantenzugriff ist eine optionale Sicherheitsfunktion, mit der Sie steuern können, welche StorageGRID Mandantenkonten einen Load Balancer-Endpunkt verwenden können, um auf ihre Buckets zuzugreifen.  Sie können allen Mandanten den Zugriff auf einen Endpunkt erlauben (Standard) oder Sie können für jeden Endpunkt eine Liste der zulässigen oder blockierten Mandanten angeben.
@@ -163,6 +171,7 @@ Um auf die `top-secret.pdf` kann ein Benutzer im Mandanten *Top secret* eine GET
 
 
 
+[[cpu-availability]]
 == CPU-Verfügbarkeit
 
 Der Load Balancer-Dienst auf jedem Admin-Knoten und Gateway-Knoten arbeitet unabhängig, wenn er S3-Verkehr an die Speicherknoten weiterleitet.  Durch einen Gewichtungsprozess leitet der Load Balancer-Dienst mehr Anfragen an Speicherknoten mit höherer CPU-Verfügbarkeit weiter.  Die Informationen zur CPU-Auslastung des Knotens werden alle paar Minuten aktualisiert, die Gewichtung kann jedoch häufiger aktualisiert werden.  Allen Speicherknoten wird ein minimaler Basisgewichtungswert zugewiesen, auch wenn ein Knoten eine Auslastung von 100 % meldet oder seine Auslastung nicht meldet.

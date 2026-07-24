@@ -27,6 +27,7 @@ Fahren Sie die Knoten ordnungsgemäß herunter, bevor Sie eine Migration oder Hy
 
 
 
+[[vmware-live-migration-not-supported]]
 == VMware Live Migration wird nicht unterstützt
 
 Bei der Durchführung einer Bare-Metal-Installation auf VMware-VMs führen OpenStack Live Migration und VMware Live vMotion dazu, dass die Uhrzeit der virtuellen Maschine springt, und werden für Grid-Knoten jeglicher Art nicht unterstützt.  Obwohl es selten vorkommt, können falsche Uhrzeiten zum Verlust von Daten oder Konfigurationsaktualisierungen führen.
@@ -35,6 +36,7 @@ Kaltmigration wird unterstützt.  Bei der Kaltmigration fahren Sie die StorageGR
 
 
 
+[[consistent-network-interface-names]]
 == Konsistente Netzwerkschnittstellennamen
 
 Um einen Knoten von einem Host auf einen anderen zu verschieben, muss der StorageGRID Hostdienst ein gewisses Vertrauen darin haben, dass die externe Netzwerkkonnektivität, über die der Knoten an seinem aktuellen Standort verfügt, am neuen Standort dupliziert werden kann.  Diese Zuverlässigkeit wird durch die Verwendung konsistenter Netzwerkschnittstellennamen in den Hosts erreicht.
@@ -51,6 +53,7 @@ Es gibt viele Möglichkeiten, eine konsistente Benennung der Netzwerkschnittstel
 
 
 
+[[shared-storage]]
 == Gemeinsam genutzter Speicher
 
 Um schnelle Knotenmigrationen mit geringem Overhead zu erreichen, verschiebt die StorageGRID Knotenmigrationsfunktion die Knotendaten nicht physisch.  Stattdessen wird die Knotenmigration wie folgt als Paar von Export- und Importvorgängen durchgeführt:

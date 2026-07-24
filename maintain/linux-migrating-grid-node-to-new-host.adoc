@@ -36,6 +36,7 @@ Andere Knotentypen, wie etwa Admin-Knoten oder Gateway-Knoten, können auf demse
 ====
 
 
+[[export-node-from-source-host]]
 == Knoten vom Quellhost exportieren
 
 Fahren Sie als ersten Schritt den Grid-Knoten herunter und exportieren Sie ihn vom Linux-Quellhost.
@@ -96,6 +97,7 @@ Sie führen diesen Befehl im nächsten Schritt auf dem Zielhost aus.
 
 
 
+[[import-node-on-target-host]]
 == Knoten auf Zielhost importieren
 
 Nachdem Sie den Knoten vom Quellhost exportiert haben, importieren und validieren Sie den Knoten auf dem Zielhost.  Durch die Validierung wird bestätigt, dass der Knoten Zugriff auf dieselben Blockspeicher- und Netzwerkschnittstellengeräte hat wie auf dem Quellhost.
@@ -143,6 +145,7 @@ Informationen zur Fehlerbehebung finden Sie in den StorageGRID -Installationsanw
 
 
 
+[[start-migrated-node]]
 == Migrierten Knoten starten
 
 Nachdem Sie den migrierten Knoten validiert haben, starten Sie den Knoten, indem Sie einen Befehl auf dem _Zielhost_ ausführen.

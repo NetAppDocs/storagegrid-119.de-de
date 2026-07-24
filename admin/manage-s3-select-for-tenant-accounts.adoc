@@ -17,22 +17,26 @@ S3 Select bietet eine effiziente Möglichkeit, große Datenmengen zu durchsuchen
 
 
 
+[[what-is-s3-select]]
 == Was ist S3 Select?
 
 Mit S3 Select können S3-Clients SelectObjectContent-Anfragen verwenden, um nur die benötigten Daten aus einem Objekt zu filtern und abzurufen.  Die StorageGRID -Implementierung von S3 Select umfasst eine Teilmenge der Befehle und Funktionen von S3 Select.
 
 
 
+[[considerations-and-requirements-for-using-s3-select]]
 == Überlegungen und Anforderungen zur Verwendung von S3 Select
 
 
 
+[[grid-administration-requirements]]
 === Anforderungen an die Netzverwaltung
 
 Der Grid-Administrator muss den Mandanten die S3 Select-Berechtigung erteilen.  Wählen Sie *S3 Select zulassen*, wennlink:creating-tenant-account.html["Erstellen eines Mandanten"] oderlink:editing-tenant-account.html["Bearbeiten eines Mandanten"] .
 
 
 
+[[object-format-requirements]]
 === Anforderungen an das Objektformat
 
 Das abzufragende Objekt muss eines der folgenden Formate aufweisen:
@@ -51,6 +55,7 @@ Das abzufragende Objekt muss eines der folgenden Formate aufweisen:
 
 
 
+[[endpoint-requirements]]
 === Endpunktanforderungen
 
 Die SelectObjectContent-Anforderung muss an einenlink:configuring-load-balancer-endpoints.html["StorageGRID Lastenausgleichsendpunkt"] .
@@ -64,6 +69,7 @@ Die vom Endpunkt verwendeten Admin- und Gateway-Knoten müssen einer der folgend
 
 
 
+[[general-considerations]]
 === Allgemeine Überlegungen
 
 Abfragen können nicht direkt an Speicherknoten gesendet werden.

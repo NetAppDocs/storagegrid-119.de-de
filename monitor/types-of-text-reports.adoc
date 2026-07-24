@@ -15,6 +15,7 @@ Textberichte zeigen eine Textdarstellung von Attributdatenwerten an, die vom NMS
 
 
 
+[[raw-text-reports]]
 == Rohtextberichte
 
 Ein Rohtextbericht zeigt Details zum ausgewählten Attribut an:
@@ -28,6 +29,7 @@ image::../media/raw_text_report.gif[Screenshot mit dem Rohtextbericht]
 
 
 
+[[aggregate-text-reports]]
 == Aggregierte Textberichte
 
 Ein aggregierter Textbericht zeigt Daten über einen längeren Zeitraum (normalerweise eine Woche) an als ein Rohtextbericht.  Jeder Eintrag ist das Ergebnis der Zusammenfassung mehrerer Attributwerte (eine Ansammlung von Attributwerten) durch den NMS-Dienst im Laufe der Zeit in einen einzigen Eintrag mit Durchschnitts-, Maximal- und Minimalwerten, die aus der Ansammlung abgeleitet werden.
@@ -44,6 +46,7 @@ image::../media/aggregate_text_report.gif[Screenshot mit dem aggregierten Textbe
 
 
 
+[[generate-text-reports]]
 == Textberichte erstellen
 
 Textberichte zeigen eine Textdarstellung von Attributdatenwerten an, die vom NMS-Dienst verarbeitet wurden.  Sie können über einen Rechenzentrumsstandort, einen Netzknoten, eine Komponente oder einen Dienst berichten.
@@ -85,6 +88,7 @@ Nach wenigen Augenblicken wird ein Textbericht erstellt.  Planen Sie für die ta
 
 
 
+[[export-text-reports]]
 == Textberichte exportieren
 
 Exportierte Textberichte öffnen eine neue Browser-Registerkarte, in der Sie die Daten auswählen und kopieren können.

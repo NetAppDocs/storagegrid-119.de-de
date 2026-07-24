@@ -15,6 +15,7 @@ Mit dem Verfahren zur Knoten-Außerbetriebnahme können Sie einen oder mehrere G
 
 
 
+[[when-to-decommission-a-node]]
 == Wann sollte ein Knoten außer Betrieb genommen werden?
 
 Verwenden Sie das Verfahren zur Außerbetriebnahme von Knoten, wenn einer der folgenden Punkte zutrifft:
@@ -33,6 +34,7 @@ TIP: Wenn Sie ein älteres Gerät durch ein neueres Gerät ersetzen möchten, be
 
 
 
+[[how-to-decommission-a-node]]
 == So wird ein Knoten außer Betrieb genommen
 
 Sie können verbundene oder getrennte Netzknoten außer Betrieb nehmen.
@@ -53,6 +55,7 @@ Anweisungen hierzu finden Sie unterlink:decommissioning-disconnected-grid-nodes.
 
 
 
+[[what-to-consider-before-decommissioning-a-node]]
 == Was ist vor der Außerbetriebnahme eines Knotens zu beachten?
 
 Bevor Sie eines der Verfahren durchführen, überprüfen Sie die Überlegungen für jeden Knotentyp:

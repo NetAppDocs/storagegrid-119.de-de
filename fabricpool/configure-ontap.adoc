@@ -20,6 +20,7 @@ Nachdem Sie die erforderlichen StorageGRID Informationen erhalten haben, können
 
 
 
+[[access-ontap-system-manager]]
 == Zugriff auf den ONTAP System Manager
 
 Diese Anweisungen beschreiben, wie Sie mit ONTAP System Manager StorageGRID als Cloud-Tier hinzufügen.  Sie können dieselbe Konfiguration mit der ONTAP CLI durchführen.  Anweisungen finden Sie unter https://docs.netapp.com/us-en/ontap/fabricpool/index.html["ONTAP -Dokumentation für FabricPool"^] .
@@ -33,6 +34,7 @@ Diese Anweisungen beschreiben, wie Sie mit ONTAP System Manager StorageGRID als 
 
 
 
+[[enter-storagegrid-values]]
 == Geben Sie StorageGRID -Werte ein
 
 Sehen https://docs.netapp.com/us-en/ontap/fabricpool/index.html["ONTAP -Dokumentation für FabricPool"^] für weitere Informationen.

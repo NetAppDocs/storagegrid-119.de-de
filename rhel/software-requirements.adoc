@@ -24,6 +24,7 @@ NOTE: Die Unterstützung für Docker als Container-Engine für reine Softwareber
 
 
 
+[[python-versions-tested]]
 == Getestete Python-Versionen
 
 * 3.5.2-2
@@ -41,6 +42,7 @@ NOTE: Die Unterstützung für Docker als Container-Engine für reine Softwareber
 
 
 
+[[podman-versions-tested]]
 == Getestete Podman-Versionen
 
 * 3.2.3-0
@@ -54,6 +56,7 @@ NOTE: Die Unterstützung für Docker als Container-Engine für reine Softwareber
 
 
 
+[[docker-versions-tested]]
 == Getestete Docker-Versionen
 
 

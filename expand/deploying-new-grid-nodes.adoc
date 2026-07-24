@@ -17,6 +17,7 @@ Wenn Sie ein Raster erweitern, müssen die hinzugefügten Knoten nicht mit den v
 
 
 
+[[vmware-deploy-grid-nodes]]
 == VMware: Grid-Knoten bereitstellen
 
 Sie müssen für jeden VMware-Knoten, den Sie der Erweiterung hinzufügen möchten, eine virtuelle Maschine in VMware vSphere bereitstellen.
@@ -31,6 +32,7 @@ Wenn Sie den Knoten bereitstellen, können Sie optional Knotenports neu zuordnen
 
 
 
+[[linux-deploy-grid-nodes]]
 == Linux: Grid-Knoten bereitstellen
 
 Sie können Grid-Knoten auf neuen oder vorhandenen Linux-Hosts bereitstellen.  Wenn Sie zusätzliche Linux-Hosts benötigen, um die CPU-, RAM- und Speicheranforderungen der StorageGRID -Knoten zu unterstützen, die Sie Ihrem Grid hinzufügen möchten, bereiten Sie diese auf die gleiche Weise vor, wie Sie die Hosts bei der Erstinstallation vorbereitet haben.  Anschließend stellen Sie die Erweiterungsknoten auf die gleiche Weise bereit, wie Sie während der Installation Grid-Knoten bereitgestellt haben.
@@ -64,6 +66,7 @@ Nachdem Sie alle neuen Grid-Knoten bereitgestellt haben, können Sielink:perform
 
 
 
+[[appliances-deploying-storage-gateway-or-non-primary-admin-nodes]]
 == Appliances: Bereitstellen von Speicher-, Gateway- oder nicht primären Admin-Knoten
 
 Um die StorageGRID -Software auf einem Appliance-Knoten zu installieren, verwenden Sie den StorageGRID Appliance Installer, der auf der Appliance enthalten ist.  Bei einer Erweiterung fungiert jedes Speichergerät als einzelner Speicherknoten und jedes Servicegerät als einzelner Gateway-Knoten oder nicht-primärer Admin-Knoten.  Jedes Gerät kann eine Verbindung zum Grid-Netzwerk, zum Admin-Netzwerk und zum Client-Netzwerk herstellen.

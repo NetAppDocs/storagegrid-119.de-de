@@ -33,6 +33,7 @@ NOTE: Eine Änderung der rasterweiten Konsistenz gilt nur für Buckets, die nach
 
 
 
+[[consistency-values]]
 == Konsistenzwerte
 
 Die Konsistenz wirkt sich darauf aus, wie die Metadaten, die StorageGRID zum Verfolgen von Objekten verwendet, zwischen Knoten verteilt werden und somit auf die Verfügbarkeit von Objekten für Clientanforderungen.
@@ -48,6 +49,7 @@ Sie können die Konsistenz für einen Bucket oder eine API-Operation auf einen d
 
 
 
+[[use-read-after-new-write-and-available-consistency]]
 == Verwenden Sie die Konsistenz „Lesen nach neuem Schreiben“ und „Verfügbar“.
 
 Wenn ein HEAD- oder GET-Vorgang die Konsistenz „Lesen nach neuem Schreiben“ verwendet, führt StorageGRID die Suche in mehreren Schritten wie folgt durch:
@@ -62,6 +64,7 @@ Sofern Sie keine Konsistenzgarantien ähnlich denen von Amazon S3 benötigen, k�
 
 
 
+[[api-operation-consistency-controlspecify-consistency-for-api-operation]]
 == [[api-operation-consistency-control]]Konsistenz für API-Operation angeben
 
 Um die Konsistenz für eine einzelne API-Operation festzulegen, müssen die Konsistenzwerte für die Operation unterstützt werden und Sie müssen die Konsistenz im Anforderungsheader angeben.  In diesem Beispiel wird die Konsistenz für einen GetObject-Vorgang auf „Strong-Site“ festgelegt.
@@ -79,6 +82,7 @@ NOTE: Sie müssen für die PutObject- und GetObject-Vorgänge dieselbe Konsisten
 
 
 
+[[bucket-consistency-controlspecify-consistency-for-bucket]]
 == [[bucket-consistency-control]]Konsistenz für Bucket angeben
 
 Um die Konsistenz für den Bucket festzulegen, können Sie das StorageGRID verwendenlink:put-bucket-consistency-request.html["PUT Bucket-Konsistenz"] Anfrage.  Oder Sie könnenlink:../tenant/manage-bucket-consistency.html#change-bucket-consistency["die Konsistenz eines Eimers ändern"] vom Mieterverwalter.
@@ -92,6 +96,7 @@ Beachten Sie beim Festlegen der Konsistenz für einen Bucket Folgendes:
 
 
 
+[[how-consistency-controls-and-ilm-rules-interacthow-consistency-and-ilm-rules-interact-to-affect-data-protection]]
 == [[Wie Konsistenzkontrollen und ILM-Regeln zusammenwirken]]Wie Konsistenz- und ILM-Regeln den Datenschutz beeinflussen
 
 Sowohl Ihre Wahl der Konsistenz als auch Ihre ILM-Regel wirken sich darauf aus, wie Objekte geschützt werden.  Diese Einstellungen können interagieren.
@@ -107,6 +112,7 @@ Ausgewogen:: StorageGRID versucht, bei der Aufnahme alle in der ILM-Regel angege
 
 
 
+[[example-of-how-the-consistency-and-ilm-rule-can-interact]]
 == Beispiel für die Interaktion zwischen Konsistenz- und ILM-Regel
 
 Angenommen, Sie haben ein Grid mit zwei Sites mit der folgenden ILM-Regel und der folgenden Konsistenz:

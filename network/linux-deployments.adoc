@@ -22,12 +22,14 @@ Siehe die Installationsanweisungen fürlink:../rhel/index.html["Red Hat Enterpri
 
 
 
+[[host-network-configuration-for-container-engine-deployments]]
 == Host-Netzwerkkonfiguration für Container-Engine-Bereitstellungen
 
 Bevor Sie mit der StorageGRID -Bereitstellung auf einer Container-Engine-Plattform beginnen, legen Sie fest, welche Netzwerke (Grid, Admin, Client) jeder Knoten verwenden wird.  Sie müssen sicherstellen, dass die Netzwerkschnittstelle jedes Knotens auf der richtigen virtuellen oder physischen Hostschnittstelle konfiguriert ist und dass jedes Netzwerk über ausreichend Bandbreite verfügt.
 
 
 
+[[physical-hosts]]
 === Physische Hosts
 
 Wenn Sie physische Hosts zur Unterstützung von Grid-Knoten verwenden:
@@ -50,6 +52,7 @@ NOTE: Eine physische Schnittstelle auf dem Host kann vom Host selbst und einem o
 
 
 
+[[minimum-bandwidth-recommendations]]
 === Empfehlungen zur Mindestbandbreite
 
 Die folgende Tabelle enthält Empfehlungen zur minimalen LAN-Bandbreite für jeden StorageGRID Knotentyp und jeden Netzwerktyp.  Sie müssen jedem physischen oder virtuellen Host eine ausreichende Netzwerkbandbreite bereitstellen, um die aggregierten Mindestbandbreitenanforderungen für die Gesamtzahl und den Typ der StorageGRID Knoten zu erfüllen, die Sie auf diesem Host ausführen möchten.

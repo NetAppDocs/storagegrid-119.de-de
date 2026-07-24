@@ -29,6 +29,7 @@ link:how-objects-are-deleted.html["So werden Objekte gelöscht"]
 
 
 
+[[ilm-rule-1-for-example-4-save-three-copies-for-10-years]]
 == ILM-Regel 1 für Beispiel 4: Drei Kopien 10 Jahre lang aufbewahren
 
 Diese beispielhafte ILM-Regel speichert eine Kopie jedes Objekts 10 Jahre lang an drei Standorten.
@@ -69,6 +70,7 @@ Bewahren Sie am Tag 0 drei replizierte Kopien 10 Jahre lang (3.652 Tage) auf, ei
 |===
 
 
+[[ilm-rule-2-for-example-4-save-two-copies-of-noncurrent-versions-for-2-years]]
 == ILM-Regel 2 für Beispiel 4: Zwei Kopien nicht aktueller Versionen für 2 Jahre aufbewahren
 
 Dieses Beispiel einer ILM-Regel speichert zwei Kopien der nicht aktuellen Versionen eines versionierten S3-Objekts für zwei Jahre.
@@ -117,6 +119,7 @@ Bewahren Sie am Tag 0 relativ zur nicht aktuellen Zeit (d. h. ab dem Tag, an dem
 |===
 
 
+[[ilm-policy-for-example-4-s3-versioned-objects]]
 == ILM-Richtlinie für Beispiel 4: S3-versionierte Objekte
 
 Wenn Sie ältere Versionen eines Objekts anders verwalten möchten als die aktuelle Version, müssen Regeln, die als Referenzzeit „Nicht aktuelle Zeit“ verwenden, in der ILM-Richtlinie vor Regeln erscheinen, die für die aktuelle Objektversion gelten.

@@ -27,6 +27,7 @@ NOTE: Wenn Sie S3-Zugriffsschlüssel für einen Verbundbenutzer klonen, werden s
 
 
 
+[[clone-your-own-access-keys]]
 == Klonen Sie Ihre eigenen Zugriffsschlüssel
 
 Sie können Ihre eigenen Zugriffsschlüssel klonen, wenn Sie auf beiden Grids auf dieselben Buckets zugreifen müssen.
@@ -56,6 +57,7 @@ image::../media/grid-federation-clone-access-key.png[Tenant Manager API, die Wer
 
 
 
+[[clone-another-users-access-keys]]
 == Klonen Sie die Zugriffsschlüssel eines anderen Benutzers
 
 Sie können die Zugriffsschlüssel eines anderen Benutzers klonen, wenn dieser auf beiden Grids auf dieselben Buckets zugreifen muss.

@@ -20,6 +20,7 @@ Die Verwaltung von Grid-Föderationsverbindungen zwischen StorageGRID -Systemen 
 
 
 
+[[editgridfedconnectionedit-a-grid-federation-connection]]
 == [[edit_grid_fed_connection]]Bearbeiten einer Grid-Föderation-Verbindung
 
 Sie können eine Grid-Föderationsverbindung bearbeiten, indem Sie sich beim primären Admin-Knoten auf einem der Grids in der Verbindung anmelden.  Nachdem Sie Änderungen am ersten Raster vorgenommen haben, müssen Sie eine neue Überprüfungsdatei herunterladen und in das andere Raster hochladen.
@@ -29,6 +30,7 @@ NOTE: Während die Verbindung bearbeitet wird, werden für Kontoklon- oder Cross
 
 
 
+[[start-editing-the-connection]]
 === Beginnen Sie mit der Bearbeitung der Verbindung
 
 .Schritte
@@ -85,6 +87,7 @@ NOTE: Wenn der Verbindungsstatus beim Beginn der Bearbeitung der Verbindung nich
 
 
 
+[[finish-editing-the-connection]]
 === Beenden Sie die Bearbeitung der Verbindung
 
 Schließen Sie die Bearbeitung der Verbindung ab, indem Sie die Bestätigungsdatei in das andere Raster hochladen.
@@ -107,6 +110,7 @@ Wenn die Verbindung mit den bearbeiteten Werten hergestellt werden kann, erschei
 
 
 
+[[testgridfedconnectiontest-a-grid-federation-connection]]
 == [[test_grid_fed_connection]]Testen Sie eine Grid-Föderation-Verbindung
 
 .Schritte
@@ -177,6 +181,7 @@ Die Verbindung befindet sich in einem unbekannten Zustand, möglicherweise aufgr
 
 
 
+[[rotategridfedcertificatesrotate-connection-certificates]]
 == [[rotate_grid_fed_certificates]]Verbindungszertifikate rotieren
 
 Jede Grid-Föderation-Verbindung verwendet vier automatisch generierte SSL-Zertifikate, um die Verbindung zu sichern.  Wenn sich das Ablaufdatum der beiden Zertifikate für jedes Grid nähert, werden Sie durch die Warnung *Ablauf des Grid-Föderationszertifikats* daran erinnert, die Zertifikate zu rotieren.
@@ -201,6 +206,7 @@ Verwenden Sie grundsätzlich auf beiden Seiten der Verbindung die gleiche Anzahl
 
 
 
+[[removegridfedconnectionremove-a-grid-federation-connection]]
 == [[remove_grid_fed_connection]]Entfernen Sie eine Grid-Föderation-Verbindung
 
 Sie können eine Grid-Föderationsverbindung aus jedem Grid in der Verbindung entfernen.  Wie in der Abbildung gezeigt, müssen Sie auf beiden Grids die erforderlichen Schritte ausführen, um zu bestätigen, dass die Verbindung von keinem Mandanten auf einem der Grids verwendet wird.
@@ -215,6 +221,7 @@ Beachten Sie vor dem Entfernen einer Verbindung Folgendes:
 
 
 
+[[disable-replication-for-all-tenant-buckets]]
 === Deaktivieren Sie die Replikation für alle Mandanten-Buckets
 
 .Schritte
@@ -231,6 +238,7 @@ TIP: Sie können die Berechtigung *Grid-Föderationsverbindung verwenden* nicht 
 
 
 
+[[remove-permission-for-each-tenant]]
 === Entfernen Sie die Berechtigung für jeden Mandanten
 
 Nachdem die Cross-Grid-Replikation für alle Mandanten-Buckets deaktiviert wurde, entfernen Sie die Berechtigung *Grid-Föderation verwenden* von allen Mandanten auf beiden Grids.
@@ -244,6 +252,7 @@ Nachdem die Cross-Grid-Replikation für alle Mandanten-Buckets deaktiviert wurde
 
 
 
+[[remove-connection]]
 === Verbindung entfernen
 
 .Schritte
@@ -263,6 +272,7 @@ Nachdem die Cross-Grid-Replikation für alle Mandanten-Buckets deaktiviert wurde
 
 
 
+[[force-removegridfedconnectionremove-a-grid-federation-connection-by-force]]
 == [[force-remove_grid_fed_connection]]Entfernen Sie eine Grid-Föderation-Verbindung mit Gewalt
 
 Bei Bedarf können Sie die Entfernung einer Verbindung erzwingen, die nicht den Status *Verbunden* hat.

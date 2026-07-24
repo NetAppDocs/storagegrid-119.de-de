@@ -17,6 +17,7 @@ Die Knotenwiederherstellung ist abgeschlossen, wenn Sie beim Ersetzen des Linux-
 
 
 
+[[corrective-actions-and-next-steps]]
 == Korrekturmaßnahmen und nächste Schritte
 
 Während des Knotenaustauschs mussten Sie möglicherweise eine der folgenden Korrekturmaßnahmen ergreifen:

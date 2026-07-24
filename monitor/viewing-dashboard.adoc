@@ -22,6 +22,7 @@ image::../media/grid_manager_dashboard.png[Grid Manager-Dashboard]
 
 
 
+[[view-the-dashboard]]
 == Dashboard anzeigen
 
 Das Dashboard besteht aus Registerkarten, die spezifische Informationen zum StorageGRID -System enthalten.  Jede Registerkarte enthält Kategorien von Informationen, die auf Karten angezeigt werden.
@@ -73,6 +74,7 @@ Einige der Karten können zur besseren Anzeige maximiert werden.  Wählen Sie da
 
 
 
+[[manage-dashboards]]
 == Dashboards verwalten
 
 Wenn Sie Root-Zugriff haben (siehelink:../admin/admin-group-permissions.html["Berechtigungen der Administratorgruppe"] ) können Sie die folgenden Verwaltungsaufgaben für Dashboards ausführen:
@@ -95,6 +97,7 @@ image::../media/dashboard_manage.png[Dashboards verwalten]
 
 
 
+[[configure-dashboards]]
 == Dashboards konfigurieren
 
 Um durch Klonen des aktiven Dashboards ein neues Dashboard zu erstellen, wählen Sie *Aktionen* > *Aktives Dashboard klonen*.

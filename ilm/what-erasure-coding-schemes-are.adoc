@@ -17,6 +17,7 @@ Wenn Sie eine ILM-Regel erstellen oder bearbeiten, wählen Sie ein verfügbares 
 
 
 
+[[data-protection]]
 == Datenschutz
 
 Das StorageGRID -System verwendet den Reed-Solomon-Erasure-Coding-Algorithmus.  Der Algorithmus zerlegt ein Objekt in `k` Datenfragmente und Berechnungen `m` Paritätsfragmente.
@@ -31,6 +32,7 @@ Den besten Datenschutz bietet das Erasure-Coding-Schema mit der höchsten Knoten
 
 
 
+[[storage-overhead]]
 == Speicheraufwand
 
 Der Speicheraufwand eines Erasure-Coding-Schemas wird berechnet, indem die Anzahl der Paritätsfragmente geteilt wird(`m` ) durch die Anzahl der Datenfragmente(`k` ).  Mithilfe des Speicher-Overheads können Sie berechnen, wie viel Speicherplatz jedes Erasure-Codierte Objekt benötigt:
@@ -48,6 +50,7 @@ Wählen Sie das Erasure-Coding-Schema mit dem niedrigsten Gesamtwert von `k+m` d
 
 
 
+[[guidelines-for-storage-pools]]
 == Richtlinien für Speicherpools
 
 Beachten Sie bei der Auswahl des Speicherpools für eine Regel zum Erstellen einer Löschcodierten Kopie die folgenden Richtlinien für Speicherpools:
@@ -75,6 +78,7 @@ Die Mindestanzahl der erforderlichen Speicherknoten beträgt `k+m` .  Wenn jedoc
 
 
 
+[[erasure-coding-schemes-for-storage-pools-containing-three-or-more-sites]]
 == Erasure-Coding-Schemata für Speicherpools mit drei oder mehr Standorten
 
 Die folgende Tabelle beschreibt die Erasure-Coding-Schemata, die derzeit von StorageGRID für Speicherpools mit drei oder mehr Standorten unterstützt werden.  Alle diese Systeme bieten Schutz vor Standortverlust.  Eine Site kann verloren gehen, und das Objekt ist weiterhin zugänglich.
@@ -238,6 +242,7 @@ NOTE: Wenn Sie sich nicht sicher sind, welches Schema Sie verwenden sollen, wäh
 
 
 
+[[erasure-coding-schemes-for-one-site-storage-pools]]
 == Erasure-Coding-Schemata für Speicherpools an einem Standort
 
 Ein Speicherpool für einen Standort unterstützt alle für drei oder mehr Standorte definierten Erasure-Coding-Schemata, vorausgesetzt, der Standort verfügt über genügend Speicherknoten.

@@ -17,6 +17,7 @@ Je nach Ihrer Wahl erstellt StorageGRID Zwischenkopien und stellt die Objekte f�
 
 
 
+[[flowchart-of-ingest-options]]
 == Flussdiagramm der Aufnahmeoptionen
 
 Das Flussdiagramm zeigt, was passiert, wenn Objekte mit einer ILM-Regel abgeglichen werden, die jede der drei Aufnahmeoptionen verwendet.
@@ -25,6 +26,7 @@ image::../media/ingest_object_lifecycle.png[Diagramm, das zeigt, wie die Objekta
 
 
 
+[[dual-commit]]
 == Doppeltes Commit
 
 Wenn Sie die Option „Dual Commit“ auswählen, erstellt StorageGRID sofort vorläufige Objektkopien auf zwei verschiedenen Speicherknoten und gibt die Meldung „Aufnahme erfolgreich“ an den Client zurück.  Das Objekt wird zur ILM-Auswertung in die Warteschlange gestellt und später werden Kopien erstellt, die den Platzierungsanweisungen der Regel entsprechen.  Wenn die ILM-Richtlinie nicht unmittelbar nach dem doppelten Commit verarbeitet werden kann, kann es einige Zeit dauern, bis der Site-Loss-Schutz erreicht ist.
@@ -42,6 +44,7 @@ Verwenden Sie in einem der folgenden Fälle die Option „Dual Commit“:
 
 
 
+[[balanced-default]]
 == Ausgeglichen (Standard)
 
 Wenn Sie die Option „Ausgewogen“ auswählen, verwendet StorageGRID auch die synchrone Platzierung bei der Aufnahme und erstellt sofort alle in den Platzierungsanweisungen der Regel angegebenen Kopien.  Im Gegensatz zur Option „Streng“ verwendet StorageGRID stattdessen „Dual Commit“, wenn es nicht sofort alle Kopien erstellen kann.  Wenn die ILM-Richtlinie Platzierungen auf mehreren Sites verwendet und kein sofortiger Schutz vor Site-Verlust erreicht werden kann, wird die Warnung „ILM-Platzierung nicht erreichbar“ ausgelöst.
@@ -50,6 +53,7 @@ Verwenden Sie die Option „Ausgewogen“, um die beste Kombination aus Datensch
 
 
 
+[[strict]]
 == Strikt
 
 Wenn Sie die Option „Streng“ auswählen, verwendet StorageGRID bei der Aufnahme die synchrone Platzierung und erstellt sofort alle in den Platzierungsanweisungen der Regel angegebenen Objektkopien.  Die Aufnahme schlägt fehl, wenn StorageGRID nicht alle Kopien erstellen kann, beispielsweise weil ein erforderlicher Speicherort vorübergehend nicht verfügbar ist.  Der Client muss den Vorgang wiederholen.

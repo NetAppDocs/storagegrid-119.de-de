@@ -25,6 +25,7 @@ NOTE: Einige StorageGRID -Dienste wurden nicht aktualisiert, um die Chiffren in 
 
 
 
+[[select-a-security-policy]]
 == Wählen Sie eine Sicherheitsrichtlinie
 
 .Schritte
@@ -87,6 +88,7 @@ Auf der Richtlinienkachel wird neben *Aktuelle Richtlinie* ein grünes Häkchen 
 
 
 
+[[create-a-custom-security-policy]]
 == Erstellen einer benutzerdefinierten Sicherheitsrichtlinie
 
 Sie können eine benutzerdefinierte Richtlinie erstellen, wenn Sie Ihre eigenen Chiffren anwenden müssen.
@@ -108,6 +110,8 @@ Auf der Kachel „Benutzerdefinierte Richtlinie“ wird neben *Aktuelle Richtlin
 
 
 
+[[temporarily-revert-to-the-default-security-policy]]
+[[temporarily-revert-to-default-security-policy]]
 == Vorübergehend zur Standardsicherheitsrichtlinie zurückkehren
 
 Wenn Sie eine benutzerdefinierte Sicherheitsrichtlinie konfiguriert haben, können Sie sich möglicherweise nicht beim Grid Manager anmelden, wenn die konfigurierte TLS-Richtlinie nicht mit derlink:global-certificate-types.html["konfiguriertes Serverzertifikat"] .

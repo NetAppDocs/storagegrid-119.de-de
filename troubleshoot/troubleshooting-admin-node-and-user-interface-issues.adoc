@@ -15,6 +15,7 @@ Sie können verschiedene Aufgaben ausführen, um die Ursache von Problemen im Zu
 
 
 
+[[admin-node-sign-in-errors]]
 == Anmeldefehler beim Admin-Knoten
 
 Wenn bei der Anmeldung bei einem StorageGRID Admin-Knoten ein Fehler auftritt, liegt möglicherweise ein Problem mit einemlink:../troubleshoot/troubleshooting-network-hardware-and-platform-issues.html["Vernetzung"] oder https://docs.netapp.com/us-en/storagegrid-appliances/installconfig/troubleshooting-hardware-installation-sg100-and-sg1000.html["Hardware"^] Problem, ein Problem mitlink:../primer/what-admin-node-is.html["Admin-Knoten-Dienste"] oder einlink:../maintain/recovering-failed-storage-volumes-and-rebuilding-cassandra-database.html["Problem mit der Cassandra-Datenbank"] auf verbundenen Speicherknoten.
@@ -165,6 +166,7 @@ Stellen Sie dem technischen Support die gesammelten Protokolle zur Verfügung. S
 
 
 
+[[user-interface-issues]]
 == Probleme mit der Benutzeroberfläche
 
 Die Benutzeroberfläche für den Grid Manager oder den Tenant Manager reagiert nach der Aktualisierung der StorageGRID -Software möglicherweise nicht wie erwartet.

@@ -25,6 +25,7 @@ CAUTION: Die folgenden ILM-Regeln und -Richtlinien sind nur Beispiele.  Es gibt 
 
 
 
+[[ilm-rule-1-for-example-5-strict-ingest-to-guarantee-paris-data-center]]
 == ILM-Regel 1 für Beispiel 5: Strikte Aufnahme zur Gewährleistung des Pariser Rechenzentrums
 
 Dieses Beispiel einer ILM-Regel verwendet das strikte Aufnahmeverhalten, um zu gewährleisten, dass Objekte, die von einem in Paris ansässigen Mandanten in S3-Buckets mit der auf die Region „eu-west-3“ (Paris) eingestellten Region gespeichert werden, niemals im US-Rechenzentrum gespeichert werden.
@@ -88,6 +89,7 @@ image::../media/ilm_rule_1_example_5_strict_ingest.png[ILM-Regel 1, Beispiel 5, 
 
 
 
+[[ilm-rule-2-for-example-5-balanced-ingest-for-other-objects]]
 == ILM-Regel 2 für Beispiel 5: Ausgewogene Aufnahme für andere Objekte
 
 Dieses Beispiel einer ILM-Regel verwendet das ausgewogene Aufnahmeverhalten, um optimale ILM-Effizienz für alle Objekte bereitzustellen, die nicht der ersten Regel entsprechen.  Von allen Objekten, die dieser Regel entsprechen, werden zwei Kopien gespeichert – eine im US-Rechenzentrum und eine im Pariser Rechenzentrum.  Kann die Regel nicht sofort erfüllt werden, werden Zwischenkopien an einem beliebigen verfügbaren Ort gespeichert.
@@ -149,6 +151,7 @@ Ausgewogen.  Objekte, die dieser Regel entsprechen, werden nach Möglichkeit ent
 |===
 
 
+[[ilm-policy-for-example-5-combining-ingest-behaviors]]
 == ILM-Richtlinie für Beispiel 5: Kombinieren von Aufnahmeverhalten
 
 Die beispielhafte ILM-Richtlinie umfasst zwei Regeln mit unterschiedlichem Aufnahmeverhalten.

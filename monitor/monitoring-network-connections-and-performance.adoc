@@ -15,6 +15,7 @@ Die Integrität und Bandbreite des Netzwerks zwischen Knoten und Standorten sowi
 
 
 
+[[monitor-network-connections-and-performance]]
 == Überwachen Sie Netzwerkverbindungen und Leistung
 
 Netzwerkkonnektivität und Bandbreite sind besonders wichtig, wenn Ihre ILM-Richtlinie (Information Lifecycle Management) replizierte Objekte zwischen Standorten kopiert oder löschcodierte Objekte mithilfe eines Schemas speichert, das Schutz vor Standortverlust bietet.  Wenn das Netzwerk zwischen den Standorten nicht verfügbar ist, die Netzwerklatenz zu hoch ist oder die Netzwerkbandbreite nicht ausreicht, können einige ILM-Regeln Objekte möglicherweise nicht an der erwarteten Stelle platzieren.  Dies kann zu Aufnahmefehlern (wenn für ILM-Regeln die Option „Strenge Aufnahme“ ausgewählt ist) oder zu einer schlechten Aufnahmeleistung und ILM-Rückständen führen.
@@ -77,6 +78,7 @@ Wenn eine Datenverkehrsklassifizierungsrichtlinie darauf ausgelegt ist, den Netz
 
 
 
+[[monitor-node-level-resources]]
 == Überwachen von Ressourcen auf Knotenebene
 
 Überwachen Sie einzelne Grid-Knoten, um deren Ressourcennutzungsgrade zu überprüfen.  Wenn Knoten ständig überlastet sind, sind für einen effizienten Betrieb möglicherweise mehr Knoten erforderlich.

@@ -39,6 +39,7 @@ link:creating-node-configuration-files.html["Erstellen von Knotenkonfigurationsd
 
 
 
+[[considerations-and-recommendations-for-mac-address-cloning]]
 == Überlegungen und Empfehlungen zum Klonen von MAC-Adressen
 
 .[[mac_address_cloning_rhel]]
@@ -46,6 +47,7 @@ Durch das Klonen von MAC-Adressen verwendet der Container die MAC-Adresse des Ho
 
 
 
+[[enabling-mac-cloning]]
 === Aktivieren des MAC-Klonens
 
 In bestimmten Umgebungen kann die Sicherheit durch das Klonen von MAC-Adressen verbessert werden, da Sie dadurch eine dedizierte virtuelle Netzwerkkarte für das Admin-Netzwerk, das Grid-Netzwerk und das Client-Netzwerk verwenden können.  Wenn der Container die MAC-Adresse der dedizierten Netzwerkkarte auf dem Host verwendet, können Sie die Verwendung von Netzwerkkonfigurationen im Promiscuous-Modus vermeiden.
@@ -72,6 +74,7 @@ NOTE: Wenn Sie das MAC-Klonen auf einem virtuellen Host aktivieren, ohne gleichz
 
 
 
+[[mac-cloning-use-cases]]
 === Anwendungsfälle für das MAC-Klonen
 
 Beim MAC-Klonen sind zwei Anwendungsfälle zu berücksichtigen:
@@ -87,6 +90,7 @@ Informationen zum Aktivieren des MAC-Klonens finden Sie imlink:creating-node-con
 
 
 
+[[mac-cloning-example]]
 === Beispiel für MAC-Klonen
 
 Beispiel für aktiviertes MAC-Klonen mit einem Host mit der MAC-Adresse 11:22:33:44:55:66 für die Schnittstelle ens256 und den folgenden Schlüsseln in der Knotenkonfigurationsdatei:
@@ -100,6 +104,7 @@ Beispiel für aktiviertes MAC-Klonen mit einem Host mit der MAC-Adresse 11:22:33
 
 
 
+[[example-1-1-to-1-mapping-to-physical-or-virtual-nics]]
 == Beispiel 1: 1-zu-1-Zuordnung zu physischen oder virtuellen NICs
 
 Beispiel 1 beschreibt eine einfache physische Schnittstellenzuordnung, die wenig oder keine Konfiguration auf der Hostseite erfordert.
@@ -114,6 +119,7 @@ Wenn Switch 1 ein physischer Switch ist, sollten Sie die mit den Schnittstellen 
 
 
 
+[[example-2-lacp-bond-carrying-vlans]]
 == Beispiel 2: LACP-Bindung mit VLANs
 
 .Informationen zu diesem Vorgang

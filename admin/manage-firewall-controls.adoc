@@ -38,6 +38,7 @@ Weitere Informationen zu externen Firewalls und Netzwerksicherheit finden Sie un
 
 
 
+[[privileged-address-list-and-manage-external-access-tabs]]
 == Registerkarten „Liste privilegierter Adressen“ und „Externen Zugriff verwalten“
 
 Auf der Registerkarte „Liste privilegierter Adressen“ können Sie eine oder mehrere IP-Adressen registrieren, denen Zugriff auf geschlossene Grid-Ports gewährt wird.  Auf der Registerkarte „Externen Zugriff verwalten“ können Sie den externen Zugriff auf ausgewählte externe Ports oder alle offenen externen Ports schließen (externe Ports sind Ports, auf die Nicht-Grid-Knoten standardmäßig zugreifen können).  Diese beiden Registerkarten können häufig zusammen verwendet werden, um den genauen Netzwerkzugriff anzupassen, den Sie für Ihr Grid zulassen müssen.
@@ -47,6 +48,7 @@ NOTE: Privilegierte IP-Adressen haben standardmäßig keinen internen Grid-Port-
 
 
 
+[[example-1-use-a-jump-host-for-maintenance-tasks]]
 === Beispiel 1: Verwenden Sie einen Jump-Host für Wartungsaufgaben
 
 Angenommen, Sie möchten einen Jump-Host (einen Host mit gehärteter Sicherheit) für die Netzwerkadministration verwenden.  Sie können diese allgemeinen Schritte verwenden:
@@ -62,6 +64,7 @@ Nachdem Sie Ihre Konfiguration gespeichert haben, werden alle externen Ports auf
 
 
 
+[[example-2-lock-down-sensitive-ports]]
 === Beispiel 2: Sperren sensibler Ports
 
 Angenommen, Sie möchten sensible Ports und den Dienst auf diesem Port sperren (z. B. SSH auf Port 22). Sie können die folgenden allgemeinen Schritte ausführen:
@@ -77,12 +80,14 @@ Nachdem Sie Ihre Konfiguration gespeichert haben, stehen Port 22 und der SSH-Die
 
 
 
+[[example-3-disable-access-to-unused-services]]
 === Beispiel 3: Zugriff auf nicht verwendete Dienste deaktivieren
 
 Auf Netzwerkebene können Sie einige Dienste deaktivieren, die Sie nicht verwenden möchten.  Um beispielsweise den HTTP S3-Client-Verkehr zu blockieren, verwenden Sie den Schalter auf der Registerkarte „Externen Zugriff verwalten“, um Port 18084 zu blockieren.
 
 
 
+[[untrusted-client-networks-tab]]
 == Registerkarte „Nicht vertrauenswürdige Clientnetzwerke“
 
 Wenn Sie ein Client-Netzwerk verwenden, können Sie StorageGRID vor feindlichen Angriffen schützen, indem Sie eingehenden Client-Verkehr nur auf explizit konfigurierten Endpunkten akzeptieren.
@@ -93,6 +98,7 @@ Sie können die Gefahr feindlicher Angriffe auf Ihr StorageGRID -System verringe
 
 
 
+[[example-1-gateway-node-only-accepts-https-s3-requests]]
 === Beispiel 1: Gateway-Knoten akzeptiert nur HTTPS S3-Anfragen
 
 Angenommen, Sie möchten, dass ein Gateway-Knoten den gesamten eingehenden Datenverkehr im Client-Netzwerk mit Ausnahme von HTTPS S3-Anfragen ablehnt.  Sie würden diese allgemeinen Schritte ausführen:
@@ -105,6 +111,7 @@ Nachdem Sie Ihre Konfiguration gespeichert haben, wird der gesamte eingehende Da
 
 
 
+[[example-2-storage-node-sends-s3-platform-services-requests]]
 === Beispiel 2: Storage Node sendet S3-Plattformdienstanfragen
 
 Angenommen, Sie möchten ausgehenden S3-Plattformdienstdatenverkehr von einem Speicherknoten aktivieren, aber alle eingehenden Verbindungen zu diesem Speicherknoten im Clientnetzwerk verhindern.  Sie würden diesen allgemeinen Schritt ausführen:
@@ -116,6 +123,7 @@ Nachdem Sie Ihre Konfiguration gespeichert haben, akzeptiert der Speicherknoten 
 
 
 
+[[example-3-limiting-access-to-grid-manager-to-a-subnet]]
 === Beispiel 3: Beschränkung des Zugriffs auf Grid Manager auf ein Subnetz
 
 Angenommen, Sie möchten dem Grid Manager nur Zugriff auf ein bestimmtes Subnetz gewähren.  Sie würden die folgenden Schritte ausführen:

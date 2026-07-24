@@ -15,6 +15,7 @@ Sie können eine virtuelle Maschine verwenden, um jeden StorageGRID Knotentyp zu
 
 
 
+[[vmware-vsphere-hypervisor]]
 == VMware vSphere Hypervisor
 
 Sie müssen VMware vSphere Hypervisor auf einem vorbereiteten physischen Server installieren.  Die Hardware muss richtig konfiguriert sein (einschließlich Firmware-Versionen und BIOS-Einstellungen), bevor Sie die VMware-Software installieren.
@@ -29,6 +30,7 @@ link:../network/index.html["Netzwerkrichtlinien"]
 
 
 
+[[esx-host-configuration-requirements]]
 == ESX-Host-Konfigurationsanforderungen
 
 
@@ -36,6 +38,7 @@ CAUTION: Sie müssen das Network Time Protocol (NTP) auf jedem ESX-Host richtig 
 
 
 
+[[vmware-configuration-requirements]]
 == VMware-Konfigurationsanforderungen
 
 Sie müssen VMware vSphere und vCenter installieren und konfigurieren, bevor Sie StorageGRID -Knoten bereitstellen.

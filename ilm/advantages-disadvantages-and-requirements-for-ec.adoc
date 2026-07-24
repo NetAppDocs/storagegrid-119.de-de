@@ -15,6 +15,7 @@ Bevor Sie sich entscheiden, ob Sie Replikation oder Erasure Coding zum Schutz vo
 
 
 
+[[advantages-of-erasure-coding]]
 == Vorteile der Erasure Coding
 
 Im Vergleich zur Replikation bietet Erasure Coding eine verbesserte Zuverlässigkeit, Verfügbarkeit und Speichereffizienz.
@@ -30,6 +31,7 @@ NOTE: Der Speicherplatz für Erasure-Codierte Objekte wird aus der Objektgröße
 
 
 
+[[disadvantages-of-erasure-coding]]
 == Nachteile der Erasure Coding
 
 Im Vergleich zur Replikation weist Erasure Coding folgende Nachteile auf:
@@ -44,6 +46,7 @@ Im Vergleich zur Replikation weist Erasure Coding folgende Nachteile auf:
 
 
 
+[[when-to-use-erasure-coding]]
 == Wann wird Erasure Coding verwendet?
 
 Erasure Coding eignet sich am besten für folgende Anforderungen:

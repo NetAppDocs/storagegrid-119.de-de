@@ -25,6 +25,7 @@ Konfigurieren Sie nach Möglichkeit alle standortspezifischen Schlüsselverwaltu
 
 
 
+[[step-1-kms-details]]
 == Schritt 1: KMS-Details
 
 In Schritt 1 (KMS-Details) des Assistenten „Schlüsselverwaltungsserver hinzufügen“ geben Sie Details zum KMS oder KMS-Cluster an.
@@ -96,6 +97,7 @@ Der vollqualifizierte Domänenname oder die IP-Adresse für den KMS.
 
 
 
+[[step-2-upload-server-certificate]]
 == Schritt 2: Server-Zertifikat hochladen
 
 In Schritt 2 (Serverzertifikat hochladen) des Assistenten „Schlüsselverwaltungsserver hinzufügen“ laden Sie das Serverzertifikat (oder Zertifikatspaket) für den KMS hoch.  Das Serverzertifikat ermöglicht dem externen KMS, sich gegenüber StorageGRID zu authentifizieren.
@@ -115,6 +117,7 @@ NOTE: Wenn Sie ein Zertifikatspaket hochgeladen haben, werden die Metadaten für
 
 
 
+[[sg-create-keystep-3-upload-client-certificates]]
 == [[sg-create-key]]Schritt 3: Client-Zertifikate hochladen
 
 In Schritt 3 (Client-Zertifikate hochladen) des Assistenten „Schlüsselverwaltungsserver hinzufügen“ laden Sie das Client-Zertifikat und den privaten Schlüssel des Client-Zertifikats hoch.  Das Client-Zertifikat ermöglicht StorageGRID , sich gegenüber dem KMS zu authentifizieren.

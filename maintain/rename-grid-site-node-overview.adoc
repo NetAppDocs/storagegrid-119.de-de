@@ -15,6 +15,7 @@ Bei Bedarf können Sie die Anzeigenamen ändern, die im gesamten Grid Manager f�
 
 
 
+[[what-is-the-rename-procedure]]
 == Wie läuft das Umbenennungsverfahren ab?
 
 Wenn Sie StorageGRID zum ersten Mal installieren, geben Sie einen Namen für das Grid, jede Site und jeden Knoten an.  Diese anfänglichen Namen werden als _Systemnamen_ bezeichnet und sind die Namen, die anfänglich in StorageGRID angezeigt werden.
@@ -25,6 +26,7 @@ Verwenden Sie das Umbenennungsverfahren, um Tippfehler zu korrigieren, eine ande
 
 
 
+[[where-do-system-and-display-names-appear]]
 == Wo erscheinen System- und Anzeigenamen?
 
 Die folgende Tabelle fasst zusammen, wo Systemnamen und Anzeigenamen in der StorageGRID Benutzeroberfläche und in StorageGRID Dateien angezeigt werden.
@@ -130,12 +132,14 @@ Leer, sofern die Elemente nicht umbenannt wurden. Andernfalls werden Raster-, Si
 |===
 
 
+[[display-name-requirements]]
 == Anforderungen für den Anzeigenamen
 
 Überprüfen Sie vor der Verwendung dieses Verfahrens die Anforderungen für Anzeigenamen.
 
 
 
+[[display-names-for-nodes]]
 === Anzeigenamen für Knoten
 
 Anzeigenamen für Knoten müssen diesen Regeln entsprechen:
@@ -153,6 +157,7 @@ Sie können einen Knoten mit einem Anzeigenamen umbenennen, der zuvor von einem 
 
 
 
+[[display-names-for-grid-and-sites]]
 === Anzeigenamen für Raster und Sites
 
 Für die Anzeigenamen des Rasters und der Sites gelten die gleichen Regeln mit folgenden Ausnahmen:
@@ -165,6 +170,7 @@ Für die Anzeigenamen des Rasters und der Sites gelten die gleichen Regeln mit f
 
 
 
+[[display-name-best-practices]]
 == Bewährte Methoden für Anzeigenamen
 
 Wenn Sie mehrere Elemente umbenennen möchten, dokumentieren Sie Ihr allgemeines Benennungsschema, bevor Sie dieses Verfahren verwenden.  Entwickeln Sie ein System, das sicherstellt, dass die Namen eindeutig, konsistent und auf den ersten Blick leicht verständlich sind.
@@ -180,6 +186,7 @@ Sie können jede Namenskonvention verwenden, die Ihren organisatorischen Anforde
 
 
 
+[[example-display-names]]
 === Beispiele für Anzeigenamen
 
 Angenommen, Ihr StorageGRID -System verfügt über drei Rechenzentren und in jedem Rechenzentrum über Knoten unterschiedlichen Typs.  Ihre Anzeigenamen könnten so einfach sein wie diese:

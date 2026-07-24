@@ -15,18 +15,21 @@ Wenn die Speicherknoten ihre Kapazitätsgrenze erreichen, müssen Sie das Storag
 
 
 
+[[add-storage-volumes]]
 == Speichervolumes hinzufügen
 
 Jeder Speicherknoten unterstützt eine maximale Anzahl von Speichervolumes.  Das definierte Maximum variiert je nach Plattform.  Wenn ein Speicherknoten weniger als die maximale Anzahl an Speichervolumes enthält, können Sie Volumes hinzufügen, um seine Kapazität zu erhöhen. Siehe die Anweisungen fürlink:../expand/index.html["Erweiterung eines StorageGRID -Systems"] .
 
 
 
+[[add-storage-expansion-shelves]]
 == Fügen Sie Speichererweiterungsregale hinzu
 
 Einige StorageGRID -Geräte-Speicherknoten, wie z. B. SG6060 oder SG6160, können zusätzliche Speicherregale unterstützen.  Wenn Sie über StorageGRID -Geräte mit Erweiterungsmöglichkeiten verfügen, die noch nicht auf die maximale Kapazität erweitert wurden, können Sie Speicherregale hinzufügen, um die Kapazität zu erhöhen. Siehe die Anweisungen fürlink:../expand/index.html["Erweiterung eines StorageGRID -Systems"] .
 
 
 
+[[add-storage-nodes]]
 == Speicherknoten hinzufügen
 
 Sie können die Speicherkapazität durch Hinzufügen von Speicherknoten erhöhen.  Beim Hinzufügen von Speicher müssen die derzeit aktiven ILM-Regeln und Kapazitätsanforderungen sorgfältig berücksichtigt werden. Siehe die Anweisungen fürlink:../expand/index.html["Erweiterung eines StorageGRID -Systems"] .

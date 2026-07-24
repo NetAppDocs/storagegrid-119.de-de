@@ -15,6 +15,7 @@ Knotenkonfigurationsdateien sind kleine Textdateien, die die Informationen berei
 
 
 
+[[location-for-node-configuration-files]]
 == Speicherort für Knotenkonfigurationsdateien
 
 Platzieren Sie die Konfigurationsdatei für jeden StorageGRID -Knoten im `/etc/storagegrid/nodes` Verzeichnis auf dem Host, auf dem der Knoten ausgeführt wird.  Wenn Sie beispielsweise planen, einen Admin-Knoten, einen Gateway-Knoten und einen Storage-Knoten auf HostA auszuführen, müssen Sie drei Knotenkonfigurationsdateien in `/etc/storagegrid/nodes` auf HostA.
@@ -23,6 +24,7 @@ Sie können die Konfigurationsdateien mit einem Texteditor wie vim oder nano dir
 
 
 
+[[naming-of-node-configuration-files]]
 == Benennung von Knotenkonfigurationsdateien
 
 Die Namen der Konfigurationsdateien sind aussagekräftig.  Das Format ist `node-name.conf` , Wo `node-name` ist ein Name, den Sie dem Knoten zuweisen.  Dieser Name wird im StorageGRID Installationsprogramm angezeigt und für Knotenwartungsvorgänge wie die Knotenmigration verwendet.
@@ -47,6 +49,7 @@ Sie könnten beispielsweise verwenden `dc1-adm1.conf` für den ersten Admin-Knot
 
 
 
+[[contents-of-a-node-configuration-file]]
 == Inhalt einer Knotenkonfigurationsdatei
 
 Eine Konfigurationsdatei enthält Schlüssel-/Wertpaare mit einem Schlüssel und einem Wert pro Zeile.  Befolgen Sie für jedes Schlüssel-/Wertpaar die folgenden Regeln:
@@ -66,6 +69,7 @@ Die folgende Tabelle definiert die Werte für alle unterstützten Schlüssel.  J
 
 
 
+[[admin-network-keys]]
 === Admin-Netzwerkschlüssel
 
 
@@ -318,6 +322,7 @@ Andernfalls optional.
 |===
 
 
+[[block-device-keys]]
 === Geräteschlüssel sperren
 
 
@@ -454,6 +459,7 @@ Erforderlich
 |===
 
 
+[[client-network-keys]]
 === Client-Netzwerkschlüssel
 
 
@@ -661,6 +667,7 @@ Bewährte Methode
 |===
 
 
+[[grid-network-keys]]
 === Grid-Netzwerkschlüssel
 
 
@@ -856,6 +863,7 @@ Bewährte Methode
 |===
 
 
+[[installation-password-key-temporary]]
 === Installationskennwortschlüssel (temporär)
 
 
@@ -885,6 +893,7 @@ Bewährte Methode
 |===
 
 
+[[interfaces-key]]
 === Schnittstellenschlüssel
 
 
@@ -912,6 +921,7 @@ Optional
 |===
 
 
+[[maximum-ram-key]]
 === Maximaler RAM-Schlüssel
 
 
@@ -943,6 +953,7 @@ Optional
 |===
 
 
+[[node-type-keys]]
 === Knotentypschlüssel
 
 
@@ -990,6 +1001,7 @@ Optional
 |===
 
 
+[[port-remap-keys]]
 === Port-Neuzuordnungsschlüssel
 
 

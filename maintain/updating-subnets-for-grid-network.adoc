@@ -45,6 +45,7 @@ Verwenden Sie beispielsweise nicht die folgenden Subnetzbereiche für das Grid-N
 ====
 
 
+[[add-a-subnet]]
 == Hinzufügen eines Subnetzes
 
 .Schritte
@@ -70,6 +71,7 @@ Die von Ihnen angegebenen Subnetze werden automatisch für Ihr StorageGRID -Syst
 
 
 
+[[edit-a-subnet]]
 == Bearbeiten eines Subnetzes
 
 .Schritte
@@ -87,6 +89,7 @@ Die von Ihnen angegebenen Subnetze werden automatisch für Ihr StorageGRID -Syst
 
 
 
+[[delete-a-subnet]]
 == Löschen eines Subnetzes
 
 .Schritte

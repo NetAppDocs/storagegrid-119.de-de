@@ -20,6 +20,7 @@ Wenn sich Mandantenbenutzer beim Mandantenmanager anmelden, stellen sie eine Ver
 
 
 
+[[tenant-manager-dashboard]]
 == Mandantenmanager-Dashboard
 
 Nachdem ein Grid-Administrator mithilfe des Grid Managers oder der Grid Management API ein Mandantenkonto erstellt hat, können sich Mandantenbenutzer beim Mandanten-Manager anmelden.
@@ -32,12 +33,14 @@ image::../media/tenant_dashboard_with_buckets.png[Mandantenmanager-Dashboard]
 
 
 
+[[storage-menu-s3]]
 == Speichermenü (S3)
 
 Das Speichermenü wird nur für S3-Mandantenkonten bereitgestellt.  Über dieses Menü können S3-Benutzer Zugriffsschlüssel verwalten, Buckets erstellen, verwalten und löschen, Plattformdienst-Endpunkte verwalten und alle Grid-Föderationsverbindungen anzeigen, die sie verwenden dürfen.
 
 
 
+[[my-access-keys]]
 === Meine Zugriffsschlüssel
 
 S3-Mandantenbenutzer können Zugriffsschlüssel wie folgt verwalten:
@@ -52,6 +55,7 @@ NOTE: Die Verwaltung der Zugriffsschlüssel für andere Benutzer erfolgt über d
 
 
 
+[[buckets]]
 === Eimer
 
 S3-Tenant-Benutzer mit den entsprechenden Berechtigungen können die folgenden Aufgaben für ihre Buckets ausführen:
@@ -77,18 +81,21 @@ Wenn ein Grid-Administrator die Verwendung von Plattformdiensten für das Mandan
 
 
 
+[[platform-services-endpoints]]
 === Plattformdienst-Endpunkte
 
 Wenn ein Grid-Administrator die Verwendung von Plattformdiensten für das Mandantenkonto aktiviert hat, kann ein S3-Mandantenbenutzer mit der Berechtigung „Endpunkte verwalten“ für jeden Plattformdienst einen Zielendpunkt konfigurieren.
 
 
 
+[[grid-federation-connections]]
 === Grid-Föderation-Verbindungen
 
 Wenn ein Grid-Administrator die Verwendung einer Grid-Föderationsverbindung für das Mandantenkonto aktiviert hat, kann ein S3-Mandantenbenutzer mit Root-Zugriffsberechtigung den Verbindungsnamen anzeigen, auf die Bucket-Detailseite für jeden Bucket zugreifen, für den die Cross-Grid-Replikation aktiviert ist, und den letzten Fehler anzeigen, der aufgetreten ist, als Bucket-Daten in das andere Grid in der Verbindung repliziert wurden. Sehen link:../tenant/grid-federation-view-connections-tenant.html["Grid-Föderation-Verbindungen anzeigen"] .
 
 
 
+[[access-management-menu]]
 == Menü „Zugriffsverwaltung“
 
 Über das Menü „Zugriffsverwaltung“ können StorageGRID Mandanten Benutzergruppen aus einer föderierten Identitätsquelle importieren und Verwaltungsberechtigungen zuweisen.  Mandanten können auch lokale Mandantengruppen und Benutzer verwalten, sofern nicht Single Sign-On (SSO) für das gesamte StorageGRID System aktiviert ist.

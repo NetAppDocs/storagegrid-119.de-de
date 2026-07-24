@@ -15,6 +15,7 @@ Abhängig von Ihrer Lebenszykluskonfiguration folgen Objekte entweder den Aufbew
 
 
 
+[[example-of-bucket-lifecycle-taking-priority-over-ilm-policy]]
 == Beispiel für den Bucket-Lebenszyklus, der Vorrang vor der ILM-Richtlinie hat
 
 ILM-Richtlinie::
@@ -50,6 +51,7 @@ Ergebnis::
 
 
 
+[[example-of-bucket-lifecycle-implicitly-keeping-forever]]
 == Beispiel für den Bucket-Lebenszyklus mit impliziter ewiger Aufbewahrung
 
 ILM-Richtlinie::
@@ -85,6 +87,7 @@ Löschmarkierungen, die mit „docs/“ beginnen, werden entfernt, wenn sie abla
 
 
 
+[[example-of-using-bucket-lifecycle-to-duplicate-ilm-and-clean-up-expired-delete-markers]]
 == Beispiel für die Verwendung des Bucket-Lebenszyklus zum Duplizieren von ILM und Bereinigen abgelaufener Löschmarkierungen
 
 ILM-Richtlinie::

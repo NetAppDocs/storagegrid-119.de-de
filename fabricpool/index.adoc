@@ -22,6 +22,7 @@ Verwenden Sie diese Anweisungen, um:
 
 
 
+[[quick-start-for-configuring-storagegrid-for-fabricpool]]
 == Schnellstart zur Konfiguration von StorageGRID für FabricPool
 
 .image:https://raw.githubusercontent.com/NetAppDocs/common/main/media/number-1.png["Eins"]Planen Sie Ihre Konfiguration
@@ -69,6 +70,7 @@ Wenn Ihr System betriebsbereit ist, führen Sie laufende Aufgaben in ONTAP und S
 
 
 
+[[what-is-fabricpool]]
 == Was ist FabricPool?
 
 FabricPool ist eine hybride ONTAP Speicherlösung, die ein leistungsstarkes Flash-Aggregat als Leistungsebene und einen Objektspeicher als Cloud-Ebene verwendet.  Durch die Verwendung von FabricPool-fähigen Aggregaten können Sie die Speicherkosten senken, ohne die Leistung, Effizienz oder Sicherheit zu beeinträchtigen.
@@ -79,12 +81,14 @@ Es sind keine Änderungen an der Architektur erforderlich und Sie können Ihre D
 
 
 
+[[what-is-storagegrid]]
 == Was ist StorageGRID?
 
 NetApp StorageGRID ist eine Speicherarchitektur, die Daten als Objekte verwaltet, im Gegensatz zu anderen Speicherarchitekturen wie Datei- oder Blockspeicher.  Objekte werden in einem einzelnen Container (z. B. einem Bucket) aufbewahrt und nicht als Dateien in einem Verzeichnis innerhalb anderer Verzeichnisse verschachtelt.  Obwohl Objektspeicher im Allgemeinen eine geringere Leistung als Datei- oder Blockspeicher bieten, sind sie deutlich skalierbarer.  StorageGRID Buckets können Petabyte an Daten und Milliarden von Objekten enthalten.
 
 
 
+[[why-use-storagegrid-as-a-fabricpool-cloud-tier]]
 == Warum StorageGRID als FabricPool Cloud-Ebene verwenden?
 
 FabricPool kann ONTAP Daten auf eine Reihe von Objektspeicheranbietern verteilen, darunter StorageGRID.  Im Gegensatz zu öffentlichen Clouds, die möglicherweise eine maximale Anzahl unterstützter Eingabe-/Ausgabevorgänge pro Sekunde (IOPS) auf Bucket- oder Containerebene festlegen, skaliert die Leistung von StorageGRID mit der Anzahl der Knoten in einem System.  Durch die Verwendung von StorageGRID als FabricPool -Cloud-Ebene können Sie Ihre kalten Daten in Ihrer eigenen privaten Cloud aufbewahren, um höchste Leistung und vollständige Kontrolle über Ihre Daten zu erzielen.

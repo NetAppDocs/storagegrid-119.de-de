@@ -15,6 +15,7 @@ Sie müssen verstehen, welche Auswirkungen die Anwendung eines Hotfixes auf Ihr 
 
 
 
+[[storagegrid-hotfixes-are-non-disruptive]]
 == StorageGRID -Hotfixes sind unterbrechungsfrei
 
 Das StorageGRID -System kann während des gesamten Hotfix-Prozesses Daten von Client-Anwendungen aufnehmen und abrufen.  Wenn Sie für alle Knoten desselben Typs (z. B. Speicherknoten) ein Hotfix genehmigen, werden die Knoten einzeln heruntergefahren, sodass es nicht vorkommt, dass alle Grid-Knoten oder alle Grid-Knoten eines bestimmten Typs nicht verfügbar sind.
@@ -29,6 +30,7 @@ Um eine kontinuierliche Verfügbarkeit zu gewährleisten, stellen Sie sicher, da
 
 
 
+[[client-applications-might-experience-short-term-disruptions]]
 == Bei Clientanwendungen kann es zu kurzfristigen Störungen kommen
 
 Das StorageGRID -System kann während des gesamten Hotfix-Prozesses Daten von Client-Anwendungen aufnehmen und abrufen. Allerdings können Client-Verbindungen zu einzelnen Gateway-Knoten oder Speicherknoten vorübergehend unterbrochen werden, wenn der Hotfix einen Neustart der Dienste auf diesen Knoten erfordert.  Die Konnektivität wird wiederhergestellt, nachdem der Hotfix-Prozess abgeschlossen ist und die Dienste auf den einzelnen Knoten wieder aufgenommen werden.
@@ -40,12 +42,14 @@ NOTE: Sie können mehrere Gateways und Hochverfügbarkeitsgruppen (HA) verwenden
 
 
 
+[[alerts-and-snmp-notifications-might-be-triggered]]
 == Es können Warnungen und SNMP-Benachrichtigungen ausgelöst werden
 
 Warnungen und SNMP-Benachrichtigungen können ausgelöst werden, wenn Dienste neu gestartet werden und wenn das StorageGRID -System als Umgebung mit gemischten Versionen betrieben wird (einige Grid-Knoten führen eine frühere Version aus, während andere auf eine neuere Version aktualisiert wurden).  Im Allgemeinen werden diese Warnungen und Benachrichtigungen gelöscht, wenn der Hotfix abgeschlossen ist.
 
 
 
+[[configuration-changes-are-restricted]]
 == Konfigurationsänderungen sind eingeschränkt
 
 Beim Anwenden eines Hotfixes auf StorageGRID:

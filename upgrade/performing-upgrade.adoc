@@ -18,6 +18,7 @@ Sie haben alle Überlegungen geprüft und alle Planungs- und Vorbereitungsschrit
 
 
 
+[[access-storagegrid-upgrade-page]]
 == Greifen Sie auf die StorageGRID -Upgrade-Seite zu
 
 Rufen Sie als ersten Schritt die StorageGRID Upgrade-Seite im Grid Manager auf.
@@ -30,6 +31,7 @@ Rufen Sie als ersten Schritt die StorageGRID Upgrade-Seite im Grid Manager auf.
 
 
 
+[[select-files]]
 == Dateien auswählen
 
 Der Aktualisierungspfad auf der StorageGRID -Upgradeseite gibt an, welche Hauptversionen (z. B. 11.9.0) und Hotfixes (z. B. 11.9.0.1) Sie installieren müssen, um die neueste StorageGRID Version zu erhalten. Sie sollten die empfohlenen Versionen und Hotfixes in der angegebenen Reihenfolge installieren.
@@ -57,6 +59,7 @@ Wenn der Upload- und Validierungsprozess abgeschlossen ist, wird neben dem Datei
 
 
 
+[[run-prechecks]]
 == Vorprüfungen durchführen
 
 Durch die Ausführung von Vorprüfungen können Sie etwaige Upgrade-Probleme erkennen und beheben, bevor Sie mit der Aktualisierung Ihres Grids beginnen.
@@ -90,6 +93,7 @@ Wenn alle Fehler behoben wurden, werden Sie aufgefordert, das Upgrade zu starten
 
 
 
+[[start-upgrade-and-upgrade-primary-admin-node]]
 == Starten Sie das Upgrade und aktualisieren Sie den primären Admin-Knoten
 
 Wenn Sie das Upgrade starten, werden die Upgrade-Vorprüfungen erneut ausgeführt und der primäre Admin-Knoten wird automatisch aktualisiert.  Dieser Teil des Upgrades kann bis zu 30 Minuten dauern.
@@ -116,6 +120,7 @@ Wenn das Grid über einen anderen Admin-Knoten verfügt, der online und bereit i
 
 
 
+[[upgrade-other-nodes]]
 == Aktualisieren Sie andere Knoten
 
 Sie müssen alle Grid-Knoten aktualisieren, Sie können jedoch mehrere Aktualisierungssitzungen durchführen und die Aktualisierungsreihenfolge anpassen.  Beispielsweise möchten Sie möglicherweise die Knoten an Standort A in einer Sitzung aktualisieren und dann die Knoten an Standort B in einer späteren Sitzung aktualisieren.  Wenn Sie das Upgrade in mehreren Sitzungen durchführen möchten, beachten Sie, dass Sie die neuen Funktionen erst verwenden können, wenn alle Knoten aktualisiert wurden.
@@ -234,6 +239,7 @@ NOTE: Einige Gerätemodelle werden möglicherweise mehrmals neu gestartet, um di
 
 
 
+[[complete-upgrade]]
 == Komplettes Upgrade
 
 Wenn alle Grid-Knoten die Upgrade-Phasen abgeschlossen haben, wird die Aufgabe *Andere Grid-Knoten aktualisieren* als Abgeschlossen angezeigt.  Die restlichen Upgrade-Aufgaben werden automatisch im Hintergrund ausgeführt.

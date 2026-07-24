@@ -18,6 +18,7 @@ NOTE: Wenn Sie Ihre Protokolle an einen externen Syslog-Server senden oder das Z
 
 
 
+[[general-storagegrid-logs]]
 == Allgemeine StorageGRID Protokolle
 
 [cols="3a,3a,2a"]
@@ -49,6 +50,7 @@ Alle Knoten
 |===
 
 
+[[cipher-related-logs]]
 == Verschlüsselungsbezogene Protokolle
 
 [cols="3a,3a,2a"]
@@ -85,6 +87,7 @@ Alle Knoten
 |===
 
 
+[[grid-federation-logs]]
 == Grid-Föderationsprotokolle
 
 [cols="3a,3a,2a"]
@@ -100,6 +103,7 @@ Alle Knoten
 |===
 
 
+[[nms-logs]]
 == NMS-Protokolle
 
 [cols="3a,3a,2a"]
@@ -136,6 +140,7 @@ Admin-Knoten
 |===
 
 
+[[server-manager-logs]]
 == Server Manager-Protokolle
 
 [cols="3a,3a,2a"]
@@ -165,6 +170,7 @@ Alle Knoten
 |===
 
 
+[[storagegrid-services-logs]]
 == StorageGRID -Dienstprotokolle
 
 [cols="3a,3a,2a"]

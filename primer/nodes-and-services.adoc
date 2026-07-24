@@ -15,6 +15,7 @@ Der grundlegende Baustein eines StorageGRID -Systems ist der Grid-Knoten.  Knote
 
 
 
+[[types-of-grid-nodes]]
 == Arten von Gitterknoten
 
 Das StorageGRID -System verwendet vier Arten von Grid-Knoten:
@@ -43,12 +44,14 @@ Sehenlink:what-gateway-node-is.html["Was ist ein Gateway-Knoten?"]
 
 
 
+[[hardware-and-software-nodes]]
 == Hardware- und Softwareknoten
 
 StorageGRID Knoten können als StorageGRID Appliance-Knoten oder als softwarebasierte Knoten bereitgestellt werden.
 
 
 
+[[storagegrid-appliance-nodes]]
 === StorageGRID -Geräteknoten
 
 StorageGRID Hardwaregeräte sind speziell für die Verwendung in einem StorageGRID -System konzipiert.  Einige Geräte können als Speicherknoten verwendet werden.  Andere Appliances können als Admin-Knoten oder Gateway-Knoten verwendet werden.  Sie können Appliance-Knoten mit softwarebasierten Knoten kombinieren oder vollständig entwickelte Grids mit ausschließlich Appliances bereitstellen, die nicht von externen Hypervisoren, Speichern oder Computerhardware abhängig sind.
@@ -61,6 +64,7 @@ Im Folgenden finden Sie Informationen zu den verfügbaren Geräten:
 
 
 
+[[software-based-nodes]]
 === Softwarebasierte Knoten
 
 Softwarebasierte Grid-Knoten können als virtuelle VMware-Maschinen oder innerhalb von Container-Engines auf einem Linux-Host bereitgestellt werden.
@@ -76,6 +80,7 @@ Bei der Erstinstallation eines neuen softwarebasierten Storage Node können Sie 
 
 
 
+[[storagegrid-services]]
 == StorageGRID Dienste
 
 Nachfolgend finden Sie eine vollständige Liste der StorageGRID -Dienste.

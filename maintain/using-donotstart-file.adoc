@@ -22,6 +22,7 @@ Der effizienteste Weg, den Neustart aller Dienste zu verhindern, besteht darin, 
 
 
 
+[[add-donotstart-file-for-service]]
 == DoNotStart-Datei für den Dienst hinzufügen
 
 Sie können den Start eines einzelnen Dienstes verhindern, indem Sie dem Verzeichnis dieses Dienstes auf einem Grid-Knoten eine DoNotStart-Datei hinzufügen.
@@ -61,6 +62,7 @@ Wenn Server Manager oder der Grid-Knoten neu gestartet wird, wird Server Manager
 
 
 
+[[remove-donotstart-file-for-service]]
 == DoNotStart-Datei für den Dienst entfernen
 
 Wenn Sie eine DoNotStart-Datei entfernen, die den Start eines Dienstes verhindert, müssen Sie diesen Dienst starten.

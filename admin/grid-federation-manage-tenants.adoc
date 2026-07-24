@@ -23,6 +23,7 @@ Sie können S3-Mandantenkonten die Verwendung einer Grid-Föderationsverbindung 
 
 
 
+[[create-a-permitted-tenant]]
 == Erstellen eines zulässigen Mandanten
 
 Wenn Sie einem neuen oder bestehenden Mandantenkonto die Verwendung einer Grid-Föderationsverbindung für Kontoklone und Cross-Grid-Replikation erlauben möchten, folgen Sie den allgemeinen Anweisungen zumlink:creating-tenant-account.html["Erstellen Sie einen neuen S3-Mandanten"] oderlink:editing-tenant-account.html["Bearbeiten eines Mieterkontos"] und beachten Sie Folgendes:
@@ -47,6 +48,7 @@ TIP: Bevor sich ein lokaler Root-Benutzer beim replizierten Mandanten im Ziel-Gr
 
 
 
+[[view-a-permitted-tenant]]
 == Anzeigen eines zulässigen Mandanten
 
 Sie können Details zu einem Mandanten anzeigen, der eine Grid-Föderation-Verbindung verwenden darf.
@@ -65,6 +67,7 @@ image::../media/grid-federation-tenant-detail.png[Registerkarte „Grid-Föderat
 
 
 
+[[edit-a-permitted-tenant]]
 == Bearbeiten eines zulässigen Mandanten
 
 Wenn Sie einen Mandanten bearbeiten müssen, der über die Berechtigung *Grid-Föderationsverbindung verwenden* verfügt, folgen Sie den allgemeinen Anweisungen fürlink:editing-tenant-account.html["Bearbeiten eines Mieterkontos"] und beachten Sie Folgendes:
@@ -76,6 +79,7 @@ Wenn Sie einen Mandanten bearbeiten müssen, der über die Berechtigung *Grid-F�
 
 
 
+[[delete-a-permitted-tenant]]
 == Löschen eines zulässigen Mandanten
 
 Wenn Sie einen Mandanten entfernen müssen, der über die Berechtigung *Grid-Föderationsverbindung verwenden* verfügt, folgen Sie den allgemeinen Anweisungen fürlink:deleting-tenant-account.html["Löschen eines Mieterkontos"] und beachten Sie Folgendes:
@@ -92,6 +96,7 @@ Um diese Fehler zu vermeiden, entfernen Sie die Berechtigung des Mandanten zur V
 
 
 
+[[remove-grid-federation-connection-permissionremove-use-grid-federation-connection-permission]]
 == [[remove-grid-federation-connection-permission]]Entfernen Sie die Berechtigung „Grid-Föderationsverbindung verwenden“.
 
 Um zu verhindern, dass ein Mandant eine Grid-Föderationsverbindung verwendet, müssen Sie die Berechtigung *Grid-Föderationsverbindung verwenden* entfernen.
@@ -115,6 +120,7 @@ NOTE: Durch erneutes Aktivieren der Berechtigung *Grid-Föderationsverbindung ve
 
 
 
+[[disable-replication-for-tenant-buckets]]
 === Deaktivieren der Replikation für Mandanten-Buckets
 
 Deaktivieren Sie als ersten Schritt die Cross-Grid-Replikation für alle Mandanten-Buckets.
@@ -133,6 +139,7 @@ TIP: Sie können die Berechtigung *Grid-Föderationsverbindung verwenden* nicht 
 
 
 
+[[remove-permission-for-tenant]]
 === Berechtigung für Mandanten entfernen
 
 Nachdem die Cross-Grid-Replikation für Mandanten-Buckets deaktiviert wurde, können Sie dem Mandanten die Berechtigung zur Verwendung der Grid-Föderationsverbindung entziehen.
@@ -184,6 +191,7 @@ Sie können einen der folgenden Schritte ausführen:
 
 
 
+[[forceremovepermissionremove-the-permission-by-force]]
 == [[force_remove_permission]]Entfernen Sie die Berechtigung mit Gewalt
 
 Bei Bedarf können Sie die Aufhebung der Berechtigung eines Mandanten zur Verwendung einer Grid-Föderationsverbindung erzwingen, auch wenn für Mandanten-Buckets die Grid-übergreifende Replikation aktiviert ist.

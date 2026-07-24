@@ -66,6 +66,7 @@ Wenn S3-Clients Löschanforderungen stellen, beginnt StorageGRID damit, Objekte 
 
 
 
+[[time-required-to-delete-objects]]
 == Zum Löschen von Objekten erforderliche Zeit
 
 Die Art und Weise, wie StorageGRID Objekte löscht, kann sich auf die scheinbare Leistung des Systems auswirken:
@@ -84,6 +85,8 @@ Die zum Freigeben von Speicherplatz nach dem Löschen eines Objekts erforderlich
 
 
 
+[[how-s3-versioned-objects-are-deleted]]
+[[delete-s3-versioned-objects]]
 == So werden versionierte S3-Objekte gelöscht
 
 Wenn die Versionierung für einen S3-Bucket aktiviert ist, folgt StorageGRID beim Antworten auf Löschanforderungen dem Verhalten von Amazon S3, unabhängig davon, ob diese Anforderungen von einem S3-Client, dem Ablauf eines S3-Bucket-Lebenszyklus oder den Anforderungen der ILM-Richtlinie stammen.

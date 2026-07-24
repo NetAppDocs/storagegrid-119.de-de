@@ -17,6 +17,7 @@ Oft können Sie Probleme selbst lösen. Bei manchen Problemen müssen Sie sich j
 
 
 
+[[defineproblemdefine-the-problem]]
 == [[define_problem]]Definieren Sie das Problem
 
 Der erste Schritt zur Lösung eines Problems besteht darin, das Problem klar zu definieren.
@@ -78,6 +79,7 @@ Dieses Problem ist mir zum ersten Mal begegnet.
 |===
 
 
+[[assess-the-risk-and-impact-on-the-system]]
 == Bewerten Sie das Risiko und die Auswirkungen auf das System
 
 Nachdem Sie das Problem definiert haben, bewerten Sie dessen Risiko und Auswirkungen auf das StorageGRID -System.  Beispielsweise bedeutet das Vorhandensein kritischer Warnungen nicht unbedingt, dass das System keine Kerndienste bereitstellt.
@@ -118,6 +120,7 @@ Ja, da Clientanwendungen keine Objekte im StorageGRID -System speichern können 
 |===
 
 
+[[collect-data]]
 == Daten sammeln
 
 Nachdem Sie das Problem definiert und sein Risiko und seine Auswirkungen bewertet haben, sammeln Sie Daten für die Analyse.  Welche Art von Daten am sinnvollsten zu erfassen ist, hängt von der Art des Problems ab.
@@ -227,6 +230,7 @@ Der technische Support bittet Sie möglicherweise, Daten zu sammeln oder bestimm
 |===
 
 
+[[createtimelinecreate-a-timeline-of-recent-changes]]
 === [[create_timeline]]Erstellen Sie eine Zeitleiste der letzten Änderungen
 
 Wenn ein Problem auftritt, sollten Sie berücksichtigen, was sich kürzlich geändert hat und wann diese Änderungen aufgetreten sind.
@@ -295,6 +299,7 @@ Hier sind einige Beispiele für potenziell bedeutende Änderungen:
 
 
 
+[[establish-baselines]]
 === Festlegen von Basislinien
 
 Sie können Basiswerte für Ihr System festlegen, indem Sie die Normalwerte verschiedener Betriebswerte aufzeichnen.  In Zukunft können Sie aktuelle Werte mit diesen Basiswerten vergleichen, um abnormale Werte zu erkennen und zu beheben.
@@ -397,6 +402,7 @@ Wählen Sie *NODES* > *_Storage Node_* > *Objects*. Zeigen Sie in der Abfragetab
 |===
 
 
+[[analyze-data]]
 == Daten analysieren
 
 Verwenden Sie die gesammelten Informationen, um die Ursache des Problems und mögliche Lösungen zu ermitteln.
@@ -410,6 +416,7 @@ Die Analyse ist problemabhängig, aber im Allgemeinen gilt:
 
 
 
+[[escalation-information-checklist]]
 == Checkliste für Eskalationsinformationen
 
 Wenn Sie das Problem nicht selbst lösen können, wenden Sie sich an den technischen Support.  Bevor Sie sich an den technischen Support wenden, sammeln Sie die in der folgenden Tabelle aufgeführten Informationen, um die Problemlösung zu erleichtern.

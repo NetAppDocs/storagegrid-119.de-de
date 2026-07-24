@@ -22,6 +22,7 @@ Sie können Berechtigungen für S3-Benutzergruppen verwalten, indem Sie föderie
 
 
 
+[[access-the-create-group-wizard]]
 == Greifen Sie auf den Assistenten „Gruppe erstellen“ zu
 
 Rufen Sie als ersten Schritt den Assistenten „Gruppe erstellen“ auf.
@@ -37,6 +38,7 @@ image::../media/grid-federation-tenant-group-banner.png[Bild des blauen Banners 
 
 
 
+[[choose-a-group-type]]
 == Wählen Sie einen Gruppentyp
 
 Sie können eine lokale Gruppe erstellen oder eine föderierte Gruppe importieren.
@@ -61,6 +63,7 @@ NOTE: Wenn Ihr Mandantenkonto über die Berechtigung *Grid-Föderationsverbindun
 
 
 
+[[manage-group-permissions]]
 == Gruppenberechtigungen verwalten
 
 Gruppenberechtigungen steuern, welche Aufgaben Benutzer im Tenant Manager und in der Tenant Management API ausführen können.
@@ -85,6 +88,7 @@ Sehen link:../tenant/tenant-management-permissions.html["Berechtigungen zur Mand
 
 
 
+[[set-s3-group-policy]]
 == S3-Gruppenrichtlinie festlegen
 
 Die Gruppenrichtlinie bestimmt, welche S3-Zugriffsberechtigungen Benutzer haben.
@@ -142,6 +146,7 @@ Ausführliche Informationen zu Gruppenrichtlinien, einschließlich Sprachsyntax 
 
 
 
+[[add-users-local-groups-only]]
 == Benutzer hinzufügen (nur lokale Gruppen)
 
 Sie können die Gruppe speichern, ohne Benutzer hinzuzufügen, oder Sie können optional bereits vorhandene lokale Benutzer hinzufügen.

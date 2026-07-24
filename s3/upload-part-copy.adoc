@@ -27,6 +27,7 @@ Die folgenden Anforderungsheader werden unterstützt:
 
 
 
+[[request-headers-for-server-side-encryption]]
 == Anforderungsheader für serverseitige Verschlüsselung
 
 Wenn Sie für die CreateMultipartUpload-Anforderung eine SSE-C-Verschlüsselung angegeben haben, müssen Sie in jede UploadPartCopy-Anforderung auch die folgenden Anforderungsheader einfügen:
@@ -48,6 +49,7 @@ CAUTION: Die von Ihnen bereitgestellten Verschlüsselungsschlüssel werden niema
 
 
 
+[[versioning]]
 == Versionierung
 
 Der mehrteilige Upload besteht aus separaten Vorgängen zum Starten des Uploads, Auflisten der Uploads, Hochladen von Teilen, Zusammenstellen der hochgeladenen Teile und Abschließen des Uploads.  Objekte werden erstellt (und gegebenenfalls versioniert), wenn der Vorgang CompleteMultipartUpload ausgeführt wird.

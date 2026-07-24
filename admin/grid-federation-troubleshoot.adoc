@@ -15,6 +15,7 @@ Möglicherweise müssen Sie Warnungen und Fehler im Zusammenhang mit Grid-Föder
 
 
 
+[[grid-federation-errorsgrid-federation-connection-alerts-and-errors]]
 == [[grid-federation-errors]]Warnungen und Fehler bei der Grid-Föderation-Verbindung
 
 Möglicherweise erhalten Sie Warnmeldungen oder es treten Fehler bei Ihren Grid-Föderation-Verbindungen auf.
@@ -23,6 +24,7 @@ Nachdem Sie Änderungen zur Behebung eines Verbindungsproblems vorgenommen haben
 
 
 
+[[grid-federation-connection-failure-alert]]
 === Warnung bei Verbindungsfehlern im Grid-Verbund
 
 .Ausgabe
@@ -40,6 +42,7 @@ Diese Warnung weist darauf hin, dass die Grid-Föderationsverbindung zwischen de
 
 
 
+[[expiration-of-grid-federation-certificate-alert]]
 === Ablaufwarnung für Grid-Föderation-Zertifikat
 
 .Ausgabe
@@ -53,6 +56,7 @@ Die Anweisungen zum Rotieren von Verbindungszertifikaten finden Sie inlink:grid-
 
 
 
+[[error-editing-a-grid-federation-connection]]
 === Fehler beim Bearbeiten einer Grid-Föderation-Verbindung
 
 .Ausgabe
@@ -69,10 +73,12 @@ Wenn Sie eine Grid-Föderationsverbindung bearbeiten, versucht StorageGRID , ein
 
 
 
+[[account-clone-errors]]
 == Fehler beim Klonen des Kontos
 
 
 
+[[cant-sign-in-to-a-cloned-tenant-account]]
 === Anmeldung bei einem geklonten Mandantenkonto nicht möglich
 
 .Ausgabe
@@ -88,6 +94,7 @@ Bevor sich ein geklonter lokaler Benutzer beim Zielraster des Mandanten anmelden
 
 
 
+[[tenant-created-without-a-clone]]
 === Mandant ohne Klon erstellt
 
 .Ausgabe
@@ -113,10 +120,12 @@ Wenn der Fehler behoben wurde, wird das Mandantenkonto nun in das andere Grid ge
 
 
 
+[[cross-grid-replication-alerts-and-errors]]
 == Warnungen und Fehler bei der Grid-übergreifenden Replikation
 
 
 
+[[last-error-shown-for-connection-or-tenant]]
 === Letzter angezeigter Fehler für Verbindung oder Mandant
 
 .Ausgabe
@@ -157,6 +166,7 @@ TIP: Nachdem Sie den Fehler behoben haben, wird möglicherweise ein neuer *Letzt
 
 
 
+[[cross-grid-replication-permanent-failure-alert]]
 === Dauerhafter Fehleralarm bei Cross-Grid-Replikation
 
 .Ausgabe
@@ -206,6 +216,7 @@ NOTE: Nach der Lösung des Alarms kann es bis zu einem Tag dauern, bis dieser ge
 
 
 
+[[cross-grid-replication-resource-unavailable-alert]]
 === Warnung: Gridübergreifende Replikationsressource nicht verfügbar
 
 .Ausgabe

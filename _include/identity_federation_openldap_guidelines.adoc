@@ -9,12 +9,14 @@ CAUTION: Bei Identitätsquellen, die nicht ActiveDirectory oder Azure sind, bloc
 
 
 
+[[memberof-and-refint-overlays]]
 === Memberof- und Refint-Overlays
 
 Die Memberof- und Refint-Overlays sollten aktiviert sein.  Weitere Informationen finden Sie in den Anweisungen zur umgekehrten Pflege von Gruppenmitgliedschaften imhttp://www.openldap.org/doc/admin24/index.html["OpenLDAP-Dokumentation: Administratorhandbuch Version 2.4"^] .
 
 
 
+[[indexing]]
 === Indizierung
 
 Sie müssen die folgenden OpenLDAP-Attribute mit den angegebenen Indexschlüsselwörtern konfigurieren:

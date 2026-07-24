@@ -17,6 +17,7 @@ Informationen zu S3 finden Sie unterlink:../s3/index.html["Verwenden Sie die S3 
 
 
 
+[[overview-of-platform-services]]
 == Übersicht der Plattformdienste
 
 Die StorageGRID -Plattformdienste können Ihnen bei der Implementierung einer Hybrid-Cloud-Strategie helfen, indem sie Ihnen das Senden von Ereignisbenachrichtigungen und Kopien von S3-Objekten und Objektmetadaten an externe Ziele ermöglichen.
@@ -30,6 +31,7 @@ TIP: Die Nutzung der Plattformdienste muss für jedes Mandantenkonto von einem S
 
 
 
+[[how-platform-services-are-configured]]
 == So werden Plattformdienste konfiguriert
 
 Plattformdienste kommunizieren mit externen Endpunkten, die Sie mithilfe derlink:configuring-platform-services-endpoints.html["Mietermanager"] oder dielink:understanding-tenant-management-api.html["Mandantenverwaltungs-API"] . Jeder Endpunkt stellt ein externes Ziel dar, beispielsweise einen StorageGRID S3-Bucket, einen Amazon Web Services-Bucket, ein Amazon SNS-Thema oder einen Elasticsearch-Cluster, der lokal, auf AWS oder anderswo gehostet wird.
@@ -90,6 +92,7 @@ Suchintegration
 |===
 
 
+[[considerations-for-using-platform-services]]
 == Überlegungen zur Verwendung von Plattformdiensten
 
 [cols="1a,3a"]
@@ -150,6 +153,7 @@ Die Authentifizierung von Kafka-Endpunkten verwendet die folgenden Authentifizie
 |===
 
 
+[[considerations-for-using-cloudmirror-replication-service]]
 == Überlegungen zur Verwendung des CloudMirror-Replikationsdienstes
 
 [cols="1a,3a"]

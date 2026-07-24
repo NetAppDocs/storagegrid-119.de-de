@@ -20,6 +20,7 @@ Sie können den S3-Setup-Assistenten verwenden, um StorageGRID für die Verwendu
 
 
 
+[[access-the-wizard]]
 == Zugriff auf den Assistenten
 
 .Schritte
@@ -33,6 +34,7 @@ image::../media/help_menu.png[Hilfemenü]
 
 
 
+[[step-1-of-6-configure-ha-group]]
 == Schritt 1 von 6: HA-Gruppe konfigurieren
 
 Eine HA-Gruppe ist eine Sammlung von Knoten, die jeweils den StorageGRID Load Balancer-Dienst enthalten.  Eine HA-Gruppe kann Gateway-Knoten, Admin-Knoten oder beides enthalten.
@@ -135,6 +137,7 @@ Mindestens eine Adresse muss IPv4 sein.  Optional können Sie zusätzliche IPv4-
 
 
 
+[[step-2-of-6-configure-load-balancer-endpoint]]
 == Schritt 2 von 6: Load Balancer-Endpunkt konfigurieren
 
 StorageGRID verwendet einen Load Balancer, um die Arbeitslast von Clientanwendungen zu verwalten.  Durch Lastenausgleich werden Geschwindigkeit und Verbindungskapazität über mehrere Speicherknoten hinweg maximiert.
@@ -334,6 +337,7 @@ Kopieren Sie das Serverzertifikat für den externen Load Balancer und fügen Sie
 ====
 
 
+[[step-3-of-6-create-tenant-and-bucket]]
 == Schritt 3 von 6: Mandanten und Bucket erstellen
 
 Ein Mandant ist eine Entität, die S3-Anwendungen zum Speichern und Abrufen von Objekten in StorageGRID verwenden kann.  Jeder Mandant verfügt über eigene Benutzer, Zugriffsschlüssel, Buckets, Objekte und einen bestimmten Satz an Funktionen.
@@ -401,6 +405,7 @@ Verwenden Sie die Standardregion(`us-east-1` ), es sei denn, Sie möchten in Zuk
 
 
 
+[[download-datastep-4-of-6-download-data]]
 == [[download-data]]Schritt 4 von 6: Daten herunterladen
 
 Im Schritt „Daten herunterladen“ können Sie eine oder zwei Dateien herunterladen, um die Details Ihrer gerade konfigurierten Daten zu speichern.
@@ -424,6 +429,7 @@ CAUTION: Schließen Sie diese Seite erst, wenn Sie beide Zugriffsschlüssel kopi
 
 
 
+[[step-5-of-6-review-ilm-rule-and-ilm-policy-for-s3]]
 == Schritt 5 von 6: ILM-Regel und ILM-Richtlinie für S3 überprüfen
 
 Regeln für das Information Lifecycle Management (ILM) steuern die Platzierung, Dauer und das Aufnahmeverhalten aller Objekte in Ihrem StorageGRID System.  Die in StorageGRID enthaltene ILM-Richtlinie erstellt zwei replizierte Kopien aller Objekte.  Diese Richtlinie bleibt so lange in Kraft, bis Sie mindestens eine neue Richtlinie aktivieren.
@@ -438,6 +444,7 @@ Regeln für das Information Lifecycle Management (ILM) steuern die Platzierung, 
 
 
 
+[[step-6-of-6-review-summary]]
 == Schritt 6 von 6: Zusammenfassung der Überprüfung
 
 .Schritte

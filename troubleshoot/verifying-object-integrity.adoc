@@ -17,6 +17,7 @@ Es gibt zwei Überprüfungsprozesse: Hintergrundüberprüfung und Objektexistenz
 
 
 
+[[what-is-background-verification]]
 == Was ist eine Hintergrundüberprüfung?
 
 Der Hintergrundüberprüfungsprozess prüft Speicherknoten automatisch und kontinuierlich auf beschädigte Kopien von Objektdaten und versucht automatisch, alle gefundenen Probleme zu beheben.
@@ -39,6 +40,7 @@ Die Hintergrundüberprüfung läuft kontinuierlich und ist so konzipiert, dass s
 
 
 
+[[alerts-related-to-background-verification]]
 === Warnungen im Zusammenhang mit der Hintergrundüberprüfung
 
 Wenn das System ein beschädigtes Objekt erkennt, das es nicht automatisch korrigieren kann (weil die Beschädigung die Identifizierung des Objekts verhindert), wird die Warnung *Unbekanntes beschädigtes Objekt erkannt* ausgelöst.
@@ -47,6 +49,7 @@ Wenn die Hintergrundüberprüfung ein beschädigtes Objekt nicht ersetzen kann, 
 
 
 
+[[change-the-background-verification-rate]]
 === Ändern Sie die Hintergrundüberprüfungsrate
 
 Sie können die Rate ändern, mit der die Hintergrundüberprüfung replizierte Objektdaten auf einem Speicherknoten prüft, wenn Sie Bedenken hinsichtlich der Datenintegrität haben.
@@ -124,6 +127,7 @@ NOTE: Wenn die Warnung „Objekte verloren“ ausgelöst wurde, möchte der tech
 
 
 
+[[what-is-object-existence-check]]
 == Was ist eine Objektexistenzprüfung?
 
 Die Objektexistenzprüfung überprüft, ob alle erwarteten replizierten Kopien von Objekten und Erasure-Coded-Fragmenten auf einem Speicherknoten vorhanden sind.  Bei der Objekt-Existenzprüfung werden nicht die Objektdaten selbst überprüft (dies geschieht durch die Hintergrundüberprüfung). Stattdessen bietet sie eine Möglichkeit, die Integrität von Speichergeräten zu überprüfen, insbesondere wenn ein kürzlich aufgetretenes Hardwareproblem die Datenintegrität beeinträchtigt haben könnte.
@@ -138,6 +142,7 @@ Die Objektexistenzprüfung liest die Metadaten für jedes in StorageGRID gespeic
 
 
 
+[[run-object-existence-check]]
 === Führen Sie eine Objekt-Existenzprüfung durch
 
 Sie erstellen und führen jeweils einen Job zur Objektexistenzprüfung aus.  Wenn Sie einen Job erstellen, wählen Sie die Speicherknoten und Volumes aus, die Sie überprüfen möchten.  Sie wählen auch die Konsistenz für den Auftrag aus.

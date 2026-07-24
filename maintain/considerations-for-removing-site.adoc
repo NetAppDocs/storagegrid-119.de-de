@@ -15,6 +15,7 @@ Bevor Sie das Verfahren zur Außerbetriebnahme einer Site zum Entfernen einer Si
 
 
 
+[[what-happens-when-you-decommission-a-site]]
 == Was passiert, wenn Sie eine Site außer Betrieb nehmen?
 
 Wenn Sie eine Site außer Betrieb nehmen, entfernt StorageGRID dauerhaft alle Knoten an der Site und die Site selbst aus dem StorageGRID -System.
@@ -27,6 +28,7 @@ Wenn das Verfahren zur Außerbetriebnahme des Standorts abgeschlossen ist:
 
 
 
+[[differences-between-connected-site-and-disconnected-site-decommission-procedures]]
 == Unterschiede zwischen den Stilllegungsverfahren für verbundene und getrennte Standorte
 
 Sie können das Verfahren zur Site-Außerbetriebnahme verwenden, um eine Site zu entfernen, bei der alle Knoten mit StorageGRID verbunden sind (als Außerbetriebnahme einer verbundenen Site bezeichnet), oder um eine Site zu entfernen, bei der alle Knoten von StorageGRID getrennt sind (als Außerbetriebnahme einer getrennten Site bezeichnet).  Bevor Sie beginnen, müssen Sie die Unterschiede zwischen diesen Verfahren verstehen.
@@ -48,6 +50,7 @@ CAUTION: Bevor Sie ein Verfahren zur Außerbetriebnahme eines getrennten Standor
 
 
 
+[[general-requirements-for-removing-a-connected-or-a-disconnected-site]]
 == Allgemeine Voraussetzungen für das Entfernen einer verbundenen oder getrennten Site
 
 Bevor Sie eine verbundene oder getrennte Site entfernen, müssen Sie sich der folgenden Anforderungen bewusst sein:
@@ -74,6 +77,7 @@ NOTE: Wenn Sie während der Außerbetriebnahme einer verbundenen Site eine weite
 
 
 
+[[requirements-for-information-lifecycle-management-ilm]]
 == Anforderungen an das Information Lifecycle Management (ILM)
 
 Beim Entfernen einer Site müssen Sie Ihre ILM-Konfiguration aktualisieren.  Der Assistent „Site außer Betrieb nehmen“ führt Sie durch eine Reihe von erforderlichen Schritten, um Folgendes sicherzustellen:
@@ -89,6 +93,7 @@ CAUTION: Bevor Sie eine Site entfernen können, müssen Sie möglicherweise neue
 
 
 
+[[considerations-for-the-object-data-at-a-connected-site]]
 == Überlegungen zu den Objektdaten an einem verbundenen Standort
 
 Wenn Sie eine verbundene Site außer Betrieb nehmen, müssen Sie entscheiden, was mit den vorhandenen Objektdaten auf der Site geschehen soll, wenn Sie neue ILM-Regeln und eine neue ILM-Richtlinie erstellen.  Sie können eine oder beide der folgenden Aktionen ausführen:
@@ -113,6 +118,7 @@ CAUTION: Erstellen Sie niemals eine ILM-Regel für eine einzelne Kopie, um die E
 
 
 
+[[additional-requirements-for-a-connected-site-decommission]]
 == Zusätzliche Anforderungen für die Stilllegung eines verbundenen Standorts
 
 Bevor StorageGRID eine verbundene Site entfernen kann, müssen Sie Folgendes sicherstellen:
@@ -136,6 +142,7 @@ NOTE: Das Verschieben oder Löschen von Objektdaten von einer Site kann Tage, Wo
 
 
 
+[[additional-requirements-for-a-disconnected-site-decommission]]
 == Zusätzliche Anforderungen für die Stilllegung eines abgekoppelten Standorts
 
 Bevor StorageGRID eine getrennte Site entfernen kann, müssen Sie Folgendes sicherstellen:
@@ -162,6 +169,7 @@ NOTE: Wenn Ihre ILM-Regeln und -Richtlinien zum Schutz vor dem Verlust einer ein
 
 
 
+[[considerations-for-consistency-when-you-remove-a-site]]
 == Überlegungen zur Konsistenz beim Entfernen einer Site
 
 Die Konsistenz für einen S3-Bucket bestimmt, ob StorageGRID Objektmetadaten vollständig auf alle Knoten und Sites repliziert, bevor einem Client mitgeteilt wird, dass die Objektaufnahme erfolgreich war.  Konsistenz sorgt für ein Gleichgewicht zwischen der Verfügbarkeit der Objekte und der Konsistenz dieser Objekte über verschiedene Speicherknoten und Standorte hinweg.

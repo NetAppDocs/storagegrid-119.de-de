@@ -15,12 +15,14 @@ Sie können die Grid-Föderation verwenden, um Mandanten zu klonen und ihre Obje
 
 
 
+[[what-is-a-grid-federation-connection]]
 == Was ist eine Grid-Föderation-Verbindung?
 
 Eine Grid-Föderationsverbindung ist eine bidirektionale, vertrauenswürdige und sichere Verbindung zwischen Admin- und Gateway-Knoten in zwei StorageGRID Systemen.
 
 
 
+[[workflow-for-grid-federation]]
 == Workflow für die Grid-Föderation
 
 Das Workflow-Diagramm fasst die Schritte zum Konfigurieren einer Grid-Föderation-Verbindung zwischen zwei Grids zusammen.
@@ -29,6 +31,7 @@ image::../media/grid-federation-workflow.png[Arbeitsablauf für die Grid-Födera
 
 
 
+[[considerations-and-requirements-for-grid-federation-connections]]
 == Überlegungen und Anforderungen für Grid-Föderation-Verbindungen
 
 * Die für die Grid-Föderation verwendeten Grids müssen StorageGRID -Versionen ausführen, die entweder identisch sind oder sich höchstens in einer Hauptversion unterscheiden.
@@ -42,6 +45,7 @@ Einzelheiten zu den Versionsanforderungen finden Sie imlink:../release-notes/ind
 
 
 
+[[networking-and-ip-address-requirements]]
 === Netzwerk- und IP-Adressanforderungen
 
 * Grid-Föderationsverbindungen können im Grid-Netzwerk, Admin-Netzwerk oder Client-Netzwerk erfolgen.
@@ -53,6 +57,7 @@ Einzelheiten zu den Versionsanforderungen finden Sie imlink:../release-notes/ind
 
 
 
+[[use-fqdns-to-load-balance-the-connection]]
 === Verwenden Sie FQDNs, um die Verbindung auszugleichen
 
 Verwenden Sie für eine Produktionsumgebung vollqualifizierte Domänennamen (FQDNs), um jedes Grid in der Verbindung zu identifizieren.  Erstellen Sie anschließend die entsprechenden DNS-Einträge wie folgt:
@@ -69,6 +74,7 @@ Wenn Sie mehrere DNS-Einträge verwenden, wird für die Anforderungen zur Verwen
 
 
 
+[[port-requirements]]
 === Portanforderungen
 
 Beim Erstellen einer Grid-Föderation-Verbindung können Sie jede nicht verwendete Portnummer zwischen 23000 und 23999 angeben.  Beide Grids in dieser Verbindung verwenden denselben Port.
@@ -77,6 +83,7 @@ Sie müssen sicherstellen, dass kein Knoten in einem der Grids diesen Port für 
 
 
 
+[[certificate-requirements]]
 === Zertifikatsanforderungen
 
 Wenn Sie eine Grid-Föderation-Verbindung konfigurieren, generiert StorageGRID automatisch vier SSL-Zertifikate:

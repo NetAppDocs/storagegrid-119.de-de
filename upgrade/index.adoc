@@ -17,6 +17,7 @@ Wenn Sie das Upgrade durchführen, werden alle Knoten in Ihrem StorageGRID -Syst
 
 
 
+[[before-you-begin]]
 == Bevor Sie beginnen
 
 Lesen Sie diese Themen, um mehr über die neuen Funktionen und Verbesserungen in StorageGRID 11.9 zu erfahren, festzustellen, ob Funktionen veraltet sind oder entfernt wurden, und sich über Änderungen an den StorageGRID -APIs zu informieren.

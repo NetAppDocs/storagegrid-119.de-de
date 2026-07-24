@@ -21,6 +21,7 @@ image::../media/nodes_page_load_balancer_tab.png[Registerkarte „Load Balancer�
 
 
 
+[[request-traffic]]
 == Verkehr anfordern
 
 Dieses Diagramm bietet einen gleitenden 3-Minuten-Durchschnitt des Datendurchsatzes, der zwischen den Endpunkten des Lastenausgleichs und den Clients, die die Anfragen stellen, in Bits pro Sekunde übertragen wird.
@@ -30,18 +31,21 @@ NOTE: Dieser Wert wird nach Abschluss jeder Anfrage aktualisiert.  Daher kann di
 
 
 
+[[incoming-request-rate]]
 == Rate eingehender Anfragen
 
 Dieses Diagramm bietet einen gleitenden 3-Minuten-Durchschnitt der Anzahl neuer Anfragen pro Sekunde, aufgeschlüsselt nach Anfragetyp (GET, PUT, HEAD und DELETE).  Dieser Wert wird aktualisiert, wenn die Header einer neuen Anfrage validiert wurden.
 
 
 
+[[average-request-duration-non-error]]
 == Durchschnittliche Anfragedauer (ohne Fehler)
 
 Dieses Diagramm bietet einen gleitenden 3-Minuten-Durchschnitt der Anfragedauer, aufgeschlüsselt nach Anfragetyp (GET, PUT, HEAD und DELETE).  Die Dauer jeder Anfrage beginnt, wenn ein Anfrageheader vom Load Balancer-Dienst analysiert wird, und endet, wenn der vollständige Antworttext an den Client zurückgegeben wird.
 
 
 
+[[error-response-rate]]
 == Fehlerantwortrate
 
 Dieses Diagramm bietet einen gleitenden 3-Minuten-Durchschnitt der Anzahl der pro Sekunde an Clients zurückgegebenen Fehlerantworten, aufgeschlüsselt nach Fehlerantwortcode.

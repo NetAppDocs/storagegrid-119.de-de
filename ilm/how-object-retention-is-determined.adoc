@@ -15,6 +15,7 @@ StorageGRID bietet sowohl Grid-Administratoren als auch einzelnen Mandantenbenut
 
 
 
+[[how-tenant-users-control-object-retention]]
 == So steuern Mandantenbenutzer die Objektaufbewahrung
 
 Mandantenbenutzer können mit diesen Methoden steuern, wie lange ihre Objekte in StorageGRID gespeichert werden:
@@ -33,6 +34,7 @@ Mandantenbenutzer können mit diesen Methoden steuern, wie lange ihre Objekte in
 
 
 
+[[how-grid-administrators-control-object-retention]]
 == So steuern Grid-Administratoren die Objektaufbewahrung
 
 Grid-Administratoren können die Objektaufbewahrung mithilfe dieser Methoden steuern:
@@ -44,18 +46,21 @@ Grid-Administratoren können die Objektaufbewahrung mithilfe dieser Methoden ste
 
 
 
+[[how-s3-bucket-lifecycle-and-ilm-interact]]
 == So interagieren S3-Bucket-Lebenszyklus und ILM
 
 Wenn ein S3-Bucket-Lebenszyklus konfiguriert ist, überschreiben die Aktionen zum Ablauf des Lebenszyklus die ILM-Richtlinie für Objekte, die dem Lebenszyklusfilter entsprechen.  Dies kann dazu führen, dass ein Objekt auch dann noch auf dem Raster verbleibt, wenn keine ILM-Anweisungen zum Platzieren des Objekts mehr vorliegen.
 
 
 
+[[examples-for-object-retention]]
 == Beispiele für die Objektaufbewahrung
 
 Um die Interaktionen zwischen S3 Object Lock, Bucket-Lebenszykluseinstellungen, Client-Löschanforderungen und ILM besser zu verstehen, betrachten Sie die folgenden Beispiele.
 
 
 
+[[example-1-s3-bucket-lifecycle-keeps-objects-longer-than-ilm]]
 === Beispiel 1: Der S3-Bucket-Lebenszyklus speichert Objekte länger als ILM
 
 ILM:: Bewahren Sie zwei Kopien für 1 Jahr (365 Tage) auf
@@ -68,6 +73,7 @@ NOTE: Wenn der Bucket-Lebenszyklus vorgibt, dass Objekte länger aufbewahrt werd
 
 
 
+[[example-2-s3-bucket-lifecycle-expires-objects-before-ilm]]
 === Beispiel 2: S3-Bucket-Lebenszyklus lässt Objekte vor ILM ablaufen
 
 ILM:: Bewahren Sie zwei Kopien 2 Jahre lang (730 Tage) auf.
@@ -77,6 +83,7 @@ Ergebnis:: StorageGRID löscht beide Kopien des Objekts nach Tag 365.
 
 
 
+[[example-3-client-delete-overrides-bucket-lifecycle-and-ilm]]
 === Beispiel 3: Client-Löschen überschreibt Bucket-Lebenszyklus und ILM
 
 ILM:: Speichern Sie zwei Kopien „für immer“ auf Speicherknoten
@@ -87,6 +94,7 @@ Ergebnis:: StorageGRID löscht beide Kopien des Objekts am Tag 400 als Antwort a
 
 
 
+[[example-4-s3-object-lock-overrides-client-delete-request]]
 === Beispiel 4: S3 Object Lock überschreibt Client-Löschanforderung
 
 S3-Objektsperre:: Das Aufbewahrungsdatum für eine Objektversion ist der 31.03.2026.  Eine rechtliche Sperre besteht nicht.

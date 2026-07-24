@@ -20,6 +20,7 @@ Weitere Informationen finden Sie unterlink:../tenant/understanding-tenant-manage
 
 
 
+[[new-api-for-bucket-capacity-limit]]
 == Neue API für Bucket-Kapazitätslimit
 
 Sie können die `/org/containers/{bucketName}/quota-object-bytes` API mit GET/PUT-Operationen zum Abrufen und Festlegen des Speicherkapazitätslimits für einen Bucket.

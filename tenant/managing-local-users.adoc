@@ -24,6 +24,7 @@ NOTE: Wenn Single Sign-On (SSO) für Ihr StorageGRID -System aktiviert ist, kön
 
 
 
+[[create-usercreate-a-local-user]]
 == [[create-user]]Erstellen Sie einen lokalen Benutzer
 
 Sie können einen lokalen Benutzer erstellen und ihn einer oder mehreren lokalen Gruppen zuweisen, um seine Zugriffsberechtigungen zu steuern.
@@ -34,6 +35,7 @@ Swift-Benutzer, die keiner Gruppe angehören, verfügen weder über Verwaltungsb
 
 
 
+[[access-the-create-user-wizard]]
 === Greifen Sie auf den Assistenten „Benutzer erstellen“ zu
 
 .Schritte
@@ -49,6 +51,7 @@ image::../media/grid-federation-tenant-user-banner.png[Bild des blauen Banners a
 
 
 
+[[enter-credentials]]
 === Anmeldeinformationen eingeben
 
 .Schritte
@@ -95,6 +98,7 @@ Wählen Sie beispielsweise *Ja* aus, um die Anmeldemöglichkeit eines Benutzers 
 
 
 
+[[assign-to-groups]]
 === Zu Gruppen zuweisen
 
 .Schritte
@@ -114,6 +118,7 @@ Wenn Ihr Mandantenkonto über die Berechtigung *Grid-Föderationsverbindung verw
 
 
 
+[[view-or-edit-local-user]]
 == Lokalen Benutzer anzeigen oder bearbeiten
 
 .Schritte
@@ -174,6 +179,7 @@ Sie können den Benutzernamen nicht ändern.
 
 
 
+[[duplicate-local-user]]
 == Duplizieren Sie den lokalen Benutzer
 
 Sie können einen lokalen Benutzer duplizieren, um schneller einen neuen Benutzer zu erstellen.
@@ -191,6 +197,7 @@ NOTE: Wenn Ihr Mandantenkonto über die Berechtigung *Grid-Föderationsverbindun
 
 
 
+[[clone-usersretry-user-clone]]
 == [[clone-users]]Benutzerklon erneut versuchen
 
 So wiederholen Sie einen fehlgeschlagenen Klonvorgang:
@@ -204,6 +211,7 @@ Weitere Informationen finden Sie unterlink:grid-federation-account-clone.html["M
 
 
 
+[[delete-one-or-more-local-users]]
 == Löschen eines oder mehrerer lokaler Benutzer
 
 Sie können einen oder mehrere lokale Benutzer dauerhaft löschen, die keinen Zugriff mehr auf das StorageGRID Mandantenkonto benötigen.

@@ -15,6 +15,7 @@ Alle Objektkopien werden aus dem StorageGRID -System entfernt, wenn ein Client e
 
 
 
+[[deletion-hierarchy]]
 == Löschhierarchie
 
 StorageGRID bietet mehrere Methoden zur Steuerung, wann Objekte aufbewahrt oder gelöscht werden.  Objekte können auf Clientanforderung oder automatisch gelöscht werden.  StorageGRID priorisiert alle S3-Objektsperreinstellungen immer gegenüber Client-Löschanforderungen, die wiederum Vorrang vor dem S3-Bucket-Lebenszyklus und ILM-Platzierungsanweisungen haben.
@@ -41,6 +42,7 @@ Sehen link:../ilm/how-objects-are-deleted.html["So werden Objekte gelöscht"] f�
 
 
 
+[[data-flow-for-client-deletes]]
 == Datenfluss für Clientlöschungen
 
 image::../media/delete_data_flow.png[Client-Löschdatenfluss]
@@ -52,6 +54,7 @@ image::../media/delete_data_flow.png[Client-Löschdatenfluss]
 
 
 
+[[data-flow-for-ilm-deletes]]
 == Datenfluss für ILM-Löschvorgänge
 
 image::../media/automatic_deletion_data_flow.png[Automatischer Löschdatenfluss]

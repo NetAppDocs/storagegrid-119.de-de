@@ -15,6 +15,7 @@ Bevor Sie StorageGRID installieren, sammeln und bereiten Sie die erforderlichen 
 
 
 
+[[required-information]]
 == Erforderliche Informationen
 
 Netzwerkplan:: Welche Netzwerke Sie an jeden StorageGRID Knoten anschließen möchten.  StorageGRID unterstützt mehrere Netzwerke zur Verkehrstrennung, Sicherheit und Verwaltungsfreundlichkeit.
@@ -37,6 +38,7 @@ Knotenmigration (falls erforderlich):: Verstehen Sie dielink:node-container-migr
 
 
 
+[[required-materials]]
 == Benötigtes Material
 
 NetApp StorageGRID -Lizenz:: Sie müssen über eine gültige, digital signierte NetApp -Lizenz verfügen.

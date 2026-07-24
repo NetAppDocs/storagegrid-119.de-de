@@ -18,6 +18,7 @@ CAUTION: Eine falsch konfigurierte ILM-Richtlinie kann zu einem nicht wiederhers
 
 
 
+[[default-ilm-policy]]
 == Standard-ILM-Richtlinie
 
 Wenn Sie StorageGRID installieren und Sites hinzufügen, wird automatisch eine Standard-ILM-Richtlinie wie folgt erstellt:
@@ -30,12 +31,14 @@ Wenn die Standardrichtlinie Ihren Speicheranforderungen nicht entspricht, könne
 
 
 
+[[one-or-many-active-ilm-policies]]
 == Eine oder mehrere aktive ILM-Richtlinien?
 
 Sie können eine oder mehrere aktive ILM-Richtlinien gleichzeitig haben.
 
 
 
+[[one-policy]]
 === Eine Richtlinie
 
 Wenn Ihr Grid ein einfaches Datenschutzschema mit wenigen mandanten- und bucketspezifischen Regeln verwendet, verwenden Sie eine einzelne aktive ILM-Richtlinie.  Die ILM-Regeln können Filter enthalten, um verschiedene Buckets oder Mandanten zu verwalten.
@@ -46,6 +49,7 @@ Wenn Sie nur eine Richtlinie haben und sich die Anforderungen eines Mandanten ä
 
 
 
+[[multiple-policies]]
 === Mehrere Richtlinien
 
 Um den Mietern unterschiedliche Servicequalitätsoptionen bereitzustellen, können Sie mehrere aktive Richtlinien gleichzeitig haben.  Jede Richtlinie kann bestimmte Mandanten, S3-Buckets und Objekte verwalten.  Wenn Sie eine Richtlinie für einen bestimmten Satz von Mandanten oder Objekten anwenden oder ändern, sind die auf andere Mandanten und Objekte angewendeten Richtlinien davon nicht betroffen.
@@ -63,6 +67,7 @@ image::../media/ilm-policies-tags-conceptual.png[Diagramm mit mehreren ILM-Richt
 
 
 
+[[how-does-an-ilm-policy-evaluate-objects]]
 == Wie bewertet eine ILM-Richtlinie Objekte?
 
 Eine aktive ILM-Richtlinie steuert die Platzierung, Dauer und den Datenschutz von Objekten.
@@ -76,6 +81,7 @@ Wenn Clients Objekte in StorageGRID speichern, werden die Objekte anhand des geo
 
 
 
+[[example-ilm-policy]]
 == Beispiel einer ILM-Richtlinie
 
 Beispielsweise könnte eine ILM-Richtlinie drei ILM-Regeln enthalten, die Folgendes festlegen:
@@ -105,6 +111,7 @@ image::../media/ilm_policy_and_rules.png[ILM-Richtlinien und -Regeln]
 
 
 
+[[what-are-active-and-inactive-policies]]
 == Was sind aktive und inaktive Richtlinien?
 
 Jedes StorageGRID -System muss über mindestens eine aktive ILM-Richtlinie verfügen.  Wenn Sie mehr als eine aktive ILM-Richtlinie haben möchten, erstellen Sie ILM-Richtlinien-Tags und weisen jedem Tag eine Richtlinie zu.  Anschließend wenden Mandanten Tags auf S3-Buckets an.  Die Standardrichtlinie wird auf alle Objekte in Buckets angewendet, denen kein Richtlinientag zugewiesen ist.
@@ -119,6 +126,7 @@ Ein StorageGRID -System verfolgt den Verlauf der aktivierten oder deaktivierten 
 
 
 
+[[considerations-for-creating-an-ilm-policy]]
 == Überlegungen zum Erstellen einer ILM-Richtlinie
 
 * Verwenden Sie in Testsystemen nur die vom System bereitgestellte Richtlinie „Baseline 2-Kopienrichtlinie“.  Für StorageGRID 11.6 und früher verwendet die Regel „2 Kopien erstellen“ in dieser Richtlinie den Speicherpool „Alle Speicherknoten“, der alle Sites enthält.  Wenn Ihr StorageGRID -System über mehr als einen Standort verfügt, können zwei Kopien eines Objekts am selben Standort platziert werden.

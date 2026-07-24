@@ -15,6 +15,7 @@ Wenn beim Versuch von StorageGRID , mit einem Plattformdienst-Endpunkt zu kommun
 
 
 
+[[determine-if-error-has-occurred]]
 == Feststellen, ob ein Fehler aufgetreten ist
 
 Wenn innerhalb der letzten 7 Tage Fehler am Endpunkt der Plattformdienste aufgetreten sind, wird im Tenant Manager-Dashboard eine Warnmeldung angezeigt.  Weitere Einzelheiten zum Fehler finden Sie auf der Seite „Plattformdienst-Endpunkte“.
@@ -30,6 +31,7 @@ Derselbe Fehler, der auf dem Dashboard angezeigt wird, erscheint auch oben auf d
 
 
 
+[[check-if-error-is-still-current]]
 == Prüfen, ob der Fehler noch aktuell ist
 
 Einige Fehler werden möglicherweise auch nach ihrer Behebung weiterhin in der Spalte *Letzter Fehler* angezeigt.  So können Sie feststellen, ob ein Fehler aktuell ist, oder das Entfernen eines behobenen Fehlers aus der Tabelle erzwingen:
@@ -46,6 +48,7 @@ Wenn Sie *Verbindung testen* auswählen, überprüft StorageGRID , ob der Endpun
 
 
 
+[[resolve-endpoint-errors]]
 == Beheben von Endpunktfehlern
 
 Mithilfe der Meldung „Letzter Fehler“ auf der Seite mit den Endpunktdetails können Sie die Fehlerursache ermitteln.  Bei einigen Fehlern müssen Sie möglicherweise den Endpunkt bearbeiten, um das Problem zu beheben.  Beispielsweise kann ein CloudMirroring-Fehler auftreten, wenn StorageGRID nicht auf den Ziel-S3-Bucket zugreifen kann, weil es nicht über die richtigen Zugriffsberechtigungen verfügt oder der Zugriffsschlüssel abgelaufen ist.  Die Meldung lautet: „Entweder müssen die Endpunktanmeldeinformationen oder der Zielzugriff aktualisiert werden“, und die Details lauten „AccessDenied“ oder „InvalidAccessKeyId“.
@@ -61,6 +64,7 @@ Wenn Sie den Endpunkt bearbeiten müssen, um einen Fehler zu beheben, führt die
 
 
 
+[[endpoint-credentials-with-insufficient-permissions]]
 == Endpunktanmeldeinformationen mit unzureichenden Berechtigungen
 
 Wenn StorageGRID einen Plattformdienst-Endpunkt validiert, bestätigt es, dass die Anmeldeinformationen des Endpunkts zum Kontaktieren der Zielressource verwendet werden können, und führt eine grundlegende Berechtigungsprüfung durch.  StorageGRID validiert jedoch nicht alle Berechtigungen, die für bestimmte Vorgänge der Plattformdienste erforderlich sind.  Wenn Sie beim Versuch, einen Plattformdienst zu verwenden, eine Fehlermeldung erhalten (z. B. „403 Forbidden“), überprüfen Sie daher die mit den Anmeldeinformationen des Endpunkts verknüpften Berechtigungen.

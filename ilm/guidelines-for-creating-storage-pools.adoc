@@ -17,6 +17,7 @@ Sehen link:using-multiple-storage-pools-for-cross-site-replication.html["Beispie
 
 
 
+[[guidelines-for-all-storage-pools]]
 == Richtlinien für alle Speicherpools
 
 * Halten Sie die Speicherpoolkonfigurationen so einfach wie möglich.  Erstellen Sie nicht mehr Speicherpools als nötig.
@@ -27,6 +28,7 @@ Sehen link:using-multiple-storage-pools-for-cross-site-replication.html["Beispie
 
 
 
+[[guidelines-for-storage-pools-used-for-replicated-copies]]
 == Richtlinien für Speicherpools, die für replizierte Kopien verwendet werden
 
 * Zum Schutz vor Site-Loss mitlink:what-replication-is.html["Replikation"] , geben Sie einen oder mehrere standortspezifische Speicherpools in derlink:create-ilm-rule-define-placements.html["Platzierungsanweisungen für jede ILM-Regel"] .
@@ -43,6 +45,7 @@ Durch die Verwendung eines Speicherpools für jeden Standort wird sichergestellt
 
 
 
+[[guidelines-for-storage-pools-used-for-erasure-coded-copies]]
 == Richtlinien für Speicherpools, die für Erasure-Coded-Kopien verwendet werden
 
 * Zum Schutz vor Site-Loss mitlink:what-erasure-coding-is.html["Löschcodierung"] , erstellen Sie Speicherpools, die aus mindestens drei Sites bestehen.  Wenn ein Speicherpool nur zwei Standorte umfasst, können Sie diesen Speicherpool nicht für Erasure Coding verwenden.  Für einen Speicherpool mit zwei Standorten sind keine Erasure-Coding-Schemata verfügbar.

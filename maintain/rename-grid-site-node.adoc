@@ -26,6 +26,7 @@ NOTE: Sie können Anzeigenamen von einem nicht primären Admin-Knoten aus hinzuf
 
 
 
+[[how-to-rename-grid-sites-or-nodes]]
 == So benennen Sie Raster, Sites oder Knoten um
 
 Sie können Ihr StorageGRID -System, einen oder mehrere Standorte oder einen oder mehrere Knoten umbenennen.
@@ -34,6 +35,7 @@ Sie können einen Anzeigenamen verwenden, der zuvor von einem anderen Knoten ver
 
 
 
+[[select-items-to-rename]]
 === Wählen Sie die umzubenennenden Elemente aus
 
 Wählen Sie zunächst die Elemente aus, die Sie umbenennen möchten.
@@ -97,6 +99,7 @@ Aktivieren Sie das Kontrollkästchen für den Knoten.
 
 
 
+[[propose-new-names]]
 === Neue Namen vorschlagen
 
 Im Schritt *Neue Namen vorschlagen* können Sie für jedes Element einzeln einen Anzeigenamen eingeben oder Elemente auf einmal umbenennen.
@@ -165,6 +168,7 @@ Es wird eine Erfolgsmeldung angezeigt.  Die neuen Anzeigenamen werden jetzt im g
 ====
 
 
+[[download-recovery-packagedownload-the-recovery-package]]
 === [[download-recovery-package]]Laden Sie das Wiederherstellungspaket herunter
 
 Wenn Sie mit dem Umbenennen der Elemente fertig sind, laden Sie ein neues Wiederherstellungspaket herunter und speichern Sie es. Die neuen Anzeigenamen für die umbenannten Elemente sind in der `Passwords.txt` Datei.
@@ -186,6 +190,7 @@ CAUTION: Die Datei des Wiederherstellungspakets muss gesichert werden, da sie Ve
 
 
 
+[[revert-display-names-back-to-system-names]]
 == Anzeigenamen wieder auf Systemnamen zurücksetzen
 
 Sie können ein umbenanntes Raster, eine Site oder einen Knoten wieder auf seinen ursprünglichen Systemnamen zurücksetzen.  Wenn Sie ein Element wieder auf seinen Systemnamen zurücksetzen, wird auf den Grid Manager-Seiten und anderen StorageGRID Standorten kein *Anzeigename* mehr für dieses Element angezeigt.  Es wird nur der Systemname des Artikels angezeigt.

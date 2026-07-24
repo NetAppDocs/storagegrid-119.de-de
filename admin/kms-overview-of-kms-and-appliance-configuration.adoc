@@ -21,6 +21,7 @@ Das Flussdiagramm zeigt, dass die KMS-Einrichtung und die Einrichtung der Applia
 
 
 
+[[set-up-the-key-management-server-kms]]
 == Einrichten des Schlüsselverwaltungsservers (KMS)
 
 Das Einrichten eines Schlüsselverwaltungsservers umfasst die folgenden allgemeinen Schritte.
@@ -52,6 +53,7 @@ link:kms-adding.html["Hinzufügen eines Schlüsselverwaltungsservers (KMS)"]
 |===
 
 
+[[set-up-the-appliance]]
 == Einrichten der Appliance
 
 Das Einrichten eines Appliance-Knotens für die KMS-Verwendung umfasst die folgenden allgemeinen Schritte.
@@ -74,6 +76,7 @@ Sehen https://docs.netapp.com/us-en/storagegrid-appliances/installconfig/optiona
 
 
 
+[[key-management-encryption-process-occurs-automatically]]
 == Schlüsselverwaltungs-Verschlüsselungsprozess (erfolgt automatisch)
 
 Die Schlüsselverwaltungsverschlüsselung umfasst die folgenden Schritte auf hoher Ebene, die automatisch ausgeführt werden.

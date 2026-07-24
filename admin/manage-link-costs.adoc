@@ -15,6 +15,7 @@ Mithilfe der Verbindungskosten können Sie priorisieren, welcher Rechenzentrumss
 
 
 
+[[what-are-link-costs]]
 == Was sind Linkkosten?
 
 * Mithilfe von Verknüpfungskosten wird priorisiert, welche Objektkopie zum Abrufen von Objekten verwendet wird.
@@ -62,6 +63,7 @@ Logische Rechenzentren im selben physischen Gebäude oder Campus, die über ein 
 |===
 
 
+[[update-link-costs]]
 == Linkkosten aktualisieren
 
 Sie können die Verbindungskosten zwischen Rechenzentrumsstandorten aktualisieren, um die Latenz zwischen den Standorten widerzuspiegeln.

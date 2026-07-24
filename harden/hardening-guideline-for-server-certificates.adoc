@@ -15,6 +15,7 @@ Sie sollten die während der Installation erstellten Standardzertifikate ersetze
 
 
 
+[[hardening-guidelines-for-certificates]]
 == Härtungsrichtlinien für Zertifikate
 
 Sie sollten die während der Installation erstellten Standardzertifikate durch Ihre eigenen benutzerdefinierten Zertifikate ersetzen.
@@ -44,6 +45,7 @@ Darüber hinaus sollten Clients bei der Kommunikation mit StorageGRID eine stren
 
 
 
+[[hardening-guidelines-for-tls-and-ssh-policy]]
 == Härtungsrichtlinien für TLS- und SSH-Richtlinien
 
 Sie können eine Sicherheitsrichtlinie auswählen, um zu bestimmen, welche Protokolle und Verschlüsselungen zum Herstellen sicherer TLS-Verbindungen mit Clientanwendungen und sicherer SSH-Verbindungen zu internen StorageGRID Diensten verwendet werden.

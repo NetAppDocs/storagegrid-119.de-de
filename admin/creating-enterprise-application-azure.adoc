@@ -28,6 +28,7 @@ NOTE: Sie müssen für jeden Admin-Knoten in Ihrem StorageGRID System eine Unter
 
 
 
+[[access-azure-ad]]
 == Zugriff auf Azure AD
 
 .Schritte
@@ -38,6 +39,7 @@ NOTE: Sie müssen für jeden Admin-Knoten in Ihrem StorageGRID System eine Unter
 
 
 
+[[create-enterprise-applications-and-save-storagegrid-sso-configuration]]
 == Erstellen Sie Unternehmensanwendungen und speichern Sie die StorageGRID SSO-Konfiguration
 
 Um die SSO-Konfiguration für Azure in StorageGRID zu speichern, müssen Sie mit Azure eine Unternehmensanwendung für jeden Admin-Knoten erstellen.  Sie kopieren die URLs der Verbundmetadaten aus Azure und fügen sie in die entsprechenden Felder *URL der Verbundmetadaten* auf der StorageGRID Single-Sign-On-Seite ein.
@@ -61,6 +63,7 @@ Um die SSO-Konfiguration für Azure in StorageGRID zu speichern, müssen Sie mit
 
 
 
+[[download-saml-metadata-for-every-admin-node]]
 == Laden Sie SAML-Metadaten für jeden Admin-Knoten herunter
 
 Nachdem die SSO-Konfiguration gespeichert wurde, können Sie für jeden Admin-Knoten in Ihrem StorageGRID System eine SAML-Metadatendatei herunterladen.
@@ -78,6 +81,7 @@ Nachdem die SSO-Konfiguration gespeichert wurde, können Sie für jeden Admin-Kn
 
 
 
+[[upload-saml-metadata-to-each-enterprise-application]]
 == Laden Sie SAML-Metadaten in jede Unternehmensanwendung hoch
 
 Nachdem Sie für jeden StorageGRID Admin-Knoten eine SAML-Metadatendatei heruntergeladen haben, führen Sie die folgenden Schritte in Azure AD aus:

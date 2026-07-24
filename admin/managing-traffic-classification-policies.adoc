@@ -17,6 +17,7 @@ Richtlinien zur Verkehrsklassifizierung werden auf Endpunkte des StorageGRID Loa
 
 
 
+[[matching-rules]]
 == Übereinstimmungsregeln
 
 Jede Datenverkehrsklassifizierungsrichtlinie enthält eine oder mehrere Übereinstimmungsregeln zur Identifizierung des Netzwerkverkehrs, der mit einer oder mehreren der folgenden Entitäten in Zusammenhang steht:
@@ -31,6 +32,7 @@ StorageGRID überwacht den Datenverkehr, der einer beliebigen Regel innerhalb de
 
 
 
+[[traffic-limiting]]
 == Verkehrsbeschränkung
 
 Optional können Sie einer Richtlinie die folgenden Limittypen hinzufügen:
@@ -52,6 +54,7 @@ Im Grid Manager können Sie Verkehrsdiagramme anzeigen und überprüfen, ob die 
 
 
 
+[[use-traffic-classification-policies-with-slas]]
 == Verwenden Sie Verkehrsklassifizierungsrichtlinien mit SLAs
 
 Sie können Richtlinien zur Verkehrsklassifizierung in Verbindung mit Kapazitätsgrenzen und Datenschutz verwenden, um Service-Level-Agreements (SLAs) durchzusetzen, die Einzelheiten zu Kapazität, Datenschutz und Leistung enthalten.

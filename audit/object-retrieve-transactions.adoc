@@ -17,6 +17,7 @@ In den folgenden Tabellen sind nicht alle Prüfmeldungen aufgeführt, die währe
 
 
 
+[[s3-retrieval-audit-messages]]
 == S3-Abruf-Audit-Nachrichten
 
 [cols="1a,1a,2a,1a,1a"]
@@ -38,6 +39,7 @@ link:sget-s3-get.html["SGET: S3 GET"]
 |===
 
 
+[[swift-retrieval-audit-messages]]
 == Audit-Nachrichten zum schnellen Abrufen
 
 [cols="1a,1a,2a,1a,1a"]
@@ -59,6 +61,7 @@ link:wget-swift-get.html["WGET: Schnelles GET"]
 |===
 
 
+[[example-s3-object-retrieval]]
 == Beispiel: S3-Objektabruf
 
 Wenn ein S3-Client ein Objekt von einem Speicherknoten (LDR-Dienst) abruft, wird eine Prüfnachricht generiert und im Prüfprotokoll gespeichert.
@@ -67,6 +70,7 @@ Beachten Sie, dass im folgenden Beispiel nicht alle während einer Transaktion g
 
 
 
+[[sget-s3-get]]
 === SGET: S3 GET
 
 Der Objektabruf beginnt, wenn der Client eine GetObject-Anforderung an einen LDR-Dienst sendet.  Die Nachricht enthält den Bucket, aus dem das Objekt abgerufen werden soll, und den S3-Schlüssel des Objekts, der zur Identifizierung des Objekts verwendet wird.
@@ -85,6 +89,7 @@ In der folgenden Beispielnachricht sendet der Client eine GetObject-Anforderung 
 ----
 
 
+[[example-s3-select-on-an-object]]
 == Beispiel: S3 Select auf einem Objekt
 
 Wenn ein S3-Client eine S3 Select-Abfrage für ein Objekt ausgibt, werden Prüfmeldungen generiert und im Prüfprotokoll gespeichert.

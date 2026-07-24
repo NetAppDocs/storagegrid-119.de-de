@@ -28,6 +28,8 @@ image::../media/nodes_table.png[Knotenmenü]
 
 
 
+[[connection-state-icons]]
+[[connection-state]]
 == Verbindungsstatussymbole
 
 Wenn ein Knoten vom Netz getrennt wird, wird neben dem Knotennamen eines der folgenden Symbole angezeigt.
@@ -74,6 +76,7 @@ Wenn ein Knoten vom Netz getrennt wird, liegt möglicherweise eine Warnung vor, 
 
 
 
+[[alert-icons]]
 == Warnsymbole
 
 Wenn für einen Knoten eine aktive Warnung vorliegt, wird neben dem Knotennamen eines der folgenden Symbole angezeigt:
@@ -86,6 +89,7 @@ image:../media/icon_alert_yellow_minor.png["Symbol Warnung Gelb Geringfügig"]*G
 
 
 
+[[view-details-for-a-system-site-or-node]]
 == Details zu einem System, einer Site oder einem Knoten anzeigen
 
 Um die in der Knotentabelle angezeigten Informationen zu filtern, geben Sie eine Suchzeichenfolge in das Feld *Suchen* ein.  Sie können nach Systemnamen, Anzeigenamen oder Typ suchen (geben Sie beispielsweise *gat* ein, um schnell alle Gateway-Knoten zu finden).

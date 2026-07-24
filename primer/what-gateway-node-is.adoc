@@ -21,6 +21,7 @@ Bei Bedarf können Sie die Netzwerkschnittstellen mehrerer Gateway-Knoten und Ad
 
 
 
+[[primary-services-for-gateway-nodes]]
 == Primäre Dienste für Gateway-Knoten
 
 Die folgende Tabelle zeigt die primären Dienste für Gateway-Knoten. Allerdings sind in dieser Tabelle nicht alle Knotendienste aufgeführt.

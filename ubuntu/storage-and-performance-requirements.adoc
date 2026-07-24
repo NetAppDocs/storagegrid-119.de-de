@@ -24,6 +24,7 @@ Sie müssen für alle Speicherkategorien RAID-gestützte Blockgeräte verwenden.
 
 
 
+[[performance-requirements]]
 == Leistungsanforderungen
 
 Die Leistung der für den Containerpool, die Systemdaten und die Objektmetadaten verwendeten Volumes hat erhebliche Auswirkungen auf die Gesamtleistung des Systems.  Sie sollten für diese Volumes Speicher der Leistungsstufe (10K SAS oder SSD) verwenden, um eine angemessene Festplattenleistung hinsichtlich Latenz, Eingabe-/Ausgabevorgängen pro Sekunde (IOPS) und Durchsatz sicherzustellen.  Sie können Capacity-Tier-Speicher (NL-SAS/SATA) für die dauerhafte Speicherung von Objektdaten verwenden.
@@ -32,6 +33,7 @@ Für die für den Containerpool, die Systemdaten und die Objektdaten verwendeten
 
 
 
+[[requirements-for-hosts-that-use-netapp-ontap-storage]]
 == Anforderungen für Hosts, die NetApp ONTAP -Speicher verwenden
 
 Wenn der StorageGRID Knoten Speicher verwendet, der von einem NetApp ONTAP System zugewiesen wurde, vergewissern Sie sich, dass für das Volume keine FabricPool -Tiering-Richtlinie aktiviert ist.  Das Deaktivieren der FabricPool Tiering-Funktion für Volumes, die mit StorageGRID -Knoten verwendet werden, vereinfacht die Fehlerbehebung und Speichervorgänge.
@@ -41,6 +43,7 @@ NOTE: Verwenden Sie FabricPool niemals, um Daten im Zusammenhang mit StorageGRID
 
 
 
+[[number-of-hosts-required]]
 == Anzahl der benötigten Hosts
 
 Jeder StorageGRID Standort benötigt mindestens drei Speicherknoten.
@@ -52,6 +55,7 @@ Andere Knotentypen, wie etwa Admin-Knoten oder Gateway-Knoten, können auf dense
 
 
 
+[[number-of-storage-volumes-for-each-host]]
 == Anzahl der Speichervolumes für jeden Host
 
 Die folgende Tabelle zeigt die Anzahl der für jeden Host erforderlichen Speichervolumes (LUNs) und die für jede LUN erforderliche Mindestgröße, basierend darauf, welche Knoten auf diesem Host bereitgestellt werden.
@@ -140,6 +144,7 @@ NOTE: Abhängig von der konfigurierten Prüfebene, der Größe der Benutzereinga
 
 
 
+[[minimum-storage-space-for-a-host]]
 == Mindestspeicherplatz für einen Host
 
 Die folgende Tabelle zeigt den für jeden Knotentyp erforderlichen Mindestspeicherplatz.  Mithilfe dieser Tabelle können Sie die Mindestspeichermenge ermitteln, die Sie dem Host in jeder Speicherkategorie bereitstellen müssen, basierend darauf, welche Knoten auf diesem Host bereitgestellt werden.
@@ -186,6 +191,7 @@ _nicht zutreffend_
 |===
 
 
+[[example-calculating-the-storage-requirements-for-a-host]]
 == Beispiel: Berechnung des Speicherbedarfs für einen Host
 
 Angenommen, Sie planen, drei Knoten auf demselben Host bereitzustellen: einen Speicherknoten, einen Admin-Knoten und einen Gateway-Knoten. Sie sollten dem Host mindestens neun Speichervolumes zur Verfügung stellen. Sie benötigen mindestens 300 GB Performance-Tier-Speicher für die Knotencontainer, 670 GB Performance-Tier-Speicher für Systemdaten und Transaktionsprotokolle und 12 TB Capacity-Tier-Speicher für Objektdaten.
@@ -287,6 +293,8 @@ Gateway-Knoten
 |===
 
 
+[[storage-requirements-for-storage-nodes]]
+[[storage_req_SN]]
 == Speicheranforderungen für Speicherknoten
 
 Ein softwarebasierter Speicherknoten kann 1 bis 48 Speichervolumes haben; 3 oder mehr Speichervolumes werden empfohlen. Jedes Speichervolumen sollte mindestens 4 TB groß sein.

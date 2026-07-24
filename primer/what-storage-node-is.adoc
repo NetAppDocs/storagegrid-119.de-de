@@ -17,6 +17,7 @@ Jeder Standort in Ihrem StorageGRID -System muss über mindestens drei Speicherk
 
 
 
+[[types-of-storage-nodes]]
 == Arten von Speicherknoten
 
 Während der Installation können Sie den Typ des Speicherknotens auswählen, den Sie installieren möchten.  Diese Typen sind für softwarebasierte Speicherknoten und für gerätebasierte Speicherknoten verfügbar, die die Funktion unterstützen:
@@ -78,6 +79,7 @@ Beim Installieren von Nur-Daten-Knoten muss das Raster Folgendes enthalten:
 
 
 
+[[primary-services-for-storage-nodes]]
 == Primäre Dienste für Speicherknoten
 
 Die folgende Tabelle zeigt die primären Dienste für Speicherknoten. Allerdings sind in dieser Tabelle nicht alle Knotendienste aufgeführt.

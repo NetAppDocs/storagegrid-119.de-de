@@ -15,6 +15,7 @@ Wenn Ihrem Mandantenkonto bei der Erstellung die Berechtigung *Grid-Föderations
 
 
 
+[[workflow-for-cross-grid-replication]]
 == Workflow für die Cross-Grid-Replikation
 
 Das Workflow-Diagramm fasst die Schritte zusammen, die Sie zum Konfigurieren der Cross-Grid-Replikation zwischen Buckets auf zwei Grids ausführen.  Diese Schritte werden im Folgenden genauer beschrieben.
@@ -23,6 +24,7 @@ image::../media/grid-federation-cgr-workflow.png[Gridübergreifender Replikation
 
 
 
+[[configure-cross-grid-replication]]
 == Konfigurieren der Cross-Grid-Replikation
 
 Bevor Sie die Cross-Grid-Replikation verwenden können, müssen Sie sich bei den entsprechenden Mandantenkonten auf jedem Grid anmelden und identische Buckets erstellen. Anschließend können Sie die Cross-Grid-Replikation für einen oder beide Buckets aktivieren.
@@ -37,6 +39,7 @@ Bevor Sie die Cross-Grid-Replikation verwenden können, müssen Sie sich bei den
 
 
 
+[[create-two-identical-buckets]]
 === Erstellen Sie zwei identische Eimer
 
 Melden Sie sich als ersten Schritt bei den entsprechenden Mandantenkonten in jedem Raster an und erstellen Sie identische Buckets.
@@ -65,6 +68,7 @@ TIP: Je nach Bedarf kann jeder Bucket eine andere Region verwenden.
 
 
 
+[[enable-cross-grid-replication]]
 === Aktivieren Sie die Cross-Grid-Replikation
 
 Sie müssen diese Schritte ausführen, bevor Sie einem der Buckets Objekte hinzufügen.
@@ -112,6 +116,7 @@ Nach einigen Augenblicken erscheint eine Erfolgsmeldung. Zu diesem Bucket hinzug
 
 
 
+[[test-replication-between-grids]]
 == Testen Sie die Replikation zwischen Grids
 
 Wenn die Cross-Grid-Replikation für einen Bucket aktiviert ist, müssen Sie möglicherweise überprüfen, ob die Verbindung und die Cross-Grid-Replikation ordnungsgemäß funktionieren und ob die Quell- und Ziel-Buckets noch alle Anforderungen erfüllen (z. B. ist die Versionierung noch aktiviert).
@@ -135,6 +140,7 @@ Wenn die Verbindung in Ordnung ist, wird ein Erfolgsbanner angezeigt. Andernfall
 
 
 
+[[disable-cross-grid-replication]]
 == Deaktivieren der Cross-Grid-Replikation
 
 Sie können die Cross-Grid-Replikation dauerhaft stoppen, wenn Sie keine Objekte mehr in das andere Grid kopieren möchten.

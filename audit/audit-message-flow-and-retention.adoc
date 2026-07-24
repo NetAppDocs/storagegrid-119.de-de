@@ -15,6 +15,7 @@ Alle StorageGRID -Dienste generieren während des normalen Systembetriebs Prüfm
 
 
 
+[[audit-message-flow]]
 == Nachrichtenfluss prüfen
 
 Audit-Nachrichten werden von Admin-Knoten und von den Speicherknoten verarbeitet, die über einen Administrative Domain Controller (ADC)-Dienst verfügen.
@@ -29,6 +30,7 @@ image::../media/audit_message_flow.gif[Diagramm, das den Überwachungsnachrichte
 
 
 
+[[audit-message-retention]]
 === Aufbewahrung von Überwachungsnachrichten
 
 StorageGRID verwendet einen Kopier- und Löschvorgang, um sicherzustellen, dass keine Prüfmeldungen verloren gehen, bevor sie in das Prüfprotokoll geschrieben werden können.
@@ -59,6 +61,7 @@ Die folgenden Arten von Problemen können dazu führen, dass die Warteschlangen 
 
 
 
+[[large-audit-queue-alert-and-audit-messages-queued-amqs-alarm]]
 === Alarm bei großer Audit-Warteschlange und Alarm bei in die Warteschlange gestellten Audit-Nachrichten (AMQS)
 
 Damit Sie die Größe der Warteschlangen für Prüfnachrichten im Laufe der Zeit überwachen können, werden die Warnung „Große Prüfwarteschlange“ und der alte AMQS-Alarm ausgelöst, wenn die Anzahl der Nachrichten in einer Speicherknotenwarteschlange oder einer Admin-Knotenwarteschlange bestimmte Schwellenwerte erreicht.
@@ -69,6 +72,7 @@ Wenn die Warnung oder der Alarm weiterhin besteht und an Schwere zunimmt, sehen 
 
 
 
+[[duplicate-messages]]
 === Doppelte Nachrichten
 
 Das StorageGRID -System verfolgt einen konservativen Ansatz, wenn ein Netzwerk- oder Knotenausfall auftritt.  Aus diesem Grund können im Überwachungsprotokoll doppelte Nachrichten vorhanden sein.
