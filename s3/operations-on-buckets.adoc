@@ -15,7 +15,7 @@ Das StorageGRID -System unterstützt maximal 5.000 Buckets für jedes S3-Mandant
 
 Jedes Raster kann maximal 100.000 Buckets enthalten.
 
-Um 5.000 Buckets zu unterstützen, muss jeder Speicherknoten im Grid über mindestens 64 GB RAM verfügen.
+Wenn mehrere Mandanten jeweils bis zu 5.000 Buckets haben, muss jeder Storage Node im Grid über mindestens 64 GB RAM verfügen.
 
 Die Einschränkungen für Bucket-Namen folgen den regionalen Einschränkungen des AWS-US-Standards, Sie sollten sie jedoch zusätzlich auf DNS-Namenskonventionen beschränken, um Anfragen im virtuellen S3-Hosting-Stil zu unterstützen.
 
@@ -27,7 +27,7 @@ Weitere Informationen finden Sie im Folgenden:
 
 Die Operationen ListObjects (GET Bucket) und ListObjectVersions (GET Bucket-Objektversionen) unterstützen StorageGRIDlink:consistency-controls.html["Konsistenzwerte"] .
 
-Sie können überprüfen, ob Aktualisierungen der letzten Zugriffszeit für einzelne Buckets aktiviert oder deaktiviert sind. Sehen link:get-bucket-last-access-time-request.html["GET Bucket – Letzte Zugriffszeit"] .
+Sie können überprüfen, ob Aktualisierungen der letzten Zugriffszeit für einzelne Buckets aktiviert oder deaktiviert sind. Weitere Informationen unter link:get-bucket-last-access-time-request.html["GET Bucket – Letzte Zugriffszeit"].
 
 Die folgende Tabelle beschreibt, wie StorageGRID S3 REST API-Bucket-Operationen implementiert.  Um diese Vorgänge auszuführen, müssen die erforderlichen Zugangsdaten für das Konto angegeben werden.
 
@@ -55,7 +55,7 @@ Erstellt einen neuen Bucket.  Indem Sie den Bucket erstellen, werden Sie zum Buc
 +
 *Hinweis*: Es tritt ein Fehler auf, wenn Ihre CreateBucket-Anforderung eine Region verwendet, die nicht in StorageGRID definiert wurde.
 
-* Sie können Folgendes einschließen: `x-amz-bucket-object-lock-enabled` Anforderungsheader zum Erstellen eines Buckets mit aktivierter S3-Objektsperre. Sehen link:../s3/use-s3-api-for-s3-object-lock.html["Verwenden Sie die S3 REST API, um S3 Object Lock zu konfigurieren"] .
+* Sie können den  `x-amz-bucket-object-lock-enabled` Anforderungsheader einfügen, um einen Bucket mit aktivierter S3 Object Lock zu erstellen. Weitere Informationen unter link:../s3/use-s3-api-for-s3-object-lock.html["Verwenden Sie die S3 REST API, um S3 Object Lock zu konfigurieren"].
 +
 Sie müssen S3 Object Lock aktivieren, wenn Sie den Bucket erstellen.  Sie können die S3-Objektsperre nicht hinzufügen oder deaktivieren, nachdem ein Bucket erstellt wurde.  S3 Object Lock erfordert eine Bucket-Versionierung, die automatisch aktiviert wird, wenn Sie den Bucket erstellen.
 
@@ -87,7 +87,7 @@ Löscht die Standardverschlüsselung aus dem Bucket.  Vorhandene verschlüsselte
  a| 
 DeleteBucketLifecycle
  a| 
-Löscht die Lebenszykluskonfiguration aus dem Bucket. Sehen link:create-s3-lifecycle-configuration.html["Erstellen einer S3-Lebenszykluskonfiguration"] .
+Löscht die Lebenszykluskonfiguration aus dem Bucket. Weitere Informationen unter link:create-s3-lifecycle-configuration.html["Erstellen einer S3-Lebenszykluskonfiguration"].
 
 
 
@@ -110,7 +110,7 @@ BucketTagging löschen
  a| 
 Verwendet die `tagging` Unterressource zum Entfernen aller Tags aus einem Bucket.
 
-*Achtung*: Wenn für diesen Bucket ein nicht standardmäßiger ILM-Richtlinientag festgelegt ist, wird ein `NTAP-SG-ILM-BUCKET-TAG` Bucket-Tag mit einem ihm zugewiesenen Wert.  Geben Sie keine DeleteBucketTagging-Anforderung aus, wenn ein `NTAP-SG-ILM-BUCKET-TAG` Eimer-Tag.  Senden Sie stattdessen eine PutBucketTagging-Anfrage mit nur dem `NTAP-SG-ILM-BUCKET-TAG` Tag und sein zugewiesener Wert, um alle anderen Tags aus dem Bucket zu entfernen.  Verändern oder entfernen Sie nicht die `NTAP-SG-ILM-BUCKET-TAG` Eimer-Tag.
+*Achtung*: Wenn für diesen Bucket ein nicht standardmäßiges ILM-Policy-Tag festgelegt ist, gibt es ein `NTAP-SG-ILM-BUCKET-TAG` Bucket-Tag mit einem zugewiesenen Wert. Eine DeleteBucketTagging-Anfrage sollte nicht gestellt werden, wenn ein  `NTAP-SG-ILM-BUCKET-TAG` Bucket-Tag vorhanden ist. Stattdessen sollte eine PutBucketTagging-Anfrage mit nur dem  `NTAP-SG-ILM-BUCKET-TAG` Tag und dessen zugewiesenem Wert gestellt werden, um alle anderen Tags aus dem Bucket zu entfernen. Das  `NTAP-SG-ILM-BUCKET-TAG` Bucket-Tag sollte nicht geändert oder entfernt werden.
 
 
 
@@ -140,7 +140,7 @@ GetBucketLifecycleConfiguration
 
 (früher GET Bucket-Lebenszyklus genannt)
  a| 
-Gibt die Lebenszykluskonfiguration für den Bucket zurück. Sehen link:create-s3-lifecycle-configuration.html["Erstellen einer S3-Lebenszykluskonfiguration"] .
+Gibt die Lebenszykluskonfiguration für den Bucket zurück. Weitere Informationen unter link:create-s3-lifecycle-configuration.html["Erstellen einer S3-Lebenszykluskonfiguration"].
 
 
 
@@ -179,7 +179,7 @@ GetBucketTagging
  a| 
 Verwendet die `tagging` Unterressource, um alle Tags für einen Bucket zurückzugeben.
 
-*Achtung*: Wenn für diesen Bucket ein nicht standardmäßiger ILM-Richtlinientag festgelegt ist, wird ein `NTAP-SG-ILM-BUCKET-TAG` Bucket-Tag mit einem ihm zugewiesenen Wert.  Ändern oder entfernen Sie dieses Tag nicht.
+*Achtung*: Wenn für diesen Bucket ein nicht standardmäßiges ILM-Policy-Tag festgelegt ist, gibt es ein `NTAP-SG-ILM-BUCKET-TAG` Bucket-Tag mit einem zugewiesenen Wert. Dieses Tag sollte weder geändert noch entfernt werden.
 
 
 
@@ -200,7 +200,7 @@ GetObjectLockConfiguration
  a| 
 Gibt den Standardaufbewahrungsmodus und die Standardaufbewahrungsdauer des Buckets zurück, sofern konfiguriert.
 
-Sehen link:../s3/use-s3-api-for-s3-object-lock.html["Verwenden Sie die S3 REST API, um S3 Object Lock zu konfigurieren"] .
+Weitere Informationen unter link:../s3/use-s3-api-for-s3-object-lock.html["Verwenden Sie die S3 REST API, um S3 Object Lock zu konfigurieren"].
 
 
 
@@ -277,9 +277,9 @@ StorageGRID unterstützt diese Aktionen nicht:
 * Übergang
 
 
-Sehen link:create-s3-lifecycle-configuration.html["Erstellen einer S3-Lebenszykluskonfiguration"] . Informationen dazu, wie die Ablaufaktion in einem Bucket-Lebenszyklus mit ILM-Platzierungsanweisungen interagiert, finden Sie unterlink:../ilm/how-ilm-operates-throughout-objects-life.html["Funktionsweise von ILM während der gesamten Lebensdauer eines Objekts"] .
+Weitere Informationen finden Sie unter link:create-s3-lifecycle-configuration.html["Erstellen einer S3-Lebenszykluskonfiguration"]. Weitere Informationen darüber, wie die Ablaufaktion im Lebenszyklus eines Buckets mit ILM-Platzierungsanweisungen interagiert, finden Sie unter link:../ilm/how-ilm-operates-throughout-objects-life.html["Funktionsweise von ILM während der gesamten Lebensdauer eines Objekts"].
 
-*Hinweis*: Die Bucket-Lebenszykluskonfiguration kann mit Buckets verwendet werden, bei denen S3 Object Lock aktiviert ist, die Bucket-Lebenszykluskonfiguration wird jedoch für ältere konforme Buckets nicht unterstützt.
+*Hinweis*: Die Bucket-Lebenszykluskonfiguration kann mit Buckets verwendet werden, bei denen die S3-Objektsperre aktiviert ist, wird jedoch für ältere Compliant Buckets nicht unterstützt.
 
 
 
@@ -328,7 +328,7 @@ nicht enthalten
  a| 
 PutBucketPolicy
  a| 
-Legt die dem Bucket zugeordnete Richtlinie fest. Sehen link:bucket-and-group-access-policies.html["Verwenden Sie Bucket- und Gruppenzugriffsrichtlinien"] .
+Legt die dem Bucket zugeordnete Richtlinie fest. Weitere Informationen unter link:bucket-and-group-access-policies.html["Verwenden Sie Bucket- und Gruppenzugriffsrichtlinien"].
 
 
 
@@ -337,18 +337,18 @@ PutBucketReplication
  a| 
 Konfiguriertlink:../tenant/understanding-cloudmirror-replication-service.html["StorageGRID CloudMirror-Replikation"] für den Bucket unter Verwendung der im Anforderungstext bereitgestellten XML-Replikationskonfiguration.  Bei der CloudMirror-Replikation sollten Sie die folgenden Implementierungsdetails beachten:
 
-* StorageGRID unterstützt nur V1 der Replikationskonfiguration.  Dies bedeutet, dass StorageGRID die Verwendung des `Filter` Element für Regeln und befolgt V1-Konventionen zum Löschen von Objektversionen.  Weitere Einzelheiten finden Sie unter https://docs.aws.amazon.com/AmazonS3/latest/userguide/replication-add-config.html["Amazon Simple Storage Service-Benutzerhandbuch: Replikationskonfiguration"^] .
+* StorageGRID unterstützt ausschließlich die Replikationskonfiguration V1. Das bedeutet, dass StorageGRID die Verwendung des  `Filter` Elements für Regeln nicht unterstützt und die V1-Konventionen für das Löschen von Objektversionen anwendet. Weitere Informationen finden Sie unter  https://docs.aws.amazon.com/AmazonS3/latest/userguide/replication-add-config.html["Amazon Simple Storage Service-Benutzerhandbuch: Replikationskonfiguration"^].
 * Die Bucket-Replikation kann für versionierte oder nicht versionierte Buckets konfiguriert werden.
 * Sie können in jeder Regel der XML-Replikationskonfiguration einen anderen Ziel-Bucket angeben.  Ein Quell-Bucket kann in mehr als einen Ziel-Bucket repliziert werden.
-* Ziel-Buckets müssen als URN von StorageGRID -Endpunkten angegeben werden, wie im Tenant Manager oder der Tenant Management API angegeben. Sehen link:../tenant/configuring-cloudmirror-replication.html["Konfigurieren der CloudMirror-Replikation"] .
+* Ziel-Buckets müssen als URN von StorageGRID Endpunkten angegeben werden, wie im Tenant Manager oder der Tenant Management API definiert. Weitere Informationen unter link:../tenant/configuring-cloudmirror-replication.html["Konfigurieren der CloudMirror-Replikation"].
 +
 Der Endpunkt muss vorhanden sein, damit die Replikationskonfiguration erfolgreich ist.  Wenn der Endpunkt nicht existiert, schlägt die Anfrage fehl, da `400 Bad Request` Die Fehlermeldung lautet: `Unable to save the replication policy. The specified endpoint URN does not exist: _URN_.`
 
-* Sie müssen kein `Role` im Konfigurations-XML.  Dieser Wert wird von StorageGRID nicht verwendet und wird ignoriert, wenn er übermittelt wird.
+* Sie müssen in der Konfigurations-XML keinen  `Role` angeben. Dieser Wert wird von StorageGRID nicht verwendet und bei der Übermittlung ignoriert.
 * Wenn Sie die Speicherklasse aus der Konfigurations-XML weglassen, verwendet StorageGRID die `STANDARD` Speicherklasse standardmäßig.
 * Wenn Sie ein Objekt aus dem Quell-Bucket oder den Quell-Bucket selbst löschen, ist das regionsübergreifende Replikationsverhalten wie folgt:
 +
-** Wenn Sie das Objekt oder den Bucket löschen, bevor es repliziert wurde, wird das Objekt/der Bucket nicht repliziert und Sie werden nicht benachrichtigt.
+** Wenn Sie das Objekt oder den Bucket löschen, bevor die Replizierung erfolgt ist, wird das Objekt bzw. der Bucket nicht repliziert, und Sie erhalten keine Benachrichtigung.
 ** Wenn Sie das Objekt oder den Bucket nach der Replikation löschen, folgt StorageGRID dem standardmäßigen Löschverhalten von Amazon S3 für V1 der regionsübergreifenden Replikation.
 
 
@@ -367,7 +367,7 @@ Verwendet die `tagging` Unterressource zum Hinzufügen oder Aktualisieren eines 
 * Bei Schlüsseln und Werten wird zwischen Groß- und Kleinschreibung unterschieden.
 
 
-*Achtung*: Wenn für diesen Bucket ein nicht standardmäßiger ILM-Richtlinientag festgelegt ist, wird ein `NTAP-SG-ILM-BUCKET-TAG` Bucket-Tag mit einem ihm zugewiesenen Wert.  Stellen Sie sicher, dass die `NTAP-SG-ILM-BUCKET-TAG` Das Bucket-Tag ist mit dem zugewiesenen Wert in allen PutBucketTagging-Anfragen enthalten.  Ändern oder entfernen Sie dieses Tag nicht.
+*Achtung*: Wenn für diesen Bucket ein nicht standardmäßiges ILM-Policy-Tag festgelegt ist, gibt es ein `NTAP-SG-ILM-BUCKET-TAG` Bucket-Tag mit einem zugewiesenen Wert. Es ist sicherzustellen, dass das `NTAP-SG-ILM-BUCKET-TAG` Bucket-Tag mit dem zugewiesenen Wert in allen PutBucketTagging-Anfragen enthalten ist. Dieses Tag sollte weder geändert noch entfernt werden.
 
 *Hinweis*: Dieser Vorgang überschreibt alle aktuellen Tags, die der Bucket bereits hat.  Wenn vorhandene Tags aus dem Set weggelassen werden, werden diese Tags für den Bucket entfernt.
 
@@ -389,7 +389,7 @@ PutObjectLockConfiguration
  a| 
 Konfiguriert oder entfernt den Standardaufbewahrungsmodus und die Standardaufbewahrungsdauer des Buckets.
 
-Wenn die Standardaufbewahrungsfrist geändert wird, bleibt das Aufbewahrungsdatum vorhandener Objektversionen gleich und wird nicht anhand der neuen Standardaufbewahrungsfrist neu berechnet.
+Wird die Standardaufbewahrungsfrist geändert, bleibt das Aufbewahrungsdatum für bestehende Objektversionen unverändert und wird nicht anhand der neuen Standardaufbewahrungsfrist neu berechnet.
 
 Sehenlink:../s3/use-s3-api-for-s3-object-lock.html["Verwenden Sie die S3 REST API, um S3 Object Lock zu konfigurieren"] für detaillierte Informationen.
 

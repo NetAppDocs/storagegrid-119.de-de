@@ -149,9 +149,6 @@ Das StorageGRID -Netz wurde inzwischen abgeschaltet.
 [[start-up-grid-nodes]]
 == Grid-Knoten starten
 
-
-CAUTION: Wenn das gesamte Netz länger als 15 Tage heruntergefahren war, müssen Sie sich an den technischen Support wenden, bevor Sie Netzknoten hochfahren.  Versuchen Sie nicht, die Wiederherstellungsverfahren zum Wiederherstellen von Cassandra-Daten durchzuführen.  Dies kann zu Datenverlust führen.
-
 Schalten Sie die Netzknoten nach Möglichkeit in dieser Reihenfolge ein:
 
 * Schalten Sie zuerst die Admin-Knoten ein.

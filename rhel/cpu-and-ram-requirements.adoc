@@ -19,7 +19,11 @@ Jeder StorageGRID -Knoten benötigt die folgenden Mindestressourcen:
 * RAM: Abhängig vom insgesamt verfügbaren RAM und der Menge der auf dem System ausgeführten Nicht- StorageGRID -Software
 +
 ** Im Allgemeinen mindestens 24 GB pro Knoten und 2 bis 16 GB weniger als der gesamte System-RAM
-** Mindestens 64 GB für jeden Mandanten mit etwa 5.000 Buckets
+** Wenn mehrere Mandanten jeweils bis zu 5.000 Buckets haben, mindestens 64 GB pro Knoten
++
+
+NOTE: Das StorageGRID -System unterstützt maximal 5.000 Buckets für jedes S3-Mandantenkonto.
+
 
 
 
@@ -41,9 +45,9 @@ Beim Hinzufügen einer neuen StorageGRID Site sollte die Gesamtmetadatenkapazit�
 Stellen Sie sicher, dass die Anzahl der StorageGRID -Knoten, die Sie auf jedem physischen oder virtuellen Host ausführen möchten, die Anzahl der verfügbaren CPU-Kerne oder des physischen RAM nicht überschreitet.  Wenn die Hosts nicht ausschließlich für die Ausführung von StorageGRID vorgesehen sind (nicht empfohlen), müssen Sie unbedingt den Ressourcenbedarf der anderen Anwendungen berücksichtigen.
 
 
-NOTE: Überwachen Sie regelmäßig Ihre CPU- und Speichernutzung, um sicherzustellen, dass diese Ressourcen weiterhin Ihrer Arbeitslast gerecht werden.  Beispielsweise würde eine Verdoppelung der RAM- und CPU-Zuweisung für virtuelle Speicherknoten ähnliche Ressourcen bereitstellen wie für StorageGRID Appliance-Knoten.  Wenn die Menge der Metadaten pro Knoten 500 GB übersteigt, sollten Sie außerdem eine Erhöhung des RAM pro Knoten auf 48 GB oder mehr in Betracht ziehen.  Informationen zum Verwalten des Objektmetadatenspeichers, zum Erhöhen der Einstellung für reservierten Speicherplatz für Metadaten und zum Überwachen der CPU- und Speicherauslastung finden Sie in den Anweisungen fürlink:../admin/index.html["Verabreichung"] ,link:../monitor/index.html["Überwachung"] , Undlink:../upgrade/index.html["Upgrade"] StorageGRID.
+NOTE: Die CPU- und Speicherauslastung sollte regelmäßig überwacht werden, damit diese Ressourcen weiterhin für die jeweilige Arbeitslast ausreichen. Eine Verdopplung der RAM- und CPU-Zuweisung für virtuelle Storage Nodes würde beispielsweise ähnliche Ressourcen bereitstellen wie für StorageGRID Appliance Nodes. Überschreitet die Metadatenmenge pro Knoten 500 GB, empfiehlt sich zudem eine Erhöhung des RAM pro Knoten auf 48 GB oder mehr. Informationen zur Verwaltung des Objekt-Metadatenspeichers, zur Erhöhung der Einstellung Metadata Reserved Space sowie zur Überwachung der CPU- und Speicherauslastung finden sich in den Anleitungen für link:../admin/index.html["Verabreichung"]link:../monitor/index.html["Überwachung"]link:../upgrade/index.html["Upgrade"] StorageGRID.
 
-Wenn Hyperthreading auf den zugrunde liegenden physischen Hosts aktiviert ist, können Sie 8 virtuelle Kerne (4 physische Kerne) pro Knoten bereitstellen.  Wenn Hyperthreading auf den zugrunde liegenden physischen Hosts nicht aktiviert ist, müssen Sie 8 physische Kerne pro Knoten bereitstellen.
+Wenn Hyperthreading auf den zugrunde liegenden physischen Hosts aktiviert ist, können Sie 8 virtuelle Kerne (4 physische Kerne) pro Knoten bereitstellen. Wenn Hyperthreading auf den zugrunde liegenden physischen Hosts nicht aktiviert ist, müssen Sie 8 physische Kerne pro Knoten bereitstellen.
 
 Wenn Sie virtuelle Maschinen als Hosts verwenden und die Kontrolle über die Größe und Anzahl der VMs haben, sollten Sie für jeden StorageGRID Knoten eine einzelne VM verwenden und die VM entsprechend dimensionieren.
 

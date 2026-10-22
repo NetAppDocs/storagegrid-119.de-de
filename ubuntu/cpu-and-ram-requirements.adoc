@@ -19,7 +19,11 @@ Jeder StorageGRID -Knoten benötigt die folgenden Mindestressourcen:
 * RAM: Abhängig vom insgesamt verfügbaren RAM und der Menge der auf dem System ausgeführten Nicht- StorageGRID -Software
 +
 ** Im Allgemeinen mindestens 24 GB pro Knoten und 2 bis 16 GB weniger als der gesamte System-RAM
-** Mindestens 64 GB für jeden Mandanten mit etwa 5.000 Buckets
+** Wenn mehrere Mandanten jeweils bis zu 5.000 Buckets haben, mindestens 64 GB pro Knoten
++
+
+NOTE: Das StorageGRID -System unterstützt maximal 5.000 Buckets für jedes S3-Mandantenkonto.
+
 
 
 

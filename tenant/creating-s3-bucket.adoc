@@ -21,10 +21,10 @@ Mit dem Tenant Manager können Sie S3-Buckets für Objektdaten erstellen.
 NOTE: Berechtigungen zum Festlegen oder Ändern der S3 Object Lock-Eigenschaften von Buckets oder Objekten können erteilt werden durchlink:../s3/bucket-and-group-access-policies.html["Bucket-Richtlinie oder Gruppenrichtlinie"] .
 
 * Wenn Sie S3 Object Lock für einen Bucket aktivieren möchten, hat ein Grid-Administrator die globale S3 Object Lock-Einstellung für das StorageGRID System aktiviert und Sie haben die Anforderungen für S3 Object Lock-Buckets und -Objekte überprüft.
-* Wenn jeder Mandant über 5.000 Buckets verfügt, verfügt jeder Speicherknoten im Grid über mindestens 64 GB RAM.
+* Wenn mehrere Mandanten jeweils bis zu 5.000 Buckets haben, verfügt jeder Storage Node im Grid über mindestens 64 GB RAM.
 +
 
-NOTE: Jedes Raster kann maximal 100.000 Buckets enthalten.
+NOTE: Das StorageGRID System unterstützt maximal 5.000 Buckets für jedes S3-Mandantenkonto. Jedes Grid kann maximal 100.000 Buckets enthalten.
 
 
 
@@ -63,7 +63,7 @@ Ein Name für den Bucket, der diesen Regeln entspricht:
 ** Darf in Anfragen im virtuell gehosteten Stil keine Punkte enthalten.  Punkte verursachen Probleme bei der Überprüfung des Platzhalterzertifikats des Servers.
 
 
-Weitere Informationen finden Sie im https://docs.aws.amazon.com/AmazonS3/latest/userguide/bucketnamingrules.html["Amazon Web Services (AWS)-Dokumentation zu Bucket-Benennungsregeln"^] .
+Weitere Informationen finden Sie in der https://docs.aws.amazon.com/AmazonS3/latest/userguide/bucketnamingrules.html["Amazon Web Services (AWS)-Dokumentation zu Bucket-Benennungsregeln"^].
 
 *Hinweis*: Sie können den Bucket-Namen nach dem Erstellen des Buckets nicht mehr ändern.
 
